@@ -1,1 +1,933 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>機捷柒號站 - A7生活入口網</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* 自定義捲軸樣式 (可選) */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <div id="root"></div>
 
+    <!-- Import Map -->
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.263.1"
+      }
+    }
+    </script>
+
+    <!-- Main Application Logic -->
+    <script type="module">
+        import React, { useState, useEffect, useMemo, useRef } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { 
+          Search, MapPin, Coffee, Utensils, ShoppingBag, 
+          Bus, Train, Stethoscope, BookOpen, Users, 
+          Menu, X, ChevronRight, Star, Clock, Heart, 
+          Navigation, Info, Home, ArrowRight, Filter,
+          Car, Loader, ImageIcon, PlusCircle, ExternalLink,
+          Table, RefreshCw, AlertCircle, Hash, Store, RefreshCcw, Sparkles, Plus, Check, Mountain,
+          MessageCircle, Facebook, QrCode, Map as MapIcon, Send, Bot, User
+        } from 'lucide-react';
+
+        // --- API Key Configuration ---
+        const apiKey = ""; // 如果需要 AI 功能，請在此填入 Gemini API Key
+
+        // --- Custom Icons ---
+        const LineIcon = ({ size = 24, className = "" }) => (
+            React.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "currentColor", className: className, xmlns: "http://www.w3.org/2000/svg" },
+                React.createElement("path", { d: "M22 10.8C22 5.8 17.5 1.8 12 1.8C6.5 1.8 2 5.8 2 10.8C2 13.9 4 16.6 6.8 18.2C7 18.5 7 19.3 6.8 20.3C6.7 20.9 7.4 21.3 7.8 20.9C9.8 19.1 11.9 17.5 12 17.5H12.1C17.5 17.5 22 14.5 22 10.8Z" })
+            )
+        );
+
+        const ThreadsIcon = ({ size = 24, className = "" }) => (
+            React.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "currentColor", className: className, xmlns: "http://www.w3.org/2000/svg" },
+                React.createElement("path", { d: "M12.7 11.5C12.5 9.7 11.2 8.8 9.8 8.8C8.2 8.8 7 10.1 7 12C7 13.8 8.2 15.3 9.9 15.3C11.1 15.3 12.2 14.6 12.6 13.2L12.7 11.5ZM16.6 12C16.6 15.9 14.4 19 10.9 19C7.8 19 5.2 16.7 5.2 13.2C5.2 9.9 7.6 7.3 10.9 7.3C13.2 7.3 14.9 8.5 15.7 10.1H17.3C16.2 7.4 13.2 4.7 9.8 4.7C4.4 4.7 0 8.7 0 13.7C0 19.1 4.4 21.8 9.8 21.8C14 21.8 18 19.1 18 13.5V12.2H16.4V12H16.6Z", fillRule: "evenodd", clipRule: "evenodd" })
+            )
+        );
+
+        // --- Data Sources ---
+        const DATA_SOURCE_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=643173606&single=true&output=csv";
+        const FOOD_SOURCE_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1150395419&single=true&output=csv";
+        const SHOPPING_SOURCE_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1279676556&single=true&output=csv";
+        const SERVICES_SOURCE_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=369381822&single=true&output=csv";
+        const MEDICAL_SOURCE_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=368795626&single=true&output=csv";
+
+        const COMMUNITY_SOURCE_CSV = SERVICES_SOURCE_CSV; 
+        const FORM_URL = "https://forms.gle/6R41TfuCMcJKry6N8";
+
+        const FALLBACK_STORE_CSV = `店名,在地店家類型,地址,備註,美食分類,照片,機能分類
+YiPin Pasta 義品料理,義式料理,桃園市龜山區文青路137號 (家樂福1F),機器人送餐、親子友善,西式料理,,美食
+荖子鍋 家樂福文青店,火鍋,桃園市龜山區文青路137號 (家樂福1F),製麵機DIY、飲料喝到飽,中式料理,,美食`;
+
+        const FALLBACK_COMMUNITY_CSV = `社群名稱,類型,說明,人數
+A7重劃區大小事,Line OpenChat,綜合討論、生活情報交流,5200+
+A7團購好物分享,Line OpenChat,美食、日用品湊團,2800+
+A7爸媽育兒群,Line OpenChat,學校、才藝、親子活動,1500+
+官方公告專區,Line OpenChat,里長、管委會重要通知,
+龜山A7生活圈,Facebook,FB社團交流,10000+`;
+
+        const INITIAL_STATS = [
+        { id: 'total', label: '全部', count: 0, color: 'text-slate-800' }, 
+        { id: 'medical', label: '醫療', count: 0, color: 'text-red-500' },
+        { id: 'food', label: '美食', count: 0, color: 'text-orange-500' },
+        { id: 'life', label: '生活', count: 0, color: 'text-blue-500' },
+        { id: 'edu', label: '教育', count: 0, color: 'text-purple-500' },
+        { id: 'spot', label: '景點', count: 0, color: 'text-green-600' },
+        ];
+
+        const NEARBY_SPOTS = [
+        { id: 1, name: '林口三井 Outlet', time: '12分', distance: '4.4km', type: '購物' },
+        { id: 2, name: 'Global Mall A8', time: '8分', distance: '2.5km', type: '生活' },
+        { id: 3, name: 'Global Mall A9', time: '11分', distance: '4.1km', type: '影城' },
+        { id: 4, name: '昕境廣場', time: '15分', distance: '5.6km', type: '綜合' },
+        { id: 5, name: '宏匯廣場', time: '22分', distance: '9.8km', type: '百貨' },
+        { id: 6, name: '輔大商圈', time: '18分', distance: '8.3km', type: '美食' },
+        ];
+
+        const NEWS_POOL = [
+        { 
+            id: 1, 
+            tag: '生活', 
+            title: '龜山A7重劃區「買菜難」市府規劃新興市場改善', 
+            date: '2025-11-20',
+            link: 'https://news.housefun.com.tw/news/article/492981477151.html'
+        },
+        { 
+            id: 2, 
+            tag: '交通', 
+            title: '機捷A7站變一道路開工！內政部補助預計118年完工', 
+            date: '2025-10-16',
+            link: 'https://tw.news.yahoo.com/%E6%A1%83%E6%A9%9F%E6%8D%B7a7%E7%AB%99%E8%AE%8A-%E9%81%93%E8%B7%AF%E9%96%8B%E5%B7%A5-%E5%85%A7%E6%94%BF%E9%83%A8%E8%A3%9C%E5%8A%A912-1%E5%84%84%E5%85%83-%E9%A0%90%E8%A8%88118%E5%B9%B4%E4%B8%8A%E5%8D%8A%E5%B9%B4%E5%AE%8C%E5%B7%A5-070900709.html'
+        },
+        { 
+            id: 3, 
+            tag: '房市', 
+            title: 'A7房價攀高，買盤外溢至鄰近大湖坪頂地區', 
+            date: '2025-10-03',
+            link: 'https://estate.ltn.com.tw/article/25691'
+        },
+        ];
+
+        // --- Helpers ---
+        const getCategoryColor = (categoryName) => {
+        if (!categoryName) return 'bg-slate-100 text-slate-600 border border-slate-200';
+        const name = categoryName.toLowerCase();
+        
+        if (name.includes('line')) return 'bg-[#06C755] text-white border border-[#06C755]';
+        if (name.includes('threads')) return 'bg-black text-white border border-black';
+        if (name.includes('facebook') || name.includes('fb')) return 'bg-[#1877F2] text-white border border-[#1877F2]';
+        
+        if (name.includes('團購')) return 'bg-orange-50 text-orange-600 border border-orange-200';
+        if (name.includes('親子') || name.includes('育兒')) return 'bg-pink-50 text-pink-600 border border-pink-200';
+        if (name.includes('官方') || name.includes('公告')) return 'bg-blue-50 text-blue-600 border border-blue-200';
+
+        if (name.match(/早午餐|早餐|brunch/)) return 'bg-amber-100 text-amber-800 border border-amber-200';
+        if (name.match(/咖啡|cafe|甜點|飲料|冰|豆花/)) return 'bg-orange-100 text-orange-800 border border-orange-200';
+        if (name.match(/日式|拉麵|壽司|丼/)) return 'bg-red-100 text-red-800 border border-red-200';
+        if (name.match(/火鍋|鍋物/)) return 'bg-rose-100 text-rose-800 border border-rose-200';
+        if (name.match(/南洋|泰式|越式/)) return 'bg-lime-100 text-lime-800 border border-lime-200';
+
+        if (name.match(/診所|藥局|牙醫|眼科|小兒|復健/)) return 'bg-rose-50 text-rose-600 border border-rose-200';
+        if (name.match(/超市|全聯|家樂福|7-11|全家/)) return 'bg-blue-100 text-blue-800 border border-blue-200';
+        if (name.match(/五金|百貨|購物|雜貨/)) return 'bg-sky-100 text-sky-800 border border-sky-200';
+        
+        if (name.match(/教育|學校|補習|托嬰/)) return 'bg-indigo-100 text-indigo-800 border border-indigo-200';
+        if (name.match(/景點|公園|步道|休閒/)) return 'bg-emerald-100 text-emerald-800 border border-emerald-200';
+
+        return 'bg-slate-100 text-slate-600 border border-slate-200';
+        };
+
+        const parseCSV = (text) => {
+        const rows = [];
+        let currentRow = [];
+        let currentVal = '';
+        let insideQuote = false;
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            const nextChar = text[i+1];
+            if (char === '"') {
+            if (insideQuote && nextChar === '"') { currentVal += '"'; i++; } else { insideQuote = !insideQuote; }
+            } else if (char === ',' && !insideQuote) {
+            currentRow.push(currentVal); currentVal = '';
+            } else if ((char === '\r' || char === '\n') && !insideQuote) {
+            if (char === '\r' && nextChar === '\n') i++;
+            currentRow.push(currentVal); rows.push(currentRow); currentRow = []; currentVal = '';
+            } else { currentVal += char; }
+        }
+        if (currentVal || currentRow.length > 0) { currentRow.push(currentVal); rows.push(currentRow); }
+        return rows;
+        };
+
+        // --- Hooks ---
+        const useGoogleSheetData = () => {
+        const [data, setData] = useState([]);
+        const [stats, setStats] = useState(INITIAL_STATS);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(null);
+
+        const parseSheetContent = (csvText, sourceContext = 'general') => {
+            const rows = parseCSV(csvText);
+            if (rows.length === 0) return [];
+            const header = rows[0].map(col => (col || '').trim());
+            const getIndex = (keywords) => header.findIndex(h => keywords.some(k => h.includes(k)));
+            
+            const idxName = getIndex(['店名', '名稱', 'Title', 'Name', '社群名稱', '診所名稱']);
+            
+            let idxCat = -1;
+            if (sourceContext === 'medical_section') {
+                idxCat = getIndex(['店家類型', '科別', '分類']);
+            } else {
+                idxCat = getIndex(['機能分類', '屬性', '主題標籤', 'Tag', '分類', 'Category']);
+            }
+            
+            const idxFoodCat = getIndex(['美食分類', 'Food Category']); 
+            const idxAddr = getIndex(['地址', 'Address', '連結', 'Link']);
+            const idxPhoto = getIndex(['照片', '圖片', 'Image', 'Photo']);
+            const idxMap = getIndex(['Google', '地圖', 'Map']);
+            const idxDesc = getIndex(['備註', '說明', 'Description', '人數']);
+
+            if (idxName === -1) return [];
+
+            return rows.slice(1).map((row, i) => {
+                if (!row[idxName]) return null;
+                const category = (idxCat !== -1 && row[idxCat]) ? row[idxCat].trim() : (sourceContext === 'medical_section' ? '醫療診所' : '其他');
+                const foodCategory = (idxFoodCat !== -1 ? (row[idxFoodCat] || '') : '').trim();
+                let mainType = 'life';
+
+                if (sourceContext === 'food') mainType = 'food';
+                else if (sourceContext === 'shopping') mainType = 'store';
+                else if (sourceContext === 'services') mainType = 'medical'; 
+                else if (sourceContext === 'medical_section') mainType = 'medical';
+                else {
+                    if (category.match(/診所|藥局|牙醫|眼科/)) mainType = 'medical';
+                    else if (category.match(/餐|食|飯|麵|飲|咖啡|早午餐/)) mainType = 'food';
+                }
+
+                let foodType = '其他美食';
+                if (mainType === 'food') {
+                if (foodCategory) foodType = foodCategory;
+                else if ((category + row[idxName]).match(/早午餐|早餐/)) foodType = '早午餐';
+                }
+
+                const tags = category ? category.split(/[,/，、\s]+/).map(t => t.trim()).filter(Boolean) : [];
+                let address = row[idxAddr] || 'A7重劃區';
+                let mapLink = (idxMap !== -1 && row[idxMap]) ? row[idxMap] : null;
+                
+                if (sourceContext === 'services' && (address.startsWith('http') || address.startsWith('www'))) {
+                    mapLink = address; address = '線上服務/社群'; 
+                }
+
+                return {
+                id: `${sourceContext}-${i}`,
+                name: row[idxName] || '未命名',
+                address: address,
+                category: category,
+                mainType: mainType,
+                foodType: foodType,
+                photo: row[idxPhoto] || null,
+                mapLink: mapLink,
+                desc: row[idxDesc] || '',
+                tags: tags,
+                source: sourceContext
+                };
+            }).filter(item => item !== null);
+        };
+
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+            const [resGeneral, resFood, resShopping, resServices, resMedical] = await Promise.allSettled([
+                fetch(DATA_SOURCE_CSV).then(r => r.text()),
+                fetch(FOOD_SOURCE_CSV).then(r => r.text()),
+                fetch(SHOPPING_SOURCE_CSV).then(r => r.text()),
+                fetch(SERVICES_SOURCE_CSV).then(r => r.text()),
+                fetch(MEDICAL_SOURCE_CSV).then(r => r.text())
+            ]);
+
+            let combinedData = [];
+            if (resGeneral.status === 'fulfilled') combinedData = [...combinedData, ...parseSheetContent(resGeneral.value, 'general')];
+            if (resFood.status === 'fulfilled') combinedData = [...combinedData, ...parseSheetContent(resFood.value, 'food')];
+            if (resShopping.status === 'fulfilled') combinedData = [...combinedData, ...parseSheetContent(resShopping.value, 'shopping')];
+            if (resServices.status === 'fulfilled') combinedData = [...combinedData, ...parseSheetContent(resServices.value, 'services')];
+            if (resMedical.status === 'fulfilled') combinedData = [...combinedData, ...parseSheetContent(resMedical.value, 'medical_section')];
+
+            const uniqueData = Array.from(new Map(combinedData.map(item => [item.name, item])).values());
+            setData(uniqueData);
+            
+            // Calc stats
+            const counts = { total: 0, medical: 0, food: 0, life: 0, spot: 0, edu: 0 };
+            uniqueData.forEach(item => {
+                counts.total++;
+                if (counts[item.mainType] !== undefined) counts[item.mainType]++; else counts.life++;
+            });
+            setStats([
+                { id: 'total', label: '全部', count: counts.total, color: 'text-slate-800' }, 
+                { id: 'medical', label: '醫療', count: counts.medical, color: 'text-red-500' },
+                { id: 'food', label: '美食', count: counts.food, color: 'text-orange-500' },
+                { id: 'life', label: '生活', count: counts.life, color: 'text-blue-500' },
+                { id: 'edu', label: '教育', count: counts.edu, color: 'text-purple-500' },
+                { id: 'spot', label: '景點', count: counts.spot, color: 'text-green-600' },
+            ]);
+            setError(null);
+            } catch (err) {
+            console.warn("Fetch failed", err);
+            try {
+                const fallbackData = parseSheetContent(FALLBACK_STORE_CSV, 'fallback');
+                setData(fallbackData);
+            } catch (e) { setError("資料讀取失敗"); }
+            } finally { setLoading(false); }
+        };
+
+        useEffect(() => { fetchData(); }, []);
+        return { data, stats, loading, error, refetch: fetchData };
+        };
+
+        const useCommunityData = () => {
+        const [groups, setGroups] = useState([]);
+        const [loading, setLoading] = useState(true);
+
+        useEffect(() => {
+            const fetchCommunityData = async () => {
+            try {
+                const response = await fetch(COMMUNITY_SOURCE_CSV);
+                if (!response.ok) throw new Error('Network error');
+                const text = await response.text();
+                
+                const rows = parseCSV(text);
+                if (rows.length === 0) return;
+                const header = rows[0].map(col => (col || '').trim());
+                const getIndex = (keywords) => header.findIndex(h => keywords.some(k => h.includes(k)));
+                const idxName = getIndex(['名稱', 'Title', 'Name', '社群名稱']);
+                const idxDesc = getIndex(['說明', 'Description', '備註']);
+                const idxLink = getIndex(['連結', 'Link', 'URL']);
+                const idxCount = getIndex(['人數', '成員', 'Member']);
+                const idxType = getIndex(['類型', 'Type', 'Tag', '屬性', '機能分類']);
+                
+                if (idxName === -1) return;
+
+                const parsedGroups = rows.slice(1).map((row, i) => {
+                if (!row[idxName]) return null;
+                const name = row[idxName];
+                const type = row[idxType] || '';
+                let icon = Users;
+                let color = "bg-blue-500";
+                
+                if (name.includes('Line') || type.includes('Line')) { icon = LineIcon; color = "bg-[#06C755]"; }
+                else if (name.includes('Facebook') || name.includes('FB')) { icon = Facebook; color = "bg-[#1877F2]"; }
+                else if (name.includes('Threads')) { icon = ThreadsIcon; color = "bg-black"; }
+
+                return {
+                    id: i, title: name, sub: row[idxDesc] || '點擊加入', link: row[idxLink] || '#',
+                    memberCount: row[idxCount], icon, color, type
+                };
+                }).filter(Boolean);
+                setGroups(parsedGroups);
+            } catch (e) { console.warn("Community fetch failed"); } 
+            finally { setLoading(false); }
+            };
+            fetchCommunityData();
+        }, []);
+
+        return { groups, loading };
+        };
+
+        // --- Components ---
+        const CountUp = ({ end, duration = 2000 }) => {
+        const [count, setCount] = useState(0);
+        useEffect(() => { setCount(end); }, [end]);
+        return React.createElement('span', null, count);
+        };
+
+        const SectionTitle = ({ title, subtitle }) => (
+        React.createElement("div", { className: "mb-6 border-l-4 border-purple-600 pl-4" },
+            React.createElement("h2", { className: "text-2xl font-bold text-slate-800" }, title),
+            subtitle && React.createElement("p", { className: "text-slate-500 text-sm mt-1" }, subtitle)
+        )
+        );
+
+        const Card = ({ children, className = "", onClick }) => (
+        React.createElement("div", { onClick: onClick, className: `bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow ${className} ${onClick ? 'cursor-pointer' : ''}` }, children)
+        );
+
+        const Badge = ({ children, className = "" }) => (
+        React.createElement("span", { className: `px-2 py-1 rounded-md text-xs font-medium transition-colors ${className}` }, children)
+        );
+
+        const GroupCard = ({ title, sub, icon: Icon, color, link, memberCount, type }) => (
+        React.createElement("div", { onClick: () => window.open(link, '_blank'), className: "bg-white p-4 rounded-xl border border-slate-200 hover:border-purple-300 hover:shadow-md transition-all cursor-pointer flex items-center gap-4 group" },
+            React.createElement("div", { className: `w-12 h-12 rounded-full flex items-center justify-center text-white ${color} shadow-sm group-hover:scale-110 transition-transform` },
+                React.createElement(Icon, { size: 24 })
+            ),
+            React.createElement("div", { className: "flex-1" },
+                React.createElement("h4", { className: "font-bold text-slate-800 text-base line-clamp-1" }, title),
+                React.createElement("p", { className: "text-xs text-slate-500 mt-0.5 line-clamp-1" }, sub),
+                memberCount && React.createElement("span", { className: "text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded mt-1 inline-block" }, `約 ${memberCount} 人`)
+            ),
+            React.createElement("div", { className: "flex flex-col items-end gap-2" },
+                React.createElement(Badge, { className: getCategoryColor(type || '') }, type || '社群'),
+                link && link !== '#' && (
+                    React.createElement("div", { className: "bg-white p-1 rounded shadow-sm border border-slate-100 group-hover:border-purple-200 transition-colors" },
+                        React.createElement("img", { src: `https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=${encodeURIComponent(link)}`, alt: "QR Code", className: "w-10 h-10" })
+                    )
+                )
+            )
+        )
+        );
+
+        const EventCard = ({ date, title, location, tag }) => (
+        React.createElement("div", { className: "flex gap-4 items-start p-3 hover:bg-slate-50 rounded-lg transition-colors border-b border-slate-100 last:border-0" },
+            React.createElement("div", { className: "flex flex-col items-center min-w-[50px] bg-purple-50 text-purple-700 rounded-lg p-2" },
+                React.createElement("span", { className: "text-xs font-bold uppercase" }, date.split(' ')[0]),
+                React.createElement("span", { className: "text-lg font-bold" }, date.split(' ')[1])
+            ),
+            React.createElement("div", null,
+                React.createElement("div", { className: "flex items-center gap-2 mb-1" },
+                    React.createElement("span", { className: "text-[10px] px-1.5 py-0.5 rounded border border-purple-200 text-purple-600 bg-white" }, tag),
+                    React.createElement("h4", { className: "font-bold text-slate-800 text-sm line-clamp-1" }, title)
+                ),
+                React.createElement("div", { className: "flex items-center gap-1 text-xs text-slate-500" },
+                    React.createElement(MapIcon, { size: 12 }), location
+                )
+            )
+        )
+        );
+
+        const PollCard = () => {
+        const [voted, setVoted] = useState(false);
+        const handleVote = () => setVoted(true);
+
+        return (
+            React.createElement("div", { className: "bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden" },
+            React.createElement("div", { className: "absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10" }),
+            React.createElement("div", { className: "relative z-10" },
+                React.createElement("div", { className: "flex items-center gap-2 mb-4" },
+                React.createElement("span", { className: "bg-white/20 backdrop-blur-md px-2 py-1 rounded text-xs font-bold flex items-center gap-1" }, React.createElement(Star, { size: 12 }), " 本週熱門話題")
+                ),
+                React.createElement("h3", { className: "text-xl font-bold mb-4" }, "A7 最迫切需要的公共建設是？"),
+                !voted ? (
+                React.createElement("div", { className: "space-y-3" },
+                    ['大型圖書館/親子館', '公有零售市場', '更多公園綠地', 'YouBike 站點加密'].map((opt, i) => (
+                    React.createElement("button", { key: i, onClick: handleVote, className: "w-full text-left bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg px-4 py-3 text-sm font-medium transition-all flex justify-between items-center group" },
+                        opt, React.createElement("span", { className: "opacity-0 group-hover:opacity-100 transition-opacity" }, "投票")
+                    )
+                    ))
+                )
+                ) : (
+                React.createElement("div", { className: "space-y-4 animate-fade-in" },
+                    [{ opt: '大型圖書館/親子館', pct: 45 }, { opt: '公有零售市場', pct: 25 }, { opt: '更多公園綠地', pct: 20 }, { opt: 'YouBike 站點加密', pct: 10 }].map((item, i) => (
+                    React.createElement("div", { key: i },
+                        React.createElement("div", { className: "flex justify-between text-xs mb-1 opacity-90" }, React.createElement("span", null, item.opt), React.createElement("span", null, `${item.pct}%`)),
+                        React.createElement("div", { className: "h-2 bg-black/20 rounded-full overflow-hidden" },
+                        React.createElement("div", { className: "h-full bg-white/90 rounded-full", style: { width: `${item.pct}%` } })
+                        )
+                    )
+                    )),
+                    React.createElement("p", { className: "text-center text-xs opacity-70 mt-4" }, "感謝您的參與！")
+                )
+                )
+            )
+            )
+        );
+        };
+
+        const ShopCard = ({ 
+        shop, showPhoto = true, showMenu = true, showTags = true, showLocationHint = true, showQRCode = false, showNavigate = true, onLocate
+        }) => {
+        const [userTags, setUserTags] = useState([]);
+        const [isAddingTag, setIsAddingTag] = useState(false);
+        const [newTag, setNewTag] = useState('');
+        const [isGeneratingTags, setIsGeneratingTags] = useState(false);
+
+        const handleAddTag = (e) => {
+            e.stopPropagation(); 
+            if (newTag.trim()) { setUserTags([...userTags, newTag.trim()]); setNewTag(''); setIsAddingTag(false); }
+        };
+        
+        const handleAiGenerateTags = async (e) => {
+            e.stopPropagation();
+            if (isGeneratingTags) return;
+            setIsGeneratingTags(true);
+            try {
+            const prompt = `Generate 5 hashtags for: ${shop.name} (${shop.category})`;
+            const response = await fetch(
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
+                { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) }
+            );
+            const result = await response.json();
+            const text = result.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+            if (text) setUserTags(text.split(/[,，\n]+/).map(t => t.trim().replace(/^#/, '')));
+            } catch (e) { alert("AI Busy"); } 
+            finally { setIsGeneratingTags(false); }
+        };
+
+        const categoryToDisplay = shop.mainType === 'food' ? shop.foodType : shop.category;
+        const badgeStyleClass = getCategoryColor(categoryToDisplay);
+        const showFooter = showNavigate || showMenu;
+
+        return (
+            React.createElement(Card, { onClick: () => onLocate ? onLocate(shop) : window.open(shop.mapLink || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shop.name)}`, '_blank'), className: `flex flex-col h-full group ${onLocate ? 'cursor-pointer' : ''}` },
+            showPhoto && (
+                React.createElement("div", { className: "h-40 bg-slate-200 flex items-center justify-center text-slate-400 group-hover:bg-slate-300 transition-colors relative overflow-hidden" },
+                shop.photo ? React.createElement("img", { src: shop.photo, alt: shop.name, className: "w-full h-full object-cover" }) : React.createElement(Store, { size: 32, className: "opacity-20" }),
+                React.createElement("div", { className: "absolute top-2 right-2 flex flex-col items-end gap-2" },
+                    React.createElement(Badge, { className: badgeStyleClass }, categoryToDisplay),
+                    showQRCode && shop.mapLink && React.createElement("div", { className: "bg-white p-1 rounded shadow-sm" }, React.createElement("img", { src: `https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=${encodeURIComponent(shop.mapLink)}`, alt: "QR", className: "w-12 h-12" }))
+                )
+                )
+            ),
+            React.createElement("div", { className: "p-4 flex-1 flex flex-col" },
+                React.createElement("div", { className: "flex justify-between items-start mb-2" },
+                React.createElement("h3", { className: "text-lg font-bold text-slate-800 mb-1 line-clamp-1 flex items-center" },
+                    shop.name,
+                    onLocate && React.createElement(MapIcon, { className: "inline-block ml-1 w-4 h-4 text-slate-400" })
+                ),
+                !showPhoto && (
+                    React.createElement("div", { className: "flex flex-col items-end gap-2" },
+                    React.createElement(Badge, { className: badgeStyleClass }, categoryToDisplay),
+                    showQRCode && shop.mapLink && React.createElement("div", { className: "bg-white p-1 rounded shadow-sm border border-slate-100" }, React.createElement("img", { src: `https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=${encodeURIComponent(shop.mapLink)}`, alt: "QR", className: "w-12 h-12" }))
+                    )
+                )
+                ),
+                React.createElement("p", { className: "text-xs text-slate-500 mb-2 flex items-center gap-1 line-clamp-1" }, React.createElement(MapIcon, { size: 12 }), " ", shop.address),
+                showLocationHint && React.createElement("div", { className: "flex items-center gap-4 text-xs text-slate-500 mb-3" }, React.createElement("span", { className: "flex items-center gap-1" }, React.createElement(Clock, { size: 12 }), " A7周邊")),
+                showTags && (
+                React.createElement("div", { className: "mt-auto pt-2 border-t border-slate-50 flex flex-wrap gap-1.5 items-center" },
+                    shop.tags && shop.tags.map((tag, i) => React.createElement("span", { key: `org-${i}`, className: "text-[10px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200" }, `# ${tag}`)),
+                    userTags.map((tag, i) => React.createElement("span", { key: `user-${i}`, className: "text-[10px] text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100" }, `# ${tag}`)),
+                    React.createElement("div", { className: "flex items-center gap-1", onClick: (e) => e.stopPropagation() },
+                    isAddingTag ? (
+                        React.createElement("div", { className: "flex items-center bg-white border border-purple-300 rounded px-1 py-0.5" },
+                        React.createElement("input", { type: "text", value: newTag, onChange: (e) => setNewTag(e.target.value), onKeyDown: (e) => e.key === 'Enter' && handleAddTag(e), className: "text-[10px] w-16 outline-none", autoFocus: true }),
+                        React.createElement("button", { onClick: handleAddTag, className: "text-green-600 ml-1" }, React.createElement(Check, { size: 10 })),
+                        React.createElement("button", { onClick: () => setIsAddingTag(false), className: "text-red-400 ml-1" }, React.createElement(X, { size: 10 }))
+                        )
+                    ) : (
+                        React.createElement(React.Fragment, null,
+                        React.createElement("button", { onClick: () => setIsAddingTag(true), className: "text-[10px] text-slate-400 hover:text-purple-600 border border-dashed border-slate-300 px-1.5 py-0.5 rounded flex items-center gap-1" }, React.createElement(Plus, { size: 10 }), " 標籤"),
+                        React.createElement("button", { onClick: handleAiGenerateTags, disabled: isGeneratingTags, className: "text-[10px] text-indigo-500 border border-indigo-200 px-1.5 py-0.5 rounded flex items-center gap-1" }, isGeneratingTags ? React.createElement(Loader, { size: 10, className: "animate-spin" }) : React.createElement(Sparkles, { size: 10 }), " AI")
+                        )
+                    )
+                    )
+                )
+                )
+            ),
+            showFooter && (
+                React.createElement("div", { className: "p-3 border-t border-slate-100 bg-slate-50/50" },
+                showNavigate && (
+                    React.createElement("button", { onClick: (e) => { e.stopPropagation(); window.open(shop.mapLink || `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(shop.address || shop.name)}`, '_blank'); }, className: "w-full py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 rounded flex items-center justify-center gap-1" },
+                    React.createElement(Navigation, { size: 16 }), " 導航前往"
+                    )
+                ),
+                showMenu && (
+                    React.createElement("button", { onClick: (e) => { e.stopPropagation(); window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shop.name)}`, '_blank'); }, className: "w-full mt-2 py-2 text-sm font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 rounded flex items-center justify-center gap-1" },
+                    React.createElement(BookOpen, { size: 16 }), " 看菜單"
+                    )
+                )
+                )
+            )
+            )
+        );
+        };
+
+        const AiAssistant = ({ sheetData }) => {
+        const [isOpen, setIsOpen] = useState(false);
+        const [query, setQuery] = useState('');
+        const [chatHistory, setChatHistory] = useState([]);
+        const [loading, setLoading] = useState(false);
+        const chatEndRef = useRef(null);
+
+        useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [chatHistory, isOpen]);
+
+        const handleAsk = async () => {
+            if (!query.trim()) return;
+            setLoading(true);
+            const userMessage = { role: 'user', content: query };
+            setChatHistory(prev => [...prev, userMessage]);
+            setQuery('');
+            try {
+            const relevantItems = sheetData.data.slice(0, 80).map(item => `- ${item.name} (${item.category}): ${item.address}`).join('\n');
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: `A7 Assistant. Context:\n${relevantItems}\nUser: ${userMessage.content}` }] }] })
+            });
+            const result = await response.json();
+            setChatHistory(prev => [...prev, { role: 'model', content: result.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, try again." }]);
+            } catch (error) { setChatHistory(prev => [...prev, { role: 'model', content: "Error." }]); } finally { setLoading(false); }
+        };
+
+        return (
+            React.createElement(React.Fragment, null,
+            React.createElement("button", { onClick: () => setIsOpen(true), className: "fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-tr from-purple-600 to-indigo-600 text-white rounded-full shadow-lg flex items-center justify-center z-50" }, React.createElement(Sparkles, { size: 24 })),
+            isOpen && (
+                React.createElement("div", { className: "fixed bottom-24 right-6 w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 z-50 flex flex-col h-[500px]" },
+                React.createElement("div", { className: "bg-purple-600 p-4 text-white flex justify-between items-center" }, React.createElement("h3", { className: "font-bold flex gap-2" }, React.createElement(Bot, { size: 20 }), " A7 助手"), React.createElement("button", { onClick: () => setIsOpen(false) }, React.createElement(X, { size: 20 }))),
+                React.createElement("div", { className: "flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50" },
+                    chatHistory.map((msg, i) => (React.createElement("div", { key: i, className: `p-3 rounded-2xl text-sm ${msg.role==='user'?'bg-blue-600 text-white ml-auto':'bg-white text-slate-700'}` }, msg.content))),
+                    loading && React.createElement("div", { className: "text-slate-400 text-sm flex gap-1" }, React.createElement(Loader, { size: 14, className: "animate-spin" }), " Thinking..."),
+                    React.createElement("div", { ref: chatEndRef })
+                ),
+                React.createElement("div", { className: "p-3 border-t flex gap-2" },
+                    React.createElement("input", { className: "flex-1 bg-slate-100 rounded-full px-4 text-sm", value: query, onChange: e=>setQuery(e.target.value), onKeyDown: e=>e.key==='Enter'&&handleAsk() }),
+                    React.createElement("button", { onClick: handleAsk, disabled: loading }, React.createElement(Send, { size: 18, className: "text-purple-600" }))
+                )
+                )
+            )
+            )
+        );
+        };
+
+        // --- Views ---
+        const BrowseView = ({ sheetData }) => {
+        const { data, loading, error } = sheetData;
+        const filteredData = useMemo(() => {
+            return data.filter(item => item.source === 'general');
+        }, [data]);
+        
+        // Sticky layout logic
+        const [activeFilter, setActiveFilter] = useState('全部');
+        const [mapUrl, setMapUrl] = useState("https://www.google.com/maps/d/embed?mid=1gbr378wKAuGFPGGA9_Guyg39j3-vSF4&ehbc=2E312F&noprof=1");
+        
+        const handleLocateShop = (shop) => {
+            const query = encodeURIComponent(`${shop.name} ${shop.address}`);
+            setMapUrl(`https://maps.google.com/maps?q=${query}&z=17&output=embed`);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        const handleResetMap = () => setMapUrl("https://www.google.com/maps/d/embed?mid=1gbr378wKAuGFPGGA9_Guyg39j3-vSF4&ehbc=2E312F&noprof=1");
+
+        return (
+            React.createElement("div", null,
+            React.createElement("div", { className: "flex justify-between items-center mb-6" },
+                React.createElement(SectionTitle, { title: "A7 商圈店家總覽", subtitle: "探索 A7 重劃區的所有店家資訊" })
+            ),
+            React.createElement("div", { className: "flex flex-col lg:flex-row-reverse gap-6 items-start" },
+                // Map
+                React.createElement("div", { className: "w-full lg:w-1/2 sticky top-16 lg:top-24 z-30" },
+                React.createElement(Card, { className: "h-[35vh] lg:h-[calc(100vh-140px)] border-purple-200 overflow-hidden shadow-md" },
+                    React.createElement("div", { className: "bg-purple-50 p-3 border-b border-purple-100 flex items-center justify-between" },
+                    React.createElement("div", { className: "flex items-center gap-2 text-purple-700 font-bold" }, React.createElement(MapIcon, { size: 18 }), React.createElement("span", null, "A7 生活地圖")),
+                    React.createElement("button", { onClick: handleResetMap, className: "text-xs bg-white text-purple-600 px-2 py-1 rounded border border-purple-200 hover:bg-purple-50 transition-colors flex items-center gap-1" }, React.createElement(RefreshCcw, { size: 12 }), " 重置地圖")
+                    ),
+                    React.createElement("iframe", { src: mapUrl, width: "100%", height: "100%", style: { border: 0 } })
+                )
+                ),
+                // List
+                React.createElement("div", { className: "w-full lg:w-1/2 flex flex-col gap-6" },
+                loading ? React.createElement("div", { className: "text-center py-20 text-slate-400" }, "Loading...") : 
+                React.createElement("div", { className: "grid grid-cols-1 gap-4" },
+                    filteredData.map(shop => React.createElement(ShopCard, { key: shop.id, shop: shop, showPhoto: false, showMenu: false, onLocate: handleLocateShop }))
+                )
+                )
+            )
+            )
+        );
+        };
+
+        const ServicesView = ({ sheetData }) => {
+        const { data, loading } = sheetData;
+        const serviceItems = useMemo(() => data.filter(item => item.source === 'services'), [data]);
+        return (
+            React.createElement("div", null,
+            React.createElement(SectionTitle, { title: "A7 生活服務" }),
+            loading ? React.createElement("div", { className: "text-center py-20 text-slate-400" }, "Loading...") : 
+            React.createElement("div", { className: "grid grid-cols-2 md:grid-cols-3 gap-4" },
+                serviceItems.map(shop => React.createElement(ShopCard, { key: shop.id, shop: shop, showPhoto: false, showMenu: false, showTags: false, showLocationHint: false, showQRCode: true, showNavigate: false }))
+            )
+            )
+        );
+        };
+
+        const CommunityView = ({ communityData, sheetData }) => {
+        const { groups, loading } = communityData;
+        const medicalItems = useMemo(() => sheetData?.data?.filter(item => item.source === 'medical_section') || [], [sheetData]);
+        return (
+            React.createElement("div", { className: "max-w-4xl mx-auto space-y-8" },
+            React.createElement(SectionTitle, { title: "A7 生活社群" }),
+            React.createElement("div", { className: "grid md:grid-cols-3 gap-8" },
+                React.createElement("div", { className: "md:col-span-2 space-y-6" },
+                React.createElement("section", null,
+                    React.createElement("h3", { className: "font-bold text-slate-800 mb-3 flex items-center gap-2" }, React.createElement(Users, { className: "text-purple-600", size: 20 }), " 加入在地社群"),
+                    loading ? React.createElement("div", { className: "text-slate-400" }, "Loading...") : React.createElement("div", { className: "grid sm:grid-cols-2 gap-3" }, groups.map(g => React.createElement(GroupCard, { key: g.id, ...g })))
+                ),
+                React.createElement("section", { className: "mt-8 border-t border-slate-200 pt-8" },
+                    React.createElement("h3", { className: "font-bold text-slate-800 mb-4 flex items-center gap-2 text-xl" }, React.createElement(Stethoscope, { className: "text-rose-600", size: 24 }), " A7 醫療診所指南"),
+                    React.createElement("div", { className: "grid sm:grid-cols-2 gap-3" },
+                    medicalItems.map(clinic => React.createElement(ShopCard, { key: clinic.id, shop: clinic, showPhoto: false, showMenu: false, showTags: false, showLocationHint: true, showQRCode: false, showNavigate: true })),
+                    medicalItems.length === 0 && React.createElement("div", { className: "text-slate-400 text-sm col-span-2" }, "目前沒有醫療診所資料")
+                    )
+                )
+                ),
+                React.createElement("div", null,
+                React.createElement(PollCard),
+                React.createElement("div", { className: "mt-4 space-y-2" },
+                    React.createElement(EventCard, { date: "DEC 24", title: "社區聖誕晚會", location: "文青水園廣場", tag: "節慶" }),
+                    React.createElement(EventCard, { date: "DEC 31", title: "A7 跨年煙火", location: "體育大學站", tag: "聚會" })
+                )
+                )
+            )
+            )
+        );
+        };
+
+        const FoodView = ({ sheetData }) => {
+        const { data, loading } = sheetData;
+        const foodItems = useMemo(() => data.filter(item => item.mainType === 'food'), [data]);
+        const [activeFilter, setActiveFilter] = useState('全部');
+        const [mapUrl, setMapUrl] = useState("https://www.google.com/maps/d/embed?mid=1gbr378wKAuGFPGGA9_Guyg39j3-vSF4&ehbc=2E312F&noprof=1");
+        const filters = useMemo(() => ['全部', ...Array.from(new Set(foodItems.map(i => i.foodType).filter(Boolean))).sort()], [foodItems]);
+        const displayItems = useMemo(() => activeFilter === '全部' ? foodItems : foodItems.filter(i => i.foodType === activeFilter), [foodItems, activeFilter]);
+        const handleLocateShop = (shop) => {
+            const query = encodeURIComponent(`${shop.name} ${shop.address}`);
+            setMapUrl(`https://maps.google.com/maps?q=${query}&z=17&output=embed`);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        const handleResetMap = () => setMapUrl("https://www.google.com/maps/d/embed?mid=1gbr378wKAuGFPGGA9_Guyg39j3-vSF4&ehbc=2E312F&noprof=1");
+        return (
+            React.createElement("div", null,
+            React.createElement(SectionTitle, { title: "A7 美食攻略" }),
+            React.createElement("div", { className: "flex flex-col lg:flex-row-reverse gap-6 items-start" },
+                React.createElement("div", { className: "w-full lg:w-7/12 sticky top-16 lg:top-24 z-30" },
+                React.createElement(Card, { className: "h-[35vh] lg:h-[calc(100vh-140px)] border-purple-200 overflow-hidden shadow-md" },
+                    React.createElement("div", { className: "bg-purple-50 p-3 border-b border-purple-100 flex items-center justify-between" },
+                    React.createElement("div", { className: "flex items-center gap-2 text-purple-700 font-bold" }, React.createElement(MapIcon, { size: 18 }), React.createElement("span", null, "A7 美食地圖")),
+                    React.createElement("button", { onClick: handleResetMap, className: "text-xs bg-white text-purple-600 px-2 py-1 rounded border border-purple-200 hover:bg-purple-50 transition-colors flex items-center gap-1" }, React.createElement(RefreshCcw, { size: 12 }), " 重置地圖")
+                    ),
+                    React.createElement("iframe", { src: mapUrl, width: "100%", height: "100%", style: { border: 0 } })
+                )
+                ),
+                React.createElement("div", { className: "w-full lg:w-5/12 flex flex-col gap-6" },
+                React.createElement("div", { className: "bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex gap-2 flex-wrap" },
+                    React.createElement("div", { className: "flex items-center gap-2 text-slate-700 font-bold w-full mb-2" }, React.createElement(Filter, { size: 18 }), " ", React.createElement("span", null, "快找：")),
+                    filters.map(f => React.createElement("button", { key: f, onClick: () => setActiveFilter(f), className: `px-4 py-2 rounded-full text-sm border transition-all ${activeFilter===f?'bg-purple-600 text-white border-purple-600 shadow-md':'bg-white text-slate-600 border-slate-200 hover:border-purple-400'}` }, f))
+                ),
+                loading ? React.createElement("div", { className: "text-center py-20 text-slate-400" }, "Loading...") : 
+                React.createElement("div", { className: "grid grid-cols-1 gap-4" }, displayItems.map(shop => React.createElement(ShopCard, { key: shop.id, shop: shop, onLocate: handleLocateShop })))
+                )
+            )
+            )
+        );
+        };
+
+        const ShoppingView = ({ sheetData }) => {
+        const { data, loading } = sheetData;
+        const items = useMemo(() => data.filter(item => (item.mainType === 'store' || item.mainType === 'medical' || item.mainType === 'life') && item.source !== 'services'), [data]);
+        const [activeFilter, setActiveFilter] = useState('全部');
+        const [mapUrl, setMapUrl] = useState("https://www.google.com/maps/d/embed?mid=1gbr378wKAuGFPGGA9_Guyg39j3-vSF4&ehbc=2E312F&noprof=1");
+        const filters = useMemo(() => {
+            const cats = Array.from(
+              new Set(
+                items
+                  .map(i => i.category)
+                  .filter(cat => typeof cat === 'string' && cat.trim().length > 0)
+                  .map(cat => cat.trim())
+              )
+            );
+            const excludedCategories = new Set([
+              'line', 'threads', '其他', 
+              'Line', 'THREADS', '其他分類', '廣告', '測試'
+            ]);
+            return [
+              '全部',
+              ...cats
+                .filter(c => !excludedCategories.has(c))
+                .sort((a, b) => a.localeCompare(b, 'zh-TW'))
+            ];
+        }, [items]);
+        const displayItems = useMemo(() => activeFilter === '全部' ? items : items.filter(i => i.category === activeFilter), [items, activeFilter]);
+        const handleLocateShop = (shop) => {
+            const query = encodeURIComponent(`${shop.name} ${shop.address}`);
+            setMapUrl(`https://maps.google.com/maps?q=${query}&z=17&output=embed`);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        const handleResetMap = () => setMapUrl("https://www.google.com/maps/d/embed?mid=1gbr378wKAuGFPGGA9_Guyg39j3-vSF4&ehbc=2E312F&noprof=1");
+
+        return (
+            React.createElement("div", null,
+            React.createElement(SectionTitle, { title: "找買 - 生活機能" }),
+            React.createElement("div", { className: "flex flex-col lg:flex-row-reverse gap-6 items-start" },
+                React.createElement("div", { className: "w-full lg:w-7/12 sticky top-16 lg:top-24 z-30" },
+                React.createElement(Card, { className: "h-[35vh] lg:h-[calc(100vh-140px)] border-purple-200 overflow-hidden shadow-md" },
+                    React.createElement("div", { className: "bg-purple-50 p-3 border-b border-purple-100 flex items-center justify-between" },
+                    React.createElement("div", { className: "flex items-center gap-2 text-purple-700 font-bold" }, React.createElement(MapIcon, { size: 18 }), React.createElement("span", null, "A7 生活地圖")),
+                    React.createElement("button", { onClick: handleResetMap, className: "text-xs bg-white text-purple-600 px-2 py-1 rounded border border-purple-200 hover:bg-purple-50 transition-colors flex items-center gap-1" }, React.createElement(RefreshCcw, { size: 12 }), " 重置地圖")
+                    ),
+                    React.createElement("iframe", { src: mapUrl, width: "100%", height: "100%", style: { border: 0 } })
+                )
+                ),
+                React.createElement("div", { className: "w-full lg:w-5/12 flex flex-col gap-6" },
+                React.createElement("div", { className: "bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex gap-2 overflow-x-auto pb-2" },
+                    filters.map(f => React.createElement("button", { key: f, onClick: () => setActiveFilter(f), className: `whitespace-nowrap px-4 py-2 rounded-full text-sm border transition-all ${activeFilter===f?'bg-purple-600 text-white border-purple-600 shadow-md':'bg-white text-slate-600 border-slate-200 hover:border-purple-400'}` }, f))
+                ),
+                loading ? React.createElement("div", { className: "text-center py-20 text-slate-400" }, "Loading...") : 
+                React.createElement("div", { className: "grid grid-cols-1 gap-4" }, displayItems.map(shop => React.createElement(ShopCard, { key: shop.id, shop: shop, onLocate: handleLocateShop })))
+                )
+            )
+            )
+        );
+        };
+
+        const OverviewView = () => (
+        React.createElement("div", null,
+            React.createElement(SectionTitle, { title: "A7 重劃區概覽" }),
+            React.createElement("div", { className: "grid md:grid-cols-2 gap-8" },
+            React.createElement(Card, { className: "p-6 border-l-4 border-l-blue-500" },
+                React.createElement("h3", { className: "text-xl font-bold text-slate-800 mb-4 flex items-center gap-2" }, React.createElement(MapIcon, null), " 區域地圖"),
+                React.createElement("div", { className: "aspect-video bg-slate-200 rounded-lg mb-4 overflow-hidden relative" }, React.createElement("img", { src: "https://img.ltn.com.tw/Upload/market/page/2020/05/20/200520-8270-3-X5Fnu.jpg", className: "w-full h-full object-cover" }))
+            ),
+            React.createElement(Card, { className: "p-6 border-l-4 border-l-purple-500" },
+                React.createElement("h3", { className: "text-xl font-bold text-slate-800 mb-4 flex items-center gap-2" }, React.createElement(Bus, null), " 交通樞紐"),
+                React.createElement("ul", { className: "space-y-4 text-sm text-slate-600" },
+                React.createElement("li", null, React.createElement("strong", null, "捷運："), " 桃園機場捷運 A7 體育大學站"),
+                React.createElement("li", null, React.createElement("strong", null, "公車："), " 往迴龍、林口、長庚醫院")
+                )
+            )
+            )
+        )
+        );
+
+        const HomeView = ({ onChangePage, sheetData }) => {
+        const { stats, loading, refetch } = sheetData;
+        const [searchTerm, setSearchTerm] = useState('');
+        const handleGetLocation = () => { alert("正在尋找您附近的熱門地點..."); onChangePage('food'); };
+
+        return (
+            React.createElement("div", { className: "space-y-8" },
+            React.createElement("div", { className: "rounded-3xl px-8 py-16 text-white relative overflow-hidden shadow-xl", style: { backgroundImage: 'url("https://www.farglory-realty.com.tw/wp-content/uploads/2025/11/%E8%8F%AF%E4%BA%9E%E5%9C%92%E5%8D%801-1-1367x1024.jpg")', backgroundSize: 'cover', backgroundPosition: 'center' } },
+                React.createElement("div", { className: "absolute inset-0 bg-slate-900/60" }),
+                React.createElement("div", { className: "relative z-10 max-w-2xl" },
+                React.createElement("h1", { className: "text-4xl font-bold mb-4" }, "發現 A7 新生活"),
+                )
+            ),
+            React.createElement("div", { className: "grid grid-cols-4 gap-4" },
+                [{ icon: Utensils, label: '美食攻略', page: 'food', color: 'text-purple-600 bg-purple-50' }, { icon: ShoppingBag, label: '找買情報', page: 'shopping', color: 'text-blue-600 bg-blue-50' }, { icon: Users, label: '生活服務', page: 'community', color: 'text-indigo-600 bg-indigo-50' }, { icon: MapIcon, label: 'A7 概覽', page: 'overview', color: 'text-slate-600 bg-slate-100' }].map((item, idx) => (
+                React.createElement("button", { key: idx, onClick: () => onChangePage(item.page), className: "flex flex-col items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all" },
+                    React.createElement("div", { className: `p-3 rounded-full mb-2 ${item.color}` }, React.createElement(item.icon, { size: 24 })),
+                    React.createElement("span", { className: "font-bold text-slate-800" }, item.label)
+                )
+                ))
+            ),
+            React.createElement("div", { className: "bg-white rounded-xl shadow-sm border border-slate-200 p-5" },
+                React.createElement("div", { className: "flex justify-between mb-4" },
+                React.createElement("h3", { className: "font-bold text-lg text-slate-800 flex gap-2" }, React.createElement(MapIcon, null), " A7 商圈店家統計"),
+                React.createElement("button", { onClick: refetch }, React.createElement(RefreshCw, { size: 16, className: loading ? "animate-spin" : "" }))
+                ),
+                React.createElement("div", { className: "grid grid-cols-6 gap-2 text-center" },
+                stats.map(s => React.createElement("div", { key: s.id, className: "p-2 bg-slate-50 rounded" }, React.createElement("div", { className: "font-bold text-xl" }, s.count), React.createElement("div", { className: "text-xs text-slate-500" }, s.label)))
+                )
+            ),
+            React.createElement("div", { className: "grid md:grid-cols-2 gap-8" },
+                React.createElement("div", { className: "bg-white rounded-xl shadow-md border-t-4 border-t-pink-500 p-5 h-full flex flex-col justify-center items-center text-center" },
+                React.createElement("h3", { className: "font-bold text-lg mb-4 text-slate-800 flex items-center gap-2" }, React.createElement(MapIcon, { className: "text-pink-500" }), " 附近熱門商圈"),
+                React.createElement("button", { onClick: handleGetLocation, className: "w-full bg-slate-50 hover:bg-pink-50 border border-dashed border-slate-300 hover:border-pink-300 rounded-xl p-8 flex flex-col items-center gap-3 transition-all group" },
+                    React.createElement(MapIcon, { size: 48, className: "text-slate-300 group-hover:text-pink-500 transition-colors" }),
+                    React.createElement("span", { className: "font-bold text-slate-500 group-hover:text-pink-600" }, "📍 點擊立即探索離您最近的熱門去處")
+                )
+                ),
+                React.createElement("div", { className: "bg-white rounded-xl shadow-md border-t-4 border-t-blue-500 p-5" },
+                React.createElement("h3", { className: "font-bold text-lg mb-4 text-slate-800" }, "最新生活消息"),
+                React.createElement("div", { className: "space-y-4" },
+                    NEWS_POOL.slice(0, 3).map(n => React.createElement("a", { key: n.id, href: n.link, target: "_blank", className: "block p-3 bg-slate-50 rounded hover:bg-blue-50 transition-colors" }, React.createElement("div", { className: "text-xs text-slate-500" }, n.date), React.createElement("div", { className: "font-bold text-slate-800" }, n.title)))
+                )
+                )
+            )
+            )
+        );
+        };
+
+        const App = () => {
+        const [currentPage, setCurrentPage] = useState('home');
+        const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+        const sheetData = useGoogleSheetData();
+        const communityData = useCommunityData();
+
+        useEffect(() => { window.scrollTo(0, 0); setIsMobileMenuOpen(false); }, [currentPage]);
+
+        const navLinks = [
+            { id: 'home', label: '首頁' },
+            { id: 'food', label: '美食攻略' },
+            { id: 'shopping', label: '找買情報' },
+            { id: 'services', label: '生活服務' },
+            { id: 'community', label: '社群互動' },
+            { id: 'overview', label: '區域概覽' },
+        ];
+
+        const renderPage = () => {
+            switch (currentPage) {
+            case 'home': return React.createElement(HomeView, { onChangePage: setCurrentPage, sheetData: sheetData });
+            case 'food': return React.createElement(FoodView, { sheetData: sheetData });
+            case 'shopping': return React.createElement(ShoppingView, { sheetData: sheetData });
+            case 'overview': return React.createElement(OverviewView, null);
+            case 'community': return React.createElement(CommunityView, { communityData: communityData, sheetData: sheetData });
+            case 'services': return React.createElement(ServicesView, { sheetData: sheetData });
+            case 'browse': return React.createElement(BrowseView, { sheetData: sheetData });
+            default: return React.createElement("div", { className: "text-center py-20" }, "頁面建置中... ", React.createElement("button", { onClick: () => setCurrentPage('home'), className: "text-blue-500" }, "回首頁"));
+            }
+        };
+
+        return (
+            React.createElement("div", { className: "min-h-screen bg-slate-50 font-sans text-slate-900" },
+            React.createElement("header", { className: "sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm" },
+                React.createElement("div", { className: "container mx-auto px-4 h-16 flex items-center justify-between" },
+                React.createElement("div", { className: "flex items-center gap-2 cursor-pointer", onClick: () => setCurrentPage('home') },
+                    React.createElement("div", { className: "w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold" }, "A7"),
+                    React.createElement("span", { className: "text-xl font-bold" }, "機捷柒號站")
+                ),
+                React.createElement("nav", { className: "hidden md:flex gap-6" },
+                    navLinks.map(link => React.createElement("button", { key: link.id, onClick: () => setCurrentPage(link.id), className: `text-sm font-medium ${currentPage === link.id ? 'text-purple-600' : 'text-slate-600 hover:text-purple-600'}` }, link.label))
+                ),
+                React.createElement("button", { className: "md:hidden", onClick: () => setIsMobileMenuOpen(!isMobileMenuOpen) }, isMobileMenuOpen ? React.createElement(X, null) : React.createElement(Menu, null))
+                ),
+                isMobileMenuOpen && React.createElement("div", { className: "md:hidden bg-white border-t p-4 space-y-3" }, navLinks.map(link => React.createElement("button", { key: link.id, onClick: () => setCurrentPage(link.id), className: "block w-full text-left p-2 rounded hover:bg-slate-50" }, link.label)))
+            ),
+            React.createElement("main", { className: "container mx-auto px-4 py-6 min-h-[80vh]" }, renderPage()),
+            React.createElement(AiAssistant, { sheetData: sheetData }),
+            React.createElement("footer", { className: "bg-slate-800 text-slate-300 py-10 mt-10" },
+                React.createElement("div", { className: "container mx-auto px-4 grid md:grid-cols-3 gap-8" },
+                React.createElement("div", null,
+                    React.createElement("div", { className: "flex items-center gap-2 mb-2 text-white" },
+                    React.createElement("div", { className: "w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center font-bold" }, "柒"),
+                    React.createElement("span", { className: "text-xl font-bold" }, "機捷柒號")
+                    ),
+                    React.createElement("p", { className: "text-sm text-slate-400" }, "專為 A7 重劃區居民打造的生活指南，整合食衣住行育樂資訊，讓你輕鬆探索新生活。")
+                ),
+                React.createElement("div", null,
+                    React.createElement("h4", { className: "text-white font-bold mb-4" }, "常用工具"),
+                    React.createElement("ul", { className: "space-y-2 text-sm" },
+                    React.createElement("li", null, React.createElement("a", { href: "#", className: "hover:text-white transition-colors" }, "垃圾車時間表")),
+                    React.createElement("li", null, React.createElement("a", { href: "#", className: "hover:text-white transition-colors" }, "機捷時刻表")),
+                    React.createElement("li", null, React.createElement("a", { href: "#", className: "hover:text-white transition-colors" }, "掛號看診進度"))
+                    )
+                ),
+                React.createElement("div", null,
+                    React.createElement("h4", { className: "text-white font-bold mb-4" }, "聯絡我們"),
+                    React.createElement("p", { className: "text-sm mb-2" }, "有新開店家要推薦？歡迎投稿！"),
+                    React.createElement("button", { className: "bg-purple-600 text-white px-4 py-2 rounded text-sm hover:bg-purple-700 transition-colors shadow-lg shadow-purple-900/50" }, "聯絡 @kao4rina")
+                )
+                ),
+                React.createElement("div", { className: "container mx-auto px-4 mt-8 pt-8 border-t border-slate-700 text-center text-xs text-slate-500" }, "© 2025 A7 Life Hub. All rights reserved. 非官方資訊平台，僅供參考。")
+            )
+            )
+        );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(React.createElement(App));
+    </script>
+</body>
+</html>
