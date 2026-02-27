@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A7 歡樂生活指南 🎡</title>
+    <title>A7 樂園生活指南 🎡｜林口、龜山美食機能情報地圖</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -305,35 +305,12 @@
                         <iframe id="food-umap-iframe" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://umap.openstreetmap.fr/zh-tw/map/a7_1366788?scaleControl=false&miniMap=false&scrollWheelZoom=true&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=none&captionBar=false#15/25.045/121.380" style="border: 0; border-radius: 1.5rem;"></iframe>
                         
                         <!-- 中心紅色標記 (點擊店家後顯示，永遠指著地圖正中心) -->
-
                         <div id="food-target-marker" class="absolute inset-0 pointer-events-none flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 z-20">
-    <i class="fa-solid fa-location-dot text-red-500 text-5xl drop-shadow-md -mt-10 animate-bounce"></i>
-    <div class="w-4 h-2 bg-black/20 rounded-[50%] blur-[1px]"></div>
-</div>
-
-<script>
-    let markerTimeout;
-
-    function showRedMarker() {
-        const marker = document.getElementById('food-target-marker');
-        
-        // 1. 顯示紅點
-        marker.classList.remove('opacity-0');
-        marker.classList.add('opacity-100');
-
-        // 2. 清除之前的計時器（避免連點造成閃爍）
-        if (markerTimeout) clearTimeout(markerTimeout);
-
-        // 3. 設定 5 秒後消失
-        markerTimeout = setTimeout(() => {
-            marker.classList.remove('opacity-100');
-            marker.classList.add('opacity-0');
-        }, 5000);
-    }
-
-    // 當點擊店家列表時，記得呼叫 showRedMarker()
-    // 例如：<div onclick="focusOnStore(...); showRedMarker();">
-</script>
+                            <!-- 新增：顯示店家名稱的小氣泡 -->
+                            <div id="food-marker-name" class="bg-themePink text-white px-4 py-1.5 rounded-full font-black shadow-md mb-2 text-sm text-center">店家名稱</div>
+                            <i class="fa-solid fa-location-dot text-red-500 text-5xl drop-shadow-md -mt-2 animate-bounce"></i>
+                            <div class="w-4 h-2 bg-black/20 rounded-[50%] blur-[1px]"></div>
+                        </div>
 
                         <!-- 載入中遮罩 (預設隱藏) -->
                         <div id="food-map-overlay" class="absolute inset-0 bg-white/80 backdrop-blur-sm hidden flex-col items-center justify-center z-30" style="border-radius: 1.5rem;">
@@ -902,6 +879,9 @@
             }).join('');
         }
 
+        // 用於存放地圖標記的計時器，避免快速點擊時發生衝突
+        let foodMapMarkerTimeout = null;
+
         async function updateFoodMap(address, name, preLat, preLng) {
             const iframe = document.getElementById('food-umap-iframe');
             const overlay = document.getElementById('food-map-overlay');
@@ -929,8 +909,20 @@
                 setTimeout(() => {
                     overlay.style.display = 'none';
                     if(centerMarker) {
+                        // 1. 設定小氣泡文字為店家名稱
+                        const markerNameEl = document.getElementById('food-marker-name');
+                        if (markerNameEl) markerNameEl.innerText = name;
+                        
+                        // 2. 顯示紅色地標與名稱氣泡
                         centerMarker.classList.remove('opacity-0');
                         centerMarker.classList.add('opacity-100');
+                        
+                        // 3. 設定 3 秒後自動隱藏，並清除舊的計時器避免干擾
+                        if (foodMapMarkerTimeout) clearTimeout(foodMapMarkerTimeout);
+                        foodMapMarkerTimeout = setTimeout(() => {
+                            centerMarker.classList.remove('opacity-100');
+                            centerMarker.classList.add('opacity-0');
+                        }, 3000);
                     }
                 }, 800);
             };
