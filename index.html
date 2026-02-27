@@ -371,8 +371,8 @@
                 <!-- 動態注入分類按鈕 -->
             </div>
 
-            <!-- 2. 動態注入的購物分類清單容器 -->
-            <div id="shopping-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 2. 動態注入的購物分類清單容器 (改用 auto-fit 自動計算框度與排列) -->
+            <div id="shopping-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-stretch">
                 <div class="col-span-full text-center text-themeYellow py-12">
                     <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
                     <p class="font-bold">正在為您整理生活圈店家...</p>
@@ -1084,16 +1084,7 @@
 
             if (filteredData.length === 0) {
                 container.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold py-8">這個分類還沒有審核通過的店家喔！</div>';
-                container.className = "grid grid-cols-1 gap-6";
                 return;
-            }
-
-            // 動態切換外層容器的排版：選中特定分類時，外層改為單欄，讓內部店家能以網格延展
-            const isSingleCategory = activeCategory !== '全部';
-            if (isSingleCategory) {
-                container.className = "flex flex-col gap-6 w-full";
-            } else {
-                container.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
             }
 
             // --- 3. 依生活分類群組化過濾後的資料，並渲染卡片 ---
@@ -1104,13 +1095,13 @@
                 groupedCategories[cat].push(item);
             });
 
-            // 為不同分類預備的可愛色彩池 (加入 hoverBorder)
+            // 為不同分類預備的可愛色彩池
             const stylePool = [
-                { border: 'border-yellow-50', hoverBorder: 'hover:border-yellow-200', textBig: 'text-yellow-100', textTitle: 'text-themeYellow', icon: 'fa-cart-shopping', emoji: '🛒' },
-                { border: 'border-blue-50', hoverBorder: 'hover:border-blue-200', textBig: 'text-blue-100', textTitle: 'text-themeBlue', icon: 'fa-couch', emoji: '🏠' },
-                { border: 'border-purple-50', hoverBorder: 'hover:border-purple-200', textBig: 'text-purple-100', textTitle: 'text-themePurple', icon: 'fa-scissors', emoji: '✂️' },
-                { border: 'border-green-50', hoverBorder: 'hover:border-green-200', textBig: 'text-green-100', textTitle: 'text-themeGreen', icon: 'fa-basket-shopping', emoji: '🛍️' },
-                { border: 'border-pink-50', hoverBorder: 'hover:border-pink-200', textBig: 'text-pink-100', textTitle: 'text-themePink', icon: 'fa-gift', emoji: '🎁' }
+                { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-themeYellow', icon: 'fa-cart-shopping', emoji: '🛒' },
+                { border: 'border-blue-50', textBig: 'text-blue-100', textTitle: 'text-themeBlue', icon: 'fa-couch', emoji: '🏠' },
+                { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', icon: 'fa-scissors', emoji: '✂️' },
+                { border: 'border-green-50', textBig: 'text-green-100', textTitle: 'text-themeGreen', icon: 'fa-basket-shopping', emoji: '🛍️' },
+                { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', icon: 'fa-gift', emoji: '🎁' }
             ];
 
             let html = '';
@@ -1127,18 +1118,13 @@
                     styleIndex++;
                 }
 
-                // 根據模式決定店家清單的排版 (單一分類時展開為響應式多欄位網格)
-                const ulClass = isSingleCategory
-                    ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 font-bold text-gray-600 relative z-10"
-                    : "space-y-3 font-bold text-gray-600 relative z-10";
-
                 // 產生該分類下的店家清單 HTML (包含地址與導航標籤)
                 const itemsHtml = items.map(item => {
                     // 將地址或店名編碼，準備傳遞給 Google Maps 路線規劃 API
                     const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
                     
                     return `
-                        <li class="flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group h-full border border-transparent ${style.hoverBorder}">
+                        <li class="flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group">
                             <!-- 左側：店名與地址 -->
                             <div class="flex items-start flex-1 overflow-hidden pr-2">
                                 <i class="fa-solid fa-check text-green-400 mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i> 
@@ -1157,11 +1143,14 @@
                 }).join('');
 
                 // 產生該分類的大卡片 HTML
+                // 外層加入 h-full 與 flex-col 確保同排等高；內層清單加入自動適應欄位
                 html += `
-                    <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col h-full">
-                        <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
-                        <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10">${style.emoji} ${catName}</h3>
-                        <ul class="${ulClass} flex-1">
+                    <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative h-full flex flex-col">
+                        <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
+                        <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
+                        
+                        <!-- 內層店家清單：當外層卡片變寬時，自動變成多欄排列 -->
+                        <ul class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start">
                             ${itemsHtml}
                         </ul>
                     </div>
