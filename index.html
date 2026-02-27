@@ -141,7 +141,10 @@
                 <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站的在地生活指南</p>
                 
                 <div class="max-w-xl mx-auto relative z-10">
-                    <input type="text" placeholder="🔍 找找看... 漢堡？診所？" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 px-6 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white">
+                    <input id="home-search-input" type="text" placeholder="🔍 找找看... 漢堡？診所？建案？" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
+                    <button onclick="doSearch()" class="absolute right-2 top-2 bottom-2 w-12 bg-themeYellow text-white rounded-full flex items-center justify-center text-xl hover:bg-yellow-400 hover:scale-105 transition-all shadow-sm">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
                 </div>
             </div>
 
@@ -236,6 +239,30 @@
                 <div id="share-form-container" class="hidden mt-6 w-full relative z-10 bg-pink-50 rounded-2xl p-2 border-2 border-pink-100 h-[600px] transition-all duration-300">
                     <iframe src="https://forms.gle/FyEGds4dPWsiEUUZA" class="w-full h-full rounded-xl border-0 bg-white shadow-inner" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
                     <p class="text-xs text-gray-400 mt-3 font-bold">※ 若表單畫面被瀏覽器阻擋或顯示異常，請 <a href="https://forms.gle/FyEGds4dPWsiEUUZA" target="_blank" class="text-themePink underline">點此直接開啟網頁填寫</a>。</p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 🔍 搜尋結果模板 (Search) -->
+    <template id="tpl-search">
+        <div class="fade-in space-y-6">
+            <div class="flex items-center justify-between mb-4 bg-white p-4 rounded-3xl shadow-sm border-2 border-gray-100">
+                <h2 class="text-2xl md:text-3xl font-black text-themeYellow flex items-center">
+                    <i class="fa-solid fa-magnifying-glass mr-3"></i> 搜尋結果
+                </h2>
+                <button onclick="loadPage('home')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl font-bold hover:bg-gray-200 transition-colors text-sm md:text-base">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> 返回首頁
+                </button>
+            </div>
+            
+            <p id="search-query-display" class="text-gray-500 font-bold px-2 text-lg">正在為您全站搜尋...</p>
+
+            <div id="search-results-container" class="space-y-8">
+                <!-- 動態注入搜尋結果 -->
+                <div class="text-center py-16 bg-white rounded-[2.5rem] border-4 border-yellow-50 shadow-cute">
+                    <i class="fa-solid fa-spinner fa-spin text-5xl text-themeYellow mb-4"></i>
+                    <p class="font-bold text-gray-500 text-lg">正在樂園各個角落尋找中...</p>
                 </div>
             </div>
         </div>
@@ -557,6 +584,173 @@
             }
         }
 
+        // ==========================================
+        // 🔎 全域搜尋系統 (Global Search)
+        // ==========================================
+        async function doSearch() {
+            const input = document.getElementById('home-search-input');
+            if(!input) return;
+            const query = input.value.trim();
+            if(!query) return;
+
+            // 切換至搜尋結果視圖
+            loadPage('search');
+            
+            const display = document.getElementById('search-query-display');
+            const container = document.getElementById('search-results-container');
+            if(display) display.innerHTML = `正在為您尋找與 <span class="text-themePink font-black">「${query}」</span> 相關的樂園角落...`;
+
+            try {
+                // 等待所有資料庫完整載入 (並行處理加速)
+                const [foodData, shoppingData, communityData, buildingData] = await Promise.all([
+                    loadSharedFoodData(),
+                    loadSharedShoppingData(),
+                    loadSharedCommunityData(),
+                    loadSharedBuildingData()
+                ]);
+
+                const q = query.toLowerCase();
+
+                // 執行過濾比對
+                const matchedFood = foodData.filter(item => 
+                    (item.name && item.name.toLowerCase().includes(q)) || 
+                    (item.category && item.category.toLowerCase().includes(q)) ||
+                    (item.address && item.address.toLowerCase().includes(q))
+                );
+
+                const matchedShopping = shoppingData.filter(item => 
+                    (item.name && item.name.toLowerCase().includes(q)) || 
+                    (item.category && item.category.toLowerCase().includes(q)) ||
+                    (item.address && item.address.toLowerCase().includes(q))
+                );
+
+                const matchedCommunity = communityData.filter(item => 
+                    (item.name && item.name.toLowerCase().includes(q)) || 
+                    (item.category && item.category.toLowerCase().includes(q))
+                );
+
+                const matchedBuildings = buildingData.filter(item => 
+                    (item.name && item.name.toLowerCase().includes(q)) || 
+                    (item.village && item.village.toLowerCase().includes(q))
+                );
+
+                let html = '';
+
+                // 渲染美食結果
+                if(matchedFood.length > 0) {
+                    html += `
+                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-pink-50 relative overflow-hidden">
+                            <h3 class="text-2xl font-black text-themePink mb-4 border-b-2 border-pink-100 pb-2"><i class="fa-solid fa-burger mr-2"></i> 美食販賣部 (${matchedFood.length})</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
+                                ${matchedFood.map(item => {
+                                    let imgContent = item.img ? `<img src="${item.img}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-utensils text-2xl text-pink-300"></i>`;
+                                    let navTarget = encodeURIComponent(item.address || item.name);
+                                    return `
+                                        <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-pink-50 p-3 rounded-2xl shadow-sm border border-white flex items-center gap-3 hover:-translate-y-1 hover:shadow-md transition-all group">
+                                            <div class="w-14 h-14 bg-white rounded-xl overflow-hidden shrink-0 flex items-center justify-center">${imgContent}</div>
+                                            <div class="flex-1 overflow-hidden pr-2">
+                                                <div class="flex items-center gap-2 mb-0.5">
+                                                    <span class="text-[10px] bg-white text-themePink px-1.5 py-0.5 rounded-md font-black shadow-sm shrink-0">${item.category}</span>
+                                                    <h4 class="font-black text-gray-800 line-clamp-1 group-hover:text-themePink">${item.name}</h4>
+                                                </div>
+                                                <p class="text-xs text-gray-500 font-bold line-clamp-1"><i class="fa-solid fa-location-dot mr-1 text-pink-400"></i>${item.address || 'A7 在地美食'}</p>
+                                            </div>
+                                            <div class="text-pink-400 text-xl pl-1"><i class="fa-solid fa-location-arrow"></i></div>
+                                        </a>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // 渲染購物與生活結果
+                if(matchedShopping.length > 0) {
+                    html += `
+                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-yellow-50 relative overflow-hidden">
+                            <h3 class="text-2xl font-black text-themeYellow mb-4 border-b-2 border-yellow-100 pb-2"><i class="fa-solid fa-store mr-2"></i> 購物與生活 (${matchedShopping.length})</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
+                                ${matchedShopping.map(item => {
+                                    let navTarget = encodeURIComponent(item.address || item.name);
+                                    return `
+                                        <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-yellow-50 p-3 rounded-2xl shadow-sm border border-white flex items-center gap-3 hover:-translate-y-1 hover:shadow-md transition-all group">
+                                            <div class="w-10 h-10 bg-white rounded-full shrink-0 flex items-center justify-center text-yellow-500 text-lg shadow-sm"><i class="fa-solid fa-bag-shopping"></i></div>
+                                            <div class="flex-1 overflow-hidden pr-2">
+                                                <div class="flex items-center gap-2 mb-0.5">
+                                                    <span class="text-[10px] bg-white text-themeYellow px-1.5 py-0.5 rounded-md font-black shadow-sm shrink-0">${item.category}</span>
+                                                    <h4 class="font-black text-gray-800 line-clamp-1 group-hover:text-themeYellow">${item.name}</h4>
+                                                </div>
+                                                <p class="text-xs text-gray-500 font-bold line-clamp-1"><i class="fa-solid fa-location-dot mr-1 text-yellow-500"></i>${item.address || '在地生活圈'}</p>
+                                            </div>
+                                            <div class="text-yellow-500 text-xl pl-1"><i class="fa-solid fa-location-arrow"></i></div>
+                                        </a>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // 渲染社群結果
+                if(matchedCommunity.length > 0) {
+                    html += `
+                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-blue-50 relative overflow-hidden">
+                            <h3 class="text-2xl font-black text-themeBlue mb-4 border-b-2 border-blue-100 pb-2"><i class="fa-solid fa-users mr-2"></i> 熱門社群 (${matchedCommunity.length})</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
+                                ${matchedCommunity.map(item => {
+                                    return `
+                                        <a href="${item.link}" target="_blank" class="bg-blue-50 p-4 rounded-2xl shadow-sm border border-white flex items-center justify-between hover:-translate-y-1 hover:shadow-md transition-all group">
+                                            <div class="flex flex-col flex-1 pr-2">
+                                                <span class="text-[10px] text-themeBlue font-black mb-1">${item.category}</span>
+                                                <h4 class="font-black text-gray-800 line-clamp-2 group-hover:text-themeBlue">${item.name}</h4>
+                                            </div>
+                                            <div class="w-10 h-10 bg-white shadow-sm rounded-full shrink-0 flex items-center justify-center text-themeBlue"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                                        </a>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // 渲染建案結果
+                if(matchedBuildings.length > 0) {
+                    html += `
+                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-green-50 relative overflow-hidden">
+                            <h3 class="text-2xl font-black text-themeGreen mb-4 border-b-2 border-green-100 pb-2"><i class="fa-solid fa-building mr-2"></i> 在地建案 (${matchedBuildings.length})</h3>
+                            <div class="flex flex-wrap gap-3 relative z-10">
+                                ${matchedBuildings.map(item => {
+                                    return `
+                                        <span class="bg-green-50 text-gray-800 font-bold px-4 py-2 rounded-xl border border-white shadow-sm flex items-center gap-2 hover:-translate-y-1 transition-transform cursor-default">
+                                            <i class="fa-solid fa-leaf text-themeGreen"></i> ${item.name} <span class="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-md ml-1 shadow-sm">${item.village}</span>
+                                        </span>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // 若都沒有找到
+                if(!html) {
+                    html = `
+                        <div class="text-center py-16 bg-white rounded-[2.5rem] border-4 border-gray-100 shadow-cute">
+                            <i class="fa-solid fa-face-sad-tear text-6xl text-gray-300 mb-4"></i>
+                            <p class="font-bold text-gray-500 text-xl">找不到與「${query}」相關的內容喔！</p>
+                            <p class="text-sm text-gray-400 mt-2">請換個關鍵字（例如：早餐、五金、文青里）試試看</p>
+                        </div>
+                    `;
+                }
+
+                if(display) display.innerHTML = `為您找到關於 <span class="text-themePink font-black">「${query}」</span> 的結果：`;
+                container.innerHTML = html;
+
+            } catch (err) {
+                console.error("Search Error:", err);
+                container.innerHTML = `<div class="text-center py-12 text-red-500 font-bold bg-white rounded-[2.5rem] border-4 border-red-50">搜尋時發生錯誤，無法連線至資料庫，請稍後再試。</div>`;
+            }
+        }
+
         // 捲動監聽：當元素進入畫面時才觸發動畫
         function initScrollCounters() {
             const statsContainer = document.getElementById('stats-container');
@@ -753,27 +947,13 @@
         // ==========================================
         // 🍿 美食販賣部 (Food) 相關函數
         // ==========================================
-        function fetchFoodData() {
-            const container = document.getElementById('food-list-container');
-            if (!container) return;
-
-            // 若有快取，直接渲染
-            if (globalFoodData) {
-                renderFoodData(globalFoodData, '全部');
-                return;
-            }
-
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1150395419&single=true&output=csv';
-
-            fetch(csvUrl)
-                .then(res => res.text())
-                .then(csvText => {
+        function loadSharedFoodData() {
+            return new Promise((resolve, reject) => {
+                if (globalFoodData) return resolve(globalFoodData);
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1150395419&single=true&output=csv';
+                fetch(csvUrl).then(res => res.text()).then(csvText => {
                     const rows = parseCSV(csvText);
-                    if (rows.length < 2) {
-                        container.innerHTML = '<div class="col-span-full text-center text-gray-500 font-bold py-8">目前沒有美食資料</div>';
-                        return;
-                    }
-
+                    if (rows.length < 2) return resolve([]);
                     const headers = rows[0];
                     const nameIdx = Math.max(0, headers.findIndex(k => k.includes('店') || k.includes('名')));
                     const catIdx = Math.max(0, headers.findIndex(k => k.includes('分類') || k.includes('類別')));
@@ -802,13 +982,25 @@
                         const s = String(item.status).toUpperCase().trim();
                         return s.includes('OK') || s === 'V' || s === 'O' || s.includes('是') || s.includes('通過') || s === 'TRUE' || s === 'Y';
                     });
+                    resolve(globalFoodData);
+                }).catch(reject);
+            });
+        }
 
-                    renderFoodData(globalFoodData, '全部');
-                })
-                .catch(err => {
-                    console.error('Food CSV Fetch Error:', err);
-                    container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8">資料載入失敗，請稍後再試。</div>';
-                });
+        function fetchFoodData() {
+            const container = document.getElementById('food-list-container');
+            if (!container) return;
+
+            loadSharedFoodData().then(data => {
+                if (data.length === 0) {
+                    container.innerHTML = '<div class="col-span-full text-center text-gray-500 font-bold py-8">目前沒有美食資料</div>';
+                } else {
+                    renderFoodData(data, '全部');
+                }
+            }).catch(err => {
+                console.error('Food CSV Fetch Error:', err);
+                container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8">資料載入失敗，請稍後再試。</div>';
+            });
         }
 
         function renderFoodData(data, activeCategory) {
@@ -1208,23 +1400,13 @@
         // ==========================================
         
         // --- 探索在地A7：社群推薦模組 ---
-        function fetchCommunityData() {
-            const container = document.getElementById('community-list-container');
-            if (!container) return;
-
-            // 若有快取，直接渲染
-            if (globalCommunityData) {
-                renderCommunityData(globalCommunityData);
-                return;
-            }
-
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=369381822&single=true&output=csv';
-
-            fetch(csvUrl)
-                .then(res => res.text())
-                .then(csvText => {
+        function loadSharedCommunityData() {
+            return new Promise((resolve, reject) => {
+                if (globalCommunityData) return resolve(globalCommunityData);
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=369381822&single=true&output=csv';
+                fetch(csvUrl).then(res => res.text()).then(csvText => {
                     const rows = parseCSV(csvText);
-                    if (rows.length < 2) return;
+                    if (rows.length < 2) return resolve([]);
 
                     const headers = rows[0];
                     let nameIdx = headers.findIndex(k => k.includes('名稱') || k.includes('社群'));
@@ -1243,12 +1425,21 @@
                     }).filter(item => item.name !== '' && item.link !== '#');
 
                     globalCommunityData = parsedData;
-                    renderCommunityData(globalCommunityData);
-                })
-                .catch(err => {
-                    console.error('Community Fetch Error:', err);
-                    container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8 bg-white rounded-3xl">社群資料載入失敗，請稍後再試。</div>';
-                });
+                    resolve(globalCommunityData);
+                }).catch(reject);
+            });
+        }
+
+        function fetchCommunityData() {
+            const container = document.getElementById('community-list-container');
+            if (!container) return;
+
+            loadSharedCommunityData().then(data => {
+                renderCommunityData(data);
+            }).catch(err => {
+                console.error('Community Fetch Error:', err);
+                container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8 bg-white rounded-3xl">社群資料載入失敗，請稍後再試。</div>';
+            });
         }
 
         function renderCommunityData(data) {
@@ -1334,23 +1525,13 @@
         }
 
         // --- 探索在地A7：建案分佈模組 ---
-        function fetchBuildingData() {
-            const container = document.getElementById('buildings-list-container');
-            if (!container) return;
-
-            // 若有快取，直接渲染
-            if (globalBuildingData) {
-                renderBuildingData(globalBuildingData);
-                return;
-            }
-
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=985024788&single=true&output=csv';
-
-            fetch(csvUrl)
-                .then(res => res.text())
-                .then(csvText => {
+        function loadSharedBuildingData() {
+            return new Promise((resolve, reject) => {
+                if (globalBuildingData) return resolve(globalBuildingData);
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=985024788&single=true&output=csv';
+                fetch(csvUrl).then(res => res.text()).then(csvText => {
                     const rows = parseCSV(csvText);
-                    if (rows.length < 2) return;
+                    if (rows.length < 2) return resolve([]);
 
                     const headers = rows[0];
                     let nameIdx = headers.findIndex(k => k.includes('建案') || k.includes('名稱'));
@@ -1369,12 +1550,21 @@
                     }).filter(item => item.name !== '');
 
                     globalBuildingData = parsedData;
-                    renderBuildingData(globalBuildingData);
-                })
-                .catch(err => {
-                    console.error('Building CSV Fetch Error:', err);
-                    container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8 bg-white rounded-3xl">建案資料載入失敗，請稍後再試。</div>';
-                });
+                    resolve(globalBuildingData);
+                }).catch(reject);
+            });
+        }
+
+        function fetchBuildingData() {
+            const container = document.getElementById('buildings-list-container');
+            if (!container) return;
+
+            loadSharedBuildingData().then(data => {
+                renderBuildingData(data);
+            }).catch(err => {
+                console.error('Building CSV Fetch Error:', err);
+                container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8 bg-white rounded-3xl">建案資料載入失敗，請稍後再試。</div>';
+            });
         }
 
         function renderBuildingData(data) {
