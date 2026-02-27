@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A7 樂園生活指南 🎡｜林口、龜山美食機能情報地圖</title>
+    <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
+    <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -504,18 +506,33 @@
             <!-- 4. A7地圖及各里所擁有的建案列表 -->
             <div class="mb-8">
                 <div class="flex items-center mb-6">
-                    <h2 class="text-2xl font-black text-themeGrey flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl"></i>A7 建案分佈</h2>
+                    <h2 class="text-2xl font-black text-themeGreen flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeGreen"></i>A7 建案分佈</h2>
                 </div>
 
-                <!-- 新增：A7 各里分配圖與快速跳轉標籤 -->
-                <div class="mb-8 bg-white rounded-[2.5rem] p-4 border-4 border-grey-50 shadow-cute">
-                    <div class="w-full h-[300px] md:h-[650px] rounded-[1.5rem] overflow-hidden relative bg-grey-50 flex items-center justify-center border-2 border-grey-100">
-                        <!-- 請將下方 src 內的網址替換為您真實的 A7 各里分配圖 -->
-                        <img src="https://lh3.googleusercontent.com/gg/AMW1TPrTUi8U8z9LW9gvaXs11KGa_VVFOdG6RGTyo0_wAY7vqqnFnLAoXtwDlgzRueOzYP0FHZ_rXuenA0Zyy-ngTeqFaBg-Tb2ia0DgRbEP0Huy48p9OwDfaNW19h0e3KXmt2gRTXKhoy7_vSTsh0QZJlyLhtQbyhp2LlfCtgNgVZ0kFVIl3Yg=s1024-rj-mp2" class="w-full h-full object-cover opacity-60 mix-blend-multiply" alt="">
+                <!-- 新增：A7 各里分配圖與快速跳轉標籤 (強制左直式地圖、右選單佈局) -->
+                <div class="mb-8 bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-3 md:p-6 border-4 border-gray-50 shadow-cute flex flex-row gap-3 md:gap-6 items-stretch">
+                    
+                    <!-- 左側地圖 (直式設計，無論螢幕大小均完整呈現 object-contain) -->
+                    <div class="w-2/5 md:w-5/12 lg:w-1/3 min-h-[300px] md:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
+                        <!-- 關鍵：使用 object-contain 加上 padding 確保地圖完整顯示不被裁切 -->
+                        <img src="https://github.com/A7Club/life/blob/main/a7map.png?raw=true" class="absolute inset-0 w-full h-full p-2 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
+                        
+                        <div class="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-white whitespace-nowrap">
+                            A7 區域建案概覽圖
+                        </div>
                     </div>
                     
-                    <!-- 這裡會動態載入各里小標籤 -->
-                    <div id="village-tags-container" class="flex flex-wrap gap-2 md:gap-3 justify-center mt-4">
+                    <!-- 右側標籤選單 -->
+                    <div class="w-3/5 md:w-7/12 lg:w-2/3 flex flex-col">
+                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-3 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
+                            <h3 class="text-sm md:text-xl font-black text-gray-700 mb-3 md:mb-4 flex items-center border-b-2 border-gray-200 pb-2 md:pb-3 shrink-0">
+                                <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
+                            </h3>
+                            <!-- 網格排版，空間大時分兩欄，空間小時單欄 -->
+                            <div id="village-tags-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3 overflow-y-auto hide-scrollbar flex-1 content-start">
+                                <!-- 這裡會動態載入各里小標籤 -->
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -698,13 +715,41 @@
                             <h3 class="text-2xl font-black text-themeBlue mb-4 border-b-2 border-blue-100 pb-2"><i class="fa-solid fa-users mr-2"></i> 熱門社群 (${matchedCommunity.length})</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
                                 ${matchedCommunity.map(item => {
+                                    let snsType = 'Web';
+                                    let avatarBg = 'random';
+                                    
+                                    const searchStr = (item.name + ' ' + item.link).toUpperCase();
+                                    if (searchStr.includes('LINE') || searchStr.includes('賴')) {
+                                        snsType = 'LINE'; 
+                                        avatarBg = '00B900';
+                                    } else if (searchStr.includes('THREADS')) {
+                                        snsType = 'Threads'; 
+                                        avatarBg = '000000';
+                                    } else if (searchStr.includes('FB') || searchStr.includes('FACEBOOK') || searchStr.includes('臉書')) {
+                                        snsType = 'Facebook'; 
+                                        avatarBg = '1877F2';
+                                    }
+
+                                    const showQR = snsType === 'LINE';
+                                    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(item.link)}`;
+                                    const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg}&color=fff&size=100&font-size=0.35`;
+
                                     return `
                                         <a href="${item.link}" target="_blank" class="bg-blue-50 p-4 rounded-2xl shadow-sm border border-white flex items-center justify-between hover:-translate-y-1 hover:shadow-md transition-all group">
                                             <div class="flex flex-col flex-1 pr-2">
                                                 <span class="text-[10px] text-themeBlue font-black mb-1">${item.category}</span>
                                                 <h4 class="font-black text-gray-800 line-clamp-2 group-hover:text-themeBlue">${item.name}</h4>
                                             </div>
-                                            <div class="w-10 h-10 bg-white shadow-sm rounded-full shrink-0 flex items-center justify-center text-themeBlue"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                                            
+                                            ${showQR ? `
+                                            <div class="w-10 h-10 shrink-0 bg-white rounded-lg p-0.5 border border-dashed border-gray-200 group-hover:border-themeBlue transition-colors flex items-center justify-center">
+                                                <img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100" alt="QR Code">
+                                            </div>
+                                            ` : `
+                                            <div class="w-10 h-10 shrink-0 rounded-full border-2 border-white shadow-sm overflow-hidden bg-white group-hover:border-themeBlue transition-colors">
+                                                <img src="${avatarUrl}" class="w-full h-full object-cover" alt="頭像">
+                                            </div>
+                                            `}
                                         </a>
                                     `;
                                 }).join('')}
@@ -1463,25 +1508,32 @@
                     let snsType = 'Web';
                     let snsBadgeClass = 'bg-gray-500 text-white';
                     let snsIcon = 'fa-solid fa-globe';
+                    let avatarBg = 'random'; // 頭像背景色
                     
                     const searchStr = (item.name + ' ' + item.link).toUpperCase();
                     if (searchStr.includes('LINE') || searchStr.includes('賴')) {
                         snsType = 'LINE'; 
                         snsBadgeClass = 'bg-[#00B900] text-white'; 
                         snsIcon = 'fa-brands fa-line';
+                        avatarBg = '00B900';
                     } else if (searchStr.includes('THREADS')) {
                         snsType = 'Threads'; 
                         snsBadgeClass = 'bg-black text-white'; 
                         snsIcon = 'fa-brands fa-threads';
+                        avatarBg = '000000'; // Threads 品牌色
                     } else if (searchStr.includes('FB') || searchStr.includes('FACEBOOK') || searchStr.includes('臉書')) {
                         snsType = 'Facebook'; 
                         snsBadgeClass = 'bg-[#1877F2] text-white'; 
                         snsIcon = 'fa-brands fa-facebook';
+                        avatarBg = '1877F2'; // Facebook 品牌色
                     }
 
                     // 判斷是否需要顯示 QR Code (僅 LINE 社群顯示)
                     const showQR = snsType === 'LINE';
                     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
+                    
+                    // 自動生成文字頭像 URL (使用品牌色或隨機色)
+                    const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
 
                     return `
                         <a href="${item.link}" target="_blank" class="bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-1 transition-all flex items-center justify-between group h-full">
@@ -1493,14 +1545,14 @@
                                 </div>
                             </div>
                             
-                            <!-- 右側：QR Code 或 開啟圖示 -->
+                            <!-- 右側：QR Code 或 自動頭像 -->
                             ${showQR ? `
                             <div class="w-14 h-14 md:w-16 md:h-16 shrink-0 bg-white rounded-xl p-1 border border-dashed border-gray-200 group-hover:border-themePink transition-colors relative flex items-center justify-center">
                                 <img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100 transition-opacity" alt="QR Code">
                             </div>
                             ` : `
-                            <div class="w-10 h-10 shrink-0 flex items-center justify-center text-gray-300 group-hover:text-themePink transition-colors text-xl">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <div class="w-12 h-12 md:w-14 md:h-14 shrink-0 rounded-full border-2 border-gray-100 group-hover:border-themePink transition-colors relative flex items-center justify-center overflow-hidden shadow-sm bg-gray-50 p-0.5">
+                                <img src="${avatarUrl}" class="w-full h-full object-cover rounded-full" alt="社群頭像">
                             </div>
                             `}
                         </a>
@@ -1579,30 +1631,47 @@
                 groupedVillages[village].push(item);
             });
 
-            const stylePool = [
-                { border: 'border-green-50', textTitle: 'text-themeGreen', icon: 'fa-building', bg: 'bg-green-50', iconColor: 'text-green-200', activeIcon: 'text-green-400' },
-                { border: 'border-yellow-50', textTitle: 'text-themeYellow', icon: 'fa-tree', bg: 'bg-yellow-50', iconColor: 'text-yellow-200', activeIcon: 'text-yellow-400' },
-                { border: 'border-blue-50', textTitle: 'text-themeBlue', icon: 'fa-city', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-blue-400' },
-                { border: 'border-purple-50', textTitle: 'text-themePurple', icon: 'fa-house-chimney', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-purple-400' },
-                { border: 'border-pink-50', textTitle: 'text-themePink', icon: 'fa-shop', bg: 'bg-pink-50', iconColor: 'text-pink-200', activeIcon: 'text-pink-400' }
+            // == 依照地圖照片顏色綁定各里別的專屬色彩 ==
+            // 由於 2026 年行政里調整，這裡將文青、樂善、文桃、善捷、牛角坡、長庚等里別，
+            // 嚴格配置專屬的 Tailwind 色系，以精準對應上方地圖照片的區塊顏色。
+            const fallbackPool = [
+                { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-map', bg: 'bg-gray-50', iconColor: 'text-gray-200', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' },
+                { border: 'border-teal-200', textTitle: 'text-teal-600', icon: 'fa-location-dot', bg: 'bg-teal-50', iconColor: 'text-teal-200', activeIcon: 'text-teal-500', hoverBg: 'hover:bg-teal-50' }
             ];
+            let fallbackStyleIndex = 0;
+
+            function getStyleForVillage(name) {
+                if (name.includes('文青')) return { border: 'border-pink-200', textTitle: 'text-themePink', icon: 'fa-building', bg: 'bg-pink-50', iconColor: 'text-pink-200', activeIcon: 'text-themePink', hoverBg: 'hover:bg-pink-50' };
+                if (name.includes('樂善')) return { border: 'border-green-200', textTitle: 'text-themeGreen', icon: 'fa-tree', bg: 'bg-green-50', iconColor: 'text-green-200', activeIcon: 'text-themeGreen', hoverBg: 'hover:bg-green-50' };
+                if (name.includes('文桃')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-city', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
+                if (name.includes('善捷')) return { border: 'border-yellow-300', textTitle: 'text-yellow-600', icon: 'fa-house-chimney', bg: 'bg-yellow-50', iconColor: 'text-yellow-300', activeIcon: 'text-yellow-500', hoverBg: 'hover:bg-yellow-50' };
+                if (name.includes('牛角坡')) return { border: 'border-purple-200', textTitle: 'text-themePurple', icon: 'fa-map-pin', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-themePurple', hoverBg: 'hover:bg-purple-50' };
+                if (name.includes('長庚')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-hospital', bg: 'bg-orange-50', iconColor: 'text-orange-200', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
+                
+                // 找不到對應里別時，使用備用色彩輪替
+                const style = fallbackPool[fallbackStyleIndex % fallbackPool.length];
+                fallbackStyleIndex++;
+                return style;
+            }
 
             let html = '';
             let tagsHtml = ''; // 準備標籤的 HTML
-            let styleIndex = 0;
 
             for (const [villageName, items] of Object.entries(groupedVillages)) {
-                const style = stylePool[styleIndex % stylePool.length];
-                styleIndex++;
+                const style = getStyleForVillage(villageName);
                 
                 // 產生安全且唯一的 ID 供錨點跳轉使用
                 const safeId = `village-${villageName.replace(/\s+/g, '')}`;
 
-                // 生成各里的快速跳轉標籤
+                // 生成各里的快速跳轉標籤 (適應大小螢幕的精緻選單按鈕樣式)
                 tagsHtml += `
                     <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
-                            class="px-4 py-2 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full hover:${style.bg} transition-colors shadow-sm text-sm md:text-base flex items-center gap-1.5 hover:-translate-y-1">
-                        <i class="fa-solid ${style.icon}"></i> ${villageName}
+                            class="px-2 md:px-4 py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-xl md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-xs md:text-base flex items-center gap-2 md:gap-3 hover:-translate-y-1 w-full text-left group">
+                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full ${style.bg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid ${style.icon} text-[10px] md:text-sm"></i>
+                        </div>
+                        <span class="truncate flex-1">${villageName}</span>
+                        <i class="fa-solid fa-chevron-right text-gray-300 group-hover:${style.textTitle} transition-colors text-[10px] md:text-xs"></i>
                     </button>
                 `;
 
