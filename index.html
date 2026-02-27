@@ -450,9 +450,9 @@
                 <div class="flex items-center mb-6">
                     <h2 class="text-2xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門社群推薦</h2>
                 </div>
-                <!-- 改為 space-y-8 來容納各分類區塊 -->
-                <div id="community-list-container" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                    <div class="text-center text-themePurple py-12 bg-white rounded-[2rem] border-4 border-purple-50 shadow-cute">
+                <!-- 應用 auto-fit 網格：自動根據螢幕與項目框度延伸並排 -->
+                <div id="community-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-stretch">
+                    <div class="col-span-full text-center text-themePurple py-12 bg-white rounded-[2rem] border-4 border-purple-50 shadow-cute">
                         <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
                         <p class="font-bold">正在連線樂園社群中心...</p>
                     </div>
@@ -1273,11 +1273,8 @@
             let html = '';
             for (const [catName, items] of Object.entries(groupedCategories)) {
                 
-                // 動態判斷排版：在地社群一排2個，其他一排3個
-                const isLocalCommunity = catName.includes('在地社群');
-                const gridClass = isLocalCommunity 
-                    ? 'grid-cols-1 md:grid-cols-2' 
-                    : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+                // 動態排版：內部社群清單使用 auto-fit 自動計算框度與排列 (最小佔據 260px)
+                const gridClass = 'grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(260px,1fr))]';
 
                 const itemsHtml = items.map(item => {
                     let snsType = 'Web';
@@ -1327,14 +1324,15 @@
                     `;
                 }).join('');
 
+                // 外層大區塊加入 flex 確保等高，並用 auto-fit 讓內部項目自動排版
                 html += `
-                    <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 border-blue-50 relative">
+                    <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 border-blue-50 relative h-full flex flex-col">
                         <div class="absolute -top-4 -right-4 text-blue-100 text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
-                        <h3 class="text-2xl font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10">
+                        <h3 class="text-2xl font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0">
                             <i class="fa-solid fa-hashtag mr-2 text-themePink"></i>${catName}
                         </h3>
-                        <!-- 應用動態網格：在地社群2欄，其餘3欄 -->
-                        <div class="grid ${gridClass} gap-3 md:gap-4 relative z-10 items-stretch">
+                        <!-- 應用動態網格：自動適應框度與排列 -->
+                        <div class="grid ${gridClass} gap-3 md:gap-4 relative z-10 flex-1 content-start items-stretch">
                             ${itemsHtml}
                         </div>
                     </div>
