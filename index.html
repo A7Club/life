@@ -150,59 +150,47 @@
                 </div>
             </div>
 
-            <!-- 快速通關 (四大捷徑) -->
-            <div class="grid grid-cols-4 md:grid-cols-4 gap-4 md:gap-3">
-                <div onclick="loadPage('food')" class="bg-white rounded-3xl p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePink group">
-                    <div class="w-16 h-16 mx-auto bg-pink-100 text-themePink rounded-full flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-burger"></i></div>
-                    <h3 class="font-black text-lg text-gray-700">找美食</h3>
-                </div>
-                <div onclick="loadPage('shopping')" class="bg-white rounded-3xl p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themeYellow group">
-                    <div class="w-16 h-16 mx-auto bg-yellow-100 text-themeYellow rounded-full flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
-                    <h3 class="font-black text-lg text-gray-700">買東西</h3>
-                </div>
-                <div onclick="loadPage('medical')" class="bg-white rounded-3xl p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themeGreen group">
-                    <div class="w-16 h-16 mx-auto bg-green-100 text-themeGreen rounded-full flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-briefcase-medical"></i></div>
-                    <h3 class="font-black text-lg text-gray-700">看醫生</h3>
-                </div>
-                <div onclick="loadPage('explore')" class="bg-white rounded-3xl p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePurple group">
-                    <div class="w-16 h-16 mx-auto bg-purple-100 text-themePurple rounded-full flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map-location-dot"></i></div>
-                    <h3 class="font-black text-lg text-gray-700">探索柒</h3>
-                </div>
-            </div>
-
-            <!-- 店家統計 (改為上下排版，下方分類文字放大並填滿寬度) -->
-            <div id="stats-container" class="bg-white rounded-[2rem] shadow-cute p-4 md:p-6 flex flex-col items-center justify-center border-2 border-pink-100 gap-4 md:gap-5 select-none cursor-default w-full">
-                <!-- 總計區塊 (置中放大) -->
-                <div class="flex items-center justify-center text-themePink font-black text-xl sm:text-2xl md:text-3xl shrink-0">
-                    <i class="fa-solid fa-chart-pie mr-2 text-2xl sm:text-3xl md:text-4xl"></i> 收錄總計：<span class="inline-block min-w-[3rem] sm:w-20 text-center text-3xl sm:text-4xl md:text-5xl mx-1 num-counter" data-target="128">0</span> 家
+            <!-- 快速通關 (四大捷徑) & 店家統計 (合併區塊) -->
+            <div id="stats-container" class="flex flex-col gap-4 md:gap-6">
+                <!-- 捷徑卡片 (包含分類統計) -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <div onclick="loadPage('food')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePink group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-pink-100 text-themePink rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-burger"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">找美食 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span class="num-counter" data-target="56">0</span>)</span></h3>
+                    </div>
+                    <div onclick="loadPage('shopping')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themeYellow group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-100 text-themeYellow rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">買東西 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span class="num-counter" data-target="32">0</span>)</span></h3>
+                    </div>
+                    <div onclick="loadPage('medical')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themeGreen group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-green-100 text-themeGreen rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-briefcase-medical"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">看醫生 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span class="num-counter" data-target="15">0</span>)</span></h3>
+                    </div>
+                    <div onclick="loadPage('explore')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePurple group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-purple-100 text-themePurple rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">探索柒 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span class="num-counter" data-target="25">0</span>)</span></h3>
+                    </div>
                 </div>
                 
-                <!-- 橫向分隔線 -->
-                <div class="w-full h-px bg-pink-100 shrink-0 opacity-80"></div>
-                
-                <!-- 分類標籤區塊 (強迫分佈填滿寬度，文字與數字顯著放大) -->
-                <div class="flex flex-row items-center justify-between gap-1.5 sm:gap-4 text-[13px] sm:text-base md:text-xl font-black w-full shrink-0">
-                    <div class="flex flex-1 items-center justify-center bg-pink-50 py-2 sm:py-3 px-1 sm:px-2 rounded-xl sm:rounded-2xl text-pink-600 border-2 border-pink-100 whitespace-nowrap shadow-sm hover:-translate-y-1 transition-transform">
-                        美食 <span class="inline-block min-w-[20px] sm:w-10 text-center ml-1 sm:ml-2 num-counter text-base sm:text-xl md:text-2xl" data-target="56">0</span>
-                    </div>
-                    <div class="flex flex-1 items-center justify-center bg-yellow-50 py-2 sm:py-3 px-1 sm:px-2 rounded-xl sm:rounded-2xl text-yellow-600 border-2 border-yellow-100 whitespace-nowrap shadow-sm hover:-translate-y-1 transition-transform">
-                        購物 <span class="inline-block min-w-[20px] sm:w-10 text-center ml-1 sm:ml-2 num-counter text-base sm:text-xl md:text-2xl" data-target="32">0</span>
-                    </div>
-                    <div class="flex flex-1 items-center justify-center bg-green-50 py-2 sm:py-3 px-1 sm:px-2 rounded-xl sm:rounded-2xl text-green-600 border-2 border-green-100 whitespace-nowrap shadow-sm hover:-translate-y-1 transition-transform">
-                        醫療 <span class="inline-block min-w-[20px] sm:w-10 text-center ml-1 sm:ml-2 num-counter text-base sm:text-xl md:text-2xl" data-target="15">0</span>
-                    </div>
-                    <div class="flex flex-1 items-center justify-center bg-purple-50 py-2 sm:py-3 px-1 sm:px-2 rounded-xl sm:rounded-2xl text-purple-600 border-2 border-purple-100 whitespace-nowrap shadow-sm hover:-translate-y-1 transition-transform">
-                        服務 <span class="inline-block min-w-[20px] sm:w-10 text-center ml-1 sm:ml-2 num-counter text-base sm:text-xl md:text-2xl" data-target="25">0</span>
-                    </div>
+                <!-- 店家總計數字 -->
+                <div class="mx-auto bg-white/80 backdrop-blur-md rounded-full px-5 md:px-8 py-2 md:py-2.5 shadow-sm border border-pink-100 flex items-center justify-center text-xs md:text-base font-bold text-gray-500 w-fit">
+                    <i class="fa-solid fa-chart-pie mr-2 text-themePink text-sm md:text-lg"></i> 
+                    目前統計店家總計數量： <span class="inline-block text-center text-themePink font-black text-base md:text-xl mx-1.5 num-counter" data-target="128">0</span> 家
                 </div>
             </div>
 
             <!-- 🎉 在地新店家開幕推廣活動 (新增區塊) -->
             <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-orange-50 relative overflow-hidden">
-                <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0"><i class="fa-solid fa-shop"></i></div>
-                <h2 class="text-2xl font-black text-orange-400 mb-4 relative z-10 flex items-center">
-                    <i class="fa-solid fa-gift mr-3"></i> 在地新店家開幕推廣
-                </h2>
+                <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0 pointer-events-none"><i class="fa-solid fa-shop"></i></div>
+                
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-5 relative z-10 gap-3">
+                    <h2 class="text-2xl font-black text-orange-400 flex items-center">
+                        <i class="fa-solid fa-gift mr-3"></i> 在地新店家開幕推廣
+                    </h2>
+                    <a href="https://line.me/ti/g2/moTJsgUwRu2-lABYleiQLH8ZqhccDhy0alxYlA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="w-fit bg-[#00B900] hover:bg-[#009900] text-white text-[11px] sm:text-xs font-black px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md flex items-center gap-1.5 transition-transform hover:scale-105 hover:-translate-y-1">
+                        <i class="fa-brands fa-line text-sm sm:text-base"></i> 提供新店情報
+                    </a>
+                </div>
                 
                 <!-- 卡片橫向捲動區塊 -->
                 <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pb-2 relative z-10 snap-x snap-mandatory">
@@ -550,7 +538,7 @@
                 </div>
 
                 <!-- 新增：A7 各里分配圖與快速跳轉標籤 (強制左直式地圖、右選單佈局) -->
-                <div class="mb-8 bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-3 md:p-6 border-4 border-gray-50 shadow-cute flex flex-row gap-3 md:gap-6 items-stretch">
+                <div class="mb-8 bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-3 md:p-6 border-4 border-gray-50 shadow-cute flex flex-col md:flex-row gap-3 md:gap-6 items-stretch">
                     
                     <!-- 左側地圖 (直式設計，確保手機版佔比適中以保持圖片清楚) -->
                     <div class="w-[55%] md:w-5/12 lg:w-1/3 min-h-[350px] md:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
