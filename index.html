@@ -83,7 +83,7 @@
                 <div class="w-10 h-10 bg-themeYellow rounded-full flex items-center justify-center text-white text-xl shadow-inner">
                     <i class="fa-solid fa-tent"></i>
                 </div>
-                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部</span></span>
+                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部　</span></span>
             </div>
 
             <!-- 電腦版選單 -->
@@ -143,7 +143,7 @@
                 <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南</p>
                 
                 <div class="max-w-xl mx-auto relative z-10">
-                    <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？牙醫？" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
+                    <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？長庚？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
                     <button onclick="doSearch()" class="absolute right-2 top-2 bottom-2 w-12 bg-themeYellow text-white rounded-full flex items-center justify-center text-xl hover:bg-yellow-400 hover:scale-105 transition-all shadow-sm">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -185,7 +185,7 @@
                 
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-5 relative z-10 gap-3">
                     <h2 class="text-2xl font-black text-orange-400 flex items-center">
-                        <i class="fa-solid fa-gift mr-3"></i> 在地新店家開幕推廣
+                        <i class="fa-solid fa-gift mr-3"></i> 在地新店家活動情報
                     </h2>
                     <a href="https://line.me/ti/g2/moTJsgUwRu2-lABYleiQLH8ZqhccDhy0alxYlA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="w-fit bg-[#00B900] hover:bg-[#009900] text-white text-[11px] sm:text-xs font-black px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md flex items-center gap-1.5 transition-transform hover:scale-105 hover:-translate-y-1">
                         <i class="fa-brands fa-line text-sm sm:text-base"></i> 提供新店情報
@@ -196,13 +196,13 @@
                 <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pb-2 relative z-10 snap-x snap-mandatory">
                     <!-- 模擬推廣卡片 1 -->
                     <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">即將開幕</div>
+                        <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                         <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">熊熊可麗餅 A7店</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">3/1~3/3 試營運期間，出示 A7 居民證全品項買一送一！</p>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>文青路</span>
+                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>桃園市龜山區長青一街39號</span>
                             <span class="text-orange-400 bg-orange-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-utensils"></i></span>
                         </div>
                     </div>
@@ -537,27 +537,27 @@
                     <h2 class="text-2xl font-black text-themeGreen flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeGreen"></i>A7 建案分佈</h2>
                 </div>
 
-                <!-- 新增：A7 各里分配圖與快速跳轉標籤 (強制左直式地圖、右選單佈局) -->
-                <div class="mb-8 bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-3 md:p-6 border-4 border-gray-50 shadow-cute flex flex-col md:flex-row gap-3 md:gap-6 items-stretch">
+                <!-- 新增：A7 各里分配圖與快速跳轉標籤 (手機版圖片在上列表在下，電腦版圖片在左列表在右) -->
+                <div class="mb-8 bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-4 md:p-6 border-4 border-gray-50 shadow-cute flex flex-col md:flex-row gap-4 md:gap-6 items-stretch">
                     
-                    <!-- 左側地圖 (直式設計，確保手機版佔比適中以保持圖片清楚) -->
-                    <div class="w-[55%] md:w-5/12 lg:w-1/3 min-h-[350px] md:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
+                    <!-- 左側/上方地圖 (手機版全寬並在上，平板以上置左並設定適當比例) -->
+                    <div class="w-full md:w-5/12 lg:w-1/3 min-h-[250px] sm:min-h-[350px] md:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
                         <!-- 關鍵：使用 object-contain 加上 padding 確保地圖完整顯示不被裁切 -->
-                        <img src="https://github.com/A7Club/life/blob/main/a7map.png?raw=true" class="absolute inset-0 w-full h-full p-1.5 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
+                        <img src="https://github.com/A7Club/life/blob/main/a7map.png?raw=true" class="absolute inset-0 w-full h-full p-2 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
                         
                         <div class="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-white whitespace-nowrap">
                             A7 區域建案概覽圖
                         </div>
                     </div>
                     
-                    <!-- 右側標籤選單 -->
-                    <div class="w-[45%] md:w-7/12 lg:w-2/3 flex flex-col">
-                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-3 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
-                            <h3 class="text-sm md:text-xl font-black text-gray-700 mb-3 md:mb-4 flex items-center border-b-2 border-gray-200 pb-2 md:pb-3 shrink-0">
+                    <!-- 右側/下方標籤選單 -->
+                    <div class="w-full md:w-7/12 lg:w-2/3 flex flex-col">
+                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
+                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-4 md:mb-5 flex items-center border-b-2 border-gray-200 pb-2 md:pb-3 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
                             </h3>
-                            <!-- 網格排版：手機版強制1欄(grid-cols-1)，平板以上分兩欄(sm:grid-cols-2) -->
-                            <div id="village-tags-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-3 overflow-y-auto hide-scrollbar flex-1 content-start">
+                            <!-- 網格排版：依據螢幕大小自動雙排或單排 -->
+                            <div id="village-tags-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start">
                                 <!-- 這裡會動態載入各里小標籤 -->
                             </div>
                         </div>
@@ -773,7 +773,19 @@
 
                                     const showQR = snsType === 'LINE';
                                     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(item.link)}`;
-                                    const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg}&color=fff&size=100&font-size=0.35`;
+                                    
+                                    // 預設純文字頭像
+                                    let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=100&font-size=0.35`;
+
+                                    // 動態解析 Threads 網址抓取真實頭像 (若表單有圖片則優先使用)
+                                    if (item.img) {
+                                        avatarUrl = item.img;
+                                    } else if (snsType === 'Threads' && item.link.includes('@')) {
+                                        const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
+                                        if (match && match[1]) {
+                                            avatarUrl = `https://unavatar.io/instagram/${match[1]}?fallback=${encodeURIComponent(avatarUrl)}`;
+                                        }
+                                    }
 
                                     return `
                                         <a href="${item.link}" target="_blank" class="bg-blue-50 p-4 rounded-2xl shadow-sm border border-white flex items-center justify-between hover:-translate-y-1 hover:shadow-md transition-all group">
@@ -1728,12 +1740,18 @@
                     if (catIdx === -1) catIdx = 1;
                     let linkIdx = headers.findIndex(k => k.includes('連結') || k.includes('網址') || k.includes('URL'));
                     if (linkIdx === -1) linkIdx = 2;
+                    // 擴充支援：自動檢查表單中是否有「頭像或照片」的欄位
+                    let imgIdx = headers.findIndex(k => k.includes('頭像') || k.includes('照片') || k.includes('圖片'));
 
                     let parsedData = rows.slice(1).map(row => {
+                        let rawImg = imgIdx !== -1 && row[imgIdx] ? row[imgIdx].trim() : '';
+                        let finalImg = rawImg.startsWith('http') ? rawImg : '';
+
                         return {
                             name: row[nameIdx] ? row[nameIdx].trim() : '',
                             category: row[catIdx] ? row[catIdx].trim() : '其他推薦',
-                            link: row[linkIdx] ? row[linkIdx].trim() : '#'
+                            link: row[linkIdx] ? row[linkIdx].trim() : '#',
+                            img: finalImg
                         };
                     }).filter(item => item.name !== '' && item.link !== '#');
 
@@ -1800,8 +1818,19 @@
                     const showQR = snsType === 'LINE';
                     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
                     
-                    // 自動生成文字頭像 URL (使用品牌色或隨機色)
-                    const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
+                    // 預設文字頭像 URL (使用品牌色或隨機色)
+                    let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
+
+                    // 動態解析 Threads 網址抓取真實頭像 (若表單有圖片則優先使用)
+                    if (item.img) {
+                        avatarUrl = item.img;
+                    } else if (snsType === 'Threads' && item.link.includes('@')) {
+                        // 擷取 Threads 的 @帳號名稱，並透過 unavatar 代理抓取對應頭像
+                        const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
+                        if (match && match[1]) {
+                            avatarUrl = `https://unavatar.io/instagram/${match[1]}?fallback=${encodeURIComponent(avatarUrl)}`;
+                        }
+                    }
 
                     return `
                         <a href="${item.link}" target="_blank" class="bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-1 transition-all flex items-center justify-between group h-full">
@@ -1931,15 +1960,15 @@
                 // 產生安全且唯一的 ID 供錨點跳轉使用
                 const safeId = `village-${villageName.replace(/\s+/g, '')}`;
 
-                // 生成各里的快速跳轉標籤 (適應大小螢幕的精緻選單按鈕樣式)
+                // 生成各里的快速跳轉標籤 (放大文字與按鈕尺寸，適應上下堆疊與並排佈局)
                 tagsHtml += `
                     <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
-                            class="px-2 md:px-4 py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-xl md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-xs md:text-base flex items-center gap-2 md:gap-3 hover:-translate-y-1 w-full text-left group">
-                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full ${style.bg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid ${style.icon} text-[10px] md:text-sm"></i>
+                            class="px-4 md:px-5 py-3.5 md:py-4 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-xl md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-base md:text-lg flex items-center gap-3 md:gap-4 hover:-translate-y-1 w-full text-left group">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full ${style.bg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid ${style.icon} text-sm md:text-base"></i>
                         </div>
-                        <span class="truncate flex-1">${villageName}</span>
-                        <i class="fa-solid fa-chevron-right text-gray-300 group-hover:${style.textTitle} transition-colors text-[10px] md:text-xs"></i>
+                        <span class="truncate flex-1 tracking-wide">${villageName}</span>
+                        <i class="fa-solid fa-chevron-right text-gray-300 group-hover:${style.textTitle} transition-colors text-xs md:text-sm"></i>
                     </button>
                 `;
 
