@@ -6,6 +6,7 @@
     <title>A7 樂園生活指南 🎡｜林口、龜山美食機能情報地圖</title>
     <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
+    <meta property="og:image" content="https://github.com/A7Club/life/blob/main/website.jpg?raw=true">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -139,7 +140,7 @@
                 <div class="absolute -left-5 -bottom-5 text-white/40 text-8xl z-0"><i class="fa-solid fa-ice-cream"></i></div>
                 
                 <h1 class="text-4xl md:text-5xl font-black text-white mb-4 relative z-10 drop-shadow-lg">探索 A7 在地生活 ✨</h1>
-                <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站的在地生活指南</p>
+                <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南</p>
                 
                 <div class="max-w-xl mx-auto relative z-10">
                     <input id="home-search-input" type="text" placeholder="🔍 找找看... 漢堡？診所？建案？" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
@@ -150,7 +151,7 @@
             </div>
 
             <!-- 快速通關 (四大捷徑) -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div class="grid grid-cols-4 md:grid-cols-4 gap-4 md:gap-3">
                 <div onclick="loadPage('food')" class="bg-white rounded-3xl p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePink group">
                     <div class="w-16 h-16 mx-auto bg-pink-100 text-themePink rounded-full flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-burger"></i></div>
                     <h3 class="font-black text-lg text-gray-700">找美食</h3>
@@ -196,8 +197,58 @@
                 </div>
             </div>
 
+            <!-- 🎉 在地新店家開幕推廣活動 (新增區塊) -->
+            <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-orange-50 relative overflow-hidden">
+                <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0"><i class="fa-solid fa-shop"></i></div>
+                <h2 class="text-2xl font-black text-orange-400 mb-4 relative z-10 flex items-center">
+                    <i class="fa-solid fa-gift mr-3"></i> 在地新店家開幕推廣
+                </h2>
+                
+                <!-- 卡片橫向捲動區塊 -->
+                <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pb-2 relative z-10 snap-x snap-mandatory">
+                    <!-- 模擬推廣卡片 1 -->
+                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">即將開幕</div>
+                        <div>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">熊熊可麗餅 A7店</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">3/1~3/3 試營運期間，出示 A7 居民證全品項買一送一！</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
+                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>文青路</span>
+                            <span class="text-orange-400 bg-orange-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-utensils"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- 模擬推廣卡片 2 -->
+                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-themeBlue text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">新開幕</div>
+                        <div>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeBlue transition-colors line-clamp-1">A7 寵物星樂園</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">歡慶開幕！毛小孩首次洗澡體驗價只要 $399，再送精美零食。</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
+                            <span class="text-themeBlue bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>樂善二路</span>
+                            <span class="text-themeBlue bg-blue-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-paw"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- 模擬推廣卡片 3 -->
+                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">活動優惠</div>
+                        <div>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeGreen transition-colors line-clamp-1">大樹藥局 (文桃店)</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">全新進駐！即日起至本週末，消費滿千送精緻衛生紙一串。</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
+                            <span class="text-themeGreen bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>文桃路</span>
+                            <span class="text-themeGreen bg-green-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-pills"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- 🗺️ 想去哪裡玩？ (景點推薦) -->
-            <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-purple-50 relative">
+            <div style="display: none;" class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-purple-50 relative">
                 <div class="absolute -top-4 -left-4 text-purple-200 text-5xl floating z-0"><i class="fa-solid fa-camera-retro"></i></div>
                 <h2 class="text-2xl font-black text-themePurple mb-4 relative z-10"> 想去哪裡玩？ <span class="text-sm text-gray-400 font-bold ml-2">為您計算距離中...</span></h2>
                 <!-- 新增 snap-x snap-mandatory 讓滑動像輪播圖一樣平滑吸附，並微調間距 -->
@@ -211,18 +262,26 @@
                 <div class="absolute top-4 right-4 text-themeBlue text-4xl floating"><i class="fa-solid fa-bullhorn"></i></div>
                 <h2 class="text-2xl font-black text-themeBlue mb-6">📢 樂園廣播 (最新動態)</h2>
                 <div class="space-y-4">
-                    <div class="flex items-start bg-blue-50 p-4 rounded-2xl">
+                    <!-- 靜態最新動態 -->
+                    <div class="flex items-start bg-blue-50 p-4 rounded-2xl shadow-sm border border-transparent">
                         <span class="bg-themeBlue text-white font-bold px-3 py-1 rounded-full text-xs mr-3 mt-0.5 shrink-0">新開幕</span>
                         <div>
                             <h4 class="font-bold text-gray-800">文青路「熊熊可麗餅」本週試營運！</h4>
                             <p class="text-sm text-gray-500 mt-1">憑樂園居民證(A7住戶)可享折抵優惠。</p>
                         </div>
                     </div>
-                    <div class="flex items-start bg-pink-50 p-4 rounded-2xl">
+                    <div class="flex items-start bg-pink-50 p-4 rounded-2xl shadow-sm border border-transparent">
                         <span class="bg-themePink text-white font-bold px-3 py-1 rounded-full text-xs mr-3 mt-0.5 shrink-0">交通</span>
                         <div>
                             <h4 class="font-bold text-gray-800">機捷假日加開班次</h4>
                             <p class="text-sm text-gray-500 mt-1">自本月起，週末往返台北車站將增加 15% 班次。</p>
+                        </div>
+                    </div>
+
+                    <!-- 動態在地新聞區塊 -->
+                    <div id="dynamic-news-container" class="pt-6 mt-6 border-t-2 border-dashed border-blue-100 space-y-3">
+                        <div class="text-center text-blue-300 py-4 font-bold text-sm">
+                            <i class="fa-solid fa-spinner fa-spin text-xl mb-2 block"></i> 正在連線搜尋在地最新新聞...
                         </div>
                     </div>
                 </div>
@@ -232,7 +291,7 @@
             <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-pink-50 relative text-center">
                 <div class="absolute -top-6 -right-2 text-pink-200 text-6xl floating z-0"><i class="fa-solid fa-gift"></i></div>
                 <h2 class="text-2xl font-black text-themePink mb-2 relative z-10">🙌 我要分享在地店家資訊</h2>
-                <p class="text-gray-500 font-bold mb-6 relative z-10">發現了超棒的新店？還是有隱藏版美食？快來告訴大家！</p>
+                <p class="text-gray-500 font-bold mb-6 relative z-10">發現了超棒的新店？還是有隱藏版美食？<br>快來告訴大家！</p>
                 
                 <button onclick="toggleShareForm()" class="relative z-10 bg-themePink text-white font-black py-3 px-8 rounded-full shadow-md hover:scale-105 hover:bg-pink-400 transition-all">
                     <i class="fa-solid fa-pen-to-square mr-2"></i> 點我填寫分享
@@ -427,7 +486,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themePurple text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-ticket"></i></div>
-                <h2 class="text-3xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">連結在地生活，更快了解這片土地</span></h2>
+                <h2 class="text-3xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">連結與了解在地生活</span></h2>
             </div>
 
 
@@ -494,7 +553,7 @@
                 <div class="mb-8 bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-3 md:p-6 border-4 border-gray-50 shadow-cute flex flex-row gap-3 md:gap-6 items-stretch">
                     
                     <!-- 左側地圖 (直式設計，確保手機版佔比適中以保持圖片清楚) -->
-                    <div class="w-[45%] md:w-5/12 lg:w-1/3 min-h-[350px] md:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
+                    <div class="w-[55%] md:w-5/12 lg:w-1/3 min-h-[350px] md:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
                         <!-- 關鍵：使用 object-contain 加上 padding 確保地圖完整顯示不被裁切 -->
                         <img src="https://github.com/A7Club/life/blob/main/a7map.png?raw=true" class="absolute inset-0 w-full h-full p-1.5 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
                         
@@ -559,6 +618,7 @@
                     setTimeout(() => {
                         initScrollCounters();
                         fetchAttractionsData(); // 新增：抓取動態景點並計算車程
+                        fetchLocalNews(); // 新增：抓取在地動態新聞
                     }, 50);
                 }
 
@@ -941,6 +1001,57 @@
                 timeElements.forEach(el => {
                     el.innerHTML = `<i class="fa-solid fa-car-side"></i> 瀏覽器不支援定位`;
                 });
+            }
+        }
+
+        // --- 首頁：抓取自動新聞邏輯 ---
+        async function fetchLocalNews() {
+            const container = document.getElementById('dynamic-news-container');
+            if (!container) return;
+
+            try {
+                // 鎖定「林口」、「龜山」、「A7」為搜尋關鍵字，並透過 rss2json 將 Google News RSS 轉為 JSON
+                const keyword = encodeURIComponent('林口 OR 龜山 OR A7重劃區 OR A7體育大學');
+                const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${keyword}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant`);
+                const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+                
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.status === 'ok' && data.items && data.items.length > 0) {
+                    // 只取前五則新聞
+                    const newsHtml = data.items.slice(0, 5).map(item => {
+                        // 整理時間格式
+                        const pubDate = new Date(item.pubDate);
+                        const dateStr = `${pubDate.getFullYear()}-${String(pubDate.getMonth() + 1).padStart(2, '0')}-${String(pubDate.getDate()).padStart(2, '0')}`;
+                        
+                        // 移除標題中多餘的媒體名稱 (如 " - Yahoo奇摩新聞")
+                        const cleanTitle = item.title.split(' - ')[0];
+
+                        return `
+                            <a href="${item.link}" target="_blank" class="flex items-start bg-white/70 hover:bg-white p-3 rounded-[1rem] shadow-sm border border-blue-50 hover:border-themeBlue transition-all group">
+                                <span class="bg-gray-100 text-gray-500 font-black px-2.5 py-1 rounded-lg text-[10px] md:text-xs mr-3 shrink-0 whitespace-nowrap group-hover:bg-themeBlue group-hover:text-white transition-colors">在地新聞</span>
+                                <div class="flex-1 overflow-hidden">
+                                    <h4 class="font-bold text-gray-700 line-clamp-2 group-hover:text-themeBlue transition-colors text-sm leading-snug">${cleanTitle}</h4>
+                                    <p class="text-[10px] md:text-xs text-gray-400 mt-1 flex items-center font-bold"><i class="fa-regular fa-clock mr-1"></i>${dateStr}</p>
+                                </div>
+                                <div class="shrink-0 text-gray-300 group-hover:text-themeBlue transition-colors ml-2 mt-1">
+                                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                                </div>
+                            </a>
+                        `;
+                    }).join('');
+                    
+                    container.innerHTML = `
+                        <h3 class="text-sm font-black text-themeBlue mb-3 flex items-center bg-blue-100/50 inline-block px-3 py-1 rounded-full"><i class="fa-solid fa-rss mr-1.5"></i>自動追蹤：在地媒體報報</h3>
+                        <div class="space-y-2.5">${newsHtml}</div>
+                    `;
+                } else {
+                    container.innerHTML = `<div class="text-center text-gray-400 text-sm font-bold py-2 bg-gray-50 rounded-xl">目前暫無最新的在地新聞喔！</div>`;
+                }
+            } catch (error) {
+                console.error("Fetch News Error:", error);
+                container.innerHTML = `<div class="text-center text-red-400 text-sm font-bold py-2 bg-red-50 rounded-xl">暫時無法取得新聞資訊，請稍後再試。</div>`;
             }
         }
 
@@ -1368,41 +1479,68 @@
                     styleIndex++;
                 }
 
-                // 產生該分類下的店家清單 HTML (包含地址與導航標籤)
-                const itemsHtml = items.map(item => {
-                    // 將地址或店名編碼，準備傳遞給 Google Maps 路線規劃 API
-                    const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
-                    
-                    return `
-                        <li class="flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group">
-                            <!-- 左側：店名與地址 -->
-                            <div class="flex items-start flex-1 overflow-hidden pr-2">
-                                <i class="fa-solid fa-check text-green-400 mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i> 
-                                <div class="flex flex-col overflow-hidden">
-                                    <span class="font-bold text-gray-800 line-clamp-1">${item.name}</span>
-                                    ${item.address ? `<span class="text-xs text-gray-500 mt-0.5 line-clamp-2"><i class="fa-solid fa-location-dot mr-1 text-gray-300"></i>${item.address}</span>` : ''}
+                // 判斷是否為需要顯示照片的「購物中心/觀光景點」類別
+                const isPhotoCategory = catName.includes('購物中心') || catName.includes('觀光景點') || catName.includes('百貨') || catName.includes('商場');
+
+                let itemsHtml = '';
+
+                if (isPhotoCategory) {
+                    // 若為購物中心，改用吸睛的「照片圖卡」排版
+                    itemsHtml = items.map(item => {
+                        const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
+                        const imgContent = item.img 
+                            ? `<img src="${item.img}" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">` 
+                            : `<i class="fa-solid ${style.icon} text-3xl sm:text-4xl text-gray-200"></i>`; // 沒有照片時的備用圖示
+
+                        return `
+                            <div onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${navTarget}', '_blank')" class="bg-gray-50 rounded-[1.5rem] p-2 sm:p-3 shadow-sm border-2 border-transparent hover:border-${style.border.split('-')[1]}-200 hover:bg-white hover:-translate-y-1 transition-all cursor-pointer group flex flex-col h-full">
+                                <div class="w-full h-24 sm:h-32 rounded-[1rem] mb-2 overflow-hidden bg-white flex items-center justify-center shrink-0 border border-gray-100 shadow-inner">
+                                    ${imgContent}
+                                </div>
+                                <div class="px-1 pb-1 flex flex-col flex-1">
+                                    <h4 class="font-black text-gray-800 line-clamp-1 text-sm sm:text-base" title="${item.name}">${item.name}</h4>
+                                    ${item.address ? `<p class="text-[10px] sm:text-xs text-gray-400 font-bold mt-0.5 line-clamp-1" title="${item.address}"><i class="fa-solid fa-location-dot mr-1"></i>${item.address}</p>` : ''}
                                 </div>
                             </div>
-                            
-                            <!-- 右側：Google 地圖導航按鈕 -->
-                            <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" title="導航至 ${item.name}" class="shrink-0 bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white px-3 py-1.5 rounded-lg text-xs font-black transition-colors shadow-sm flex items-center gap-1.5 z-10 cursor-pointer">
-                                <i class="fa-solid fa-location-arrow"></i> 導航
-                            </a>
-                        </li>
-                    `;
-                }).join('');
+                        `;
+                    }).join('');
+                } else {
+                    // 一般分類，維持原本的高效率列表排版
+                    itemsHtml = items.map(item => {
+                        const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
+                        return `
+                            <li class="flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group">
+                                <div class="flex items-start flex-1 overflow-hidden pr-2">
+                                    <i class="fa-solid fa-check text-green-400 mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i> 
+                                    <div class="flex flex-col overflow-hidden">
+                                        <span class="font-bold text-gray-800 line-clamp-1">${item.name}</span>
+                                        ${item.address ? `<span class="text-xs text-gray-500 mt-0.5 line-clamp-2"><i class="fa-solid fa-location-dot mr-1 text-gray-300"></i>${item.address}</span>` : ''}
+                                    </div>
+                                </div>
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" title="導航至 ${item.name}" class="shrink-0 bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white px-3 py-1.5 rounded-lg text-xs font-black transition-colors shadow-sm flex items-center gap-1.5 z-10 cursor-pointer">
+                                    <i class="fa-solid fa-location-arrow"></i> 導航
+                                </a>
+                            </li>
+                        `;
+                    }).join('');
+                }
 
-                // 產生該分類的大卡片 HTML
-                // 外層加入 h-full 與 flex-col 確保同排等高；內層清單加入自動適應欄位
+                // 根據是否為照片卡片，切換對應的網格佈局 (照片卡片需要稍微寬一點的空間，且支援兩欄並排)
+                const listClass = isPhotoCategory 
+                    ? "grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2 sm:gap-3 relative z-10 flex-1 content-start"
+                    : "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
+                
+                const containerTag = isPhotoCategory ? "div" : "ul";
+
                 html += `
                     <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative h-full flex flex-col">
                         <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
                         <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
                         
-                        <!-- 內層店家清單：當外層卡片變寬時，自動變成多欄排列 -->
-                        <ul class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start">
+                        <!-- 動態套用不同的網格排版 -->
+                        <${containerTag} class="${listClass}">
                             ${itemsHtml}
-                        </ul>
+                        </${containerTag}>
                     </div>
                 `;
             }
