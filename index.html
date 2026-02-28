@@ -102,13 +102,12 @@
             </div>
         </div>
 
-        <!-- 手機版展開選單 -->
-        <div id="mobile-menu" class="hidden absolute top-full left-0 right-0 mt-2 bg-white rounded-3xl shadow-cute p-4 border-2 border-pink-100 flex-col space-y-2 text-center">
-
-            <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-3 rounded-xl font-bold text-themePink bg-pink-50">🍿 美食販賣部</button>
-            <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-3 rounded-xl font-bold text-themeYellow bg-yellow-50">🛍️ 購買與生活</button>
-            <button onclick="loadPage('medical'); toggleMobileMenu()" class="w-full py-3 rounded-xl font-bold text-themeGreen bg-green-50">🩺 樂園救護站</button>
-            <button onclick="loadPage('explore'); toggleMobileMenu()" class="w-full py-3 rounded-xl font-bold text-themePurple bg-purple-50">🎠 探索在地A7</button>
+        <!-- 手機版展開選單 (取消全寬，改為自適應寬度並放大字體) -->
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[260px]">
+            <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
+            <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</button>
+            <button onclick="loadPage('medical'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</button>
+            <button onclick="loadPage('explore'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</button>
         </div>
     </nav>
 
@@ -170,28 +169,29 @@
                 </div>
             </div>
 
-            <!-- 店家統計 (大螢幕強制一列 + 固定寬度防抖動，中小螢幕改為兩列/網格佈局) -->
-            <div id="stats-container" class="bg-white rounded-[2rem] lg:rounded-full shadow-cute px-5 lg:px-6 py-4 flex flex-col lg:flex-row items-center justify-center lg:justify-between border-2 border-pink-100 gap-4 select-none cursor-default">
-                <!-- 總計區塊 (置中) -->
-                <div class="flex items-center justify-center text-themePink font-black text-lg shrink-0">
-                    <i class="fa-solid fa-chart-pie mr-2 text-xl"></i> 收錄總計：<span class="inline-block w-12 text-center text-2xl mx-1 num-counter" data-target="128">0</span> 家
+            <!-- 店家統計 (改為上下排版，下方分類文字放大並填滿寬度) -->
+            <div id="stats-container" class="bg-white rounded-[2rem] shadow-cute p-4 md:p-6 flex flex-col items-center justify-center border-2 border-pink-100 gap-4 md:gap-5 select-none cursor-default w-full">
+                <!-- 總計區塊 (置中放大) -->
+                <div class="flex items-center justify-center text-themePink font-black text-xl sm:text-2xl md:text-3xl shrink-0">
+                    <i class="fa-solid fa-chart-pie mr-2 text-2xl sm:text-3xl md:text-4xl"></i> 收錄總計：<span class="inline-block min-w-[3rem] sm:w-20 text-center text-3xl sm:text-4xl md:text-5xl mx-1 num-counter" data-target="128">0</span> 家
                 </div>
                 
-                <div class="hidden lg:block w-px h-6 bg-gray-200 shrink-0"></div>
+                <!-- 橫向分隔線 -->
+                <div class="w-full h-px bg-pink-100 shrink-0 opacity-80"></div>
                 
-                <!-- 分類標籤區塊 (中小螢幕呈現兩欄/一列，大螢幕強制一列) -->
-                <div class="grid grid-cols-2 md:flex md:flex-row items-center justify-center gap-2 sm:gap-3 md:gap-4 text-sm font-bold w-full lg:w-auto shrink-0">
-                    <div class="flex items-center justify-center bg-pink-50 px-2 sm:px-3 py-2 sm:py-1.5 rounded-full text-pink-600 border border-pink-100">
-                        美食 <span class="inline-block w-7 text-center ml-0.5 num-counter" data-target="56">0</span>
+                <!-- 分類標籤區塊 (強迫分佈填滿寬度，文字與數字顯著放大) -->
+                <div class="flex flex-row items-center justify-between gap-1.5 sm:gap-4 text-[13px] sm:text-base md:text-xl font-black w-full shrink-0">
+                    <div class="flex flex-1 items-center justify-center bg-pink-50 py-2 sm:py-3 px-1 sm:px-2 rounded-xl sm:rounded-2xl text-pink-600 border-2 border-pink-100 whitespace-nowrap shadow-sm hover:-translate-y-1 transition-transform">
+                        美食 <span class="inline-block min-w-[20px] sm:w-10 text-center ml-1 sm:ml-2 num-counter text-base sm:text-xl md:text-2xl" data-target="56">0</span>
                     </div>
-                    <div class="flex items-center justify-center bg-yellow-50 px-2 sm:px-3 py-2 sm:py-1.5 rounded-full text-yellow-600 border border-yellow-100">
-                        購物 <span class="inline-block w-7 text-center ml-0.5 num-counter" data-target="32">0</span>
+                    <div class="flex flex-1 items-center justify-center bg-yellow-50 py-2 sm:py-3 px-1 sm:px-2 rounded-xl sm:rounded-2xl text-yellow-600 border-2 border-yellow-100 whitespace-nowrap shadow-sm hover:-translate-y-1 transition-transform">
+                        購物 <span class="inline-block min-w-[20px] sm:w-10 text-center ml-1 sm:ml-2 num-counter text-base sm:text-xl md:text-2xl" data-target="32">0</span>
                     </div>
-                    <div class="flex items-center justify-center bg-green-50 px-2 sm:px-3 py-2 sm:py-1.5 rounded-full text-green-600 border border-green-100">
-                        醫療 <span class="inline-block w-7 text-center ml-0.5 num-counter" data-target="15">0</span>
+                    <div class="flex flex-1 items-center justify-center bg-green-50 py-2 sm:py-3 px-1 sm:px-2 rounded-xl sm:rounded-2xl text-green-600 border-2 border-green-100 whitespace-nowrap shadow-sm hover:-translate-y-1 transition-transform">
+                        醫療 <span class="inline-block min-w-[20px] sm:w-10 text-center ml-1 sm:ml-2 num-counter text-base sm:text-xl md:text-2xl" data-target="15">0</span>
                     </div>
-                    <div class="flex items-center justify-center bg-purple-50 px-2 sm:px-3 py-2 sm:py-1.5 rounded-full text-purple-600 border border-purple-100">
-                        服務 <span class="inline-block w-7 text-center ml-0.5 num-counter" data-target="25">0</span>
+                    <div class="flex flex-1 items-center justify-center bg-purple-50 py-2 sm:py-3 px-1 sm:px-2 rounded-xl sm:rounded-2xl text-purple-600 border-2 border-purple-100 whitespace-nowrap shadow-sm hover:-translate-y-1 transition-transform">
+                        服務 <span class="inline-block min-w-[20px] sm:w-10 text-center ml-1 sm:ml-2 num-counter text-base sm:text-xl md:text-2xl" data-target="25">0</span>
                     </div>
                 </div>
             </div>
@@ -200,7 +200,8 @@
             <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-purple-50 relative">
                 <div class="absolute -top-4 -left-4 text-purple-200 text-5xl floating z-0"><i class="fa-solid fa-camera-retro"></i></div>
                 <h2 class="text-2xl font-black text-themePurple mb-4 relative z-10"> 想去哪裡玩？ <span class="text-sm text-gray-400 font-bold ml-2">為您計算距離中...</span></h2>
-                <div class="flex gap-4 overflow-x-auto hide-scrollbar pb-2 relative z-10" id="attractions-list-container">
+                <!-- 新增 snap-x snap-mandatory 讓滑動像輪播圖一樣平滑吸附，並微調間距 -->
+                <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pb-2 relative z-10 snap-x snap-mandatory" id="attractions-list-container">
                     <div class="text-center text-purple-300 py-4 w-full"><i class="fa-solid fa-spinner fa-spin text-2xl"></i><span class="text-sm ml-2 font-bold">載入在地景點中...</span></div>
                 </div>
             </div>
@@ -395,47 +396,27 @@
                 <h2 class="text-3xl font-black text-gray-800">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- 診所醫院 -->
-                <div class="bg-white rounded-[2.5rem] p-8 shadow-cute border-4 border-green-50">
-                    <h3 class="text-2xl font-black text-themeGreen mb-6 flex items-center"><i class="fa-solid fa-hospital mr-3"></i> 醫療看診</h3>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center bg-gray-50 p-4 rounded-2xl">
-                            <div>
-                                <h4 class="font-bold text-gray-800">A7 聯合診所</h4>
-                                <p class="text-xs text-gray-500 font-bold mt-1">家醫科、小兒科</p>
-                            </div>
-                            <button class="w-10 h-10 bg-green-100 text-themeGreen rounded-full flex items-center justify-center hover:bg-themeGreen hover:text-white transition-colors"><i class="fa-solid fa-phone"></i></button>
-                        </div>
-                        <div class="flex justify-between items-center bg-gray-50 p-4 rounded-2xl">
-                            <div>
-                                <h4 class="font-bold text-gray-800">微風牙醫診所</h4>
-                                <p class="text-xs text-gray-500 font-bold mt-1">一般牙科、植牙</p>
-                            </div>
-                            <button class="w-10 h-10 bg-green-100 text-themeGreen rounded-full flex items-center justify-center hover:bg-themeGreen hover:text-white transition-colors"><i class="fa-solid fa-phone"></i></button>
-                        </div>
-                        <div class="mt-4 p-4 border-2 border-dashed border-green-200 rounded-2xl text-sm font-bold text-gray-600">
-                            🏥 <span class="text-themeGreen">大型急診：</span>長庚醫院 (車程約 10 分鐘)
-                        </div>
+            <!-- 獨立保留緊急聯絡電話區塊 -->
+            <div class="bg-red-400 p-6 md:p-8 rounded-[2.5rem] text-white shadow-cute mb-8 relative overflow-hidden border-4 border-red-200">
+                <div class="absolute -right-6 -bottom-6 text-red-300 text-8xl floating opacity-50 z-0 pointer-events-none"><i class="fa-solid fa-truck-medical"></i></div>
+                <h3 class="text-2xl font-black mb-4 relative z-10 flex items-center"><i class="fa-solid fa-phone-volume mr-3"></i> 救護與緊急電話</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-lg md:text-xl font-bold relative z-10">
+                    <div class="flex justify-between items-center bg-red-500 p-4 rounded-2xl shadow-inner">
+                        <span class="flex items-center"><i class="fa-solid fa-building-shield mr-2"></i>派出所</span>
+                        <span class="bg-white text-red-500 px-3 py-1 rounded-xl shadow-sm">03-328-1110</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-red-500 p-4 rounded-2xl shadow-inner">
+                        <span class="flex items-center"><i class="fa-solid fa-fire-extinguisher mr-2"></i>消防隊</span>
+                        <span class="bg-white text-red-500 px-3 py-1 rounded-xl shadow-sm">03-329-3351</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- 藥局急救 -->
-                <div class="bg-white rounded-[2.5rem] p-8 shadow-cute border-4 border-red-50">
-                    <h3 class="text-2xl font-black text-red-400 mb-6 flex items-center"><i class="fa-solid fa-pills mr-3"></i> 藥局與緊急聯絡</h3>
-                    <ul class="space-y-4 mb-8">
-                        <li class="bg-red-50 p-4 rounded-2xl flex justify-between items-center font-bold text-gray-700">
-                            <span>大樹藥局 (A7店)</span>
-                            <span class="text-xs bg-red-100 text-red-600 px-3 py-1 rounded-full">至 22:00</span>
-                        </li>
-                    </ul>
-                    <div class="bg-red-400 p-6 rounded-3xl text-white shadow-inner">
-                        <h4 class="font-black mb-4 flex items-center"><i class="fa-solid fa-truck-medical mr-2 text-xl"></i> 緊急電話</h4>
-                        <div class="space-y-2 font-mono text-lg font-bold">
-                            <p class="flex justify-between bg-red-500 p-2 rounded-xl"><span>派出所</span> <span>03-328-1110</span></p>
-                            <p class="flex justify-between bg-red-500 p-2 rounded-xl"><span>消防隊</span> <span>03-329-3351</span></p>
-                        </div>
-                    </div>
+            <!-- 動態醫療分類清單：套用自動自適應網格 -->
+            <div id="medical-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-stretch">
+                <div class="col-span-full text-center text-themeGreen py-12 bg-white rounded-[2.5rem] border-4 border-green-50 shadow-cute">
+                    <i class="fa-solid fa-spinner fa-spin text-4xl mb-5"></i>
+                    <p class="font-bold">正在連線樂園救護中心庫...</p>
                 </div>
             </div>
         </div>
@@ -512,10 +493,10 @@
                 <!-- 新增：A7 各里分配圖與快速跳轉標籤 (強制左直式地圖、右選單佈局) -->
                 <div class="mb-8 bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-3 md:p-6 border-4 border-gray-50 shadow-cute flex flex-row gap-3 md:gap-6 items-stretch">
                     
-                    <!-- 左側地圖 (直式設計，無論螢幕大小均完整呈現 object-contain) -->
-                    <div class="w-2/5 md:w-5/12 lg:w-1/3 min-h-[300px] md:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
+                    <!-- 左側地圖 (直式設計，確保手機版佔比適中以保持圖片清楚) -->
+                    <div class="w-[45%] md:w-5/12 lg:w-1/3 min-h-[350px] md:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
                         <!-- 關鍵：使用 object-contain 加上 padding 確保地圖完整顯示不被裁切 -->
-                        <img src="https://github.com/A7Club/life/blob/main/a7map.png?raw=true" class="absolute inset-0 w-full h-full p-2 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
+                        <img src="https://github.com/A7Club/life/blob/main/a7map.png?raw=true" class="absolute inset-0 w-full h-full p-1.5 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
                         
                         <div class="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-white whitespace-nowrap">
                             A7 區域建案概覽圖
@@ -523,13 +504,13 @@
                     </div>
                     
                     <!-- 右側標籤選單 -->
-                    <div class="w-3/5 md:w-7/12 lg:w-2/3 flex flex-col">
+                    <div class="w-[55%] md:w-7/12 lg:w-2/3 flex flex-col">
                         <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-3 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
                             <h3 class="text-sm md:text-xl font-black text-gray-700 mb-3 md:mb-4 flex items-center border-b-2 border-gray-200 pb-2 md:pb-3 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
                             </h3>
-                            <!-- 網格排版，空間大時分兩欄，空間小時單欄 -->
-                            <div id="village-tags-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3 overflow-y-auto hide-scrollbar flex-1 content-start">
+                            <!-- 網格排版：手機版強制1欄(grid-cols-1)，平板以上分兩欄(sm:grid-cols-2) -->
+                            <div id="village-tags-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-3 overflow-y-auto hide-scrollbar flex-1 content-start">
                                 <!-- 這裡會動態載入各里小標籤 -->
                             </div>
                         </div>
@@ -591,6 +572,11 @@
                     fetchShoppingData();
                 }
 
+                // 如果是 Medical 頁面，動態抓取醫療資料庫
+                if (pageId === 'medical') {
+                    fetchMedicalData();
+                }
+
                 // 如果是 Explore 頁面，動態抓取熱門社群推薦資料
                 if (pageId === 'explore') {
                     fetchCommunityData();
@@ -619,11 +605,12 @@
 
             try {
                 // 等待所有資料庫完整載入 (並行處理加速)
-                const [foodData, shoppingData, communityData, buildingData] = await Promise.all([
+                const [foodData, shoppingData, communityData, buildingData, medicalData] = await Promise.all([
                     loadSharedFoodData(),
                     loadSharedShoppingData(),
                     loadSharedCommunityData(),
-                    loadSharedBuildingData()
+                    loadSharedBuildingData(),
+                    loadSharedMedicalData()
                 ]);
 
                 const q = query.toLowerCase();
@@ -649,6 +636,12 @@
                 const matchedBuildings = buildingData.filter(item => 
                     (item.name && item.name.toLowerCase().includes(q)) || 
                     (item.village && item.village.toLowerCase().includes(q))
+                );
+
+                const matchedMedical = medicalData.filter(item => 
+                    (item.name && item.name.toLowerCase().includes(q)) || 
+                    (item.category && item.category.toLowerCase().includes(q)) ||
+                    (item.address && item.address.toLowerCase().includes(q))
                 );
 
                 let html = '';
@@ -769,6 +762,33 @@
                                         <span class="bg-green-50 text-gray-800 font-bold px-4 py-2 rounded-xl border border-white shadow-sm flex items-center gap-2 hover:-translate-y-1 transition-transform cursor-default">
                                             <i class="fa-solid fa-leaf text-themeGreen"></i> ${item.name} <span class="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-md ml-1 shadow-sm">${item.village}</span>
                                         </span>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // 渲染醫療結果
+                if(matchedMedical.length > 0) {
+                    html += `
+                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-green-50 relative overflow-hidden">
+                            <h3 class="text-2xl font-black text-themeGreen mb-4 border-b-2 border-green-100 pb-2"><i class="fa-solid fa-heart-pulse mr-2"></i> 醫療與救護 (${matchedMedical.length})</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
+                                ${matchedMedical.map(item => {
+                                    let navTarget = encodeURIComponent(item.address || item.name);
+                                    return `
+                                        <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-green-50 p-3 rounded-2xl shadow-sm border border-white flex items-center gap-3 hover:-translate-y-1 hover:shadow-md transition-all group">
+                                            <div class="w-10 h-10 bg-white rounded-full shrink-0 flex items-center justify-center text-themeGreen text-lg shadow-sm"><i class="fa-solid fa-stethoscope"></i></div>
+                                            <div class="flex-1 overflow-hidden pr-2">
+                                                <div class="flex items-center gap-2 mb-0.5">
+                                                    <span class="text-[10px] bg-white text-themeGreen px-1.5 py-0.5 rounded-md font-black shadow-sm shrink-0">${item.category}</span>
+                                                    <h4 class="font-black text-gray-800 line-clamp-1 group-hover:text-themeGreen">${item.name}</h4>
+                                                </div>
+                                                <p class="text-xs text-gray-500 font-bold line-clamp-1"><i class="fa-solid fa-location-dot mr-1 text-green-500"></i>${item.address || '在地醫療'}</p>
+                                            </div>
+                                            <div class="text-themeGreen text-xl pl-1"><i class="fa-solid fa-location-arrow"></i></div>
+                                        </a>
                                     `;
                                 }).join('')}
                             </div>
@@ -988,6 +1008,7 @@
         let globalShoppingData = null; // 快取購物與生活資料庫
         let globalCommunityData = null; // 快取熱門社群資料庫
         let globalBuildingData = null; // 快取建案資料庫
+        let globalMedicalData = null; // 快取醫療資料庫
 
         // ==========================================
         // 🍿 美食販賣部 (Food) 相關函數
@@ -1419,16 +1440,20 @@
                 const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
                 const imgContent = item.img 
                     ? `<img src="${item.img}" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition-transform">` 
-                    : `<i class="fa-solid fa-camera-retro text-4xl text-purple-200"></i>`;
+                    : `<i class="fa-solid fa-camera-retro text-3xl sm:text-4xl text-purple-200"></i>`;
 
+                // 修改：進一步縮小手機版的寬度與高度，讓畫面能顯示更多張卡片，並加入地址標示
                 return `
-                    <div onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${navTarget}', '_blank')" class="min-w-[220px] bg-white rounded-[2rem] p-3 shadow-sm border-2 border-purple-50 shrink-0 hover:-translate-y-2 transition-transform cursor-pointer group flex flex-col">
-                        <div class="w-full h-32 rounded-[1.5rem] mb-3 overflow-hidden bg-purple-50 flex items-center justify-center shrink-0">
+                    <div onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${navTarget}', '_blank')" class="w-[135px] sm:w-[220px] bg-white rounded-[1.2rem] sm:rounded-[2rem] p-2 sm:p-3 shadow-sm border-2 border-purple-50 shrink-0 hover:-translate-y-2 transition-transform cursor-pointer group flex flex-col snap-start">
+                        <div class="w-full h-20 sm:h-32 rounded-[1rem] sm:rounded-[1.5rem] mb-2 overflow-hidden bg-purple-50 flex items-center justify-center shrink-0">
                             ${imgContent}
                         </div>
-                        <div class="flex flex-col flex-1 justify-between">
-                            <h4 class="font-black text-gray-800 px-2 line-clamp-1" title="${item.name}">${item.name}</h4>
-                            <p class="text-sm text-themePurple font-bold px-2 mt-1 location-time" data-address="${item.address || item.name}">
+                        <div class="flex flex-col flex-1 justify-between gap-1">
+                            <div class="px-1 sm:px-2">
+                                <h4 class="font-black text-gray-800 line-clamp-1 text-xs sm:text-base" title="${item.name}">${item.name}</h4>
+                                ${item.address ? `<p class="text-[10px] sm:text-xs text-gray-400 font-bold mt-0.5 line-clamp-1" title="${item.address}"><i class="fa-solid fa-location-dot mr-1"></i>${item.address}</p>` : ''}
+                            </div>
+                            <p class="text-[10px] sm:text-sm text-themePurple font-bold px-1 sm:px-2 mt-auto location-time" data-address="${item.address || item.name}">
                                 <i class="fa-solid fa-spinner fa-spin"></i> 載入車程中...
                             </p>
                         </div>
@@ -1438,6 +1463,123 @@
 
             // 觸發非同步的車程計算
             calculateCarTime();
+        }
+
+        // ==========================================
+        // 🩺 樂園救護站 (Medical) 模組
+        // ==========================================
+        function loadSharedMedicalData() {
+            return new Promise((resolve, reject) => {
+                if (globalMedicalData) return resolve(globalMedicalData);
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=368795626&single=true&output=csv';
+                
+                fetch(csvUrl).then(res => res.text()).then(csvText => {
+                    const rows = parseCSV(csvText);
+                    if (rows.length < 2) return resolve([]);
+
+                    const headers = rows[0];
+                    let nameIdx = headers.findIndex(k => k.includes('名稱') || k.includes('機構') || k.includes('店名'));
+                    if (nameIdx === -1) nameIdx = 0; 
+                    let catIdx = headers.findIndex(k => k.includes('醫療分類'));
+                    if (catIdx === -1) catIdx = 8; // 預設使用 I 欄
+                    let addressIdx = headers.findIndex(k => k.includes('地址'));
+                    let phoneIdx = headers.findIndex(k => k.includes('電話'));
+
+                    let parsedData = rows.slice(1).map(row => {
+                        return {
+                            name: row[nameIdx] ? row[nameIdx].trim() : '',
+                            category: row[catIdx] ? row[catIdx].trim() : '其他醫療',
+                            address: addressIdx !== -1 && row[addressIdx] ? row[addressIdx].trim() : '',
+                            phone: phoneIdx !== -1 && row[phoneIdx] ? row[phoneIdx].trim() : ''
+                        };
+                    }).filter(item => item.name !== '');
+
+                    globalMedicalData = parsedData;
+                    resolve(globalMedicalData);
+                }).catch(reject);
+            });
+        }
+
+        function fetchMedicalData() {
+            const container = document.getElementById('medical-list-container');
+            if (!container) return;
+
+            loadSharedMedicalData().then(data => {
+                renderMedicalData(data);
+            }).catch(err => {
+                console.error('Medical CSV Fetch Error:', err);
+                container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8 bg-white rounded-3xl">醫療資料載入失敗，請稍後再試。</div>';
+            });
+        }
+
+        function renderMedicalData(data) {
+            const container = document.getElementById('medical-list-container');
+            if (!container) return;
+
+            // 依照醫療分類(I欄) 群組化資料
+            const groupedCategories = {};
+            data.forEach(item => {
+                const cat = item.category || '其他醫療';
+                if (!groupedCategories[cat]) groupedCategories[cat] = [];
+                groupedCategories[cat].push(item);
+            });
+
+            const stylePool = [
+                { border: 'border-green-50', textBig: 'text-green-100', textTitle: 'text-themeGreen', icon: 'fa-stethoscope' },
+                { border: 'border-blue-50', textBig: 'text-blue-100', textTitle: 'text-themeBlue', icon: 'fa-tooth' },
+                { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', icon: 'fa-baby' },
+                { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-yellow-500', icon: 'fa-eye' },
+                { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', icon: 'fa-bone' },
+                { border: 'border-orange-50', textBig: 'text-orange-100', textTitle: 'text-orange-400', icon: 'fa-pills' }
+            ];
+
+            let html = '';
+
+            for (const [catName, items] of Object.entries(groupedCategories)) {
+                // 智慧配對：依分類名稱關鍵字給予適合的顏色與圖示
+                let style;
+                if (catName.includes('牙')) style = stylePool[1];
+                else if (catName.includes('小兒') || catName.includes('婦產')) style = stylePool[2];
+                else if (catName.includes('眼')) style = stylePool[3];
+                else if (catName.includes('骨') || catName.includes('復健')) style = stylePool[4];
+                else if (catName.includes('藥')) style = stylePool[5];
+                else style = stylePool[0];
+
+                const itemsHtml = items.map(item => {
+                    const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
+                    return `
+                        <li class="bg-gray-50 p-4 rounded-2xl hover:bg-white hover:shadow-md transition-all group flex flex-col gap-2 border border-transparent hover:border-gray-100 h-full justify-between">
+                            <div class="flex items-start justify-between w-full">
+                                <div class="flex items-start flex-1 pr-2">
+                                    <i class="fa-solid fa-notes-medical ${style.textTitle} mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i>
+                                    <span class="font-black text-gray-800 text-lg">${item.name}</span>
+                                </div>
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" title="導航至 ${item.name}" class="shrink-0 bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white px-2.5 py-1.5 rounded-lg text-xs font-black transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
+                                    <i class="fa-solid fa-location-arrow"></i> 導航
+                                </a>
+                            </div>
+                            <div class="mt-1 space-y-1.5">
+                                ${item.phone ? `<div class="text-xs md:text-sm text-gray-500 font-bold ml-6 flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-300"></i>${item.phone}</div>` : ''}
+                                ${item.address ? `<div class="text-xs md:text-sm text-gray-500 font-bold ml-6 flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-300 mt-0.5"></i><span class="line-clamp-2">${item.address}</span></div>` : ''}
+                            </div>
+                        </li>
+                    `;
+                }).join('');
+
+                // 外層大卡片 (套用 flex 與 h-full 確保等高)
+                html += `
+                    <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${style.border} relative h-full flex flex-col">
+                        <div class="absolute -top-4 -right-4 text-6xl ${style.textBig} floating pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
+                        <h3 class="text-2xl font-black ${style.textTitle} mb-5 border-b-2 border-gray-100 pb-3 relative z-10 shrink-0">
+                            ${catName}
+                        </h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start">
+                            ${itemsHtml}
+                        </ul>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
         }
 
         // ==========================================
@@ -1632,7 +1774,6 @@
             });
 
             // == 依照地圖照片顏色綁定各里別的專屬色彩 ==
-            // 由於 2026 年行政里調整，這裡將文青、樂善、文桃、善捷、牛角坡、長庚等里別，
             // 嚴格配置專屬的 Tailwind 色系，以精準對應上方地圖照片的區塊顏色。
             const fallbackPool = [
                 { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-map', bg: 'bg-gray-50', iconColor: 'text-gray-200', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' },
@@ -1641,12 +1782,13 @@
             let fallbackStyleIndex = 0;
 
             function getStyleForVillage(name) {
-                if (name.includes('文青')) return { border: 'border-pink-200', textTitle: 'text-themePink', icon: 'fa-building', bg: 'bg-pink-50', iconColor: 'text-pink-200', activeIcon: 'text-themePink', hoverBg: 'hover:bg-pink-50' };
-                if (name.includes('樂善')) return { border: 'border-green-200', textTitle: 'text-themeGreen', icon: 'fa-tree', bg: 'bg-green-50', iconColor: 'text-green-200', activeIcon: 'text-themeGreen', hoverBg: 'hover:bg-green-50' };
-                if (name.includes('文桃')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-city', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
-                if (name.includes('善捷')) return { border: 'border-yellow-300', textTitle: 'text-yellow-600', icon: 'fa-house-chimney', bg: 'bg-yellow-50', iconColor: 'text-yellow-300', activeIcon: 'text-yellow-500', hoverBg: 'hover:bg-yellow-50' };
-                if (name.includes('牛角坡')) return { border: 'border-purple-200', textTitle: 'text-themePurple', icon: 'fa-map-pin', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-themePurple', hoverBg: 'hover:bg-purple-50' };
-                if (name.includes('長庚')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-hospital', bg: 'bg-orange-50', iconColor: 'text-orange-200', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
+                if (name.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
+                if (name.includes('樂善')) return { border: 'border-yellow-200', textTitle: 'text-themeYellow', icon: 'fa-tree', bg: 'bg-yellow-50', iconColor: 'text-yellow-200', activeIcon: 'text-themeYellow', hoverBg: 'hover:bg-yellow-50' };
+                if (name.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-themeGreen', icon: 'fa-leaf', bg: 'bg-green-50', iconColor: 'text-green-200', activeIcon: 'text-themeGreen', hoverBg: 'hover:bg-green-50' };
+                if (name.includes('文桃')) return { border: 'border-pink-200', textTitle: 'text-themePink', icon: 'fa-city', bg: 'bg-pink-50', iconColor: 'text-pink-200', activeIcon: 'text-themePink', hoverBg: 'hover:bg-pink-50' };
+                if (name.includes('文藝')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-palette', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
+                if (name.includes('文樂')) return { border: 'border-purple-200', textTitle: 'text-themePurple', icon: 'fa-music', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-themePurple', hoverBg: 'hover:bg-purple-50' };
+                if (name.includes('長庚')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-hospital', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
                 
                 // 找不到對應里別時，使用備用色彩輪替
                 const style = fallbackPool[fallbackStyleIndex % fallbackPool.length];
