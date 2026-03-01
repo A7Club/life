@@ -203,8 +203,9 @@
                 <div class="absolute -left-5 -bottom-5 text-white/40 text-8xl z-0"><i class="fa-solid fa-ice-cream"></i></div>
                 
                 <h1 class="text-4xl md:text-5xl font-black text-white mb-4 relative z-10 drop-shadow-lg">探索 A7 在地生活 ✨</h1>
-                <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南</p>
-                
+                <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南<br>
+                <span class="text-sm md:text-base text-white font-bold mt-1 inline-block">― 網站三月試營運，你的建議就是我們升級的動力 ―</span>
+                </p>
                 <div class="max-w-xl mx-auto relative z-10">
                     <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？全聯？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
                     <button onclick="doSearch()" class="absolute right-2 top-2 bottom-2 w-12 bg-themeYellow text-white rounded-full flex items-center justify-center text-xl hover:bg-yellow-400 hover:scale-105 transition-all shadow-sm">
@@ -251,7 +252,9 @@
                 <div class="w-full lg:w-[35%] flex flex-col gap-3 relative z-10 shrink-0">
                     <h2 class="text-xl md:text-2xl font-black text-purple-400 flex items-center border-b-2 border-gray-100 pb-3 mb-1">
                         <i class="fa-solid fa-train-tram text-themePurple mr-3 text-2xl md:text-3xl"></i> 機捷到站通知
+                        <span class="text-xs text-gray-400 font-normal ml-3 mt-1 hidden sm:inline-block"><b>參考資料：<a href="https://tdx.transportdata.tw/" target="_blank" class="hover:underline">交通部TDX</a></b></span>
                     </h2>
+
                     <div class="flex flex-row lg:flex-col gap-3 md:gap-4 h-full">
                         <!-- 北上 (往台北) -->
                         <div class="flex-1 bg-green-50 rounded-2xl p-4 shadow-sm border border-green-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
@@ -285,8 +288,8 @@
                         <span class="text-[10px] sm:text-xs text-gray-400 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>系統推算中</span>
                     </div>
                     
-                    <!-- 預留 mb-8 空間避免下方文字被遮蔽 -->
-                    <div class="relative w-full px-3 sm:px-6 mb-6 mt-2">
+                    <!-- 預留 mb-12 空間避免下方文字被遮蔽 -->
+                    <div class="relative w-full px-3 sm:px-6 mb-12 mt-2">
                         <!-- 軌道底線 -->
                         <div class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[6px] h-1.5 sm:h-2 bg-gray-200 rounded-full z-0"></div>
                         
@@ -294,48 +297,48 @@
                         <div id="mrt-track-container" class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[6px] z-20 pointer-events-none"></div>
                         
                         <!-- 站點配置 (使用 justify-between 自動均分 A4 到 A10) -->
-                        <div class="flex justify-between relative z-10 w-full">
+                        <div class="flex justify-between relative z-10 w-full ">
                             <!-- A4 -->
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
                                 <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A4</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">副都心</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">副都心</span>
                             </div>
                             <!-- A5 -->
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
                                 <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A5</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">泰山</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">泰山</span>
                             </div>
                             <!-- A6 -->
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
                                 <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A6</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">貴和</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">貴和</span>
                             </div>
                             <!-- A7 (放大醒目) -->
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-themePurple border-[3px] sm:border-4 border-white shadow-md z-10 -mt-0.5 sm:-mt-0.5"></div>
                                 <span class="text-[11px] sm:text-sm font-black text-themePurple mt-1.5">A7</span>
-                                <span class="text-[11px] sm:text-[15px] font-black text-gray-600 whitespace-nowrap absolute top-8 sm:top-10">體大</span>
+                                <span class="text-[11px] sm:text-[15px] font-black text-gray-600 whitespace-nowrap absolute top-11 sm:top-14">體大</span>
                             </div>
                             <!-- A8 -->
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
                                 <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A8</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">長庚</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">長庚</span>
                             </div>
                             <!-- A9 -->
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
                                 <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A9</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">林口</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">林口</span>
                             </div>
                             <!-- A10 -->
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
                                 <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A10</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">山鼻</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">山鼻</span>
                             </div>
                         </div>
                     </div>
@@ -576,7 +579,7 @@
                         <div id="food-target-marker" class="absolute inset-0 pointer-events-none flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 z-20">
                             <!-- 新增：顯示店家名稱的小氣泡 -->
                             <div id="food-marker-name" class="bg-themePink text-white px-4 py-1.5 rounded-full font-black shadow-md mb-2 text-sm text-center">店家名稱</div>
-                            <i class="fa-solid fa-location-dot text-red-500 text-5xl drop-shadow-md -mt-2 animate-bounce"></i>
+                            <i class="fa-solid fa-location-dot text-red-300 text-5xl drop-shadow-md -mt-2 animate-bounce"></i>
                             <div class="w-4 h-2 bg-black/20 rounded-[50%] blur-[1px]"></div>
                         </div>
 
@@ -1252,7 +1255,7 @@
                         pos = Math.max(0, Math.min(100, pos));
                         
                         nbTrainsHTML += `<div class="absolute top-[4px] sm:top-[4px] -translate-y-full -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
-                            <div class="bg-white text-themeGreen rounded-full shadow-md border-2 border-purple-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
+                            <div class="bg-white text-themeGreen rounded-full shadow-md border-2 border-green-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
                                 <i class="fa-solid fa-caret-left text-[10px]"></i>
                                 <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
                             </div>
@@ -1293,7 +1296,7 @@
                 const unitEl = document.getElementById(unitId);
                 if (Math.ceil(diff) <= 1 && Math.ceil(diff) >= 0) {
                     el.innerText = '進站中';
-                    el.className = 'text-2xl sm:text-3xl font-black text-red-500 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest';
+                    el.className = 'text-2xl sm:text-3xl font-black text-red-200 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest';
                     if(unitEl) unitEl.style.display = 'none';
                 } else {
                     el.innerText = Math.ceil(diff);
@@ -2526,4 +2529,3 @@
     </script>
 </body>
 </html>
-
