@@ -212,32 +212,32 @@
                 </div>
             </div>
 
-            <!-- 快速通關 (四大捷徑) & 店家統計 (合併區塊) -->
+            <!-- 快速通關 (四大捷徑) & 店家統計 (合併區塊，數字自動載入) -->
             <div id="stats-container" class="flex flex-col gap-4 md:gap-6">
                 <!-- 捷徑卡片 (包含分類統計) -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                     <div onclick="loadPage('food')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePink group flex flex-col items-center justify-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-pink-100 text-themePink rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-burger"></i></div>
-                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">找美食 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span class="num-counter" data-target="56">0</span>)</span></h3>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">找美食 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-food" class="num-counter tracking-widest">...</span>)</span></h3>
                     </div>
                     <div onclick="loadPage('shopping')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themeYellow group flex flex-col items-center justify-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-100 text-themeYellow rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
-                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">買東西 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span class="num-counter" data-target="32">0</span>)</span></h3>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">買東西 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-shopping" class="num-counter tracking-widest">...</span>)</span></h3>
                     </div>
                     <div onclick="loadPage('medical')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themeGreen group flex flex-col items-center justify-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-green-100 text-themeGreen rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-briefcase-medical"></i></div>
-                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">看醫生 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span class="num-counter" data-target="15">0</span>)</span></h3>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">看醫生 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-medical" class="num-counter tracking-widest">...</span>)</span></h3>
                     </div>
                     <div onclick="loadPage('explore')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePurple group flex flex-col items-center justify-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-purple-100 text-themePurple rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map-location-dot"></i></div>
-                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">探索柒 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span class="num-counter" data-target="25">0</span>)</span></h3>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">探索柒 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-explore" class="num-counter tracking-widest">...</span>)</span></h3>
                     </div>
                 </div>
                 
                 <!-- 店家總計數字 -->
                 <div class="mx-auto bg-white/80 backdrop-blur-md rounded-full px-5 md:px-8 py-2 md:py-2.5 shadow-sm border border-pink-100 flex items-center justify-center text-xs md:text-base font-bold text-gray-500 w-fit">
                     <i class="fa-solid fa-chart-pie mr-2 text-themePink text-sm md:text-lg"></i> 
-                    目前統計店家總計數量： <span class="inline-block text-center text-themePink font-black text-base md:text-xl mx-1.5 num-counter" data-target="128">0</span> 家
+                    目前統計店家總計數量： <span id="counter-total" class="inline-block text-center text-themePink font-black text-base md:text-xl mx-1.5 num-counter">...</span> 家
                 </div>
             </div>
 
@@ -667,24 +667,24 @@
                 <!-- 新增：A7 各里分配圖與快速跳轉標籤 (手機版圖片在上列表在下，電腦版圖片在左列表在右) -->
                 <div class="mb-8 bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-4 md:p-6 border-4 border-gray-50 shadow-cute flex flex-col md:flex-row gap-4 md:gap-6 items-stretch">
                     
-                    <!-- 左側/上方地圖 (改為以圖片高度為主，自然撐開空間不裁切，搭配 max-h 避免過長) -->
-                    <div class="w-full md:w-1/2 lg:w-5/12 rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
-                        <!-- 關鍵：移除 absolute，讓圖片依據原比例自然撐開容器高度，確保任何螢幕下都最大化且清晰 -->
-                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-auto max-h-[75vh] md:max-h-[85vh] p-2 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
+                    <!-- 左側/上方地圖 (移除外框，以圖片高度為主，自然撐開空間不裁切) -->
+                    <div class="w-full md:w-1/2 lg:w-5/12 relative flex items-center justify-center shrink-0 group">
+                        <!-- 關鍵：移除外框、背景與 padding，讓圖片乾淨呈現 -->
+                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-auto max-h-[75vh] md:max-h-[85vh] object-contain opacity-95 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
                         
-                        <div class="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-white whitespace-nowrap">
+                        <div class="hidden md:block absolute bottom-2 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-gray-100 whitespace-nowrap">
                             A7 區域建案概覽圖
                         </div>
                     </div>
                     
                     <!-- 右側/下方標籤選單 (寬度自動分配剩下的空間) -->
                     <div class="w-full md:w-1/2 lg:w-7/12 flex flex-col">
-                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
-                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-4 md:mb-5 flex items-center border-b-2 border-gray-200 pb-2 md:pb-3 shrink-0">
+                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-3 sm:p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
+                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 md:mb-5 flex items-center border-b-2 border-gray-200 pb-2 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
                             </h3>
-                            <!-- 改為彈性換行 (flex-wrap)，按鈕寬度將由內部文字長短決定 -->
-                            <div id="village-tags-container" class="flex flex-wrap gap-2 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start">
+                            <!-- 手機版採用 grid-cols-4 確保兩行內，平板以上採用 flex-wrap 依內容適應寬度 -->
+                            <div id="village-tags-container" class="grid grid-cols-4 sm:flex sm:flex-wrap gap-1.5 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start">
                                 <!-- 這裡會動態載入各里小標籤 -->
                             </div>
                         </div>
@@ -816,7 +816,7 @@
                 if (pageId === 'home') {
                     // 微小延遲確保 DOM 已完全渲染
                     setTimeout(() => {
-                        initScrollCounters();
+                        fetchAndUpdateHomeCounts(); // 動態載入並計算首頁店家數字
                         fetchAttractionsData(); // 新增：抓取動態景點並計算車程
                         fetchLocalNews(); // 新增：抓取在地動態新聞
                     }, 50);
@@ -1088,57 +1088,67 @@
             }
         }
 
-        // 捲動監聽：當元素進入畫面時才觸發動畫
-        function initScrollCounters() {
-            const statsContainer = document.getElementById('stats-container');
-            if (!statsContainer) return;
+        // --- 首頁店家數量動態統計與動畫 ---
+        async function fetchAndUpdateHomeCounts() {
+            try {
+                // 等待所有共用資料庫載入
+                const [foodData, shoppingData, medicalData, communityData] = await Promise.all([
+                    loadSharedFoodData(),
+                    loadSharedShoppingData(),
+                    loadSharedMedicalData(),
+                    loadSharedCommunityData()
+                ]);
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    // 當區塊進入畫面時
-                    if (entry.isIntersecting) {
-                        animateCounters();
-                        observer.unobserve(entry.target); // 觸發過後就取消監聽，避免重複播放
+                // 計算各分類數量與總計
+                const counts = {
+                    'counter-food': foodData.length,
+                    'counter-shopping': shoppingData.length,
+                    'counter-medical': medicalData.length,
+                    'counter-explore': communityData.length,
+                    'counter-total': foodData.length + shoppingData.length + medicalData.length + communityData.length
+                };
+
+                // 觸發數字跳動動畫
+                for (const [id, target] of Object.entries(counts)) {
+                    const counter = document.getElementById(id);
+                    if (counter && target > 0) {
+                        animateSingleCounter(counter, target);
+                    } else if (counter) {
+                        counter.innerText = '0';
                     }
-                });
-            }, { threshold: 0.2 }); // 當區塊進入畫面 20% 視角時觸發
-
-            observer.observe(statsContainer);
+                }
+            } catch (error) {
+                console.error("取得統計數字失敗:", error);
+                // 發生錯誤時顯示 0
+                document.querySelectorAll('.num-counter').forEach(el => el.innerText = '0');
+            }
         }
 
-        // 數字跳動/翻牌動畫函數 (Ease-Out 特效)
-        function animateCounters() {
-            const counters = document.querySelectorAll('.num-counter');
+        // 單一數字跳動動畫函數 (Ease-Out 特效)
+        function animateSingleCounter(counter, target) {
+            const duration = 2000; // 動畫總時間 2 秒
+            const frameRate = 1000 / 60; // 60 FPS
+            const totalFrames = Math.round(duration / frameRate);
+            let currentFrame = 0;
+
+            // 緩動函數
+            const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+
+            const updateCounter = () => {
+                currentFrame++;
+                const progress = easeOutExpo(currentFrame / totalFrames);
+                const currentVal = Math.round(target * progress);
+                counter.innerText = currentVal;
+
+                if (currentFrame < totalFrames) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.innerText = target; // 確保最後停在精準目標數字
+                }
+            };
             
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-target'));
-                const duration = 2500; // 動畫總時間 2.5 秒
-                const frameRate = 1000 / 60; // 60 FPS
-                const totalFrames = Math.round(duration / frameRate);
-                let currentFrame = 0;
-
-                // 緩動函數：前面跳超快，後面「緩慢停下來」的平滑感 (EaseOutExpo)
-                const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-
-                const updateCounter = () => {
-                    currentFrame++;
-                    const progress = easeOutExpo(currentFrame / totalFrames);
-                    
-                    // 單純、乾淨且快速遞增的數字翻動，視覺上最舒服不抖動
-                    const currentVal = Math.round(target * progress);
-                    counter.innerText = currentVal;
-
-                    if (currentFrame < totalFrames) {
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.innerText = target; // 確保最後停在精準目標數字
-                    }
-                };
-                
-                // 開始前先歸零
-                counter.innerText = '0';
-                requestAnimationFrame(updateCounter);
-            });
+            counter.innerText = '0';
+            requestAnimationFrame(updateCounter);
         }
 
         // --- 景點車程計算邏輯 ---
@@ -2185,14 +2195,14 @@
                 // 產生安全且唯一的 ID 供錨點跳轉使用
                 const safeId = `village-${villageName.replace(/\s+/g, '')}`;
 
-                // 生成各里的快速跳轉標籤 (取消 w-full，讓寬度自適應內容；保留適當的 padding)
+                // 生成各里的快速跳轉標籤 (手機版採用上下排列以節省空間塞入兩行，電腦版維持左右並排)
                 tagsHtml += `
                     <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
-                            class="px-4 md:px-5 py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-sm md:text-base flex items-center gap-2 md:gap-3 hover:-translate-y-1 w-auto text-left group">
-                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full ${style.bg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid ${style.icon} text-xs md:text-sm"></i>
+                            class="px-1 sm:px-4 md:px-5 py-1.5 sm:py-2.5 md:py-3 bg-white border sm:border-2 ${style.border} ${style.textTitle} font-black rounded-xl sm:rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-[11px] sm:text-sm md:text-base flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-2 md:gap-3 hover:-translate-y-1 w-full sm:w-auto text-center sm:text-left group">
+                        <div class="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full ${style.bg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid ${style.icon} text-[10px] sm:text-xs md:text-sm"></i>
                         </div>
-                        <span class="tracking-wide whitespace-nowrap">${villageName}</span>
+                        <span class="tracking-tighter sm:tracking-wide whitespace-nowrap">${villageName}</span>
                     </button>
                 `;
 
