@@ -533,56 +533,65 @@
                 <h2 class="text-3xl font-black text-gray-800">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
             </div>
 
-            <!-- 獨立保留緊急聯絡電話區塊 -->
+            <!-- 獨立保留緊急聯絡電話區塊 (改為精簡併排的摺疊選單設計) -->
             <div class="bg-red-400 p-6 md:p-8 rounded-[2.5rem] text-white shadow-cute mb-8 relative overflow-hidden border-4 border-red-200">
                 <div class="absolute -right-6 -bottom-6 text-red-300 text-8xl floating opacity-50 z-0 pointer-events-none"><i class="fa-solid fa-truck-medical"></i></div>
                 <h3 class="text-2xl font-black mb-4 relative z-10 flex items-center"><i class="fa-solid fa-phone-volume mr-3"></i> 救護與緊急電話</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono font-bold relative z-10">
+                
+                <!-- 使用 flex-wrap 讓兩個分類可以依照內容寬度並排 -->
+                <div class="flex flex-wrap gap-3 md:gap-4 relative z-10 items-start">
                     
-                    <div class="flex flex-col justify-between bg-red-500 p-4 rounded-2xl shadow-inner gap-3 h-full">
-                        <div class="flex justify-between items-start gap-2 flex-col xl:flex-row">
-                            <span class="flex items-start text-sm md:text-base leading-snug"><i class="fa-solid fa-building-shield mt-0.5 mr-2 shrink-0"></i>桃園市政府警察局龜山分局大埔派出所</span>
-                            <a href="tel:03-3202554" class="bg-white hover:bg-red-50 transition-colors text-red-500 px-3 py-1 rounded-xl shadow-sm text-sm md:text-base shrink-0 w-fit">03-3202554</a>
+                    <!-- 派出所 -->
+                    <details class="group bg-white rounded-[1.2rem] shadow-sm border-2 border-red-100 overflow-hidden text-gray-800 transition-all w-full md:w-auto">
+                        <summary class="font-black list-none flex justify-between items-center px-5 py-3 md:py-4 text-base md:text-lg text-red-500 cursor-pointer hover:bg-red-50 transition-colors gap-6">
+                            <span class="flex items-center whitespace-nowrap"><i class="fa-solid fa-building-shield mr-2.5 text-xl"></i> 警察局 / 派出所</span>
+                            <span class="text-red-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="px-3 pb-3 space-y-2.5 bg-white">
+                            <!-- 大埔派出所 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3 border border-red-100/50 hover:border-red-200 transition-colors">
+                                <div class="pr-2">
+                                    <div class="text-red-700 font-black text-sm md:text-base mb-1">大埔派出所</div>
+                                    <div class="text-xs text-red-400 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>桃園市龜山區文德二路80號</div>
+                                </div>
+                                <a href="tel:03-3202554" class="bg-white hover:bg-red-500 hover:text-white transition-colors text-red-500 px-3.5 py-1.5 rounded-lg shadow-sm text-sm font-black shrink-0 border border-red-100 flex items-center justify-center gap-1.5 w-fit sm:w-auto"><i class="fa-solid fa-phone-volume"></i> 03-3202554</a>
+                            </div>
+                            <!-- 坪頂派出所 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3 border border-red-100/50 hover:border-red-200 transition-colors">
+                                <div class="pr-2">
+                                    <div class="text-red-700 font-black text-sm md:text-base mb-1">坪頂派出所</div>
+                                    <div class="text-xs text-red-400 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>桃園市龜山區大湖一路65號</div>
+                                </div>
+                                <a href="tel:03-3282570" class="bg-white hover:bg-red-500 hover:text-white transition-colors text-red-500 px-3.5 py-1.5 rounded-lg shadow-sm text-sm font-black shrink-0 border border-red-100 flex items-center justify-center gap-1.5 w-fit sm:w-auto"><i class="fa-solid fa-phone-volume"></i> 03-3282570</a>
+                            </div>
+                            <!-- 龜山派出所 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3 border border-red-100/50 hover:border-red-200 transition-colors">
+                                <div class="pr-2">
+                                    <div class="text-red-700 font-black text-sm md:text-base mb-1">龜山派出所</div>
+                                    <div class="text-xs text-red-400 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>桃園市龜山區萬壽路二段931號</div>
+                                </div>
+                                <a href="tel:03-3186447" class="bg-white hover:bg-red-500 hover:text-white transition-colors text-red-500 px-3.5 py-1.5 rounded-lg shadow-sm text-sm font-black shrink-0 border border-red-100 flex items-center justify-center gap-1.5 w-fit sm:w-auto"><i class="fa-solid fa-phone-volume"></i> 03-3186447</a>
+                            </div>
                         </div>
-                        <div class="text-xs md:text-sm text-red-100 flex items-start border-t border-red-400/50 pt-3 mt-auto">
-                            <i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>
-                            <span class="tracking-wide">桃園市龜山區文德二路80號</span>
-                        </div>
-                    </div>
+                    </details>
 
-                    <div class="flex flex-col justify-between bg-red-500 p-4 rounded-2xl shadow-inner gap-3 h-full">
-                        <div class="flex justify-between items-start gap-2 flex-col xl:flex-row">
-                            <span class="flex items-start text-sm md:text-base leading-snug"><i class="fa-solid fa-building-shield mt-0.5 mr-2 shrink-0"></i>桃園市政府警察局龜山分局坪頂派出所</span>
-                            <a href="tel:03-3282570" class="bg-white hover:bg-red-50 transition-colors text-red-500 px-3 py-1 rounded-xl shadow-sm text-sm md:text-base shrink-0 w-fit">03-3282570</a>
+                    <!-- 消防隊 -->
+                    <details class="group bg-white rounded-[1.2rem] shadow-sm border-2 border-red-100 overflow-hidden text-gray-800 transition-all w-full md:w-auto">
+                        <summary class="font-black list-none flex justify-between items-center px-5 py-3 md:py-4 text-base md:text-lg text-red-500 cursor-pointer hover:bg-red-50 transition-colors gap-6">
+                            <span class="flex items-center whitespace-nowrap"><i class="fa-solid fa-fire-extinguisher mr-2.5 text-xl"></i> 消防隊</span>
+                            <span class="text-red-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="px-3 pb-3 space-y-2.5 bg-white">
+                            <!-- 坪頂分隊 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3 border border-red-100/50 hover:border-red-200 transition-colors">
+                                <div class="pr-2">
+                                    <div class="text-red-700 font-black text-sm md:text-base mb-1">坪頂消防分隊</div>
+                                    <div class="text-xs text-red-400 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>桃園市龜山區復興三路80號</div>
+                                </div>
+                                <a href="tel:03-3280309" class="bg-white hover:bg-red-500 hover:text-white transition-colors text-red-500 px-3.5 py-1.5 rounded-lg shadow-sm text-sm font-black shrink-0 border border-red-100 flex items-center justify-center gap-1.5 w-fit sm:w-auto"><i class="fa-solid fa-phone-volume"></i> 03-3280309</a>
+                            </div>
                         </div>
-                        <div class="text-xs md:text-sm text-red-100 flex items-start border-t border-red-400/50 pt-3 mt-auto">
-                            <i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>
-                            <span class="tracking-wide">桃園市龜山區大湖一路65號</span>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col justify-between bg-red-500 p-4 rounded-2xl shadow-inner gap-3 h-full">
-                        <div class="flex justify-between items-start gap-2 flex-col xl:flex-row">
-                            <span class="flex items-start text-sm md:text-base leading-snug"><i class="fa-solid fa-building-shield mt-0.5 mr-2 shrink-0"></i>桃園市政府警察局龜山分局龜山派出所</span>
-                            <a href="tel:03-3186447" class="bg-white hover:bg-red-50 transition-colors text-red-500 px-3 py-1 rounded-xl shadow-sm text-sm md:text-base shrink-0 w-fit">03-3186447</a>
-                        </div>
-                        <div class="text-xs md:text-sm text-red-100 flex items-start border-t border-red-400/50 pt-3 mt-auto">
-                            <i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>
-                            <span class="tracking-wide">桃園市龜山區萬壽路二段931號</span>
-                        </div>
-                    </div>
-                    
-                    <div class="flex flex-col justify-between bg-red-500 p-4 rounded-2xl shadow-inner gap-3 h-full">
-                        <div class="flex justify-between items-start gap-2 flex-col xl:flex-row">
-                            <span class="flex items-start text-sm md:text-base leading-snug"><i class="fa-solid fa-fire-extinguisher mt-0.5 mr-2 shrink-0"></i>桃園市政府消防局第一大隊坪頂分隊</span>
-                            <a href="tel:03-3280309" class="bg-white hover:bg-red-50 transition-colors text-red-500 px-3 py-1 rounded-xl shadow-sm text-sm md:text-base shrink-0 w-fit">03-3280309</a>
-                        </div>
-                        <div class="text-xs md:text-sm text-red-100 flex items-start border-t border-red-400/50 pt-3 mt-auto">
-                            <i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>
-                            <span class="tracking-wide">桃園市龜山區復興三路80號</span>
-                        </div>
-                    </div>
-
+                    </details>
                 </div>
             </div>
 
