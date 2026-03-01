@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A7 樂園生活指南 🎡｜林口、龜山美食機能情報地圖</title>
+    <title>A7 柒樂部 🎡｜林口、龜山美食機能生活地圖指南</title>
     <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
     <meta property="og:image" content="https://i.meee.com.tw/R3pFx6d.jpg">
@@ -89,10 +89,10 @@
             <!-- 電腦版選單 -->
             <div class="hidden md:flex space-x-2">
                 
-                <button onclick="loadPage('food')" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all">🍿 找美食</button>
-                <button onclick="loadPage('shopping')" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all">🛍️ 買東西</button>
-                <button onclick="loadPage('medical')" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeGreen hover:text-white transition-all">🩺 救護站</button>
-                <button onclick="loadPage('explore')" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all">🎠 探索柒</button>
+                <button onclick="loadPage('food')" id="nav-btn-food" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all">🍿 找美食</button>
+                <button onclick="loadPage('shopping')" id="nav-btn-shopping" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all">🛍️ 買東西</button>
+                <button onclick="loadPage('medical')" id="nav-btn-medical" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeGreen hover:text-white transition-all">🩺 救護站</button>
+                <button onclick="loadPage('explore')" id="nav-btn-explore" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all">🎠 探索柒</button>
             </div>
 
             <!-- 手機版選單按鈕 -->
@@ -198,7 +198,7 @@
                     <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                         <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜初店</h4>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
                             <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
@@ -209,13 +209,13 @@
 
                     <!-- 模擬推廣卡片 2 -->
                     <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 bg-themeBlue text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">新開幕</div>
+                        <div class="absolute top-0 right-0 bg-themeBlue text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">裝潢統包</div>
                         <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeBlue transition-colors line-clamp-1">墨屋カレー 龜山店</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">歡慶開幕！毛小孩首次洗澡體驗價只要 $399，再送精美零食。</p>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeBlue transition-colors line-clamp-1">凱驛空間</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">LINE群友推薦 https://line.me/R/ti/p/@791bjdaj</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-themeBlue bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>長青一街</span>
+                            <span class="text-themeBlue bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>LINE帳號</span>
                             <span class="text-themeBlue bg-blue-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-paw"></i></span>
                         </div>
                     </div>
@@ -245,29 +245,37 @@
                 </div>
             </div>
 
-            <!-- 樂園廣播 (最新消息) -->
-            <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-blue-50 relative overflow-hidden">
-                <div class="absolute top-4 right-4 text-themeBlue text-4xl floating"><i class="fa-solid fa-bullhorn"></i></div>
-                <h2 class="text-2xl font-black text-themeBlue mb-6">📢 樂園廣播 (最新動態)</h2>
-                <div class="space-y-4">
-                    <!-- 靜態最新動態 -->
-                    <div class="flex items-start bg-blue-50 p-4 rounded-2xl shadow-sm border border-transparent">
-                        <span class="bg-themeBlue text-white font-bold px-3 py-1 rounded-full text-xs mr-3 mt-0.5 shrink-0">新開幕</span>
-                        <div>
-                            <h4 class="font-bold text-gray-800">文青路「熊熊可麗餅」本週試營運！</h4>
-                            <p class="text-sm text-gray-500 mt-1">憑樂園居民證(A7住戶)可享折抵優惠。</p>
+            <!-- 樂園廣播 (最新消息) - 修改為精簡版面，靜態在左，動態新聞在右 -->
+            <div class="bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-blue-50 relative overflow-hidden">
+                <div class="absolute top-4 right-4 text-themeBlue text-4xl floating pointer-events-none"><i class="fa-solid fa-bullhorn"></i></div>
+                <h2 class="text-2xl font-black text-themeBlue mb-5 relative z-10 flex items-center">
+                    📢 樂園廣播 <span class="text-sm text-blue-300 ml-2 font-bold hidden sm:inline-block">/ 最新動態</span>
+                </h2>
+                
+                <div class="flex flex-col lg:flex-row gap-6 relative z-10">
+                    <!-- 左側：靜態最新動態 -->
+                    <div class="w-full lg:w-1/2 space-y-3 flex flex-col">
+                        <h3 class="text-sm font-black text-themeBlue mb-1 flex items-center bg-blue-100/50 w-fit px-3 py-1 rounded-full">
+                            <i class="fa-solid fa-thumbtack mr-1.5"></i>樂園精選公告
+                        </h3>
+                        <div class="flex items-start bg-blue-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
+                            <span class="bg-themeBlue text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">新開幕</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">文青路「熊熊可麗餅」本週試營運！</h4>
+                                <p class="text-xs sm:text-sm text-gray-500 mt-1">憑樂園居民證(A7住戶)可享折抵優惠。</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-start bg-pink-50 p-4 rounded-2xl shadow-sm border border-transparent">
-                        <span class="bg-themePink text-white font-bold px-3 py-1 rounded-full text-xs mr-3 mt-0.5 shrink-0">交通</span>
-                        <div>
-                            <h4 class="font-bold text-gray-800">機捷假日加開班次</h4>
-                            <p class="text-sm text-gray-500 mt-1">自本月起，週末往返台北車站將增加 15% 班次。</p>
+                        <div class="flex items-start bg-pink-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
+                            <span class="bg-themePink text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">交通</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">機捷假日加開班次</h4>
+                                <p class="text-xs sm:text-sm text-gray-500 mt-1">自本月起，週末往返台北車站將增加 15% 班次。</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 動態在地新聞區塊 -->
-                    <div id="dynamic-news-container" class="pt-6 mt-6 border-t-2 border-dashed border-blue-100 space-y-3">
+                    <!-- 右側：動態在地新聞區塊 -->
+                    <div id="dynamic-news-container" class="w-full lg:w-1/2 pt-5 lg:pt-0 border-t-2 lg:border-t-0 lg:border-l-2 border-dashed border-blue-100 lg:pl-6 flex flex-col">
                         <div class="text-center text-blue-300 py-4 font-bold text-sm">
                             <i class="fa-solid fa-spinner fa-spin text-xl mb-2 block"></i> 正在連線搜尋在地最新新聞...
                         </div>
@@ -447,15 +455,52 @@
             <div class="bg-red-400 p-6 md:p-8 rounded-[2.5rem] text-white shadow-cute mb-8 relative overflow-hidden border-4 border-red-200">
                 <div class="absolute -right-6 -bottom-6 text-red-300 text-8xl floating opacity-50 z-0 pointer-events-none"><i class="fa-solid fa-truck-medical"></i></div>
                 <h3 class="text-2xl font-black mb-4 relative z-10 flex items-center"><i class="fa-solid fa-phone-volume mr-3"></i> 救護與緊急電話</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-lg md:text-xl font-bold relative z-10">
-                    <div class="flex justify-between items-center bg-red-500 p-4 rounded-2xl shadow-inner">
-                        <span class="flex items-center"><i class="fa-solid fa-building-shield mr-2"></i>派出所</span>
-                        <span class="bg-white text-red-500 px-3 py-1 rounded-xl shadow-sm">03-328-1110</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono font-bold relative z-10">
+                    
+                    <div class="flex flex-col justify-between bg-red-500 p-4 rounded-2xl shadow-inner gap-3 h-full">
+                        <div class="flex justify-between items-start gap-2 flex-col xl:flex-row">
+                            <span class="flex items-start text-sm md:text-base leading-snug"><i class="fa-solid fa-building-shield mt-0.5 mr-2 shrink-0"></i>桃園市政府警察局龜山分局大埔派出所</span>
+                            <a href="tel:03-3202554" class="bg-white hover:bg-red-50 transition-colors text-red-500 px-3 py-1 rounded-xl shadow-sm text-sm md:text-base shrink-0 w-fit">03-3202554</a>
+                        </div>
+                        <div class="text-xs md:text-sm text-red-100 flex items-start border-t border-red-400/50 pt-3 mt-auto">
+                            <i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>
+                            <span class="tracking-wide">桃園市龜山區文德二路80號</span>
+                        </div>
                     </div>
-                    <div class="flex justify-between items-center bg-red-500 p-4 rounded-2xl shadow-inner">
-                        <span class="flex items-center"><i class="fa-solid fa-fire-extinguisher mr-2"></i>消防隊</span>
-                        <span class="bg-white text-red-500 px-3 py-1 rounded-xl shadow-sm">03-329-3351</span>
+
+                    <div class="flex flex-col justify-between bg-red-500 p-4 rounded-2xl shadow-inner gap-3 h-full">
+                        <div class="flex justify-between items-start gap-2 flex-col xl:flex-row">
+                            <span class="flex items-start text-sm md:text-base leading-snug"><i class="fa-solid fa-building-shield mt-0.5 mr-2 shrink-0"></i>桃園市政府警察局龜山分局坪頂派出所</span>
+                            <a href="tel:03-3282570" class="bg-white hover:bg-red-50 transition-colors text-red-500 px-3 py-1 rounded-xl shadow-sm text-sm md:text-base shrink-0 w-fit">03-3282570</a>
+                        </div>
+                        <div class="text-xs md:text-sm text-red-100 flex items-start border-t border-red-400/50 pt-3 mt-auto">
+                            <i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>
+                            <span class="tracking-wide">桃園市龜山區大湖一路65號</span>
+                        </div>
                     </div>
+
+                    <div class="flex flex-col justify-between bg-red-500 p-4 rounded-2xl shadow-inner gap-3 h-full">
+                        <div class="flex justify-between items-start gap-2 flex-col xl:flex-row">
+                            <span class="flex items-start text-sm md:text-base leading-snug"><i class="fa-solid fa-building-shield mt-0.5 mr-2 shrink-0"></i>桃園市政府警察局龜山分局龜山派出所</span>
+                            <a href="tel:03-3186447" class="bg-white hover:bg-red-50 transition-colors text-red-500 px-3 py-1 rounded-xl shadow-sm text-sm md:text-base shrink-0 w-fit">03-3186447</a>
+                        </div>
+                        <div class="text-xs md:text-sm text-red-100 flex items-start border-t border-red-400/50 pt-3 mt-auto">
+                            <i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>
+                            <span class="tracking-wide">桃園市龜山區萬壽路二段931號</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col justify-between bg-red-500 p-4 rounded-2xl shadow-inner gap-3 h-full">
+                        <div class="flex justify-between items-start gap-2 flex-col xl:flex-row">
+                            <span class="flex items-start text-sm md:text-base leading-snug"><i class="fa-solid fa-fire-extinguisher mt-0.5 mr-2 shrink-0"></i>桃園市政府消防局第一大隊坪頂分隊</span>
+                            <a href="tel:03-3280309" class="bg-white hover:bg-red-50 transition-colors text-red-500 px-3 py-1 rounded-xl shadow-sm text-sm md:text-base shrink-0 w-fit">03-3280309</a>
+                        </div>
+                        <div class="text-xs md:text-sm text-red-100 flex items-start border-t border-red-400/50 pt-3 mt-auto">
+                            <i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>
+                            <span class="tracking-wide">桃園市龜山區復興三路80號</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -540,18 +585,18 @@
                 <!-- 新增：A7 各里分配圖與快速跳轉標籤 (手機版圖片在上列表在下，電腦版圖片在左列表在右) -->
                 <div class="mb-8 bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-4 md:p-6 border-4 border-gray-50 shadow-cute flex flex-col md:flex-row gap-4 md:gap-6 items-stretch">
                     
-                    <!-- 左側/上方地圖 (手機版全寬並在上，平板以上置左並設定適當比例) -->
-                    <div class="w-full md:w-5/12 lg:w-1/3 min-h-[250px] sm:min-h-[350px] md:h-auto lg:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-0 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
-                        <!-- 關鍵：使用 object-contain 加上 padding 確保地圖完整顯示不被裁切 -->
-                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="absolute inset-0 w-full h-full p-2 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
+                    <!-- 左側/上方地圖 (改為以圖片高度為主，自然撐開空間不裁切，搭配 max-h 避免過長) -->
+                    <div class="w-full md:w-1/2 lg:w-5/12 rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
+                        <!-- 關鍵：移除 absolute，讓圖片依據原比例自然撐開容器高度，確保任何螢幕下都最大化且清晰 -->
+                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-auto max-h-[75vh] md:max-h-[85vh] p-2 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
                         
-                        <div class="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-white whitespace-nowrap">
+                        <div class="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-white whitespace-nowrap">
                             A7 區域建案概覽圖
                         </div>
                     </div>
                     
-                    <!-- 右側/下方標籤選單 -->
-                    <div class="w-full md:w-7/12 lg:w-2/3 flex flex-col">
+                    <!-- 右側/下方標籤選單 (寬度自動分配剩下的空間) -->
+                    <div class="w-full md:w-1/2 lg:w-7/12 flex flex-col">
                         <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
                             <h3 class="text-base md:text-xl font-black text-gray-700 mb-4 md:mb-5 flex items-center border-b-2 border-gray-200 pb-2 md:pb-3 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
@@ -781,7 +826,6 @@
                                     if (item.img) {
                                         avatarUrl = item.img;
                                     } else if (snsType === 'Threads' && item.link.includes('@')) {
-                                        // 擷取 Threads 的 @帳號名稱，並透過 unavatar 代理抓取對應頭像
                                         const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
                                         if (match && match[1]) {
                                             avatarUrl = `https://unavatar.io/instagram/${match[1]}?fallback=${encodeURIComponent(avatarUrl)}`;
@@ -1020,7 +1064,7 @@
                 const data = await response.json();
 
                 if (data.status === 'ok' && data.items && data.items.length > 0) {
-                    // 只取前五則新聞
+                    // 只取前五則新聞，改用單行精簡排版以縮短版面
                     const newsHtml = data.items.slice(0, 5).map(item => {
                         // 整理時間格式
                         const pubDate = new Date(item.pubDate);
@@ -1030,22 +1074,19 @@
                         const cleanTitle = item.title.split(' - ')[0];
 
                         return `
-                            <a href="${item.link}" target="_blank" class="flex items-start bg-white/70 hover:bg-white p-3 rounded-[1rem] shadow-sm border border-blue-50 hover:border-themeBlue transition-all group">
-                                <span class="bg-gray-100 text-gray-500 font-black px-2.5 py-1 rounded-lg text-[10px] md:text-xs mr-3 shrink-0 whitespace-nowrap group-hover:bg-themeBlue group-hover:text-white transition-colors">在地新聞</span>
-                                <div class="flex-1 overflow-hidden">
-                                    <h4 class="font-bold text-gray-700 line-clamp-2 group-hover:text-themeBlue transition-colors text-sm leading-snug">${cleanTitle}</h4>
-                                    <p class="text-[10px] md:text-xs text-gray-400 mt-1 flex items-center font-bold"><i class="fa-regular fa-clock mr-1"></i>${dateStr}</p>
-                                </div>
-                                <div class="shrink-0 text-gray-300 group-hover:text-themeBlue transition-colors ml-2 mt-1">
-                                    <i class="fa-solid fa-chevron-right text-xs"></i>
-                                </div>
+                            <a href="${item.link}" target="_blank" class="flex items-center bg-white/70 hover:bg-white p-2.5 rounded-xl shadow-sm border border-blue-50 hover:border-themeBlue transition-all group gap-2">
+                                <span class="bg-gray-100 text-gray-500 font-black px-2 py-0.5 rounded-md text-[10px] shrink-0 group-hover:bg-themeBlue group-hover:text-white transition-colors">新聞</span>
+                                <h4 class="font-bold text-gray-700 line-clamp-1 group-hover:text-themeBlue transition-colors text-xs sm:text-sm flex-1">${cleanTitle}</h4>
+                                <span class="text-[10px] text-gray-400 font-bold shrink-0 hidden sm:block">${dateStr.slice(5)}</span>
                             </a>
                         `;
                     }).join('');
                     
                     container.innerHTML = `
-                        <h3 class="text-sm font-black text-gray-300 mb-3 flex items-center bg-grey-100/50 inline-block px-3 py-1 rounded-full"><i class="fa-solid fa-rss mr-1.5"></i>自動追蹤：在地媒體報報</h3>
-                        <div class="space-y-2.5">${newsHtml}</div>
+                        <h3 class="text-sm font-black text-gray-300 mb-2.5 flex items-center bg-gray-100/80 w-fit px-3 py-1 rounded-full shrink-0">
+                            <i class="fa-solid fa-rss mr-1.5 text-gray-300"></i>自動追蹤：在地媒體報報
+                        </h3>
+                        <div class="flex flex-col gap-2 flex-1 overflow-y-auto hide-scrollbar max-h-[250px] pr-1">${newsHtml}</div>
                     `;
                 } else {
                     container.innerHTML = `<div class="text-center text-gray-400 text-sm font-bold py-2 bg-gray-50 rounded-xl">目前暫無最新的在地新聞喔！</div>`;
@@ -1056,24 +1097,40 @@
             }
         }
 
-        // 更新導航按鈕的 Active 狀態
+        // 更新導航按鈕的 Active 狀態與重置懸停顏色
         function updateNavStyles(pageId) {
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                // 重置所有按鈕樣式
-                btn.className = "nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-gray-100 transition-all";
-                
-                // 為當前按鈕加上對應的可愛顏色
-                if (btn.getAttribute('onclick').includes(pageId)) {
-                    const colors = {
-                        'overview': 'bg-themeBlue text-white shadow-md',
-                        'food': 'bg-themePink text-white shadow-md',
-                        'shopping': 'bg-themeYellow text-white shadow-md',
-                        'medical': 'bg-themeGreen text-white shadow-md',
-                        'explore': 'bg-themePurple text-white shadow-md'
-                    };
-                    btn.className = `nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 ${colors[pageId] || 'bg-gray-200 text-gray-800'}`;
-                }
-            });
+            // 先取得所有導航按鈕
+            const btnFood = document.getElementById('nav-btn-food');
+            const btnShopping = document.getElementById('nav-btn-shopping');
+            const btnMedical = document.getElementById('nav-btn-medical');
+            const btnExplore = document.getElementById('nav-btn-explore');
+
+            // 定義預設的樣式 (包含各自專屬的 hover 顏色)
+            const defaultClasses = {
+                'food': 'nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all',
+                'shopping': 'nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all',
+                'medical': 'nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeGreen hover:text-white transition-all',
+                'explore': 'nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all'
+            };
+
+            // 全部先重置回預設樣式
+            if(btnFood) btnFood.className = defaultClasses['food'];
+            if(btnShopping) btnShopping.className = defaultClasses['shopping'];
+            if(btnMedical) btnMedical.className = defaultClasses['medical'];
+            if(btnExplore) btnExplore.className = defaultClasses['explore'];
+            
+            // 為當前所在頁面的按鈕加上被點選後的醒目顏色
+            const activeClasses = {
+                'food': 'nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 bg-themePink text-white shadow-md',
+                'shopping': 'nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 bg-themeYellow text-white shadow-md',
+                'medical': 'nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 bg-themeGreen text-white shadow-md',
+                'explore': 'nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 bg-themePurple text-white shadow-md'
+            };
+
+            if (pageId === 'food' && btnFood) btnFood.className = activeClasses['food'];
+            if (pageId === 'shopping' && btnShopping) btnShopping.className = activeClasses['shopping'];
+            if (pageId === 'medical' && btnMedical) btnMedical.className = activeClasses['medical'];
+            if (pageId === 'explore' && btnExplore) btnExplore.className = activeClasses['explore'];
         }
 
         // 手機版選單開關
