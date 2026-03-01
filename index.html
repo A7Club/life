@@ -160,7 +160,7 @@
                         <div class="w-8 flex justify-center mt-0.5 shrink-0"><i class="fa-solid fa-clock text-themeYellow text-lg"></i></div>
                         <span id="store-modal-hours" class="text-gray-700 font-bold"></span>
                     </div>
-                    <div class="flex items-start text-sm sm:text-base">
+                    <div id="store-modal-rating-container" class="flex items-start text-sm sm:text-base">
                         <div class="w-8 flex justify-center mt-0.5 shrink-0"><i class="fa-solid fa-star text-themeYellow text-lg"></i></div>
                         <span id="store-modal-rating" class="text-gray-700 font-bold">4.8 (Google 商家評分參考)</span>
                     </div>
@@ -170,6 +170,17 @@
                 <a id="store-modal-map-btn" href="#" target="_blank" class="w-full text-white font-black py-4 rounded-xl shadow-md flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] text-lg">
                     <!-- JS 動態寫入內容 -->
                 </a>
+
+                <!-- LINE QR Code 區塊 (預設隱藏，專供 LINE 帳號使用) -->
+                <div id="store-modal-qr-container" class="hidden flex-col items-center justify-center bg-green-50/80 p-6 rounded-2xl border-2 border-green-100 shadow-inner">
+                    <p class="text-sm md:text-base font-black text-[#00B900] mb-3 flex items-center"><i class="fa-brands fa-line mr-1.5 text-xl"></i>掃描加入 LINE 好友</p>
+                    <div class="bg-white p-2.5 rounded-xl shadow-sm border border-gray-100">
+                        <img id="store-modal-qr-img" src="" alt="LINE QR Code" class="w-32 h-32 md:w-40 md:h-40 object-contain mix-blend-multiply">
+                    </div>
+                    <a id="store-modal-line-btn" href="#" target="_blank" class="mt-4 w-full text-white bg-[#00B900] hover:bg-[#009900] font-black py-3 rounded-xl shadow-sm flex items-center justify-center gap-2 transition-transform hover:-translate-y-1 text-sm md:text-base">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> 手機點此直接開啟
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -252,16 +263,16 @@
                         <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                         <div>
                             <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門</p>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-荼木寺手搖飲以真材實料、茶香回甘聞名，清爽不膩口，喝得到細膩層次與職人溫度。</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>長青一街39號</span>
-                            <span class="text-orange-400 bg-orange-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-utensils"></i></span>
+                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>長青一街39號</span>
+                            <span class="text-orange-400 bg-orange-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-glass-water"></i></span>
                         </div>
                     </div>
 
-                    <!-- 模擬推廣卡片 2 -->
-                    <div onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeBlue', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80', 'https://line.me/R/ti/p/@791bjdaj')"
+                    <!-- 模擬推廣卡片 2 (LINE 推廣) -->
+                    <div style="display: none;" onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeBlue', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiShTBJexn0395iVhq7Vktqa_pNYHjVBn1jQ&s', 'https://line.me/R/ti/p/@791bjdaj')"
                          class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-themeBlue text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">裝潢統包</div>
                         <div>
@@ -269,22 +280,38 @@
                             <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">LINE群友推薦 https://line.me/R/ti/p/@791bjdaj</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-themeBlue bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>LINE帳號</span>
+                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" 避免觸發卡片的放大視窗 -->
+                            <a href="https://line.me/R/ti/p/@791bjdaj" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
                             <span class="text-themeBlue bg-blue-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-paw"></i></span>
                         </div>
                     </div>
 
-                    <!-- 模擬推廣卡片 3 -->
-                    <div onclick="openStoreModal('台灣房屋 (胡哲嘉)', '在地經營', 'bg-themeGreen', '我是您的在地專業房仲，專營 A7 重劃區及周邊建案。不管是買屋、賣屋還是租屋，都能給您最精準、最實在的建議，歡迎預約賞屋！', '桃園市龜山區 (A7重劃區)', '09:00 - 20:00', 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80', '台灣房屋 龜山')"
+                    <!-- 模擬推廣卡片 3 (LINE 推廣) -->
+                    <div onclick="openStoreModal('台灣房屋 (胡哲嘉)', '在地經營', 'bg-themeGreen', '我是您的在地專業房仲，專營 A7 重劃區及周邊建案。不管是買屋、賣屋還是租屋，都能給您最精準、最實在的建議，歡迎預約賞屋！', '桃園市龜山區 (A7重劃區)', '09:00 - 20:00', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe0lcXuBdkigxkB6vF83oRy31Ol8swsPVNAQ&s', 'https://line.me/ti/p/~ID')"
                          class="w-[220px] sm:w-[260px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">在地經營</div>
                         <div>
                             <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeGreen transition-colors line-clamp-1">台灣房屋</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">胡哲嘉 推薦專業房仲 https://line.me/ti/p/~ID</p>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">台灣房屋房仲-胡哲嘉，專業細心、行情透明，站在客戶立場評估，溝通誠懇不強推，買賣安心有保障。</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-themeGreen bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>LINE帳號</span>
-                            <span class="text-themeGreen bg-green-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-pills"></i></span>
+                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" -->
+                            <a href="https://line.me/ti/p/~cwalkedwin" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
+                            
+                        </div>
+                    </div>
+                    <!-- 模擬推廣卡片 5 (LINE 推廣) -->
+                    <div onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeGreen', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiShTBJexn0395iVhq7Vktqa_pNYHjVBn1jQ&s', 'https://line.me/R/ti/p/@791bjdaj')"
+                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">統包裝潢</div>
+                        <div>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeGreen transition-colors line-clamp-1">凱驛空間</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">社群推薦統包裝潢規劃細緻、工班穩定，報價透明好溝通，從設計到完工一條龍，省心又安心。</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
+                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" -->
+                            <a href="https://line.me/ti/p/~@791bjdaj" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -691,7 +718,6 @@
             tagEl.className = `text-xs font-black px-2.5 py-1 rounded-lg text-white shadow-sm ${tagColor}`;
             
             document.getElementById('store-modal-desc').innerText = desc;
-            document.getElementById('store-modal-address').innerText = address;
             document.getElementById('store-modal-hours').innerText = hours;
             
             const imgContainer = document.getElementById('store-modal-img-container');
@@ -702,12 +728,37 @@
             `;
             
             const mapBtn = document.getElementById('store-modal-map-btn');
-            // 判斷若是 LINE 網址，就改變按鈕行為
-            if (mapQuery.startsWith('http')) {
-                mapBtn.href = mapQuery;
-                mapBtn.innerHTML = `<i class="fa-brands fa-line text-xl"></i> 前往了解更多`;
-                mapBtn.className = "w-full text-white bg-[#00B900] hover:bg-[#009900] font-black py-3.5 rounded-xl shadow-md flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] text-lg";
+            const qrContainer = document.getElementById('store-modal-qr-container');
+            const qrImg = document.getElementById('store-modal-qr-img');
+            const lineBtn = document.getElementById('store-modal-line-btn');
+            const ratingContainer = document.getElementById('store-modal-rating-container');
+            const addressEl = document.getElementById('store-modal-address');
+            
+            // 判斷若是 LINE 網址，顯示 QR Code 區塊並隱藏 Google Map 按鈕
+            if (mapQuery.startsWith('http') && (mapQuery.includes('line.me') || mapQuery.includes('lin.ee'))) {
+                mapBtn.classList.add('hidden');
+                qrContainer.classList.remove('hidden');
+                qrContainer.classList.add('flex');
+                
+                // 使用公共 API 生成 QR Code
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(mapQuery)}`;
+                lineBtn.href = mapQuery;
+                
+                // 如果是純線上服務，隱藏評分
+                if (ratingContainer) ratingContainer.classList.add('hidden');
+                
+                // 地址欄改為顯示 LINE 帳號提示
+                addressEl.innerHTML = `<span class="text-[#00B900]">官方 LINE 帳號諮詢</span>`;
+                
             } else {
+                // 一般實體店家，顯示 Google Map
+                qrContainer.classList.add('hidden');
+                qrContainer.classList.remove('flex');
+                mapBtn.classList.remove('hidden');
+                
+                if (ratingContainer) ratingContainer.classList.remove('hidden');
+                addressEl.innerText = address;
+
                 mapBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
                 mapBtn.innerHTML = `<i class="fa-solid fa-map-location-dot text-xl"></i> 前往 Google Map 查看詳細資訊`;
                 mapBtn.className = "w-full text-white bg-blue-500 hover:bg-blue-600 font-black py-3.5 rounded-xl shadow-md flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] text-lg";
