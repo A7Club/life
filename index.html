@@ -252,7 +252,7 @@
                 <div class="w-full lg:w-[35%] flex flex-col gap-3 relative z-10 shrink-0">
                     <h2 class="text-xl md:text-2xl font-black text-purple-400 flex items-center border-b-2 border-gray-100 pb-3 mb-1">
                         <i class="fa-solid fa-train-tram text-themePurple mr-3 text-2xl md:text-3xl"></i> 機捷到站通知
-                        <span class="text-xs text-gray-400 font-normal ml-3 mt-1 hidden sm:inline-block"><b>參考資料：<a href="https://tdx.transportdata.tw/" target="_blank" class="hover:underline">交通部TDX</a></b></span>
+                        <span class="text-xs text-gray-400 font-normal ml-3 mt-1 hidden sm:inline-block"><b>參考資料：<a href="https://tdx.transportdata.tw/" target="_blank" class="hover:underline">交通部 TDX</a></b> (運輸資料流通服務平臺)</span>
                     </h2>
 
                     <div class="flex flex-row lg:flex-col gap-3 md:gap-4 h-full">
@@ -1296,7 +1296,7 @@
                 const unitEl = document.getElementById(unitId);
                 if (Math.ceil(diff) <= 1 && Math.ceil(diff) >= 0) {
                     el.innerText = '進站中';
-                    el.className = 'text-2xl sm:text-3xl font-black text-red-200 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest';
+                    el.className = 'text-2xl sm:text-3xl font-black text-red-400 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest';
                     if(unitEl) unitEl.style.display = 'none';
                 } else {
                     el.innerText = Math.ceil(diff);
