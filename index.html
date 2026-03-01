@@ -6,7 +6,7 @@
     <title>A7 柒樂部 🎡｜林口、龜山美食機能生活地圖指南</title>
     <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
-    <meta property="og:image" content="https://i.meee.com.tw/R3pFx6d.jpg">
+    <meta property="og:image" content="https://a7club.github.io/life/website.jpg">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -73,10 +73,10 @@
         .num-counter { font-family: 'Nunito', sans-serif; font-variant-numeric: tabular-nums; }
     </style>
 </head>
-<body class="text-gray-700 antialiased min-h-screen flex flex-col">
+<body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
 
     <!-- 🎪 導航列 (雲朵造型) -->
-    <nav class="sticky top-4 z-50 mx-4 sm:mx-8 lg:mx-auto max-w-6xl">
+    <nav class="sticky top-4 z-40 mx-4 sm:mx-8 lg:mx-auto max-w-6xl">
         <div class="bg-white/90 backdrop-blur-md rounded-full shadow-cute px-6 py-3 flex justify-between items-center border-2 border-white">
             <!-- Logo -->
             <div class="flex items-center cursor-pointer gap-2" onclick="loadPage('home')">
@@ -122,6 +122,57 @@
         <h2 class="text-xl font-black text-themePink mb-2">🎈 A7 歡樂生活圈</h2>
         <p class="text-gray-400 text-sm font-bold">讓每天的生活都像在遊樂園一樣精彩！© 2026</p>
     </footer>
+
+    <!-- ========================================== -->
+    <!-- 🛍️ 店家詳細資訊 Modal (彈出視窗) -->
+    <!-- ========================================== -->
+    <div id="store-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6">
+        <!-- 遮罩背景 -->
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="closeStoreModal()"></div>
+        
+        <!-- 卡片內容 -->
+        <div class="bg-white w-full max-w-lg rounded-[2rem] md:rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden flex flex-col max-h-[90vh] transform scale-95 opacity-0 transition-all duration-300" id="store-modal-content">
+            <!-- 關閉按鈕 -->
+            <button onclick="closeStoreModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full text-gray-500 hover:bg-themePink hover:text-white flex items-center justify-center z-20 shadow-sm transition-colors border border-gray-100">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <!-- 圖片區塊 -->
+            <div id="store-modal-img-container" class="w-full h-48 sm:h-64 bg-gray-100 relative shrink-0">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+            </div>
+            
+            <!-- 文字資訊區塊 -->
+            <div class="p-6 md:p-8 overflow-y-auto flex-1 hide-scrollbar bg-white">
+                <div class="flex items-center gap-2 mb-3">
+                    <span id="store-modal-tag" class="text-xs font-black px-3 py-1 rounded-lg text-white shadow-sm"></span>
+                </div>
+                <h3 id="store-modal-title" class="text-2xl sm:text-3xl font-black text-gray-800 mb-3 leading-tight"></h3>
+                <p id="store-modal-desc" class="text-sm sm:text-base text-gray-600 font-bold mb-6 leading-relaxed"></p>
+
+                <!-- Google 詳細資訊風格卡片 -->
+                <div class="space-y-3.5 mb-8 bg-gray-50 p-5 rounded-2xl border-2 border-gray-100 shadow-inner">
+                    <div class="flex items-start text-sm sm:text-base">
+                        <div class="w-8 flex justify-center mt-0.5 shrink-0"><i class="fa-solid fa-location-dot text-themePink text-lg"></i></div>
+                        <span id="store-modal-address" class="text-gray-700 font-bold leading-snug"></span>
+                    </div>
+                    <div class="flex items-start text-sm sm:text-base">
+                        <div class="w-8 flex justify-center mt-0.5 shrink-0"><i class="fa-solid fa-clock text-themeYellow text-lg"></i></div>
+                        <span id="store-modal-hours" class="text-gray-700 font-bold"></span>
+                    </div>
+                    <div class="flex items-start text-sm sm:text-base">
+                        <div class="w-8 flex justify-center mt-0.5 shrink-0"><i class="fa-solid fa-star text-themeYellow text-lg"></i></div>
+                        <span id="store-modal-rating" class="text-gray-700 font-bold">4.8 (Google 商家評分參考)</span>
+                    </div>
+                </div>
+
+                <!-- Google Map 導航按鈕 -->
+                <a id="store-modal-map-btn" href="#" target="_blank" class="w-full text-white font-black py-4 rounded-xl shadow-md flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] text-lg">
+                    <!-- JS 動態寫入內容 -->
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- ========================================== -->
     <!-- 🧩 頁面模板區 (Template) - 不會被渲染直到被呼叫 -->
@@ -193,9 +244,11 @@
                 </div>
                 
                 <!-- 卡片橫向捲動區塊：新增 pt-3 pb-4 預留上下緩衝空間，防止 Hover 動畫被裁切 -->
+                <!-- 更新：加入 onclick 綁定 openStoreModal 觸發彈出視窗 -->
                 <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pt-3 pb-4 relative z-10 snap-x snap-mandatory">
                     <!-- 模擬推廣卡片 1 -->
-                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                    <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://images.unsplash.com/photo-1558160074-4d7d8bdf4256?auto=format&fit=crop&w=800&q=80', '沐荼寺林口龜山店')" 
+                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                         <div>
                             <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
@@ -208,7 +261,8 @@
                     </div>
 
                     <!-- 模擬推廣卡片 2 -->
-                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                    <div onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeBlue', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80', 'https://line.me/R/ti/p/@791bjdaj')"
+                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-themeBlue text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">裝潢統包</div>
                         <div>
                             <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeBlue transition-colors line-clamp-1">凱驛空間</h4>
@@ -221,7 +275,8 @@
                     </div>
 
                     <!-- 模擬推廣卡片 3 -->
-                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                    <div onclick="openStoreModal('台灣房屋 (胡哲嘉)', '在地經營', 'bg-themeGreen', '我是您的在地專業房仲，專營 A7 重劃區及周邊建案。不管是買屋、賣屋還是租屋，都能給您最精準、最實在的建議，歡迎預約賞屋！', '桃園市龜山區 (A7重劃區)', '09:00 - 20:00', 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80', '台灣房屋 龜山')"
+                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">在地經營</div>
                         <div>
                             <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeGreen transition-colors line-clamp-1">台灣房屋</h4>
@@ -626,6 +681,67 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadPage('home');
         });
+
+        // 打開店家詳細資訊 Modal
+        function openStoreModal(name, tag, tagColor, desc, address, hours, imgUrl, mapQuery) {
+            document.getElementById('store-modal-title').innerText = name;
+            
+            const tagEl = document.getElementById('store-modal-tag');
+            tagEl.innerText = tag;
+            tagEl.className = `text-xs font-black px-2.5 py-1 rounded-lg text-white shadow-sm ${tagColor}`;
+            
+            document.getElementById('store-modal-desc').innerText = desc;
+            document.getElementById('store-modal-address').innerText = address;
+            document.getElementById('store-modal-hours').innerText = hours;
+            
+            const imgContainer = document.getElementById('store-modal-img-container');
+            // 清除之前的圖片，並加入新圖片，同時保留漸層遮罩
+            imgContainer.innerHTML = `
+                <img src="${imgUrl}" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+            `;
+            
+            const mapBtn = document.getElementById('store-modal-map-btn');
+            // 判斷若是 LINE 網址，就改變按鈕行為
+            if (mapQuery.startsWith('http')) {
+                mapBtn.href = mapQuery;
+                mapBtn.innerHTML = `<i class="fa-brands fa-line text-xl"></i> 前往了解更多`;
+                mapBtn.className = "w-full text-white bg-[#00B900] hover:bg-[#009900] font-black py-3.5 rounded-xl shadow-md flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] text-lg";
+            } else {
+                mapBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+                mapBtn.innerHTML = `<i class="fa-solid fa-map-location-dot text-xl"></i> 前往 Google Map 查看詳細資訊`;
+                mapBtn.className = "w-full text-white bg-blue-500 hover:bg-blue-600 font-black py-3.5 rounded-xl shadow-md flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] text-lg";
+            }
+
+            const modal = document.getElementById('store-modal');
+            const content = document.getElementById('store-modal-content');
+            
+            // 顯示背景
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // 觸發放大淡入動畫
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // 關閉店家詳細資訊 Modal
+        function closeStoreModal() {
+            const modal = document.getElementById('store-modal');
+            const content = document.getElementById('store-modal-content');
+            
+            // 觸發縮小淡出動畫
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            // 等待動畫結束後隱藏背景
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        }
 
         // 頁面動態注入核心函數 (模擬多頁面行為)
         function loadPage(pageId) {
@@ -1083,8 +1199,8 @@
                     }).join('');
                     
                     container.innerHTML = `
-                        <h3 class="text-sm font-black text-gray-300 mb-2.5 flex items-center bg-gray-100/80 w-fit px-3 py-1 rounded-full shrink-0">
-                            <i class="fa-solid fa-rss mr-1.5 text-gray-300"></i>自動追蹤：在地媒體報報
+                        <h3 class="text-sm font-black text-gray-500 mb-2.5 flex items-center bg-gray-100/80 w-fit px-3 py-1 rounded-full shrink-0">
+                            <i class="fa-solid fa-rss mr-1.5 text-themeBlue"></i>自動追蹤：在地媒體報報
                         </h3>
                         <div class="flex flex-col gap-2 flex-1 overflow-y-auto hide-scrollbar max-h-[250px] pr-1">${newsHtml}</div>
                     `;
