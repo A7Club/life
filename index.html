@@ -6,7 +6,7 @@
     <title>A7 樂園生活指南 🎡｜林口、龜山美食機能情報地圖</title>
     <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
-    <meta property="og:image" content="https://github.com/A7Club/life/blob/main/website.jpg?raw=true">
+    <meta property="og:image" content="https://i.meee.com.tw/R3pFx6d.jpg">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -143,7 +143,7 @@
                 <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南</p>
                 
                 <div class="max-w-xl mx-auto relative z-10">
-                    <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？長庚？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
+                    <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？全聯？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
                     <button onclick="doSearch()" class="absolute right-2 top-2 bottom-2 w-12 bg-themeYellow text-white rounded-full flex items-center justify-center text-xl hover:bg-yellow-400 hover:scale-105 transition-all shadow-sm">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -183,26 +183,26 @@
             <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-orange-50 relative overflow-hidden">
                 <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0 pointer-events-none"><i class="fa-solid fa-shop"></i></div>
                 
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-5 relative z-10 gap-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2 relative z-10 gap-3">
                     <h2 class="text-2xl font-black text-orange-400 flex items-center">
-                        <i class="fa-solid fa-gift mr-3"></i> 在地新店家活動情報
+                        <i class="fa-solid fa-gift mr-3"></i> 在地新商家情報
                     </h2>
                     <a href="https://line.me/ti/g2/moTJsgUwRu2-lABYleiQLH8ZqhccDhy0alxYlA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="w-fit bg-[#00B900] hover:bg-[#009900] text-white text-[11px] sm:text-xs font-black px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md flex items-center gap-1.5 transition-transform hover:scale-105 hover:-translate-y-1">
-                        <i class="fa-brands fa-line text-sm sm:text-base"></i> 提供新店情報
+                        <i class="fa-brands fa-line text-sm sm:text-base"></i> 提供活動資訊
                     </a>
                 </div>
                 
-                <!-- 卡片橫向捲動區塊 -->
-                <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pb-2 relative z-10 snap-x snap-mandatory">
+                <!-- 卡片橫向捲動區塊：新增 pt-3 pb-4 預留上下緩衝空間，防止 Hover 動畫被裁切 -->
+                <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pt-3 pb-4 relative z-10 snap-x snap-mandatory">
                     <!-- 模擬推廣卡片 1 -->
                     <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                         <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜初店</h4>
                             <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>桃園市龜山區長青一街39號</span>
+                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>長青一街39號</span>
                             <span class="text-orange-400 bg-orange-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-utensils"></i></span>
                         </div>
                     </div>
@@ -211,24 +211,24 @@
                     <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-themeBlue text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">新開幕</div>
                         <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeBlue transition-colors line-clamp-1">A7 寵物星樂園</h4>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeBlue transition-colors line-clamp-1">墨屋カレー 龜山店</h4>
                             <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">歡慶開幕！毛小孩首次洗澡體驗價只要 $399，再送精美零食。</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-themeBlue bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>樂善二路</span>
+                            <span class="text-themeBlue bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>長青一街</span>
                             <span class="text-themeBlue bg-blue-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-paw"></i></span>
                         </div>
                     </div>
 
                     <!-- 模擬推廣卡片 3 -->
                     <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">活動優惠</div>
+                        <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">在地經營</div>
                         <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeGreen transition-colors line-clamp-1">大樹藥局 (文桃店)</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">全新進駐！即日起至本週末，消費滿千送精緻衛生紙一串。</p>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeGreen transition-colors line-clamp-1">台灣房屋</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">胡哲嘉 推薦專業房仲 https://line.me/ti/p/~ID</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-themeGreen bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>文桃路</span>
+                            <span class="text-themeGreen bg-white px-2 py-1 rounded-lg shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i>LINE帳號</span>
                             <span class="text-themeGreen bg-green-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-pills"></i></span>
                         </div>
                     </div>
@@ -238,9 +238,9 @@
             <!-- 🗺️ 想去哪裡玩？ (景點推薦) -->
             <div style="display: none;" class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-purple-50 relative">
                 <div class="absolute -top-4 -left-4 text-purple-200 text-5xl floating z-0"><i class="fa-solid fa-camera-retro"></i></div>
-                <h2 class="text-2xl font-black text-themePurple mb-4 relative z-10"> 想去哪裡玩？ <span class="text-sm text-gray-400 font-bold ml-2">為您計算距離中...</span></h2>
-                <!-- 新增 snap-x snap-mandatory 讓滑動像輪播圖一樣平滑吸附，並微調間距 -->
-                <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pb-2 relative z-10 snap-x snap-mandatory" id="attractions-list-container">
+                <h2 class="text-2xl font-black text-themePurple mb-2 relative z-10"> 想去哪裡玩？ <span class="text-sm text-gray-400 font-bold ml-2">為您計算距離中...</span></h2>
+                <!-- 新增 pt-3 pb-4 預留上下方空間避免懸停被遮蔽 -->
+                <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pt-3 pb-4 relative z-10 snap-x snap-mandatory" id="attractions-list-container">
                     <div class="text-center text-purple-300 py-4 w-full"><i class="fa-solid fa-spinner fa-spin text-2xl"></i><span class="text-sm ml-2 font-bold">載入在地景點中...</span></div>
                 </div>
             </div>
@@ -541,9 +541,9 @@
                 <div class="mb-8 bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-4 md:p-6 border-4 border-gray-50 shadow-cute flex flex-col md:flex-row gap-4 md:gap-6 items-stretch">
                     
                     <!-- 左側/上方地圖 (手機版全寬並在上，平板以上置左並設定適當比例) -->
-                    <div class="w-full md:w-5/12 lg:w-1/3 min-h-[250px] sm:min-h-[350px] md:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-50 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
+                    <div class="w-full md:w-5/12 lg:w-1/3 min-h-[250px] sm:min-h-[350px] md:h-auto lg:min-h-[500px] rounded-[1.2rem] md:rounded-[2rem] overflow-hidden relative bg-gray-0 flex items-center justify-center border-2 md:border-4 border-white shadow-inner shrink-0 group">
                         <!-- 關鍵：使用 object-contain 加上 padding 確保地圖完整顯示不被裁切 -->
-                        <img src="https://github.com/A7Club/life/blob/main/a7map.png?raw=true" class="absolute inset-0 w-full h-full p-2 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
+                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="absolute inset-0 w-full h-full p-2 md:p-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
                         
                         <div class="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-white whitespace-nowrap">
                             A7 區域建案概覽圖
@@ -556,8 +556,8 @@
                             <h3 class="text-base md:text-xl font-black text-gray-700 mb-4 md:mb-5 flex items-center border-b-2 border-gray-200 pb-2 md:pb-3 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
                             </h3>
-                            <!-- 網格排版：依據螢幕大小自動雙排或單排 -->
-                            <div id="village-tags-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start">
+                            <!-- 改為彈性換行 (flex-wrap)，按鈕寬度將由內部文字長短決定 -->
+                            <div id="village-tags-container" class="flex flex-wrap gap-2 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start">
                                 <!-- 這裡會動態載入各里小標籤 -->
                             </div>
                         </div>
@@ -774,13 +774,14 @@
                                     const showQR = snsType === 'LINE';
                                     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(item.link)}`;
                                     
-                                    // 預設純文字頭像
+                                    // 預設文字頭像 URL (使用品牌色或隨機色)
                                     let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=100&font-size=0.35`;
 
                                     // 動態解析 Threads 網址抓取真實頭像 (若表單有圖片則優先使用)
                                     if (item.img) {
                                         avatarUrl = item.img;
                                     } else if (snsType === 'Threads' && item.link.includes('@')) {
+                                        // 擷取 Threads 的 @帳號名稱，並透過 unavatar 代理抓取對應頭像
                                         const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
                                         if (match && match[1]) {
                                             avatarUrl = `https://unavatar.io/instagram/${match[1]}?fallback=${encodeURIComponent(avatarUrl)}`;
@@ -1043,7 +1044,7 @@
                     }).join('');
                     
                     container.innerHTML = `
-                        <h3 class="text-sm font-black text-themeBlue mb-3 flex items-center bg-blue-100/50 inline-block px-3 py-1 rounded-full"><i class="fa-solid fa-rss mr-1.5"></i>自動追蹤：在地媒體報報</h3>
+                        <h3 class="text-sm font-black text-gray-300 mb-3 flex items-center bg-grey-100/50 inline-block px-3 py-1 rounded-full"><i class="fa-solid fa-rss mr-1.5"></i>自動追蹤：在地媒體報報</h3>
                         <div class="space-y-2.5">${newsHtml}</div>
                     `;
                 } else {
@@ -1960,15 +1961,14 @@
                 // 產生安全且唯一的 ID 供錨點跳轉使用
                 const safeId = `village-${villageName.replace(/\s+/g, '')}`;
 
-                // 生成各里的快速跳轉標籤 (放大文字與按鈕尺寸，適應上下堆疊與並排佈局)
+                // 生成各里的快速跳轉標籤 (取消 w-full，讓寬度自適應內容；保留適當的 padding)
                 tagsHtml += `
                     <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
-                            class="px-4 md:px-5 py-3.5 md:py-4 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-xl md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-base md:text-lg flex items-center gap-3 md:gap-4 hover:-translate-y-1 w-full text-left group">
-                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-full ${style.bg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid ${style.icon} text-sm md:text-base"></i>
+                            class="px-4 md:px-5 py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-sm md:text-base flex items-center gap-2 md:gap-3 hover:-translate-y-1 w-auto text-left group">
+                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full ${style.bg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid ${style.icon} text-xs md:text-sm"></i>
                         </div>
-                        <span class="truncate flex-1 tracking-wide">${villageName}</span>
-                        <i class="fa-solid fa-chevron-right text-gray-300 group-hover:${style.textTitle} transition-colors text-xs md:text-sm"></i>
+                        <span class="tracking-wide whitespace-nowrap">${villageName}</span>
                     </button>
                 `;
 
