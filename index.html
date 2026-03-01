@@ -236,13 +236,113 @@
                 </div>
                 
                 <!-- 店家總計數字 -->
-                <div class="mx-auto bg-white/80 backdrop-blur-md rounded-full px-5 md:px-8 py-2 md:py-2.5 shadow-sm border border-pink-100 flex items-center justify-center text-xs md:text-base font-bold text-gray-500 w-fit">
+                <div class="mx-auto bg-white/80 backdrop-blur-md rounded-full px-5 md:px-8 py-2 md:py-2.5 shadow-sm border border-pink-100 flex items-center justify-center text-xs md:text-base font-bold text-gray-500 w-fit mb-4">
                     <i class="fa-solid fa-chart-pie mr-2 text-themePink text-sm md:text-lg"></i> 
                     目前統計店家總計數量： <span id="counter-total" class="inline-block text-center text-themePink font-black text-base md:text-xl mx-1.5 num-counter">...</span> 家
                 </div>
             </div>
 
-            <!-- 🎉 在地新店家開幕推廣活動 (新增區塊) -->
+            <!-- 🚇 機捷 A7 體育大學站 列車動態 (極簡清晰排版) -->
+            <div class="mb-2 bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-gray-50 flex flex-col lg:flex-row gap-6 md:gap-8 items-center relative overflow-hidden">
+                <!-- 背景裝飾 -->
+                <div class="absolute -right-4 -top-4 text-gray-100 text-8xl floating pointer-events-none z-0 opacity-50"><i class="fa-solid fa-train-subway"></i></div>
+                
+                <!-- 左側：倒數資訊 (簡約明顯的南下北上) -->
+                <div class="w-full lg:w-[35%] flex flex-col gap-3 relative z-10 shrink-0">
+                    <h2 class="text-xl md:text-2xl font-black text-purple-400 flex items-center border-b-2 border-gray-100 pb-3 mb-1">
+                        <i class="fa-solid fa-train-tram text-themePurple mr-3 text-2xl md:text-3xl"></i> 機捷到站通知
+                    </h2>
+                    <div class="flex flex-row lg:flex-col gap-3 md:gap-4 h-full">
+                        <!-- 北上 (往台北) -->
+                        <div class="flex-1 bg-green-50 rounded-2xl p-4 shadow-sm border border-green-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                            <div>
+                                <div class="text-[10px] sm:text-xs text-green-400 font-bold mb-0.5">往台北</div>
+                                <div class="text-sm sm:text-lg font-black text-themeGreen">北上</div>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span id="mrt-time-north" class="text-3xl sm:text-4xl font-black text-themeGreen font-mono w-10 text-center">--</span>
+                                <span id="mrt-unit-north" class="text-xs sm:text-sm font-bold text-gray-500">分</span>
+                            </div>
+                        </div>
+                        <!-- 南下 (往中壢) -->
+                        <div class="flex-1 bg-blue-50 rounded-2xl p-4 shadow-sm border border-blue-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                            <div>
+                                <div class="text-[10px] sm:text-xs text-blue-400 font-bold mb-0.5">往機場/中壢</div>
+                                <div class="text-sm sm:text-lg font-black text-themeBlue">南下</div>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span id="mrt-time-south" class="text-3xl sm:text-4xl font-black text-themeBlue font-mono w-10 text-center">--</span>
+                                <span id="mrt-unit-south" class="text-xs sm:text-sm font-bold text-gray-500">分</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：軌道與列車動畫圖 (前後3站: A4~A10) -->
+                <div class="w-full lg:w-[65%] relative z-10 bg-white rounded-[1.5rem] p-4 sm:p-6 border-2 border-gray-100 shadow-inner flex flex-col justify-center">
+                    <div class="flex justify-between items-center mb-8">
+                        <span class="text-xs sm:text-sm text-gray-500 font-black"><i class="fa-solid fa-location-crosshairs mr-1.5"></i>列車即時位置</span>
+                        <span class="text-[10px] sm:text-xs text-gray-400 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>系統推算中</span>
+                    </div>
+                    
+                    <!-- 預留 mb-8 空間避免下方文字被遮蔽 -->
+                    <div class="relative w-full px-3 sm:px-6 mb-12 mt-2">
+                        <!-- 軌道底線 -->
+                        <div class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[6px] h-1.5 sm:h-2 bg-gray-200 rounded-full z-0"></div>
+                        
+                        <!-- 動態列車注入點 -->
+                        <div id="mrt-track-container" class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[6px] z-20 pointer-events-none"></div>
+                        
+                        <!-- 站點配置 (使用 justify-between 自動均分 A4 到 A10) -->
+                        <div class="flex justify-between relative z-10 w-full">
+                            <!-- A4 -->
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A4</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">副都心</span>
+                            </div>
+                            <!-- A5 -->
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A5</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">泰山</span>
+                            </div>
+                            <!-- A6 -->
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A6</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">貴和</span>
+                            </div>
+                            <!-- A7 (放大醒目) -->
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-themePurple border-[3px] sm:border-4 border-white shadow-md z-10 -mt-0.5 sm:-mt-0.5"></div>
+                                <span class="text-[11px] sm:text-sm font-black text-themePurple mt-1.5">A7</span>
+                                <span class="text-[11px] sm:text-[15px] font-black text-gray-600 whitespace-nowrap absolute top-8 sm:top-10">體大</span>
+                            </div>
+                            <!-- A8 -->
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A8</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">長庚</span>
+                            </div>
+                            <!-- A9 -->
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A9</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">林口</span>
+                            </div>
+                            <!-- A10 -->
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A10</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-8 sm:top-10">山鼻</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🎉 在地新商家情報 -->
             <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-orange-50 relative overflow-hidden">
                 <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0 pointer-events-none"><i class="fa-solid fa-shop"></i></div>
                 
@@ -663,11 +763,11 @@
                         </summary>
                         <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">
                             A7 區域主要學區為<strong class="text-themePink">樂善國小</strong>，以及即將完工招生的<strong class="text-themePink">文青國中小</strong>。
-                            <br>•文青里、文藝里全部為文青國中小、大埔國小自由學區。        
-                            <br>•樂善里（1、2、3）為樂善、文青國中小自由學區。
-                            <br>•長樂里（1-9）為樂善、文青國中小自由學區。
-                            <br>•長樂里（10-21）為樂善、長庚國小自由學區。
-                            <br>•文樂里全部為樂善、文青國中小自由學區。 <br>
+                            <br><br>• 文青里、文藝里全部為文青國中小、大埔國小自由學區。        
+                            <br>• 樂善里（1、2、3）為樂善、文青國中小自由學區。
+                            <br>• 長樂里（1-9）為樂善、文青國中小自由學區。
+                            <br>• 長樂里（10-21）為樂善、長庚國小自由學區。
+                            <br>• 文樂里全部為樂善、文青國中小自由學區。 <br><br>
                             具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所或學校教務處確認。
                         </p>
                     </details>
@@ -720,6 +820,9 @@
 
     <!-- JavaScript 路由與注入邏輯 -->
     <script>
+        // 用於存放全域 setInterval 以便切換頁面時清除
+        let globalMrtInterval = null;
+
         // 初始化載入首頁
         document.addEventListener('DOMContentLoaded', () => {
             loadPage('home');
@@ -828,14 +931,25 @@
                 // 4. 平滑滾動到頂部
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
-                // 如果是首頁，觸發捲動監聽的跳動數字動畫
+                // 如果是首頁，觸發捲動監聽的跳動數字動畫及各種動態載入
                 if (pageId === 'home') {
                     // 微小延遲確保 DOM 已完全渲染
                     setTimeout(() => {
                         fetchAndUpdateHomeCounts(); // 動態載入並計算首頁店家數字
                         fetchAttractionsData(); // 新增：抓取動態景點並計算車程
                         fetchLocalNews(); // 新增：抓取在地動態新聞
+                        
+                        // 啟動 MRT 動態模擬
+                        updateMRTStatus();
+                        if (globalMrtInterval) clearInterval(globalMrtInterval);
+                        globalMrtInterval = setInterval(updateMRTStatus, 1000);
                     }, 50);
+                } else {
+                    // 若切換到其他頁面，清除 MRT 動畫定時器節省資源
+                    if (globalMrtInterval) {
+                        clearInterval(globalMrtInterval);
+                        globalMrtInterval = null;
+                    }
                 }
 
                 // 如果是 Food 頁面，動態抓取試算表資料
@@ -1102,6 +1216,94 @@
                 console.error("Search Error:", err);
                 container.innerHTML = `<div class="text-center py-12 text-red-500 font-bold bg-white rounded-[2.5rem] border-4 border-red-50">搜尋時發生錯誤，無法連線至資料庫，請稍後再試。</div>`;
             }
+        }
+
+        // --- 機捷動態模擬更新函數 ---
+        function updateMRTStatus() {
+            const container = document.getElementById('mrt-track-container');
+            const nbEl = document.getElementById('mrt-time-north');
+            const sbEl = document.getElementById('mrt-time-south');
+            if (!container || !nbEl || !sbEl) return;
+
+            const now = new Date();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const currentTotalMinutes = minutes + seconds / 60;
+
+            // 假設北上列車 (往台北) 在每個小時的 5, 20, 35, 50 分抵達 A7
+            const baseNbArrivals = [5, 20, 35, 50]; 
+            // 假設南下列車 (往機場) 在每個小時的 10, 25, 40, 55 分抵達 A7
+            const baseSbArrivals = [10, 25, 40, 55]; 
+
+            let nbTrainsHTML = '';
+            let minNbDiff = 999;
+            
+            // 處理北上列車 (由 A10 往 A4 方向移動，A7位於中心)
+            baseNbArrivals.forEach(arr => {
+                [-60, 0, 60].forEach(offset => {
+                    let diff = (arr + offset) - currentTotalMinutes;
+                    if (diff > 0 && diff < minNbDiff) minNbDiff = diff;
+                    
+                    // 從 A10 到 A4，總共跨越 6 個站距，每站約3分鐘，跨度約為 -9 到 +9 分鐘
+                    if (diff >= -9 && diff <= 9) {
+                        // A7 固定在 50% 位置，每 9 分鐘移動 50%
+                        // 北上列車：從右側 A10 (100%) 往左側 A4 (0%) 開
+                        let pos = 50 + (diff * (50/9));
+                        pos = Math.max(0, Math.min(100, pos));
+                        
+                        nbTrainsHTML += `<div class="absolute top-[4px] sm:top-[4px] -translate-y-full -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
+                            <div class="bg-white text-themeGreen rounded-full shadow-md border-2 border-purple-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
+                                <i class="fa-solid fa-caret-left text-[10px]"></i>
+                                <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
+                            </div>
+                        </div>`;
+                    }
+                });
+            });
+
+            let sbTrainsHTML = '';
+            let minSbDiff = 999;
+            
+            // 處理南下列車 (由 A4 往 A10 方向移動)
+            baseSbArrivals.forEach(arr => {
+                [-60, 0, 60].forEach(offset => {
+                    let diff = (arr + offset) - currentTotalMinutes;
+                    if (diff > 0 && diff < minSbDiff) minSbDiff = diff;
+                    
+                    if (diff >= -9 && diff <= 9) {
+                        // 南下列車：從左側 A4 (0%) 往右側 A10 (100%) 開
+                        let pos = 50 - (diff * (50/9));
+                        pos = Math.max(0, Math.min(100, pos));
+                        
+                        sbTrainsHTML += `<div class="absolute top-[22px] sm:top-[28px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
+                            <div class="bg-white text-themeBlue rounded-full shadow-md border-2 border-blue-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
+                                <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
+                                <i class="fa-solid fa-caret-right text-[10px]"></i>
+                            </div>
+                        </div>`;
+                    }
+                });
+            });
+
+            // 寫入畫面
+            container.innerHTML = nbTrainsHTML + sbTrainsHTML;
+
+            // 更新倒數文字
+            const updateText = (el, diff, unitId) => {
+                const unitEl = document.getElementById(unitId);
+                if (Math.ceil(diff) <= 1 && Math.ceil(diff) >= 0) {
+                    el.innerText = '進站中';
+                    el.className = 'text-2xl sm:text-3xl font-black text-red-500 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest';
+                    if(unitEl) unitEl.style.display = 'none';
+                } else {
+                    el.innerText = Math.ceil(diff);
+                    el.className = el.id.includes('north') ? 'text-3xl sm:text-4xl font-black text-themeGreen font-mono w-10 text-center' : 'text-3xl sm:text-4xl font-black text-themeBlue font-mono w-10 text-center';
+                    if(unitEl) unitEl.style.display = 'inline';
+                }
+            };
+
+            updateText(nbEl, minNbDiff, 'mrt-unit-north');
+            updateText(sbEl, minSbDiff, 'mrt-unit-south');
         }
 
         // --- 首頁店家數量動態統計與動畫 ---
@@ -2324,5 +2526,3 @@
     </script>
 </body>
 </html>
-
-
