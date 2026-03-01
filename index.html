@@ -665,26 +665,26 @@
                 </div>
 
                 <!-- 新增：A7 各里分配圖與快速跳轉標籤 (手機版圖片在上列表在下，電腦版圖片在左列表在右) -->
-                <div class="mb-8 flex flex-col md:flex-row gap-4 md:gap-6 items-stretch">
+                <div class="mb-8 flex flex-col md:flex-row gap-4 md:gap-6 items-start">
                     
                     <!-- 左側/上方地圖 (移除外框，以圖片高度為主，自然撐開空間不裁切) -->
                     <div class="w-full md:w-1/2 lg:w-5/12 relative flex items-center justify-center shrink-0 group">
                         <!-- 關鍵：移除外框、背景與 padding，讓圖片乾淨呈現 -->
-                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-auto max-h-[75vh] md:max-h-[85vh] object-contain opacity-95 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-md" alt="A7建案地圖">
+                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-auto max-h-[75vh] md:max-h-[85vh] object-contain opacity-95 group-hover:opacity-100 transition-opacity duration-300" alt="A7建案地圖">
                         
                         <div class="hidden md:block absolute bottom-2 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-gray-100 whitespace-nowrap">
                             A7 區域建案概覽圖
                         </div>
                     </div>
                     
-                    <!-- 右側/下方標籤選單 (寬度自動分配剩下的空間) -->
+                    <!-- 右側/下方標籤選單 (寬度自動分配剩下的空間，並加入專屬卡片外框) -->
                     <div class="w-full md:w-1/2 lg:w-7/12 flex flex-col">
-                        <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 sm:p-5 md:p-6 h-full border-4 border-gray-50 shadow-cute flex flex-col">
-                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-100 pb-3 shrink-0">
+                        <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-6 shadow-cute border-4 border-gray-50 flex flex-col h-full">
+                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-100 pb-2 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
                             </h3>
                             <!-- 手機版採用 grid-cols-4 確保兩行內，平板以上採用 flex-wrap 依內容適應寬度 -->
-                            <div id="village-tags-container" class="grid grid-cols-4 sm:flex sm:flex-wrap gap-2 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start">
+                            <div id="village-tags-container" class="grid grid-cols-4 sm:flex sm:flex-wrap gap-1.5 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start">
                                 <!-- 這裡會動態載入各里小標籤 -->
                             </div>
                         </div>
@@ -2195,11 +2195,11 @@
                 // 產生安全且唯一的 ID 供錨點跳轉使用
                 const safeId = `village-${villageName.replace(/\s+/g, '')}`;
 
-                // 生成各里的快速跳轉標籤 (手機版隱藏 icon 並調整 padding，以縮小為兩行)
+                // 生成各里的快速跳轉標籤 (手機版僅顯示文字，無背景與圖示；電腦版維持按鈕樣式)
                 tagsHtml += `
                     <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
-                            class="px-1 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 bg-white border sm:border-2 ${style.border} ${style.textTitle} font-black rounded-lg sm:rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-xs sm:text-sm md:text-base flex items-center justify-center sm:justify-start gap-0 sm:gap-2 md:gap-3 hover:-translate-y-1 w-full sm:w-auto text-center sm:text-left group">
-                        <div class="hidden sm:flex w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            class="py-1.5 sm:px-4 md:px-5 sm:py-2.5 md:py-3 sm:bg-white sm:border-2 sm:${style.border} ${style.textTitle} font-black sm:rounded-full md:rounded-2xl sm:${style.hoverBg} transition-all sm:shadow-sm text-xs sm:text-sm md:text-base flex items-center justify-center sm:justify-start gap-2 md:gap-3 hover:-translate-y-1 w-full sm:w-auto text-center sm:text-left group">
+                        <div class="hidden sm:flex w-6 h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                             <i class="fa-solid ${style.icon} text-[10px] sm:text-xs md:text-sm"></i>
                         </div>
                         <span class="tracking-tighter sm:tracking-wide whitespace-nowrap">${villageName}</span>
