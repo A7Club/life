@@ -3,25 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>A7 樂園生活指南 🎡｜林口、龜山美食機能情報地圖</title>
+    <title>A7 柒樂部 🎡｜林口、龜山美食機能生活地圖指南</title>
     <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
-
-    <meta property="og:site_name" content="A7 柒樂部">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://a7club.github.io/life/">
-    <meta property="og:title" content="A7 樂園生活指南 🎡｜林口、龜山美食機能情報地圖">
-    <meta property="og:description" content="專為 A7 住戶打造的一站式生活指南。美食、買東西、看醫生、建案地景資訊完整收錄。">
     <meta property="og:image" content="https://a7club.github.io/life/website.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="A7 樂園生活指南 🎡">
-    <meta name="twitter:description" content="林口、龜山、A7體育大學站在地生活指南">
-    <meta name="twitter:image" content="https://a7club.github.io/life/website.jpg">
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -676,7 +661,13 @@
                             <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
                         </summary>
                         <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">
-                            A7 區域主要學區為<strong class="text-themePink">樂善國小</strong>，以及即將完工招生的<strong class="text-themePink">文青國中小</strong>。具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所或學校教務處確認。
+                            A7 區域主要學區為<strong class="text-themePink">樂善國小</strong>，以及即將完工招生的<strong class="text-themePink">文青國中小</strong>。
+                            <br>•文青里、文藝里全部為文青國中小、大埔國小自由學區。        
+                            <br>•樂善里（1、2、3）為樂善、文青國中小自由學區。
+                            <br>•長樂里（1-9）為樂善、文青國中小自由學區。
+                            <br>•長樂里（10-21）為樂善、長庚國小自由學區。
+                            <br>•文樂里全部為樂善、文青國中小自由學區。 <br>
+                            具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所或學校教務處確認。
                         </p>
                     </details>
                 </div>
@@ -703,8 +694,8 @@
                     
                     <!-- 右側/下方標籤選單 (寬度自動分配剩下的空間，並加入專屬卡片外框) -->
                     <div class="w-full md:w-1/2 lg:w-7/12 flex flex-col">
-                        <div class="bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-6 shadow-cute border-4 border-gray-50 flex flex-col h-full">
-                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-100 pb-2 shrink-0">
+                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
+                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
                             </h3>
                             <!-- 手機版採用 flex-wrap 純文字雲排版，平板以上維持原按鈕排版 -->
@@ -1999,12 +1990,17 @@
                     if (catIdx === -1) catIdx = 1;
                     let linkIdx = headers.findIndex(k => k.includes('連結') || k.includes('網址') || k.includes('URL'));
                     if (linkIdx === -1) linkIdx = 2;
-                    // 擴充支援：自動檢查表單中是否有「頭像或照片」的欄位
-                    let imgIdx = headers.findIndex(k => k.includes('頭像') || k.includes('照片') || k.includes('圖片'));
+                    // 擴充支援：自動檢查表單中是否有「頭像、照片、圖片或備註」的欄位
+                    let imgIdx = headers.findIndex(k => k.includes('頭像') || k.includes('照片') || k.includes('圖片') || k.includes('備註'));
 
                     let parsedData = rows.slice(1).map(row => {
+                        // 如果有找到對應欄位，嘗試從裡面萃取出 http 開頭的網址
                         let rawImg = imgIdx !== -1 && row[imgIdx] ? row[imgIdx].trim() : '';
-                        let finalImg = rawImg.startsWith('http') ? rawImg : '';
+                        let finalImg = '';
+                        const urlMatch = rawImg.match(/https?:\/\/[^\s]+/);
+                        if (urlMatch) {
+                            finalImg = urlMatch[0];
+                        }
 
                         return {
                             name: row[nameIdx] ? row[nameIdx].trim() : '',
@@ -2014,6 +2010,7 @@
                         };
                     }).filter(item => item.name !== '' && item.link !== '#');
 
+                    // 直接使用表單載入的資料，不再強制寫死
                     globalCommunityData = parsedData;
                     resolve(globalCommunityData);
                 }).catch(reject);
@@ -2036,24 +2033,36 @@
             const container = document.getElementById('community-list-container');
             if (!container) return;
 
-            const groupedCategories = {};
+            // 初始化時先設定好「在地社群」，利用 JS 物件屬性順序特性，確保它永遠排在第一位
+            const groupedCategories = { '在地社群': [] };
+            
             data.forEach(item => {
                 const cat = item.category || '其他推薦';
                 if (!groupedCategories[cat]) groupedCategories[cat] = [];
                 groupedCategories[cat].push(item);
             });
 
+            // 若未來真的沒有資料，則清除空陣列避免顯示空白區塊
+            if (groupedCategories['在地社群'].length === 0) {
+                delete groupedCategories['在地社群'];
+            }
+
             let html = '';
             for (const [catName, items] of Object.entries(groupedCategories)) {
                 
-                // 動態排版：內部社群清單使用 auto-fit 自動計算框度與排列 (最小佔據 260px)
-                const gridClass = 'grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(260px,1fr))]';
+                const isLocalCommunity = catName === '在地社群';
+                
+                // 動態排版：在地社群改用 flex 彈性寬度自然並排，且強制置中 (justify-center)
+                const gridClass = isLocalCommunity
+                    ? 'flex flex-wrap justify-center items-stretch'
+                    : 'grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(260px,1fr))]';
 
                 const itemsHtml = items.map(item => {
                     let snsType = 'Web';
                     let snsBadgeClass = 'bg-gray-500 text-white';
                     let snsIcon = 'fa-solid fa-globe';
                     let avatarBg = 'random'; // 頭像背景色
+                    let btnClasses = 'bg-gray-500 hover:bg-gray-600 text-white';
                     
                     const searchStr = (item.name + ' ' + item.link).toUpperCase();
                     if (searchStr.includes('LINE') || searchStr.includes('賴')) {
@@ -2061,36 +2070,72 @@
                         snsBadgeClass = 'bg-[#00B900] text-white'; 
                         snsIcon = 'fa-brands fa-line';
                         avatarBg = '00B900';
+                        btnClasses = 'bg-[#00B900] hover:bg-[#009900] text-white';
                     } else if (searchStr.includes('THREADS')) {
                         snsType = 'Threads'; 
                         snsBadgeClass = 'bg-black text-white'; 
                         snsIcon = 'fa-brands fa-threads';
                         avatarBg = '000000'; // Threads 品牌色
+                        btnClasses = 'bg-black hover:bg-gray-800 text-white';
                     } else if (searchStr.includes('FB') || searchStr.includes('FACEBOOK') || searchStr.includes('臉書')) {
                         snsType = 'Facebook'; 
                         snsBadgeClass = 'bg-[#1877F2] text-white'; 
                         snsIcon = 'fa-brands fa-facebook';
                         avatarBg = '1877F2'; // Facebook 品牌色
+                        btnClasses = 'bg-[#1877F2] hover:bg-[#166FE5] text-white';
+                    } else {
+                        btnClasses = 'bg-themePink hover:bg-pink-400 text-white';
                     }
 
-                    // 判斷是否需要顯示 QR Code (僅 LINE 社群顯示)
-                    const showQR = snsType === 'LINE';
+                    // 判斷是否需要顯示 QR Code (僅一般社群的 LINE 顯示)
+                    const showQR = snsType === 'LINE' && !isLocalCommunity;
                     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
                     
                     // 預設文字頭像 URL (使用品牌色或隨機色)
                     let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
 
-                    // 動態解析 Threads 網址抓取真實頭像 (若表單有圖片則優先使用)
+                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 預設顯示黑色 KR
                     if (item.img) {
                         avatarUrl = item.img;
-                    } else if (snsType === 'Threads' && item.link.includes('@')) {
-                        // 擷取 Threads 的 @帳號名稱，並透過 unavatar 代理抓取對應頭像
-                        const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
-                        if (match && match[1]) {
-                            avatarUrl = `https://unavatar.io/instagram/${match[1]}?fallback=${encodeURIComponent(avatarUrl)}`;
-                        }
+                    } else if (snsType === 'Threads') {
+                        avatarUrl = `https://ui-avatars.com/api/?name=KR&background=000000&color=fff&size=150&bold=true`;
                     }
 
+                    // 取得社群 ID 顯示文字 (自動過濾網址擷取並移除 @)
+                    let displayId = "點擊進入";
+                    if (item.link.includes('@')) {
+                        const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
+                        if (match && match[1]) {
+                            displayId = match[1];
+                        }
+                    } else if (snsType === 'LINE') {
+                        displayId = "加入 LINE 社群";
+                    } else if (snsType === 'Facebook') {
+                        displayId = "前往粉絲專頁";
+                    }
+
+                    // === 在地社群 (精緻直式彈性卡片置中排版) ===
+                    if (isLocalCommunity) {
+                        const imgElement = `<div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full shadow-sm border-2 border-gray-100 group-hover:border-themePink group-hover:scale-105 transition-all mx-auto mb-3 shrink-0 bg-gray-50 overflow-hidden"><img src="${avatarUrl}" class="w-full h-full object-cover" alt="頭像" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff'"></div>`;
+
+                        // 移除 SNS 標籤，讓卡片極簡，寬度會依據 flex-1 與 min-w / max-w 自動調整
+                        return `
+                            <a href="${item.link}" target="_blank" class="flex-1 min-w-[140px] sm:min-w-[160px] max-w-[240px] shrink-0 flex flex-col bg-white rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-5 shadow-cute border-2 border-gray-100 hover:border-pink-200 hover:shadow-xl transition-all group hover:-translate-y-2 text-center justify-between items-center relative overflow-hidden">
+                                <!-- 裝飾背景 Icon -->
+                                <div class="absolute -right-3 -bottom-3 text-6xl opacity-[0.03] text-gray-500 pointer-events-none"><i class="${snsIcon}"></i></div>
+
+                                ${imgElement}
+
+                                <h4 class="font-black text-gray-800 text-sm sm:text-base md:text-lg mb-4 line-clamp-2 leading-snug group-hover:text-themePink transition-colors flex-1 w-full">${item.name}</h4>
+
+                                <div class="w-full ${btnClasses} py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-sm flex items-center justify-center gap-1.5 transition-colors mt-auto z-10 relative">
+                                    <i class="${snsIcon}"></i> <span class="truncate">${displayId}</span>
+                                </div>
+                            </a>
+                        `;
+                    }
+
+                    // === 一般社群 (橫式條列卡片排版) ===
                     return `
                         <a href="${item.link}" target="_blank" class="bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-1 transition-all flex items-center justify-between group h-full">
                             <!-- 左側：標題與藥丸標籤 -->
@@ -2115,15 +2160,20 @@
                     `;
                 }).join('');
 
-                // 外層大區塊加入 flex 確保等高，並用 auto-fit 讓內部項目自動排版
+                // 針對在地社群給予特殊的樣式 (圖釘圖示與微紅邊框)
+                const catIcon = catName === '在地社群' ? 'fa-thumbtack text-red-400' : 'fa-hashtag text-themePink';
+                const catBorder = catName === '在地社群' ? 'border-red-50' : 'border-blue-50';
+                const catBgIcon = catName === '在地社群' ? 'text-red-100' : 'text-blue-100';
+
+                // 外層大區塊加入 flex 確保等高，並用動態 Class 來排版
                 html += `
-                    <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 border-blue-50 relative h-full flex flex-col">
-                        <div class="absolute -top-4 -right-4 text-blue-100 text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
+                    <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${catBorder} relative h-full flex flex-col">
+                        <div class="absolute -top-4 -right-4 ${catBgIcon} text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
                         <h3 class="text-2xl font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0">
-                            <i class="fa-solid fa-hashtag mr-2 text-themePink"></i>${catName}
+                            <i class="fa-solid ${catIcon} mr-2"></i>${catName}
                         </h3>
-                        <!-- 應用動態網格：自動適應框度與排列 -->
-                        <div class="grid ${gridClass} gap-3 md:gap-4 relative z-10 flex-1 content-start items-stretch">
+                        <!-- 應用動態網格：根據是否為在地社群決定彈性或網格 -->
+                        <div class="${gridClass} gap-3 md:gap-4 relative z-10 flex-1 content-start">
                             ${itemsHtml}
                         </div>
                     </div>
@@ -2273,4 +2323,3 @@
     </script>
 </body>
 </html>
-
