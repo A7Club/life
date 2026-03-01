@@ -251,7 +251,7 @@
                 <!-- 左側：倒數資訊 (簡約明顯的南下北上) -->
                 <div class="w-full lg:w-[35%] flex flex-col gap-3 relative z-10 shrink-0">
                     <h2 class="text-xl md:text-2xl font-black text-purple-400 flex items-center border-b-2 border-gray-100 pb-3 mb-1">
-                        <i class="fa-solid fa-train-tram text-themePurple mr-3 text-2xl md:text-3xl"></i> 機捷到站通知
+                        <i class="fa-solid fa-train-tram text-themePurple mr-3 text-2xl md:text-3xl"></i> 機捷報站
                         <span class="text-xs text-gray-400 font-normal ml-3 mt-1 hidden sm:inline-block"><b>參考資料：<a href="https://tdx.transportdata.tw/" target="_blank" class="hover:underline">交通部 TDX</a></b> (運輸資料流通服務平臺)</span>
                     </h2>
 
@@ -619,8 +619,8 @@
                 <!-- 動態注入分類按鈕 -->
             </div>
 
-            <!-- 2. 動態注入的購物分類清單容器 (改用 auto-fit 自動計算框度與排列) -->
-            <div id="shopping-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-stretch">
+            <!-- 2. 動態注入的購物分類清單容器 (改為 items-start 讓每個分類根據內容決定高度) -->
+            <div id="shopping-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-start">
                 <div class="col-span-full text-center text-themeYellow py-12">
                     <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
                     <p class="font-bold">正在為您整理生活圈店家...</p>
@@ -1868,6 +1868,9 @@
             const tagsContainer = document.getElementById('shopping-tags-container');
             if (!container) return;
 
+            // 確保外層容器不會強制拉伸內容高度，改為 items-start 讓每個分類依照內容高度自然顯示
+            container.className = "grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-start";
+
             // --- 1. 渲染上方分類 TAG ---
             if (tagsContainer) {
                 // 從全部資料中抓出唯一分類
@@ -1938,6 +1941,10 @@
                 // 判斷是否為需要顯示照片的「購物中心/觀光景點」類別
                 const isPhotoCategory = catName.includes('購物中心') || catName.includes('觀光景點') || catName.includes('百貨') || catName.includes('商場');
 
+                // 如果分類中有照片且數量過多 (大於2)，請改用獨立一欄
+                const isFullWidth = isPhotoCategory && items.length > 2;
+                const spanClass = isFullWidth ? 'md:col-span-full' : '';
+
                 let itemsHtml = '';
 
                 if (isPhotoCategory) {
@@ -1981,15 +1988,23 @@
                     }).join('');
                 }
 
-                // 根據是否為照片卡片，切換對應的網格佈局 (照片卡片需要稍微寬一點的空間，且支援兩欄並排)
-                const listClass = isPhotoCategory 
-                    ? "grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2 sm:gap-3 relative z-10 flex-1 content-start"
-                    : "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
+                // 根據是否為照片卡片及是否為獨立滿版，切換對應的網格佈局
+                let listClass = '';
+                if (isPhotoCategory) {
+                    if (isFullWidth) {
+                        listClass = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 relative z-10 flex-1 content-start";
+                    } else {
+                        listClass = "grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-3 relative z-10 flex-1 content-start";
+                    }
+                } else {
+                    listClass = "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
+                }
                 
                 const containerTag = isPhotoCategory ? "div" : "ul";
 
+                // 移除外層容器的 h-full，並加上 spanClass 動態支援滿版獨立欄位
                 html += `
-                    <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative h-full flex flex-col">
+                    <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col ${spanClass}">
                         <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
                         <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
                         
@@ -2529,4 +2544,3 @@
     </script>
 </body>
 </html>
-
