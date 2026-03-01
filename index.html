@@ -193,23 +193,27 @@
     <template id="tpl-home">
         <div class="fade-in space-y-8">
             <!-- 英雄看板 (Hero) -->
-            <div class="bg-cover bg-center rounded-[2.5rem] shadow-sticker p-8 md:p-14 text-center relative overflow-hidden" style="background-image: url('https://github.com/A7Club/life/blob/main/A7life.png?raw=true');">
-                <!-- 照片遮罩：加入淡淡的粉藍漸層與微暗效果，確保文字清晰且風格一致 -->
-                <div class="absolute inset-0 bg-black/30"></div>
-                <div class="absolute inset-0 bg-gradient-to-br from-themeBlue/40 to-themePink/40"></div>
-                
-                <div class="absolute -right-10 -top-10 text-white/40 text-9xl z-0"><i class="fa-solid fa-tent"></i></div>
-                <div class="absolute -left-5 -bottom-5 text-white/40 text-8xl z-0"><i class="fa-solid fa-ice-cream"></i></div>
-                
-                <h1 class="text-4xl md:text-5xl font-black text-white mb-4 relative z-10 drop-shadow-lg">探索 A7 在地生活 ✨</h1>
-                <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南</p>
-                
-                <div class="max-w-xl mx-auto relative z-10">
-                    <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？全聯？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
-                    <button onclick="doSearch()" class="absolute right-2 top-2 bottom-2 w-12 bg-themeYellow text-white rounded-full flex items-center justify-center text-xl hover:bg-yellow-400 hover:scale-105 transition-all shadow-sm">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </div>
+            <div class="bg-cover bg-center rounded-[2.5rem] shadow-sticker p-8 md:p-14 text-center relative overflow-hidden flex flex-col justify-center items-center" 
+     style="background-image: url('https://github.com/A7Club/life/blob/main/A7life.png?raw=true'); height: 650px;">
+    
+    <div class="absolute inset-0 bg-black/30"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-themeBlue/40 to-themePink/40"></div>
+    
+    <div class="absolute -right-10 -top-10 text-white/40 text-9xl z-0"><i class="fa-solid fa-tent"></i></div>
+    <div class="absolute -left-5 -bottom-5 text-white/40 text-8xl z-0"><i class="fa-solid fa-ice-cream"></i></div>
+    
+    <div class="w-full relative z-10">
+        <h1 class="text-4xl md:text-5xl font-black text-white mb-4 drop-shadow-lg">探索 A7 在地生活 ✨</h1>
+        <p class="text-lg md:text-xl text-white/95 font-bold mb-8 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南</p>
+        
+        <div class="max-w-xl mx-auto relative">
+            <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？全聯？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
+            <button onclick="doSearch()" class="absolute right-2 top-2 bottom-2 w-12 bg-themeYellow text-white rounded-full flex items-center justify-center text-xl hover:bg-yellow-400 hover:scale-105 transition-all shadow-sm">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+</div>
             </div>
 
             <!-- 快速通關 (四大捷徑) & 店家統計 (合併區塊，數字自動載入) -->
@@ -2249,3 +2253,4 @@
     </script>
 </body>
 </html>
+
