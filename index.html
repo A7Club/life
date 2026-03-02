@@ -450,7 +450,7 @@
                     </div>
 
                     <!-- 模擬推廣卡片 Pink (無放大) -->
-                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-pink-50 to-white-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-pink-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-themePink text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">建案分享</div>
                         <div>
                             <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themePink transition-colors line-clamp-1">粉粉兔看房地圖</h4>
@@ -2386,7 +2386,7 @@
                                         <i class="fa-solid fa-notes-medical ${style.textTitle} mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i>
                                         <span class="font-black text-gray-800 text-lg leading-snug">${item.name}</span>
                                     </div>
-                                    ${item.license ? `<div class="ml-6 mt-1.5 text-[10px] text-white ${style.badgeBg} px-2 py-1 rounded-md font-black w-fit shadow-sm flex items-center"><i class="fa-regular fa-id-badge mr-1"></i>字號：${item.license}</div>` : ''}
+                                    ${item.license ? `<div class="ml-6 mt-1.5 text-[10px] text-white ${style.badgeBg} px-2 py-1 rounded-md font-black w-fit shadow-sm flex items-center"><i class="fa-regular fa-id-badge mr-1"></i>桃衛醫字第：${item.license} 號</div>` : ''}
                                 </div>
                                 <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" title="導航至 ${item.name}" class="shrink-0 bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white px-2.5 py-1.5 rounded-lg text-xs font-black transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer mt-0.5">
                                     <i class="fa-solid fa-location-arrow"></i> 導航
@@ -2789,4 +2789,3 @@
     </script>
 </body>
 </html>
-
