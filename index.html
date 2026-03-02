@@ -85,7 +85,25 @@
         /* --- Leaflet 客製化樣式 --- */
         .leaflet-popup-content-wrapper { border-radius: 1.5rem !important; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1) !important; padding: 4px !important; }
         .leaflet-popup-content { margin: 10px !important; font-family: 'Nunito', '"Noto Sans TC"', sans-serif; }
-        .leaflet-popup-close-button { top: 8px !important; right: 10px !important; color: #FF9EBB !important; font-weight: bold !important; }
+        
+        /* 為 Leaflet Popup 關閉按鈕加上白色圓形底圖與陰影 */
+        .leaflet-popup-close-button { 
+            top: 10px !important; 
+            right: 12px !important; 
+            color: #FF9EBB !important; 
+            background-color: white !important; 
+            border-radius: 50% !important; 
+            width: 24px !important; 
+            height: 24px !important; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
+            text-align: center !important;
+            line-height: 24px !important;
+            font-size: 16px !important;
+            font-weight: 900 !important;
+            padding: 0 !important;
+            z-index: 100 !important;
+        }
+        .leaflet-popup-close-button:hover { background-color: #FF9EBB !important; color: white !important; }
         
         .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large { background-color: rgba(255, 158, 187, 0.5) !important; }
         .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
@@ -97,19 +115,12 @@
         .leaflet-tooltip.custom-tooltip { background-color: white; color: #FF9EBB; font-weight: 900; border-radius: 0.5rem; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 4px 10px; font-family: 'Nunito', '"Noto Sans TC"', sans-serif; }
         .leaflet-tooltip.custom-tooltip::before { border-top-color: white; }
 
-        /* 水滴圖標動畫 */
+        /* 水滴圖標動畫 (移除了顫抖效果，僅保留平滑漂浮) */
         .floating-marker { animation: floatMarker 2.5s ease-in-out infinite; }
         @keyframes floatMarker {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-4px); }
             100% { transform: translateY(0px); }
-        }
-        
-        .bounce-marker { animation: bounceMarker 0.5s cubic-bezier(0.28, 0.84, 0.42, 1) infinite; }
-        @keyframes bounceMarker {
-            0% { transform: translateY(0px) scale(1, 1); }
-            45% { transform: translateY(-12px) scale(0.95, 1.05); }
-            100% { transform: translateY(0px) scale(1, 1); }
         }
     </style>
 </head>
@@ -181,8 +192,8 @@
         
         <!-- 卡片內容 -->
         <div class="bg-white w-full max-w-lg rounded-[2rem] md:rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden flex flex-col max-h-[90vh] transform scale-95 opacity-0 transition-all duration-300" id="store-modal-content">
-            <!-- 關閉按鈕 -->
-            <button onclick="closeStoreModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full text-gray-500 hover:bg-themePink hover:text-white flex items-center justify-center z-20 shadow-sm transition-colors border border-gray-100">
+            <!-- 關閉按鈕 (已改為純白圓底、加深邊框與陰影) -->
+            <button onclick="closeStoreModal()" class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full text-gray-500 hover:bg-themePink hover:text-white flex items-center justify-center z-20 shadow-md transition-colors border-2 border-gray-100">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
             
@@ -758,7 +769,7 @@
             <div class="bg-blue-50/80 text-blue-600 text-xs sm:text-sm font-bold px-5 py-3 rounded-2xl mb-6 flex items-start sm:items-center shadow-sm border border-blue-100 w-full leading-relaxed gap-3">
                 <i class="fa-solid fa-circle-info text-blue-500 text-lg mt-0.5 sm:mt-0 shrink-0"></i>
                 <div>
-                    建議前往前，先確認該機構是否符合台灣合法登記的醫事機構（包含診所、藥局等）與醫事人員。<br class="hidden sm:block">
+                    就診前請確認機構與醫事人員具合法資格。<br class="hidden sm:block">
                     <a href="https://ma.mohw.gov.tw/Accessibility/BASSearch/MASearchBAS" target="_blank" class="inline-flex items-center text-blue-500 hover:text-blue-700 underline mt-1 sm:mt-0">
                         <i class="fa-solid fa-magnifying-glass mr-1.5 text-xs"></i>衛福部醫事機構查詢系統
                     </a>
@@ -1749,20 +1760,19 @@
                 if (category.includes('早')) { iconClass = 'fa-egg'; bgColorClass = 'bg-yellow-400'; textColorClass = 'text-yellow-600'; }
                 else if (category.includes('飯') || category.includes('麵') || category.includes('正餐') || category.includes('主食')) { iconClass = 'fa-bowl-food'; bgColorClass = 'bg-orange-400'; textColorClass = 'text-orange-600'; }
                 else if (category.includes('咖啡') || category.includes('甜點') || category.includes('飲料') || category.includes('冰')) { iconClass = 'fa-mug-hot'; bgColorClass = 'bg-themeBlue'; textColorClass = 'text-blue-500'; }
-                else if (category.includes('小吃') || category.includes('炸')) { iconClass = 'fa-drumstick-bite'; bgColorClass = 'bg-amber-400'; textColorClass = 'text-amber-600'; }
+                else if (category.includes('小吃') || category.includes('宵夜') || category.includes('炸')) { iconClass = 'fa-drumstick-bite'; bgColorClass = 'bg-amber-400'; textColorClass = 'text-amber-600'; }
                 else if (category.includes('鍋')) { iconClass = 'fa-fire-burner'; bgColorClass = 'bg-red-400'; textColorClass = 'text-red-500'; }
             }
 
-            if (state === 'bouncing' || state === 'clicked') {
+            if (state === 'clicked') {
                 bgColorClass = 'bg-themePurple';
-                textColorClass = 'text-purple-600';
+                textColorClass = 'text-white';
             }
             
-            const animationClass = (state === 'bouncing') ? 'bounce-marker' : 'floating-marker';
-
+            // 統一使用平滑漂浮，不使用顫抖動畫
             const html = `
                 <div class="relative flex flex-col items-center justify-start w-[48px] h-[64px] pt-1">
-                    <div class="${animationClass} flex flex-col items-center relative z-10 w-full" style="filter: drop-shadow(0 4px 5px rgba(0,0,0,0.25)) drop-shadow(0 0 2px rgba(255,255,255,0.8));">
+                    <div class="floating-marker flex flex-col items-center relative z-10 w-full" style="filter: drop-shadow(0 4px 5px rgba(0,0,0,0.25)) drop-shadow(0 0 2px rgba(255,255,255,0.8));">
                         <div class="relative w-[36px] h-[36px] ${bgColorClass} flex items-center justify-center z-10 transition-colors duration-300 mt-[2px]" style="border-radius: 50% 50% 50% 0; transform: rotate(-45deg);">
                             <div class="w-[22px] h-[22px] bg-white rounded-full flex items-center justify-center shadow-sm" style="transform: rotate(45deg);">
                                 <i class="fa-solid ${iconClass} ${textColorClass} text-[11px] mt-[1px]"></i>
@@ -1905,7 +1915,7 @@
             }).join('');
         }
 
-        // 點擊飛躍動畫與地標跳動
+        // 點擊飛躍動畫與地標顏色變化 (移除顫抖效果，並使用平滑定焦)
         async function updateFoodMap(address, name, preLat, preLng, category) {
             const overlay = document.getElementById('food-map-overlay');
             const overlayText = document.getElementById('food-map-overlay-text');
@@ -1919,14 +1929,11 @@
             if (foodMarkersMap[name]) {
                 const marker = foodMarkersMap[name];
                 foodClusterGroup.zoomToShowLayer(marker, () => {
-                    foodMapInstance.flyTo(marker.getLatLng(), 18, { animate: true, duration: 1 });
+                    // 改為 setView 取代 flyTo，避免跟群聚展開動畫衝突導致地圖顫抖
+                    foodMapInstance.setView(marker.getLatLng(), 18, { animate: true, duration: 0.5 });
                     marker.openPopup();
-                    marker.setIcon(getCategoryIcon(category, 'bouncing'));
-                    if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
-                    marker.bounceTimeout = setTimeout(() => {
-                        if (foodMarkersMap[name]) marker.setIcon(getCategoryIcon(category, 'clicked'));
-                    }, 5000);
-                    if(overlay) setTimeout(() => overlay.style.display = 'none', 500);
+                    marker.setIcon(getCategoryIcon(category, 'clicked'));
+                    if(overlay) setTimeout(() => overlay.style.display = 'none', 300);
                 });
                 return;
             }
