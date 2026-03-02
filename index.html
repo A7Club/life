@@ -15,6 +15,15 @@
     <!-- Google Fonts (可愛圓潤字體) -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
     
+    <!-- 🗺️ 加入 Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- 🗺️ 加入 Leaflet.MarkerCluster (地標群聚套件) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -72,8 +81,47 @@
         
         /* 數字跳動的字體強調 */
         .num-counter { font-family: 'Nunito', sans-serif; font-variant-numeric: tabular-nums; }
+
+        /* --- Leaflet 客製化樣式 --- */
+        .leaflet-popup-content-wrapper { border-radius: 1.5rem !important; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1) !important; padding: 4px !important; }
+        .leaflet-popup-content { margin: 10px !important; font-family: 'Nunito', '"Noto Sans TC"', sans-serif; }
+        .leaflet-popup-close-button { top: 8px !important; right: 10px !important; color: #FF9EBB !important; font-weight: bold !important; }
+        
+        .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large { background-color: rgba(255, 158, 187, 0.5) !important; }
+        .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
+            background-color: rgba(255, 158, 187, 0.9) !important; color: white !important; font-family: 'Nunito', sans-serif !important; font-weight: 900 !important;
+        }
+
+        .custom-leaflet-icon-dynamic .fa-solid { margin-bottom: 2px; margin-right: 1px; }
+
+        .leaflet-tooltip.custom-tooltip { background-color: white; color: #FF9EBB; font-weight: 900; border-radius: 0.5rem; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 4px 10px; font-family: 'Nunito', '"Noto Sans TC"', sans-serif; }
+        .leaflet-tooltip.custom-tooltip::before { border-top-color: white; }
+
+        /* 水滴圖標動畫 */
+        .floating-marker { animation: floatMarker 2.5s ease-in-out infinite; }
+        @keyframes floatMarker {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .bounce-marker { animation: bounceMarker 0.5s cubic-bezier(0.28, 0.84, 0.42, 1) infinite; }
+        @keyframes bounceMarker {
+            0% { transform: translateY(0px) scale(1, 1); }
+            45% { transform: translateY(-12px) scale(0.95, 1.05); }
+            100% { transform: translateY(0px) scale(1, 1); }
+        }
     </style>
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YJ9RJC2DRS');
+</script>
 <body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
 
     <!-- 🎪 導航列 (雲朵造型) -->
@@ -105,11 +153,11 @@
         </div>
 
         <!-- 手機版展開選單 (取消全寬，改為自適應寬度並放大字體) -->
-        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[260px]">
-            <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
-            <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</button>
-            <button onclick="loadPage('medical'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</button>
-            <button onclick="loadPage('explore'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</button>
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-2xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[260px]">
+            <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
+            <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</button>
+            <button onclick="loadPage('medical'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</button>
+            <button onclick="loadPage('explore'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</button>
         </div>
     </nav>
 
@@ -204,7 +252,7 @@
                 
                 <h1 class="text-4xl md:text-5xl font-black text-white mb-4 relative z-10 drop-shadow-lg">探索 A7 在地生活 ✨</h1>
                 <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南<br>
-                <span class="text-sm md:text-base text-white font-bold mt-1 inline-block">― 網站三月試營運，你的建議就是我們升級的動力 ―</span>
+                <span class="text-sm md:text-base text-white font-bold mt-1 inline-block">― 網站３月試營運，你的建議就是我們升級的動力 ―</span>
                 </p>
                 <div class="max-w-xl mx-auto relative z-10">
                     <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？全聯？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
@@ -376,16 +424,17 @@
                     </div>
 
                     <!-- 模擬推廣卡片 2 (LINE 推廣) -->
-                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-pink-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 bg-themePink text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">建案分享</div>
+                    <div style="display: none;" onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeBlue', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://github.com/A7Club/life/blob/main/layoutdesing.jpg?raw=true', 'https://line.me/R/ti/p/@791bjdaj')"
+                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-themeBlue text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">裝潢統包</div>
                         <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themePink transition-colors line-clamp-1">粉粉兔看房地圖</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">粉粉兔詳細建案懶人包，讓你更快了解自己想要的建案。</p>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeBlue transition-colors line-clamp-1">凱驛空間</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">LINE群友推薦 https://line.me/R/ti/p/@791bjdaj</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
                             <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" 避免觸發卡片的放大視窗 -->
-                            <a href="https://rabbitpinkpink.meimeicircle.workers.dev/" target="_blank" onclick="event.stopPropagation()" class="text-[#ec4899] bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#fbcfe8] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-solid fa-window-maximize mr-1 text-sm"></i>線上查詢</a>
-                            <span class="text-themePink bg-pink-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-globe"></i></span>
+                            <a href="https://line.me/R/ti/p/@791bjdaj" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
+                            <span class="text-themeBlue bg-blue-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-paw"></i></span>
                         </div>
                     </div>
 
@@ -404,7 +453,7 @@
                         </div>
                     </div>
                     <!-- 模擬推廣卡片 5 (LINE 推廣) -->
-                    <div onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeGreen', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00'https://instagram.ftpe7-3.fna.fbcdn.net/v/t51.82787-15/611645977_17858897817579302_2041866932127186046_n.jpg?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InRocmVhZHMuRkVFRC5pbWFnZV91cmxnZW4uMTQ0MHg5NjAuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=instagram.ftpe7-3.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2QH_WUPI6FuvzOZrLR5wYFL07ds2b3HQ8hOGkVSvnhv_z_Octg-7EXmaCEqNVHtsVbGv7XVGYQqdj-ibIRfwj0OO&_nc_ohc=_THfrAlXzTkQ7kNvwF-fcSg&_nc_gid=TdKiiBBPy_xWZBwXxpgOlQ&edm=AKr904kBAAAA&ccb=7-5&ig_cache_key=MzgwMjQ5NTA5NjQwODA0ODU3Mg%3D%3D.3-ccb7-5&oh=00_AfxeLKRWmDZMV3_525FEvS4W5iOwRCiw8EpKsFt-xPlcig&oe=69AACC81&_nc_sid=23467f', 'https://line.me/R/ti/p/@791bjdaj')"
+                    <div onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeGreen', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://github.com/A7Club/life/blob/main/layoutdesing.jpg?raw=true', 'https://line.me/R/ti/p/@791bjdaj')"
                          class="w-[220px] sm:w-[260px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">統包裝潢</div>
                         <div>
@@ -571,16 +620,13 @@
                 <div class="w-full h-[45vh] lg:h-[calc(100vh-160px)] lg:w-1/2 xl:w-5/12 sticky top-[80px] lg:top-[100px] z-20 shrink-0 shadow-lg rounded-[2rem] order-1 lg:order-2">
                     <div class="w-full h-full bg-pink-50 rounded-[2rem] border-4 border-white overflow-hidden relative flex items-center justify-center">
                         
-                        <!-- uMap 嵌入：套用無邊框與參數 -->
-                        <iframe id="food-umap-iframe" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://umap.openstreetmap.fr/zh-tw/map/a7_1366788?scaleControl=false&miniMap=false&scrollWheelZoom=true&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=none&captionBar=false#15/25.045/121.380" style="border: 0; border-radius: 1.5rem;"></iframe>
+                        <!-- Leaflet 專用容器 -->
+                        <div id="food-leaflet-map" class="w-full h-full relative z-10"></div>
                         
-                        <!-- 中心紅色標記 (點擊店家後顯示，永遠指著地圖正中心) -->
-                        <div id="food-target-marker" class="absolute inset-0 pointer-events-none flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 z-20">
-                            <!-- 新增：顯示店家名稱的小氣泡 -->
-                            <div id="food-marker-name" class="bg-themePink text-white px-4 py-1.5 rounded-full font-black shadow-md mb-2 text-sm text-center">店家名稱</div>
-                            <i class="fa-solid fa-location-dot text-red-300 text-5xl drop-shadow-md -mt-2 animate-bounce"></i>
-                            <div class="w-4 h-2 bg-black/20 rounded-[50%] blur-[1px]"></div>
-                        </div>
+                        <!-- 現在位置按鈕 -->
+                        <button onclick="locateUserOnFoodMap()" title="我的位置" class="absolute top-[20px] right-[20px] z-[400] bg-white w-10 h-10 rounded-xl shadow-md flex items-center justify-center text-gray-600 hover:text-themeBlue hover:bg-blue-50 transition-colors border-2 border-gray-100 hover:border-blue-200">
+                            <i id="location-btn-icon" class="fa-solid fa-crosshairs text-lg"></i>
+                        </button>
 
                         <!-- 載入中遮罩 (預設隱藏) -->
                         <div id="food-map-overlay" class="absolute inset-0 bg-white/80 backdrop-blur-sm hidden flex-col items-center justify-center z-30" style="border-radius: 1.5rem;">
@@ -598,7 +644,7 @@
                         <i class="fa-solid fa-comment-dots mr-2 text-pink-400"></i>以上店家資訊為彙整各社群網友推薦分享，僅作資訊交流與參考。
                     </div>
 
-                    <p class="text-center text-xs text-themePink font-black mb-4"><i class="fa-solid fa-hand-pointer mr-1"></i> 點選下方店家，地圖會自動放大定位喔！</p>
+                    <p class="text-center text-sm text-themePink font-black mb-4"><i class="fa-solid fa-hand-pointer mr-1"></i> 點選下方店家，地圖會自動放大定位喔！</p>
 
                     <!-- 2. 動態店家卡片容器 -->
                     <div id="food-list-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 pb-12">
@@ -705,6 +751,17 @@
                             </div>
                         </div>
                     </details>
+                </div>
+            </div>
+
+            <!-- 醫療合法登記查詢提醒 -->
+            <div class="bg-blue-50/80 text-blue-600 text-xs sm:text-sm font-bold px-5 py-3 rounded-2xl mb-6 flex items-start sm:items-center shadow-sm border border-blue-100 w-full leading-relaxed gap-3">
+                <i class="fa-solid fa-circle-info text-blue-500 text-lg mt-0.5 sm:mt-0 shrink-0"></i>
+                <div>
+                    建議前往前，先確認該機構是否符合台灣合法登記的醫事機構（包含診所、藥局等）與醫事人員。<br class="hidden sm:block">
+                    <a href="https://ma.mohw.gov.tw/Accessibility/BASSearch/MASearchBAS" target="_blank" class="inline-flex items-center text-blue-500 hover:text-blue-700 underline mt-1 sm:mt-0">
+                        <i class="fa-solid fa-magnifying-glass mr-1.5 text-xs"></i>衛福部醫事機構查詢系統
+                    </a>
                 </div>
             </div>
 
@@ -834,6 +891,11 @@
     <script>
         // 用於存放全域 setInterval 以便切換頁面時清除
         let globalMrtInterval = null;
+        
+        // --- Leaflet 全域變數 ---
+        let foodMapInstance = null;
+        let foodClusterGroup = null;
+        let foodMarkersMap = {}; 
 
         // 初始化載入首頁
         document.addEventListener('DOMContentLoaded', () => {
@@ -966,7 +1028,11 @@
 
                 // 如果是 Food 頁面，動態抓取試算表資料
                 if (pageId === 'food') {
-                    fetchFoodData();
+                    // 確保 DOM 載入後喚醒 Leaflet
+                    setTimeout(() => {
+                        initFoodMap();
+                        fetchFoodData();
+                    }, 50);
                 }
 
                 // 如果是 Shopping 頁面，動態抓取購物生活資料庫
@@ -1645,6 +1711,108 @@
             });
         }
 
+        // ==========================================
+        // 🗺️ Leaflet 地圖核心功能
+        // ==========================================
+        function initFoodMap() {
+            const mapEl = document.getElementById('food-leaflet-map');
+            if (!mapEl) return;
+
+            if (foodMapInstance) {
+                foodMapInstance.remove();
+                foodMapInstance = null;
+                foodClusterGroup = null;
+                foodMarkersMap = {};
+            }
+
+            foodMapInstance = L.map('food-leaflet-map', { zoomControl: false }).setView([25.0425, 121.3870], 18);
+            L.control.zoom({ position: 'bottomright' }).addTo(foodMapInstance);
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap &copy; CARTO',
+                maxZoom: 20
+            }).addTo(foodMapInstance);
+
+            foodClusterGroup = L.markerClusterGroup({
+                chunkedLoading: true, spiderfyOnMaxZoom: true, showCoverageOnHover: false, zoomToBoundsOnClick: true, maxClusterRadius: 40
+            });
+            foodMapInstance.addLayer(foodClusterGroup);
+        }
+
+        // 動態產生有白色大圓底與 ICON 的水滴圖釘
+        function getCategoryIcon(category, state = 'normal') {
+            let iconClass = 'fa-utensils';
+            let bgColorClass = 'bg-themePink';
+            let textColorClass = 'text-pink-500';
+
+            if (category) {
+                if (category.includes('早')) { iconClass = 'fa-egg'; bgColorClass = 'bg-yellow-400'; textColorClass = 'text-yellow-600'; }
+                else if (category.includes('飯') || category.includes('麵') || category.includes('正餐') || category.includes('主食')) { iconClass = 'fa-bowl-food'; bgColorClass = 'bg-orange-400'; textColorClass = 'text-orange-600'; }
+                else if (category.includes('咖啡') || category.includes('甜點') || category.includes('飲料') || category.includes('冰')) { iconClass = 'fa-mug-hot'; bgColorClass = 'bg-themeBlue'; textColorClass = 'text-blue-500'; }
+                else if (category.includes('小吃') || category.includes('炸')) { iconClass = 'fa-drumstick-bite'; bgColorClass = 'bg-amber-400'; textColorClass = 'text-amber-600'; }
+                else if (category.includes('鍋')) { iconClass = 'fa-fire-burner'; bgColorClass = 'bg-red-400'; textColorClass = 'text-red-500'; }
+            }
+
+            if (state === 'bouncing' || state === 'clicked') {
+                bgColorClass = 'bg-themePurple';
+                textColorClass = 'text-purple-600';
+            }
+            
+            const animationClass = (state === 'bouncing') ? 'bounce-marker' : 'floating-marker';
+
+            const html = `
+                <div class="relative flex flex-col items-center justify-start w-[48px] h-[64px] pt-1">
+                    <div class="${animationClass} flex flex-col items-center relative z-10 w-full" style="filter: drop-shadow(0 4px 5px rgba(0,0,0,0.25)) drop-shadow(0 0 2px rgba(255,255,255,0.8));">
+                        <div class="relative w-[36px] h-[36px] ${bgColorClass} flex items-center justify-center z-10 transition-colors duration-300 mt-[2px]" style="border-radius: 50% 50% 50% 0; transform: rotate(-45deg);">
+                            <div class="w-[22px] h-[22px] bg-white rounded-full flex items-center justify-center shadow-sm" style="transform: rotate(45deg);">
+                                <i class="fa-solid ${iconClass} ${textColorClass} text-[11px] mt-[1px]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-[9px] w-5 h-1.5 bg-black/25 rounded-[50%] blur-[1.5px] scale-x-[1.5] z-0"></div>
+                </div>
+            `;
+            
+            return L.divIcon({
+                className: 'custom-leaflet-icon-dynamic bg-transparent border-0',
+                html: html, iconSize: [48, 64], iconAnchor: [24, 60], popupAnchor: [0, -45]
+            });
+        }
+
+        let userLocationMarker = null;
+        function locateUserOnFoodMap() {
+            if (!foodMapInstance) return;
+            const btnIcon = document.getElementById('location-btn-icon');
+            if(btnIcon) { btnIcon.classList.remove('fa-crosshairs'); btnIcon.classList.add('fa-spinner', 'fa-spin'); }
+
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    foodMapInstance.flyTo([lat, lng], 18, { animate: true, duration: 1 });
+                    
+                    if (userLocationMarker) {
+                        userLocationMarker.setLatLng([lat, lng]);
+                    } else {
+                        const userIcon = L.divIcon({
+                            className: 'user-location-icon',
+                            html: `<div class="w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-md relative"><div class="absolute inset-0 bg-blue-500 rounded-full animate-ping opacity-75"></div></div>`,
+                            iconSize: [16, 16], iconAnchor: [8, 8]
+                        });
+                        userLocationMarker = L.marker([lat, lng], {icon: userIcon, zIndexOffset: 1000}).addTo(foodMapInstance);
+                        userLocationMarker.bindPopup('<div class="font-black text-blue-500 text-center">您的現在位置</div>');
+                    }
+                    if(btnIcon) { btnIcon.classList.remove('fa-spinner', 'fa-spin'); btnIcon.classList.add('fa-crosshairs', 'text-themeBlue'); }
+                }, (error) => {
+                    alert("無法取得您的位置，請確認是否允許瀏覽器存取定位權限。");
+                    if(btnIcon) { btnIcon.classList.remove('fa-spinner', 'fa-spin'); btnIcon.classList.add('fa-crosshairs'); }
+                });
+            } else {
+                alert("您的瀏覽器不支援定位功能。");
+                if(btnIcon) { btnIcon.classList.remove('fa-spinner', 'fa-spin'); btnIcon.classList.add('fa-crosshairs'); }
+            }
+        }
+
         function renderFoodData(data, activeCategory) {
             const container = document.getElementById('food-list-container');
             const tagsContainer = document.getElementById('food-tags-container');
@@ -1684,6 +1852,30 @@
                 return;
             }
 
+            // 繪製地標到 Leaflet 地圖
+            if (foodClusterGroup) foodClusterGroup.clearLayers();
+            foodMarkersMap = {};
+
+            filteredData.forEach(item => {
+                if (item.lat && item.lng) {
+                    const marker = L.marker([item.lat, item.lng], { icon: getCategoryIcon(item.category, 'normal') });
+                    marker.bindTooltip(item.name, { direction: 'top', offset: [0, -50], className: 'custom-tooltip' });
+                    
+                    let imgHtml = item.img ? `<img src="${item.img}" class="w-full h-24 object-cover rounded-xl mb-2" onerror="this.style.display='none'">` : '';
+                    let popupContent = `
+                        <div class="text-center p-1 w-48">
+                            ${imgHtml}
+                            <h4 class="font-black text-themePink text-base mb-1">${item.name}</h4>
+                            <p class="text-xs text-gray-500 font-bold leading-snug"><i class="fa-solid fa-location-dot mr-1"></i>${item.address}</p>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}" target="_blank" class="mt-2 block w-full bg-blue-100 text-blue-600 font-black py-1.5 rounded-lg text-xs hover:bg-blue-500 hover:text-white transition-colors">導航去</a>
+                        </div>
+                    `;
+                    marker.bindPopup(popupContent);
+                    foodClusterGroup.addLayer(marker);
+                    foodMarkersMap[item.name] = marker;
+                }
+            });
+
             // 渲染下方列表 (點擊觸發 updateFoodMap)
             container.innerHTML = filteredData.map(item => {
                 // 如果沒有照片，顯示 ICON
@@ -1695,7 +1887,7 @@
                 }
 
                 return `
-                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null})" class="bg-white p-4 pt-6 rounded-3xl shadow-cute flex items-center gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative">
+                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-4 pt-6 rounded-3xl shadow-cute flex items-center gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative">
                     <!-- 右上角分類標籤 -->
                     <div class="absolute top-0 right-0 bg-themePink text-white text-xs font-black px-3 py-1.5 rounded-tr-3xl rounded-bl-xl shadow-sm z-10">
                         ${item.category}
@@ -1713,91 +1905,74 @@
             }).join('');
         }
 
-        // 用於存放地圖標記的計時器，避免快速點擊時發生衝突
-        let foodMapMarkerTimeout = null;
-
-        async function updateFoodMap(address, name, preLat, preLng) {
-            const iframe = document.getElementById('food-umap-iframe');
+        // 點擊飛躍動畫與地標跳動
+        async function updateFoodMap(address, name, preLat, preLng, category) {
             const overlay = document.getElementById('food-map-overlay');
             const overlayText = document.getElementById('food-map-overlay-text');
-            const centerMarker = document.getElementById('food-target-marker');
-            if(!iframe || !overlay) return;
-
-            // 顯示載入中動畫與文字
-            overlayText.className = "text-sm font-bold text-gray-600";
-            overlayText.innerText = `正在尋找 ${name} 的位置...`;
-            overlay.style.display = 'flex';
             
-            if(centerMarker) {
-                centerMarker.classList.remove('opacity-100');
-                centerMarker.classList.add('opacity-0');
+            if (overlay) {
+                overlayText.className = "text-sm font-bold text-gray-600";
+                overlayText.innerText = `正在為您定位 ${name}...`;
+                overlay.style.display = 'flex';
             }
 
-            const zoomToLocation = (lat, lon) => {
-                // 動態更新 uMap iframe 的 src，並利用 hash 控制視角放大 (Zoom level 18)
-                const baseUrl = "https://umap.openstreetmap.fr/zh-tw/map/a7_1366788";
-                const params = "?scaleControl=false&miniMap=false&scrollWheelZoom=true&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=none&captionBar=false";
-                iframe.src = `${baseUrl}${params}#18/${lat}/${lon}`;
-                
-                // 短暫延遲後隱藏遮罩，並顯示中心紅色 Marker 標記定位點
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    if(centerMarker) {
-                        // 1. 設定小氣泡文字為店家名稱
-                        const markerNameEl = document.getElementById('food-marker-name');
-                        if (markerNameEl) markerNameEl.innerText = name;
-                        
-                        // 2. 顯示紅色地標與名稱氣泡
-                        centerMarker.classList.remove('opacity-0');
-                        centerMarker.classList.add('opacity-100');
-                        
-                        // 3. 設定 3 秒後自動隱藏，並清除舊的計時器避免干擾
-                        if (foodMapMarkerTimeout) clearTimeout(foodMapMarkerTimeout);
-                        foodMapMarkerTimeout = setTimeout(() => {
-                            centerMarker.classList.remove('opacity-100');
-                            centerMarker.classList.add('opacity-0');
-                        }, 3000);
-                    }
-                }, 800);
-            };
+            if (foodMarkersMap[name]) {
+                const marker = foodMarkersMap[name];
+                foodClusterGroup.zoomToShowLayer(marker, () => {
+                    foodMapInstance.flyTo(marker.getLatLng(), 18, { animate: true, duration: 1 });
+                    marker.openPopup();
+                    marker.setIcon(getCategoryIcon(category, 'bouncing'));
+                    if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
+                    marker.bounceTimeout = setTimeout(() => {
+                        if (foodMarkersMap[name]) marker.setIcon(getCategoryIcon(category, 'clicked'));
+                    }, 5000);
+                    if(overlay) setTimeout(() => overlay.style.display = 'none', 500);
+                });
+                return;
+            }
 
             try {
-                // 若表單有提供座標，優先使用表單的座標
-                if (preLat && preLng && !isNaN(preLat) && !isNaN(preLng)) {
-                    zoomToLocation(preLat, preLng);
+                let targetLat = preLat;
+                let targetLng = preLng;
+
+                if (!targetLat || !targetLng) {
+                    let searchAddress = address.includes('市') ? address : '桃園市龜山區 ' + address;
+                    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchAddress)}&limit=1`);
+                    const data = await res.json();
+                    if (data && data.length > 0) {
+                        targetLat = parseFloat(data[0].lat);
+                        targetLng = parseFloat(data[0].lon);
+                    }
+                }
+
+                if (targetLat && targetLng) {
+                    foodMapInstance.flyTo([targetLat, targetLng], 18, { animate: true, duration: 1.5 });
+                    setTimeout(() => {
+                        L.popup({ className: 'custom-popup-temporary' })
+                            .setLatLng([targetLat, targetLng])
+                            .setContent(`<div class="font-black text-themePink p-2 text-center text-lg"><i class="fa-solid fa-location-dot mr-1"></i> ${name}</div>`)
+                            .openOn(foodMapInstance);
+                    }, 1000);
+                } else {
+                    if (overlay) {
+                        overlayText.innerHTML = `地圖無法精確定位此地址<br><span class="text-xs text-gray-400 mt-1">${address}</span>`;
+                        overlayText.className = "text-sm font-bold text-red-400 text-center";
+                        setTimeout(() => overlay.style.display = 'none', 2000);
+                        return;
+                    }
+                }
+            } catch (error) { 
+                console.error("Geocoding error:", error); 
+                if (overlay) {
+                    overlayText.innerText = `地圖服務暫時無法連線`;
+                    overlayText.className = "text-sm font-bold text-red-400";
+                    setTimeout(() => overlay.style.display = 'none', 2000);
                     return;
                 }
-
-                // 否則，利用地址解析
-                let searchAddress = address;
-                if(!searchAddress.includes('市') && !searchAddress.includes('區')) {
-                    searchAddress = '桃園市龜山區 ' + searchAddress;
-                }
-
-                // 使用 Nominatim API 取得經緯度
-                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchAddress)}&limit=1`);
-                const data = await response.json();
-
-                if (data && data.length > 0) {
-                    zoomToLocation(parseFloat(data[0].lat), parseFloat(data[0].lon));
-                } else {
-                    // 若 OSM 找不到該精確地址，顯示提示
-                    overlayText.innerHTML = `地圖無法精確定位此地址<br><span class="text-xs text-gray-400 mt-1">${address}</span>`;
-                    overlayText.className = "text-sm font-bold text-red-400 text-center";
-                    setTimeout(() => {
-                        overlay.style.display = 'none';
-                    }, 2000);
-                }
-            } catch (error) {
-                console.error("OSM Geocoding error:", error);
-                overlayText.innerText = `地圖服務暫時無法連線`;
-                overlayText.className = "text-sm font-bold text-red-400";
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 2000);
             }
-        }
 
+            if(overlay) setTimeout(() => overlay.style.display = 'none', 800);
+        }
 
         // ==========================================
         // 🛍️ 購物、生活與景點共用資料模組 (Shopping)
@@ -2102,13 +2277,17 @@
                     if (catIdx === -1) catIdx = 8; // 預設使用 I 欄
                     let addressIdx = headers.findIndex(k => k.includes('地址'));
                     let phoneIdx = headers.findIndex(k => k.includes('電話'));
+                    
+                    // 尋找機構代碼/核准字號欄位，預設為 O 欄 (第15欄，即 index 14)
+                    let licenseIdx = 14; 
 
                     let parsedData = rows.slice(1).map(row => {
                         return {
                             name: row[nameIdx] ? row[nameIdx].trim() : '',
                             category: row[catIdx] ? row[catIdx].trim() : '其他醫療',
                             address: addressIdx !== -1 && row[addressIdx] ? row[addressIdx].trim() : '',
-                            phone: phoneIdx !== -1 && row[phoneIdx] ? row[phoneIdx].trim() : ''
+                            phone: phoneIdx !== -1 && row[phoneIdx] ? row[phoneIdx].trim() : '',
+                            license: row[licenseIdx] ? row[licenseIdx].trim() : ''
                         };
                     }).filter(item => item.name !== '');
 
@@ -2143,12 +2322,12 @@
             });
 
             const stylePool = [
-                { border: 'border-green-50', textBig: 'text-green-100', textTitle: 'text-themeGreen', icon: 'fa-stethoscope' },
-                { border: 'border-blue-50', textBig: 'text-blue-100', textTitle: 'text-themeBlue', icon: 'fa-tooth' },
-                { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', icon: 'fa-baby' },
-                { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-yellow-500', icon: 'fa-eye' },
-                { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', icon: 'fa-bone' },
-                { border: 'border-orange-50', textBig: 'text-orange-100', textTitle: 'text-orange-400', icon: 'fa-pills' }
+                { border: 'border-green-50', textBig: 'text-green-100', textTitle: 'text-themeGreen', badgeBg: 'bg-themeGreen', icon: 'fa-stethoscope' },
+                { border: 'border-blue-50', textBig: 'text-blue-100', textTitle: 'text-themeBlue', badgeBg: 'bg-themeBlue', icon: 'fa-tooth' },
+                { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', badgeBg: 'bg-themePink', icon: 'fa-baby' },
+                { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-yellow-500', badgeBg: 'bg-yellow-500', icon: 'fa-eye' },
+                { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', badgeBg: 'bg-themePurple', icon: 'fa-bone' },
+                { border: 'border-orange-50', textBig: 'text-orange-100', textTitle: 'text-orange-400', badgeBg: 'bg-orange-400', icon: 'fa-pills' }
             ];
 
             let html = '';
@@ -2168,11 +2347,14 @@
                     return `
                         <li class="bg-gray-50 p-4 rounded-2xl hover:bg-white hover:shadow-md transition-all group flex flex-col gap-2 border border-transparent hover:border-gray-100 h-full justify-between">
                             <div class="flex items-start justify-between w-full">
-                                <div class="flex items-start flex-1 pr-2">
-                                    <i class="fa-solid fa-notes-medical ${style.textTitle} mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i>
-                                    <span class="font-black text-gray-800 text-lg">${item.name}</span>
+                                <div class="flex flex-col flex-1 pr-2">
+                                    <div class="flex items-start">
+                                        <i class="fa-solid fa-notes-medical ${style.textTitle} mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i>
+                                        <span class="font-black text-gray-800 text-lg leading-snug">${item.name}</span>
+                                    </div>
+                                    ${item.license ? `<div class="ml-6 mt-1.5 text-[10px] text-white ${style.badgeBg} px-2 py-1 rounded-md font-black w-fit shadow-sm flex items-center"><i class="fa-regular fa-id-badge mr-1"></i>字號：${item.license}</div>` : ''}
                                 </div>
-                                <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" title="導航至 ${item.name}" class="shrink-0 bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white px-2.5 py-1.5 rounded-lg text-xs font-black transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" title="導航至 ${item.name}" class="shrink-0 bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white px-2.5 py-1.5 rounded-lg text-xs font-black transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer mt-0.5">
                                     <i class="fa-solid fa-location-arrow"></i> 導航
                                 </a>
                             </div>
