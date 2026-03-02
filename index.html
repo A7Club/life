@@ -164,11 +164,11 @@
         </div>
 
         <!-- 手機版展開選單 (取消全寬，改為自適應寬度並放大字體) -->
-        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-2xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[260px]">
-            <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
-            <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</button>
-            <button onclick="loadPage('medical'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</button>
-            <button onclick="loadPage('explore'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</button>
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[260px]">
+            <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
+            <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</button>
+            <button onclick="loadPage('medical'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</button>
+            <button onclick="loadPage('explore'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</button>
         </div>
     </nav>
 
@@ -434,8 +434,8 @@
                         </div>
                     </div>
 
-                    <!-- 模擬推廣卡片 2 (LINE 推廣) -->
-                    <div style="display: none;" onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeBlue', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://github.com/A7Club/life/blob/main/layoutdesing.jpg?raw=true', 'https://line.me/R/ti/p/@791bjdaj')"
+                    <!-- 模擬推廣卡片 Blue  -->
+                    <div style="display: none;" onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeBlue', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiShTBJexn0395iVhq7Vktqa_pNYHjVBn1jQ&s', 'https://line.me/R/ti/p/@791bjdaj')"
                          class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-themeBlue text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">裝潢統包</div>
                         <div>
@@ -444,8 +444,22 @@
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
                             <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" 避免觸發卡片的放大視窗 -->
-                            <a href="https://line.me/R/ti/p/@791bjdaj" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
+                            <a href="https://line.me/R/ti/p/@791bjdaj" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-pink-50 px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
                             <span class="text-themeBlue bg-blue-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-paw"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- 模擬推廣卡片 Pink (無放大) -->
+                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-pink-50 to-white-50 rounded-[1.5rem] p-4 shadow-sm border border-pink-200 shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-themePink text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">建案分享</div>
+                        <div>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themePink transition-colors line-clamp-1">粉粉兔看房地圖</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">追蹤看房粉粉兔了解詳細建案懶人包，參考 300+ 筆預售屋評比資料 + 建材等級加權...等的精密建案分析。</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
+                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" 避免觸發卡片的放大視窗 -->
+                            <a href="https://rabbitpinkpink.meimeicircle.workers.dev/" target="_blank" onclick="event.stopPropagation()" class="text-pink-300 bg-pink-50 px-2 py-1.5 rounded-lg shadow-sm hover:bg-pink-300 hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-solid fa-globe mr-1 text-sm"></i>線上查詢</a>
+                            <span class="text-themePink bg-Pink-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-solid fa-mouse-pointer"></i></span>
                         </div>
                     </div>
 
@@ -1915,8 +1929,33 @@
             }).join('');
         }
 
-        // 點擊飛躍動畫與地標顏色變化 (移除顫抖效果，並使用平滑定焦)
+        // 點擊飛躍動畫與地標顏色變化 (平滑飛躍，徹底移除畫面顫抖衝突)
         async function updateFoodMap(address, name, preLat, preLng, category) {
+            // 如果地圖上已經有該店家地標，直接平滑飛躍 (不顯示載入遮罩避免畫面閃爍)
+            if (foodMarkersMap[name]) {
+                const marker = foodMarkersMap[name];
+                
+                // 單純使用 flyTo 從目前位置平滑飛躍到目標店家 (zoom level 18)
+                foodMapInstance.flyTo(marker.getLatLng(), 18, { animate: true, duration: 1.5 });
+                
+                // 必須等飛躍動畫完全結束 ('moveend') 後，再執行地標展開與變色
+                // 這樣能徹底避免 zoomToShowLayer 的平移與 flyTo 互相衝突所造成的畫面拉扯/顫抖
+                foodMapInstance.once('moveend', () => {
+                    foodClusterGroup.zoomToShowLayer(marker, () => {
+                        marker.openPopup();
+                        marker.setIcon(getCategoryIcon(category, 'clicked'));
+                        
+                        // 5 秒後將圖示還原回預設狀態
+                        if (marker.restoreTimeout) clearTimeout(marker.restoreTimeout);
+                        marker.restoreTimeout = setTimeout(() => {
+                            if (foodMarkersMap[name]) marker.setIcon(getCategoryIcon(category, 'normal'));
+                        }, 5000);
+                    });
+                });
+                return;
+            }
+
+            // 以下為無快取時需透過地址解析的 fallback 邏輯
             const overlay = document.getElementById('food-map-overlay');
             const overlayText = document.getElementById('food-map-overlay-text');
             
@@ -1924,18 +1963,6 @@
                 overlayText.className = "text-sm font-bold text-gray-600";
                 overlayText.innerText = `正在為您定位 ${name}...`;
                 overlay.style.display = 'flex';
-            }
-
-            if (foodMarkersMap[name]) {
-                const marker = foodMarkersMap[name];
-                foodClusterGroup.zoomToShowLayer(marker, () => {
-                    // 改為 setView 取代 flyTo，避免跟群聚展開動畫衝突導致地圖顫抖
-                    foodMapInstance.setView(marker.getLatLng(), 18, { animate: true, duration: 0.5 });
-                    marker.openPopup();
-                    marker.setIcon(getCategoryIcon(category, 'clicked'));
-                    if(overlay) setTimeout(() => overlay.style.display = 'none', 300);
-                });
-                return;
             }
 
             try {
@@ -2429,8 +2456,19 @@
                         };
                     }).filter(item => item.name !== '' && item.link !== '#');
 
-                    // 直接使用表單載入的資料，不再強制寫死
-                    globalCommunityData = parsedData;
+                    // 預設強制加入的「固定社群」
+                    const fixedCommunities = [
+                        {
+                            name: '柒楽部| A7居民互助樂園',
+                            category: '在地社群',
+                            link: 'https://line.me/ti/g2/moTJsgUwRu2-lABYleiQLH8ZqhccDhy0alxYlA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default',
+                            img: ''
+                        }
+
+                    ];
+
+                    // 將固定社群合併到最前面 (這樣全域搜尋也會搜得到)
+                    globalCommunityData = [...fixedCommunities, ...parsedData];
                     resolve(globalCommunityData);
                 }).catch(reject);
             });
