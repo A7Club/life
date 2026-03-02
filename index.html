@@ -2456,19 +2456,8 @@
                         };
                     }).filter(item => item.name !== '' && item.link !== '#');
 
-                    // 預設強制加入的「固定社群」
-                    const fixedCommunities = [
-                        {
-                            name: '柒楽部| A7居民互助樂園',
-                            category: '在地社群',
-                            link: 'https://line.me/ti/g2/moTJsgUwRu2-lABYleiQLH8ZqhccDhy0alxYlA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default',
-                            img: ''
-                        }
-
-                    ];
-
-                    // 將固定社群合併到最前面 (這樣全域搜尋也會搜得到)
-                    globalCommunityData = [...fixedCommunities, ...parsedData];
+                    // 直接使用表單載入的資料，不再強制寫死
+                    globalCommunityData = parsedData;
                     resolve(globalCommunityData);
                 }).catch(reject);
             });
@@ -2551,7 +2540,7 @@
                     // 預設文字頭像 URL (使用品牌色或隨機色)
                     let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
 
-                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 預設顯示黑色 ID 前三碼
+                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 預設顯示黑色 KR
                     if (item.img) {
                         avatarUrl = item.img;
                     } else if (snsType === 'Threads') {
