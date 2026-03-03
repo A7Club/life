@@ -115,12 +115,20 @@
         .leaflet-tooltip.custom-tooltip { background-color: white; color: #FF9EBB; font-weight: 900; border-radius: 0.5rem; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 4px 10px; font-family: 'Nunito', '"Noto Sans TC"', sans-serif; }
         .leaflet-tooltip.custom-tooltip::before { border-top-color: white; }
 
-        /* 水滴圖標動畫 (移除了顫抖效果，僅保留平滑漂浮) */
+        /* 水滴圖標動畫 */
         .floating-marker { animation: floatMarker 2.5s ease-in-out infinite; }
         @keyframes floatMarker {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-4px); }
             100% { transform: translateY(0px); }
+        }
+        
+        /* 恢復圖標彈跳動畫 */
+        .bounce-marker { animation: bounceMarker 0.5s cubic-bezier(0.28, 0.84, 0.42, 1) infinite; }
+        @keyframes bounceMarker {
+            0% { transform: translateY(0px) scale(1, 1); }
+            45% { transform: translateY(-12px) scale(0.95, 1.05); }
+            100% { transform: translateY(0px) scale(1, 1); }
         }
     </style>
 </head>
@@ -691,7 +699,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themeYellow text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-bag-shopping"></i></div>
-                <h2 class="text-2xl font-black text-yellow-400">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
+                <h2 class="text-3xl font-black text-gray-800">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
             </div>
 
             <!-- 1. 橫向 TAG 分類按鈕 (彈性排版：手機依字數排列、電腦1列) -->
@@ -719,7 +727,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themeGreen text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform rotate-3 shadow-md"><i class="fa-solid fa-heart-pulse"></i></div>
-                <h2 class="text-2xl font-black text-themeGreen">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
+                <h2 class="text-3xl font-black text-gray-800">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
             </div>
 
             <!-- 獨立保留緊急聯絡電話區塊 (改為精簡併排的摺疊選單設計) -->
@@ -926,11 +934,34 @@
         let foodMapInstance = null;
         let foodClusterGroup = null;
         let foodMarkersMap = {}; 
+        let activeFoodMarkerName = null; // 新增：用於記錄目前被選取的店家名稱
 
-        // 初始化載入首頁
+        // 初始化與路由監聽 (讓 GA 可追蹤網址 Hash 停留時間)
         document.addEventListener('DOMContentLoaded', () => {
-            loadPage('home');
+            handleRoute();
         });
+
+        // 當網址 Hash 發生變化時觸發 (可用於瀏覽器上一頁/下一頁)
+        window.addEventListener('hashchange', handleRoute);
+
+        // 核心路由控制處理器
+        function handleRoute() {
+            let hash = window.location.hash.substring(1) || 'home';
+            
+            // 處理搜尋的特殊路由
+            if (hash.startsWith('search=')) {
+                const query = decodeURIComponent(hash.substring(7));
+                renderPage('search');
+                executeSearchLogic(query);
+            } else {
+                renderPage(hash);
+            }
+        }
+
+        // 修改原本的 loadPage，改為推播網址 Hash，讓瀏覽器產生歷史紀錄
+        function loadPage(pageId) {
+            window.location.hash = pageId;
+        }
 
         // 打開店家詳細資訊 Modal
         function openStoreModal(name, tag, tagColor, desc, address, hours, imgUrl, mapQuery) {
@@ -1017,8 +1048,8 @@
             }, 300);
         }
 
-        // 頁面動態注入核心函數 (模擬多頁面行為)
-        function loadPage(pageId) {
+        // 頁面動態注入核心函數 (原本的 loadPage 改為內部 renderPage)
+        function renderPage(pageId) {
             const root = document.getElementById('app-root');
             const template = document.getElementById('tpl-' + pageId);
             
@@ -1088,15 +1119,17 @@
         // ==========================================
         // 🔎 全域搜尋系統 (Global Search)
         // ==========================================
-        async function doSearch() {
+        function doSearch() {
             const input = document.getElementById('home-search-input');
             if(!input) return;
             const query = input.value.trim();
             if(!query) return;
-
-            // 切換至搜尋結果視圖
-            loadPage('search');
             
+            // 透過修改網址 Hash 來觸發搜尋，這樣返回鍵與 GA 都會正確運作
+            window.location.hash = 'search=' + encodeURIComponent(query);
+        }
+
+        async function executeSearchLogic(query) {
             const display = document.getElementById('search-query-display');
             const container = document.getElementById('search-results-container');
             if(display) display.innerHTML = `正在為您尋找與 <span class="text-themePink font-black">「${query}」</span> 相關的樂園角落...`;
@@ -1771,28 +1804,32 @@
         }
 
         // 動態產生有白色大圓底與 ICON 的水滴圖釘
-        function getCategoryIcon(category, state = 'normal') {
+        function getCategoryIcon(category, state = 'normal', isBouncing = false) {
             let iconClass = 'fa-utensils';
             let bgColorClass = 'bg-themePink';
             let textColorClass = 'text-pink-500';
 
             if (category) {
                 if (category.includes('早')) { iconClass = 'fa-egg'; bgColorClass = 'bg-yellow-400'; textColorClass = 'text-yellow-600'; }
+                else if (category.includes('素食') || category.includes('蔬食')) { iconClass = 'fa-leaf'; bgColorClass = 'bg-green-400'; textColorClass = 'text-green-600'; }
+                else if (category.includes('手搖') || category.includes('飲料')) { iconClass = 'fa-glass-water'; bgColorClass = 'bg-teal-400'; textColorClass = 'text-teal-600'; }
                 else if (category.includes('飯') || category.includes('麵') || category.includes('正餐') || category.includes('主食')) { iconClass = 'fa-bowl-food'; bgColorClass = 'bg-orange-400'; textColorClass = 'text-orange-600'; }
-                else if (category.includes('咖啡') || category.includes('甜點') || category.includes('飲料') || category.includes('冰')) { iconClass = 'fa-mug-hot'; bgColorClass = 'bg-themeBlue'; textColorClass = 'text-blue-500'; }
+                else if (category.includes('咖啡') || category.includes('甜點') || category.includes('冰')) { iconClass = 'fa-mug-hot'; bgColorClass = 'bg-themeBlue'; textColorClass = 'text-blue-500'; }
                 else if (category.includes('小吃') || category.includes('宵夜') || category.includes('炸')) { iconClass = 'fa-drumstick-bite'; bgColorClass = 'bg-amber-400'; textColorClass = 'text-amber-600'; }
                 else if (category.includes('鍋')) { iconClass = 'fa-fire-burner'; bgColorClass = 'bg-red-400'; textColorClass = 'text-red-500'; }
             }
 
+            let animationClass = isBouncing ? 'bounce-marker' : 'floating-marker'; // 根據狀態切換跳動或平滑漂浮
+
+            // 選取狀態：改為紅色並保持，不再隨時間消失，彈跳動畫則由 isBouncing 獨立控制
             if (state === 'clicked') {
-                bgColorClass = 'bg-themePurple';
-                textColorClass = 'text-white';
+                bgColorClass = 'bg-red-500';
+                textColorClass = 'text-red-500'; // 修改這裡：讓內部 ICON 變為紅色，而不是白色，這樣在白底圈圈內才會顯現
             }
             
-            // 統一使用平滑漂浮，不使用顫抖動畫
             const html = `
                 <div class="relative flex flex-col items-center justify-start w-[48px] h-[64px] pt-1">
-                    <div class="floating-marker flex flex-col items-center relative z-10 w-full" style="filter: drop-shadow(0 4px 5px rgba(0,0,0,0.25)) drop-shadow(0 0 2px rgba(255,255,255,0.8));">
+                    <div class="${animationClass} flex flex-col items-center relative z-10 w-full" style="filter: drop-shadow(0 4px 5px rgba(0,0,0,0.25)) drop-shadow(0 0 2px rgba(255,255,255,0.8));">
                         <div class="relative w-[36px] h-[36px] ${bgColorClass} flex items-center justify-center z-10 transition-colors duration-300 mt-[2px]" style="border-radius: 50% 50% 50% 0; transform: rotate(-45deg);">
                             <div class="w-[22px] h-[22px] bg-white rounded-full flex items-center justify-center shadow-sm" style="transform: rotate(45deg);">
                                 <i class="fa-solid ${iconClass} ${textColorClass} text-[11px] mt-[1px]"></i>
@@ -1862,14 +1899,16 @@
                 
                 let icon = '🍩';
                 if(cat.includes('早')) icon = '🍳';
-                if(cat.includes('飯') || cat.includes('麵') || cat.includes('正餐') || cat.includes('主食')) icon = '🍱';
-                if(cat.includes('咖啡') || cat.includes('甜點') || cat.includes('飲料') || cat.includes('冰')) icon = '☕';
-                if(cat.includes('小吃') || cat.includes('宵夜') || cat.includes('炸')) icon = '🍗';
-                if(cat.includes('鍋')) icon = '🍲';
-                if(cat === '全部') icon = '🎡';
+                else if(cat.includes('素食') || cat.includes('蔬食')) icon = '🥗';
+                else if(cat.includes('手搖') || cat.includes('飲料')) icon = '🧋';
+                else if(cat.includes('飯') || cat.includes('麵') || cat.includes('正餐') || cat.includes('主食')) icon = '🍱';
+                else if(cat.includes('咖啡') || cat.includes('甜點') || cat.includes('冰')) icon = '☕';
+                else if(cat.includes('小吃') || cat.includes('宵夜') || cat.includes('炸')) icon = '🍗';
+                else if(cat.includes('鍋')) icon = '🍲';
+                else if(cat === '全部') icon = '🎡';
                 
-                // 手機版根據內容自適應寬度 (flex-auto)，大螢幕維持一列 (lg:flex-none)，文字加大，手機版隱藏 icon
-                return `<button onclick="renderFoodData(globalFoodData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-none w-auto py-2.5 px-3 md:px-5 rounded-xl md:rounded-2xl font-black text-base md:text-lg transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-pink-100 whitespace-nowrap ${activeClass}">
+                // 手機版根據內容自適應寬度 (flex-auto)，大螢幕維持一列 (lg:flex-none)，文字縮小一級，改為全圓角藥丸形狀
+                return `<button onclick="renderFoodData(globalFoodData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-none w-auto py-2 md:py-2.5 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-pink-100 whitespace-nowrap ${activeClass}">
                             <span class="hidden md:inline-block shrink-0">${icon}</span>
                             <span>${cat}</span>
                         </button>`;
@@ -1890,31 +1929,58 @@
             // 繪製地標到 Leaflet 地圖
             if (foodClusterGroup) foodClusterGroup.clearLayers();
             foodMarkersMap = {};
+            activeFoodMarkerName = null; // 重置選取狀態
 
             filteredData.forEach(item => {
                 if (item.lat && item.lng) {
                     const marker = L.marker([item.lat, item.lng], { icon: getCategoryIcon(item.category, 'normal') });
+                    marker.category = item.category; // 記錄分類供還原顏色使用
+                    
                     marker.bindTooltip(item.name, { direction: 'top', offset: [0, -50], className: 'custom-tooltip' });
                     
-                    let imgHtml = item.img ? `<img src="${item.img}" class="w-full h-24 object-cover rounded-xl mb-2" onerror="this.style.display='none'">` : '';
+                    // 移除彈出卡片的照片，並將標題字級縮小至 text-sm
                     let popupContent = `
-                        <div class="text-center p-1 w-48">
-                            ${imgHtml}
-                            <h4 class="font-black text-themePink text-base mb-1">${item.name}</h4>
+                        <div class="text-center p-1 w-44">
+                            <h4 class="font-black text-themePink text-sm mb-1">${item.name}</h4>
                             <p class="text-xs text-gray-500 font-bold leading-snug"><i class="fa-solid fa-location-dot mr-1"></i>${item.address}</p>
-                            <a href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}" target="_blank" class="mt-2 block w-full bg-blue-100 text-blue-600 font-black py-1.5 rounded-lg text-xs hover:bg-blue-500 hover:text-white transition-colors">導航去</a>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}" target="_blank" class="mt-2.5 block w-full bg-blue-100 text-blue-600 font-black py-1.5 rounded-lg text-xs hover:bg-blue-500 hover:text-white transition-colors shadow-sm">導航去</a>
                         </div>
                     `;
                     marker.bindPopup(popupContent);
+
+                    // 綁定地圖上的直接點擊事件
+                    marker.on('click', () => {
+                        if (activeFoodMarkerName && activeFoodMarkerName !== item.name && foodMarkersMap[activeFoodMarkerName]) {
+                            const prevMarker = foodMarkersMap[activeFoodMarkerName];
+                            if (prevMarker.bounceTimeout) clearTimeout(prevMarker.bounceTimeout);
+                            prevMarker.setIcon(getCategoryIcon(prevMarker.category, 'normal', false));
+                        }
+                        activeFoodMarkerName = item.name;
+                        marker.setIcon(getCategoryIcon(item.category, 'clicked', true));
+
+                        if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
+                        marker.bounceTimeout = setTimeout(() => {
+                            if (foodMarkersMap[item.name] && activeFoodMarkerName === item.name) {
+                                marker.setIcon(getCategoryIcon(item.category, 'clicked', false));
+                            }
+                        }, 5000);
+                    });
+
                     foodClusterGroup.addLayer(marker);
                     foodMarkersMap[item.name] = marker;
                 }
             });
 
-            // 確保所有地標添加完成後，自動縮放地圖以顯示全部範圍
+            // 確保所有地標添加完成後，自動縮放地圖以顯示全部範圍 (初始顯示所有店家分佈)
             if (foodClusterGroup && foodClusterGroup.getLayers().length > 0) {
+                // 綁定縮放完成事件再進行放大一倍，確保繁體中文字清晰可見
+                foodMapInstance.once('moveend', () => {
+                    setTimeout(() => {
+                        foodMapInstance.setZoom(foodMapInstance.getZoom() + 1);
+                    }, 150);
+                });
                 // 預留一點 padding 讓邊緣的圖釘不會貼齊畫面
-                foodMapInstance.fitBounds(foodClusterGroup.getBounds(), { padding: [40, 40], maxZoom: 18 });
+                foodMapInstance.fitBounds(foodClusterGroup.getBounds(), { padding: [40, 40] });
             }
 
             // 渲染下方列表 (點擊觸發 updateFoodMap)
@@ -1952,6 +2018,14 @@
             if (foodMarkersMap[name]) {
                 const marker = foodMarkersMap[name];
                 
+                // 還原前一個被點擊的店家圖標狀態
+                if (activeFoodMarkerName && activeFoodMarkerName !== name && foodMarkersMap[activeFoodMarkerName]) {
+                    const prevMarker = foodMarkersMap[activeFoodMarkerName];
+                    if (prevMarker.bounceTimeout) clearTimeout(prevMarker.bounceTimeout);
+                    prevMarker.setIcon(getCategoryIcon(prevMarker.category, 'normal', false));
+                }
+                activeFoodMarkerName = name; // 更新當前選取店家
+                
                 // 單純使用 flyTo 從目前位置平滑飛躍到目標店家 (zoom level 18)
                 foodMapInstance.flyTo(marker.getLatLng(), 18, { animate: true, duration: 1.5 });
                 
@@ -1960,12 +2034,14 @@
                 foodMapInstance.once('moveend', () => {
                     foodClusterGroup.zoomToShowLayer(marker, () => {
                         marker.openPopup();
-                        marker.setIcon(getCategoryIcon(category, 'clicked'));
+                        marker.setIcon(getCategoryIcon(category, 'clicked', true));
                         
-                        // 5 秒後將圖示還原回預設狀態
-                        if (marker.restoreTimeout) clearTimeout(marker.restoreTimeout);
-                        marker.restoreTimeout = setTimeout(() => {
-                            if (foodMarkersMap[name]) marker.setIcon(getCategoryIcon(category, 'normal'));
+                        // 5 秒後停止跳動，但保持紅色
+                        if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
+                        marker.bounceTimeout = setTimeout(() => {
+                            if (foodMarkersMap[name] && activeFoodMarkerName === name) {
+                                marker.setIcon(getCategoryIcon(category, 'clicked', false));
+                            }
                         }, 5000);
                     });
                 });
@@ -2126,8 +2202,8 @@
                     if(cat.includes('服務') || cat.includes('洗') || cat.includes('美容') || cat.includes('修繕')) icon = '✂️';
                     if(cat === '全部') icon = '🎡';
                     
-                    // 手機版根據內容自適應寬度 (flex-auto)，大螢幕維持一列 (lg:flex-1 或 flex-none)，文字加大，手機版隱藏 icon
-                    return `<button onclick="renderShoppingData(globalShoppingData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-1 w-auto py-3 px-3 md:px-5 rounded-xl md:rounded-2xl font-black text-base md:text-lg transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-yellow-100 whitespace-nowrap ${activeClass}">
+                    // 手機版根據內容自適應寬度 (flex-auto)，大螢幕維持一列 (lg:flex-1 或 flex-none)，文字縮小一級，改為全圓角藥丸形狀
+                    return `<button onclick="renderShoppingData(globalShoppingData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-1 w-auto py-2.5 md:py-3 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-yellow-100 whitespace-nowrap ${activeClass}">
                                 <span class="hidden md:inline-block shrink-0">${icon}</span>
                                 <span>${cat}</span>
                             </button>`;
@@ -2453,12 +2529,13 @@
                     if (catIdx === -1) catIdx = 1;
                     let linkIdx = headers.findIndex(k => k.includes('連結') || k.includes('網址') || k.includes('URL'));
                     if (linkIdx === -1) linkIdx = 2;
-                    // 擴充支援：自動檢查表單中是否有「頭像、照片、圖片或備註」的欄位
-                    let imgIdx = headers.findIndex(k => k.includes('頭像') || k.includes('照片') || k.includes('圖片') || k.includes('備註'));
+                    
+                    // 強制指定讀取表單 E 欄 (Index 4 為 E 欄) 作為照片備註來源
+                    let imgIdx = 4;
 
                     let parsedData = rows.slice(1).map(row => {
                         // 如果有找到對應欄位，嘗試從裡面萃取出 http 開頭的網址
-                        let rawImg = imgIdx !== -1 && row[imgIdx] ? row[imgIdx].trim() : '';
+                        let rawImg = (row.length > imgIdx && row[imgIdx]) ? row[imgIdx].trim() : '';
                         let finalImg = '';
                         const urlMatch = rawImg.match(/https?:\/\/[^\s]+/);
                         if (urlMatch) {
@@ -2557,7 +2634,7 @@
                     // 預設文字頭像 URL (使用品牌色或隨機色)
                     let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
 
-                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 預設顯示黑色 KR
+                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 預設顯示黑色 ID 前三碼
                     if (item.img) {
                         avatarUrl = item.img;
                     } else if (snsType === 'Threads') {
@@ -2621,7 +2698,7 @@
                             <!-- 右側：QR Code 或 自動頭像 -->
                             ${showQR ? `
                             <div class="w-14 h-14 md:w-16 md:h-16 shrink-0 bg-white rounded-xl p-1 border border-dashed border-gray-200 group-hover:border-themePink transition-colors relative flex items-center justify-center">
-                                <img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100 transition-opacity" alt="QR Code">
+                                <img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100" alt="QR Code">
                             </div>
                             ` : `
                             <div class="w-12 h-12 md:w-14 md:h-14 shrink-0 rounded-full border-2 border-gray-100 group-hover:border-themePink transition-colors relative flex items-center justify-center overflow-hidden shadow-sm bg-gray-50 p-0.5">
@@ -2712,19 +2789,19 @@
             // == 依照地圖照片顏色綁定各里別的專屬色彩 ==
             // 嚴格配置專屬的 Tailwind 色系，以精準對應上方地圖照片的區塊顏色。
             const fallbackPool = [
-                { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-map', bg: 'bg-gray-50', iconColor: 'text-gray-200', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' },
-                { border: 'border-teal-200', textTitle: 'text-teal-600', icon: 'fa-location-dot', bg: 'bg-teal-50', iconColor: 'text-teal-200', activeIcon: 'text-teal-500', hoverBg: 'hover:bg-teal-50' }
+                { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-50', iconColor: 'text-gray-200', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' },
+                { border: 'border-teal-200', textTitle: 'text-teal-600', icon: 'fa-building', bg: 'bg-teal-50', iconColor: 'text-teal-200', activeIcon: 'text-teal-500', hoverBg: 'hover:bg-teal-50' }
             ];
             let fallbackStyleIndex = 0;
 
             function getStyleForVillage(name) {
                 if (name.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
-                if (name.includes('樂善')) return { border: 'border-yellow-200', textTitle: 'text-themeYellow', icon: 'fa-tree', bg: 'bg-yellow-50', iconColor: 'text-yellow-200', activeIcon: 'text-themeYellow', hoverBg: 'hover:bg-yellow-50' };
-                if (name.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-themeGreen', icon: 'fa-leaf', bg: 'bg-green-50', iconColor: 'text-green-200', activeIcon: 'text-themeGreen', hoverBg: 'hover:bg-green-50' };
-                if (name.includes('文桃')) return { border: 'border-pink-200', textTitle: 'text-themePink', icon: 'fa-city', bg: 'bg-pink-50', iconColor: 'text-pink-200', activeIcon: 'text-themePink', hoverBg: 'hover:bg-pink-50' };
-                if (name.includes('文藝')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-palette', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
-                if (name.includes('文樂')) return { border: 'border-purple-200', textTitle: 'text-themePurple', icon: 'fa-music', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-themePurple', hoverBg: 'hover:bg-purple-50' };
-                if (name.includes('長庚')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-hospital', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
+                if (name.includes('樂善')) return { border: 'border-yellow-200', textTitle: 'text-themeYellow', icon: 'fa-building', bg: 'bg-yellow-50', iconColor: 'text-yellow-200', activeIcon: 'text-themeYellow', hoverBg: 'hover:bg-yellow-50' };
+                if (name.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-themeGreen', icon: 'fa-building', bg: 'bg-green-50', iconColor: 'text-green-200', activeIcon: 'text-themeGreen', hoverBg: 'hover:bg-green-50' };
+                if (name.includes('文桃')) return { border: 'border-pink-200', textTitle: 'text-themePink', icon: 'fa-building', bg: 'bg-pink-50', iconColor: 'text-pink-200', activeIcon: 'text-themePink', hoverBg: 'hover:bg-pink-50' };
+                if (name.includes('文藝')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
+                if (name.includes('文樂')) return { border: 'border-purple-200', textTitle: 'text-themePurple', icon: 'fa-building', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-themePurple', hoverBg: 'hover:bg-purple-50' };
+                if (name.includes('長庚')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
                 
                 // 找不到對應里別時，使用備用色彩輪替
                 const style = fallbackPool[fallbackStyleIndex % fallbackPool.length];
@@ -2760,17 +2837,19 @@
                         imgContent = `<i class="fa-solid ${style.icon} ${style.iconColor} text-2xl"></i>`;
                     }
 
+                    // 修改為自適應寬度 (w-auto) 並設定最小與最大寬度，以符合名稱長度
                     return `
-                    <div class="${style.bg} p-2 rounded-2xl border border-white shadow-sm flex items-center gap-3 hover:-translate-y-1 transition-transform cursor-default">
+                    <div class="${style.bg} p-2 rounded-2xl border border-white shadow-sm flex items-center gap-3 hover:-translate-y-1 transition-transform cursor-default w-auto min-w-[120px] max-w-full">
                         <div class="w-12 h-12 shrink-0 rounded-xl overflow-hidden bg-white flex items-center justify-center border border-gray-100 shadow-inner">
                             ${imgContent}
                         </div>
-                        <span class="font-bold text-gray-700 text-sm">${item.name}</span>
+                        <span class="font-bold text-gray-700 text-sm whitespace-nowrap overflow-hidden text-ellipsis">${item.name}</span>
                     </div>
                     `;
                 }).join('');
 
                 // 在外層 div 加上 id，並加上 scroll-mt 確保被固定的 Navbar 擋住
+                // 修改內部容器為 flex-wrap 以支援自適應寬度項目的排列
                 html += `
                     <div id="${safeId}" class="bg-white rounded-[2.5rem] shadow-cute p-6 border-4 ${style.border} hover:shadow-lg transition-shadow relative overflow-hidden scroll-mt-[100px]">
                         <div class="absolute -right-4 -bottom-4 text-6xl ${style.iconColor} opacity-50 pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
@@ -2778,7 +2857,7 @@
                             <h3 class="text-xl font-black ${style.textTitle}">${villageName}</h3>
                             <i class="fa-solid ${style.icon} text-2xl ${style.activeIcon}"></i>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 relative z-10">
+                        <div class="flex flex-wrap gap-3 relative z-10">
                             ${itemsHtml}
                         </div>
                     </div>
