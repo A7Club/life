@@ -637,7 +637,7 @@
                 <!-- 左側：標題區 -->
                 <div class="flex items-center shrink-0">
                     <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
-                    <h2 class="text-2xl md:text-3xl font-black text-themePink shrink-0">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
+                    <h2 class="text-2xl md:text-2xl font-black text-themePink shrink-0">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
                 </div>
 
                 <!-- 右側：電腦版 TAG 分類按鈕 (僅大螢幕顯示，靠右對齊) -->
@@ -699,7 +699,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themeYellow text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-bag-shopping"></i></div>
-                <h2 class="text-3xl font-black text-gray-800">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
+                <h2 class="text-2xl font-black text-themeYellow">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
             </div>
 
             <!-- 1. 橫向 TAG 分類按鈕 (彈性排版：手機依字數排列、電腦1列) -->
@@ -727,7 +727,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themeGreen text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform rotate-3 shadow-md"><i class="fa-solid fa-heart-pulse"></i></div>
-                <h2 class="text-3xl font-black text-gray-800">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
+                <h2 class="text-2xl font-black themeGreen">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
             </div>
 
             <!-- 獨立保留緊急聯絡電話區塊 (改為精簡併排的摺疊選單設計) -->
@@ -818,7 +818,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themePurple text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-ticket"></i></div>
-                <h2 class="text-3xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">了解在地生活</span></h2>
+                <h2 class="text-2xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">了解在地生活</span></h2>
             </div>
 
 
@@ -1718,6 +1718,34 @@
         // ==========================================
         // 🍿 美食販賣部 (Food) 相關函數
         // ==========================================
+
+        // --- 美食分類的關鍵字比對池 (Keyword Mapping Pool) ---
+        // 透過這個設定，未來只要分類名稱包含這些關鍵字，就會自動配對顏色、圖示與 Emoji
+        const FOOD_CATEGORY_STYLES = [
+            { keywords: ['早', '早餐', '早午餐'], iconClass: 'fa-egg', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '🍳' },
+            { keywords: ['素', '素食', '蔬食', '健康'], iconClass: 'fa-leaf', bgColor: 'bg-green-400', textColor: 'text-green-600', emoji: '🥗' },
+            { keywords: ['飲', '飲料', '手搖', '茶'], iconClass: 'fa-glass-water', bgColor: 'bg-teal-400', textColor: 'text-teal-600', emoji: '🧋' },
+            { keywords: ['飯', '麵', '正餐', '主食', '便當', '水餃'], iconClass: 'fa-bowl-food', bgColor: 'bg-orange-400', textColor: 'text-orange-600', emoji: '🍱' },
+            { keywords: ['咖啡', '甜點', '冰', '蛋糕'], iconClass: 'fa-mug-hot', bgColor: 'bg-themeBlue', textColor: 'text-blue-500', emoji: '☕' },
+            { keywords: ['小吃', '宵夜', '炸', '烤', '滷味'], iconClass: 'fa-drumstick-bite', bgColor: 'bg-amber-400', textColor: 'text-amber-600', emoji: '🍗' },
+            { keywords: ['鍋', '火鍋', '鐵板'], iconClass: 'fa-fire-burner', bgColor: 'bg-red-400', textColor: 'text-red-500', emoji: '🍲' },
+            { keywords: ['異國', '日式', '韓式', '義式', '美式', '泰式'], iconClass: 'fa-earth-americas', bgColor: 'bg-indigo-400', textColor: 'text-indigo-600', emoji: '🍝' },
+            // 預設分類 (當都比對不到時的預設值)
+            { keywords: ['預設'], iconClass: 'fa-utensils', bgColor: 'bg-themePink', textColor: 'text-pink-500', emoji: '🍩' }
+        ];
+
+        // 輔助函數：透過分類名稱，找出最適合的樣式設定
+        function getFoodStyleByCategory(categoryName) {
+            if (!categoryName) return FOOD_CATEGORY_STYLES[FOOD_CATEGORY_STYLES.length - 1]; // 回傳預設
+            
+            for (let style of FOOD_CATEGORY_STYLES) {
+                if (style.keywords.some(kw => categoryName.includes(kw))) {
+                    return style;
+                }
+            }
+            return FOOD_CATEGORY_STYLES[FOOD_CATEGORY_STYLES.length - 1]; // 找不到配對，回傳預設
+        }
+
         function loadSharedFoodData() {
             return new Promise((resolve, reject) => {
                 if (globalFoodData) return resolve(globalFoodData);
@@ -1805,26 +1833,20 @@
 
         // 動態產生有白色大圓底與 ICON 的水滴圖釘
         function getCategoryIcon(category, state = 'normal', isBouncing = false) {
-            let iconClass = 'fa-utensils';
-            let bgColorClass = 'bg-themePink';
-            let textColorClass = 'text-pink-500';
-
-            if (category) {
-                if (category.includes('早')) { iconClass = 'fa-egg'; bgColorClass = 'bg-yellow-400'; textColorClass = 'text-yellow-600'; }
-                else if (category.includes('素食') || category.includes('蔬食')) { iconClass = 'fa-leaf'; bgColorClass = 'bg-green-400'; textColorClass = 'text-green-600'; }
-                else if (category.includes('手搖') || category.includes('飲料')) { iconClass = 'fa-glass-water'; bgColorClass = 'bg-teal-400'; textColorClass = 'text-teal-600'; }
-                else if (category.includes('飯') || category.includes('麵') || category.includes('正餐') || category.includes('主食')) { iconClass = 'fa-bowl-food'; bgColorClass = 'bg-orange-400'; textColorClass = 'text-orange-600'; }
-                else if (category.includes('咖啡') || category.includes('甜點') || category.includes('冰')) { iconClass = 'fa-mug-hot'; bgColorClass = 'bg-themeBlue'; textColorClass = 'text-blue-500'; }
-                else if (category.includes('小吃') || category.includes('宵夜') || category.includes('炸')) { iconClass = 'fa-drumstick-bite'; bgColorClass = 'bg-amber-400'; textColorClass = 'text-amber-600'; }
-                else if (category.includes('鍋')) { iconClass = 'fa-fire-burner'; bgColorClass = 'bg-red-400'; textColorClass = 'text-red-500'; }
-            }
+            
+            // 透過比對池取得對應的樣式
+            const style = getFoodStyleByCategory(category);
+            
+            let iconClass = style.iconClass;
+            let bgColorClass = style.bgColor;
+            let textColorClass = style.textColor;
 
             let animationClass = isBouncing ? 'bounce-marker' : 'floating-marker'; // 根據狀態切換跳動或平滑漂浮
 
             // 選取狀態：改為紅色並保持，不再隨時間消失，彈跳動畫則由 isBouncing 獨立控制
             if (state === 'clicked') {
                 bgColorClass = 'bg-red-500';
-                textColorClass = 'text-red-500'; // 修改這裡：讓內部 ICON 變為紅色，而不是白色，這樣在白底圈圈內才會顯現
+                textColorClass = 'text-red-500'; 
             }
             
             const html = `
@@ -1897,15 +1919,8 @@
                     ? 'bg-themePink text-white shadow-md scale-[1.02] md:scale-105 z-10' 
                     : 'bg-white text-gray-600 hover:bg-pink-50 shadow-sm border-2 border-transparent hover:-translate-y-1';
                 
-                let icon = '🍩';
-                if(cat.includes('早')) icon = '🍳';
-                else if(cat.includes('素食') || cat.includes('蔬食')) icon = '🥗';
-                else if(cat.includes('手搖') || cat.includes('飲料')) icon = '🧋';
-                else if(cat.includes('飯') || cat.includes('麵') || cat.includes('正餐') || cat.includes('主食')) icon = '🍱';
-                else if(cat.includes('咖啡') || cat.includes('甜點') || cat.includes('冰')) icon = '☕';
-                else if(cat.includes('小吃') || cat.includes('宵夜') || cat.includes('炸')) icon = '🍗';
-                else if(cat.includes('鍋')) icon = '🍲';
-                else if(cat === '全部') icon = '🎡';
+                // 透過比對池取得對應的 Emoji，如果沒有就預設
+                let icon = cat === '全部' ? '🎡' : getFoodStyleByCategory(cat).emoji;
                 
                 // 手機版根據內容自適應寬度 (flex-auto)，大螢幕維持一列 (lg:flex-none)，文字縮小一級，改為全圓角藥丸形狀
                 return `<button onclick="renderFoodData(globalFoodData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-none w-auto py-2 md:py-2.5 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-pink-100 whitespace-nowrap ${activeClass}">
@@ -1985,22 +2000,25 @@
 
             // 渲染下方列表 (點擊觸發 updateFoodMap)
             container.innerHTML = filteredData.map(item => {
-                // 如果沒有照片，顯示 ICON
+                // 如果沒有照片，顯示 ICON，透過比對池取得對應的圖示與顏色
                 let imgContent = '';
+                const style = getFoodStyleByCategory(item.category);
+                
                 if (item.img && item.img.startsWith('http')) {
-                    imgContent = `<img src="${item.img}" onerror="this.outerHTML='<i class=\\'fa-solid fa-utensils text-4xl text-pink-300\\'></i>'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">`;
+                    imgContent = `<img src="${item.img}" onerror="this.outerHTML='<i class=\\'fa-solid ${style.iconClass} text-4xl ${style.textColor}\\'></i>'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">`;
                 } else {
-                    imgContent = `<i class="fa-solid fa-utensils text-4xl text-pink-300 group-hover:text-themePink transition-colors"></i>`;
+                    imgContent = `<i class="fa-solid ${style.iconClass} text-4xl ${style.textColor} group-hover:text-themePink transition-colors opacity-80"></i>`;
                 }
 
+                // 卡片的標籤顏色也同步使用比對池的顏色
                 return `
                 <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-4 pt-6 rounded-3xl shadow-cute flex items-center gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative">
-                    <!-- 右上角分類標籤 -->
-                    <div class="absolute top-0 right-0 bg-themePink text-white text-xs font-black px-3 py-1.5 rounded-tr-3xl rounded-bl-xl shadow-sm z-10">
-                        ${item.category}
+                    <!-- 右上角分類標籤 (顏色與地圖圖釘同步) -->
+                    <div class="absolute top-0 right-0 ${style.bgColor} text-white text-[10px] sm:text-xs font-black px-3 py-1 sm:py-1.5 rounded-tr-3xl rounded-bl-xl shadow-sm z-10 flex items-center gap-1">
+                        <i class="fa-solid ${style.iconClass}"></i> ${item.category}
                     </div>
                     
-                    <div class="w-20 h-20 bg-pink-50 rounded-[1.2rem] overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center">
+                    <div class="w-20 h-20 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')} rounded-[1.2rem] overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center">
                         ${imgContent}
                     </div>
                     <div class="flex-1 overflow-hidden pr-2">
