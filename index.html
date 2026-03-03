@@ -164,11 +164,11 @@
         </div>
 
         <!-- 手機版展開選單 (取消全寬，改為自適應寬度並放大字體) -->
-        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[260px]">
-            <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
-            <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</button>
-            <button onclick="loadPage('medical'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</button>
-            <button onclick="loadPage('explore'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-2xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</button>
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
+            <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
+            <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</button>
+            <button onclick="loadPage('medical'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</button>
+            <button onclick="loadPage('explore'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</button>
         </div>
     </nav>
 
@@ -624,16 +624,16 @@
     <!-- 🍿 3. 找美食模板 (Food) - 更新為主標右側配置 -->
     <template id="tpl-food">
         <div class="fade-in">
-            <!-- 標題與 TAG 分類容器 -->
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-4 shrink-0 px-2 gap-4">
+            <!-- 標題與 TAG 分類容器 (修改：手機版標題獨立，電腦版才顯示右側標籤) -->
+            <div class="flex items-center justify-between mb-4 shrink-0 px-2 gap-4">
                 <!-- 左側：標題區 -->
                 <div class="flex items-center shrink-0">
                     <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
-                    <h2 class="text-2xl md:text-3xl font-black text-gray-800 shrink-0">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
+                    <h2 class="text-2xl md:text-3xl font-black text-themePink shrink-0">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
                 </div>
 
-                <!-- 右側：橫向 TAG 分類按鈕 (電腦版靠右對齊在地圖上方) -->
-                <div id="food-tags-container" class="flex flex-wrap lg:flex-nowrap lg:overflow-x-auto hide-scrollbar justify-start lg:justify-end gap-2 md:gap-3 w-full lg:w-auto lg:max-w-[65%] xl:max-w-[70%]">
+                <!-- 右側：電腦版 TAG 分類按鈕 (僅大螢幕顯示，靠右對齊) -->
+                <div id="food-tags-desktop" class="hidden lg:flex flex-nowrap overflow-x-auto hide-scrollbar justify-end gap-2 md:gap-3 w-auto max-w-[65%] xl:max-w-[70%]">
                     <div class="w-full text-center text-pink-300 py-2"><i class="fa-solid fa-spinner fa-spin text-xl"></i><span class="text-xl ml-2 font-bold">載入分類中...</span></div>
                 </div>
             </div>
@@ -664,12 +664,17 @@
                 <!-- 列表區塊：隨內容增長自然往下推，網頁捲動時地圖依然置頂 -->
                 <div class="w-full flex-1 lg:w-1/2 xl:w-7/12 flex flex-col bg-white/60 rounded-[2rem] p-3 md:p-4 shadow-inner border border-pink-50 order-2 lg:order-1">
 
-                    <!-- 可愛免責聲明 -->
-                    <div class="bg-pink-50/80 text-pink-500 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl mb-3 flex items-center justify-center shadow-sm border border-pink-100 text-center">
-                        <i class="fa-solid fa-comment-dots mr-2 text-pink-400"></i>以上店家資訊為彙整各社群網友推薦分享，僅作資訊交流與參考。
+                    <!-- 手機版 TAG 分類按鈕 (僅手機版顯示，放置於列表正上方) -->
+                    <div id="food-tags-mobile" class="flex lg:hidden flex-wrap overflow-x-auto hide-scrollbar justify-start gap-2 w-full mb-4">
+                        <!-- 動態注入手機版分類按鈕 -->
                     </div>
 
-                    <p class="text-center text-sm text-themePink font-black mb-4"><i class="fa-solid fa-hand-pointer mr-1"></i> 點選下方店家，地圖會自動放大定位喔！</p>
+                    <!-- 可愛免責聲明 -->
+                    <div class="bg-pink-50/80 text-pink-500 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl mb-3 flex items-center justify-center shadow-sm border border-pink-100 text-center">
+                        <i class="fa-solid fa-comment-dots mr-2 text-pink-400"></i>店家資訊皆由社群網友熱心分享，提供大家參考交流。
+                    </div>
+
+                    <p class="text-left text-sm text-themePink font-black mb-4"><i class="fa-solid fa-arrow-down-short-wide mr-1"></i> 點選下方店家，地圖會自動放大定位喔！</p>
 
                     <!-- 2. 動態店家卡片容器 -->
                     <div id="food-list-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 pb-12">
@@ -686,7 +691,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themeYellow text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-bag-shopping"></i></div>
-                <h2 class="text-3xl font-black text-gray-800">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
+                <h2 class="text-2xl font-black text-yellow-400">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
             </div>
 
             <!-- 1. 橫向 TAG 分類按鈕 (彈性排版：手機依字數排列、電腦1列) -->
@@ -696,7 +701,7 @@
 
             <!-- 可愛免責聲明 -->
             <div class="bg-yellow-50/80 text-yellow-600 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl mb-6 flex items-center justify-center shadow-sm border border-yellow-100 text-center w-full">
-                <i class="fa-solid fa-comment-dots mr-2 text-yellow-500"></i>以上店家資訊為彙整各社群網友推薦分享，僅作資訊交流與參考。
+                <i class="fa-solid fa-comment-dots mr-2 text-yellow-500"></i>店家資訊皆由社群網友熱心分享，提供大家參考交流。
             </div>
 
             <!-- 2. 動態注入的購物分類清單容器 (改為 items-start 讓每個分類根據內容決定高度) -->
@@ -714,7 +719,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themeGreen text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform rotate-3 shadow-md"><i class="fa-solid fa-heart-pulse"></i></div>
-                <h2 class="text-3xl font-black text-gray-800">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
+                <h2 class="text-2xl font-black text-themeGreen">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
             </div>
 
             <!-- 獨立保留緊急聯絡電話區塊 (改為精簡併排的摺疊選單設計) -->
@@ -805,7 +810,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themePurple text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-ticket"></i></div>
-                <h2 class="text-3xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">連結與了解在地生活</span></h2>
+                <h2 class="text-3xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">了解在地生活</span></h2>
             </div>
 
 
@@ -1750,7 +1755,8 @@
                 foodMarkersMap = {};
             }
 
-            foodMapInstance = L.map('food-leaflet-map', { zoomControl: false }).setView([25.0425, 121.3870], 18);
+            // 初始化縮放級別放寬，避免一開始跳動過大
+            foodMapInstance = L.map('food-leaflet-map', { zoomControl: false }).setView([25.0425, 121.3870], 15);
             L.control.zoom({ position: 'bottomright' }).addTo(foodMapInstance);
 
             L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -1839,13 +1845,14 @@
 
         function renderFoodData(data, activeCategory) {
             const container = document.getElementById('food-list-container');
-            const tagsContainer = document.getElementById('food-tags-container');
-            if (!container || !tagsContainer) return;
+            const desktopTagsContainer = document.getElementById('food-tags-desktop');
+            const mobileTagsContainer = document.getElementById('food-tags-mobile');
+            if (!container) return;
 
             // 渲染上方 TAG 分類按鈕
             const categories = ['全部', ...new Set(data.map(item => item.category).filter(c => c))];
             
-            tagsContainer.innerHTML = categories.map(cat => {
+            const tagsHtml = categories.map(cat => {
                 const isActive = cat === activeCategory;
                 
                 // 統一標籤的適應性佈局，取消個別差異
@@ -1867,6 +1874,10 @@
                             <span>${cat}</span>
                         </button>`;
             }).join('');
+
+            // 同步渲染到電腦版與手機版的容器
+            if (desktopTagsContainer) desktopTagsContainer.innerHTML = tagsHtml;
+            if (mobileTagsContainer) mobileTagsContainer.innerHTML = tagsHtml;
 
             // 過濾資料
             const filteredData = activeCategory === '全部' ? data : data.filter(item => item.category === activeCategory);
@@ -1899,6 +1910,12 @@
                     foodMarkersMap[item.name] = marker;
                 }
             });
+
+            // 確保所有地標添加完成後，自動縮放地圖以顯示全部範圍
+            if (foodClusterGroup && foodClusterGroup.getLayers().length > 0) {
+                // 預留一點 padding 讓邊緣的圖釘不會貼齊畫面
+                foodMapInstance.fitBounds(foodClusterGroup.getBounds(), { padding: [40, 40], maxZoom: 18 });
+            }
 
             // 渲染下方列表 (點擊觸發 updateFoodMap)
             container.innerHTML = filteredData.map(item => {
