@@ -399,31 +399,95 @@
             <!-- 🎉 在地新商家情報 -->
             <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-orange-50 relative overflow-hidden">
                 <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0 pointer-events-none"><i class="fa-solid fa-shop"></i></div>
+                
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2 relative z-10 gap-3">
                     <h2 class="text-2xl font-black text-orange-400 flex items-center">
                         <i class="fa-solid fa-gift mr-3"></i> 在地新商家情報
                     </h2>
-                    <a href="https://line.me/ti/g2/moTJsgUwRu2-lABYleiQLH8ZqhccDhy0alxYlA" target="_blank" class="w-fit bg-[#00B900] hover:bg-[#009900] text-white text-[11px] sm:text-xs font-black px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md flex items-center gap-1.5 transition-transform hover:scale-105 hover:-translate-y-1">
+                    <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="w-fit bg-[#00B900] hover:bg-[#009900] text-white text-[11px] sm:text-xs font-black px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md flex items-center gap-1.5 transition-transform hover:scale-105 hover:-translate-y-1">
                         <i class="fa-brands fa-line text-sm sm:text-base"></i> 提供活動資訊
                     </a>
                 </div>
                 
+                <!-- 卡片橫向捲動區塊：新增 pt-3 pb-4 預留上下緩衝空間，防止 Hover 動畫被裁切 -->
+                <!-- 更新：加入 onclick 綁定 openStoreModal 觸發彈出視窗 -->
                 <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pt-3 pb-4 relative z-10 snap-x snap-mandatory">
-                    <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
+                    <!-- 模擬推廣卡片 1 -->
+                    <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
                          class="w-[220px] sm:w-[260px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                         <div>
                             <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-荼木寺手搖飲以真材實料、茶香回甘聞名...</p>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-荼木寺手搖飲以真材實料、茶香回甘聞名，清爽不膩口，喝得到細膩層次與職人溫度。</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
                             <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>長青一街39號</span>
+                            <span class="text-orange-400 bg-orange-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-glass-water"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- 模擬推廣卡片 Blue  -->
+                    <div style="display: none;" onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeBlue', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiShTBJexn0395iVhq7Vktqa_pNYHjVBn1jQ&s', 'https://line.me/R/ti/p/@791bjdaj')"
+                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-themeBlue text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">裝潢統包</div>
+                        <div>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeBlue transition-colors line-clamp-1">凱驛空間</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">LINE群友推薦 https://line.me/R/ti/p/@791bjdaj</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
+                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" 避免觸發卡片的放大視窗 -->
+                            <a href="https://line.me/R/ti/p/@791bjdaj" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-pink-50 px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
+                            <span class="text-themeBlue bg-blue-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-paw"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- 模擬推廣卡片 Pink (無放大) -->
+                    <div class="w-[220px] sm:w-[260px] bg-gradient-to-br from-pink-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-themePink text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">建案分享</div>
+                        <div>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themePink transition-colors line-clamp-1">粉粉兔看房地圖</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">追蹤看房粉粉兔了解詳細建案懶人包，參考 300+ 筆預售屋評比資料 + 建材等級加權...等的精密建案分析。</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
+                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" 避免觸發卡片的放大視窗 -->
+                            <a href="https://rabbitpinkpink.meimeicircle.workers.dev/" target="_blank" onclick="event.stopPropagation()" class="text-pink-300 bg-pink-50 px-2 py-1.5 rounded-lg shadow-sm hover:bg-pink-300 hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-solid fa-globe mr-1 text-sm"></i>線上查詢</a>
+                            <span class="text-themePink bg-Pink-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-solid fa-mouse-pointer"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- 模擬推廣卡片 3 (LINE 推廣) -->
+                    <div onclick="openStoreModal('台灣房屋 (胡哲嘉)', '在地經營', 'bg-themeGreen', '我是您的在地專業房仲，專營 A7 重劃區及周邊建案。不管是買屋、賣屋還是租屋，都能給您最精準、最實在的建議，歡迎預約賞屋！', '桃園市龜山區 (A7重劃區)', '09:00 - 20:00', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe0lcXuBdkigxkB6vF83oRy31Ol8swsPVNAQ&s', 'https://line.me/ti/p/~ID')"
+                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">在地經營</div>
+                        <div>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeGreen transition-colors line-clamp-1">台灣房屋</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">台灣房屋房仲-胡哲嘉，專業細心、行情透明，站在客戶立場評估，溝通誠懇不強推，買賣安心有保障。</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
+                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" -->
+                            <a href="https://line.me/ti/p/~cwalkedwin" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
+                            
+                        </div>
+                    </div>
+                    <!-- 模擬推廣卡片 5 (LINE 推廣) -->
+                    <div onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeGreen', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://github.com/A7Club/life/blob/main/layoutdesing.jpg?raw=true', 'https://line.me/R/ti/p/@791bjdaj')"
+                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">統包裝潢</div>
+                        <div>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeGreen transition-colors line-clamp-1">凱驛空間</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">社群推薦統包裝潢規劃細緻、工班穩定，報價透明好溝通，從設計到完工一條龍，省心又安心。</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
+                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" -->
+                            <a href="https://line.me/ti/p/~@791bjdaj" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
+                            
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 樂園廣播 -->
+
+            <!-- 樂園廣播 (最新消息) - 修改為精簡版面，靜態在左，動態新聞在右 -->
             <div class="bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-blue-50 relative overflow-hidden">
                 <div class="absolute top-4 right-4 text-themeBlue text-4xl floating pointer-events-none"><i class="fa-solid fa-bullhorn"></i></div>
                 <h2 class="text-2xl font-black text-themeBlue mb-5 relative z-10 flex items-center">
@@ -431,6 +495,7 @@
                 </h2>
                 
                 <div class="flex flex-col lg:flex-row gap-6 relative z-10">
+                    <!-- 左側：靜態最新動態 -->
                     <div class="w-full lg:w-1/2 space-y-3 flex flex-col">
                         <h3 class="text-sm font-black text-themeBlue mb-1 flex items-center bg-blue-100/50 w-fit px-3 py-1 rounded-full">
                             <i class="fa-solid fa-thumbtack mr-1.5"></i>樂園精選公告
@@ -439,9 +504,19 @@
                             <span class="bg-themeBlue text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">新開幕</span>
                             <div>
                                 <h4 class="font-bold text-gray-800 text-sm sm:text-base">文青路「熊熊可麗餅」本週試營運！</h4>
+                                <p class="text-xs sm:text-sm text-gray-500 mt-1">憑樂園居民證(A7住戶)可享折抵優惠。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start bg-pink-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
+                            <span class="bg-themePink text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">交通</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">機捷假日加開班次</h4>
+                                <p class="text-xs sm:text-sm text-gray-500 mt-1">自本月起，週末往返台北車站將增加 15% 班次。</p>
                             </div>
                         </div>
                     </div>
+
+                    <!-- 右側：動態在地新聞區塊 -->
                     <div id="dynamic-news-container" class="w-full lg:w-1/2 pt-5 lg:pt-0 border-t-2 lg:border-t-0 lg:border-l-2 border-dashed border-blue-100 lg:pl-6 flex flex-col">
                         <div class="text-center text-blue-300 py-4 font-bold text-sm">
                             <i class="fa-solid fa-spinner fa-spin text-xl mb-2 block"></i> 正在連線搜尋在地最新新聞...
