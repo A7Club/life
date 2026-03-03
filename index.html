@@ -900,9 +900,9 @@
         // 輔助函數：過濾地址字串 (移除常見的桃園市區域碼)
         function formatAddress(address) {
             if (!address) return '';
-            let formatted = address.replace(/^桃園市\s*龜山區\s*/, '');
-            formatted = formatted.replace(/^桃園市\s*林口區\s*/, ''); // 雖然林口區是新北市，但以防資料填錯也加入過濾
-            formatted = formatted.replace(/^新北市\s*林口區\s*/, '');
+            // 利用正則表達式，去除字串開頭可能存在的 3~5 位數字 (郵遞區號) 以及後面的空白
+            let formatted = address.replace(/^\d{3,5}\s*/, '');
+
             return formatted;
         }
 
@@ -1153,7 +1153,7 @@
             const categories = ['全部', ...new Set(data.map(item => item.category).filter(c => c))];
             const tagsHtml = categories.map(cat => {
                 const isActive = cat === activeCategory;
-                const activeClass = isActive ? 'bg-themePink text-white shadow-md scale-[1.02] z-10' : 'bg-white text-gray-600 hover:bg-pink-50 shadow-sm border-2 border-transparent hover:-translate-y-1';
+                const activeClass = isActive ? 'bg-themePink text-white shadow-md scale-[1.02] md:scale-105 z-10' : 'bg-white text-gray-600 hover:bg-pink-50 shadow-sm border-2 border-transparent hover:-translate-y-1';
                 let icon = cat === '全部' ? '🎡' : getFoodStyleByCategory(cat).emoji;
                 return `<button onclick="renderFoodData(globalFoodData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-none w-auto py-2 md:py-2.5 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-pink-100 whitespace-nowrap ${activeClass}">
                             <span class="hidden md:inline-block shrink-0">${icon}</span><span>${cat}</span>
