@@ -840,7 +840,7 @@
                 const lastClickedMonth = history[storeName];
 
                 if (lastClickedMonth === currentMonthStr || userLikes[storeName]) {
-                    showToast("下次等你來捧場🙌", false);
+                    showToast("下次等你來捧場 🙌", false);
                     return;
                 }
 
@@ -851,7 +851,7 @@
                 globalLikesData[storeName] = (globalLikesData[storeName] || 0) + 1;
                 
                 updateLikeUI(storeName);
-                showToast("感謝您的支持！💖", true);
+                showToast("感謝您的支持 💖", true);
 
                 if (APPS_SCRIPT_WEB_APP_URL) {
                     try {
