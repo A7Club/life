@@ -881,9 +881,12 @@
             const count = globalLikesData[storeName] || 0;
             const isLiked = userLikes[storeName] || false;
             
+            // 調整 Hover 時的顏色：
+            // 如果還沒按讚 (isLiked為false)，hover 邊框變深粉色 (hover:border-pink-300)，背景微紅 (hover:bg-red-50)
+            // 如果已經按讚 (isLiked為true)，hover 邊框更深 (hover:border-pink-400)，背景更粉 (hover:bg-pink-100)
             const iconColor = isLiked ? 'text-themePink' : 'text-pink-200';
             const textColor = isLiked ? 'text-pink-600' : 'text-gray-400';
-            const bgColor = isLiked ? 'bg-pink-50 border-pink-200' : 'bg-white border-pink-100';
+            const bgColor = isLiked ? 'bg-pink-50 border-pink-200 hover:bg-pink-100 hover:border-pink-400' : 'bg-white border-pink-100 hover:bg-red-50 hover:border-pink-300';
             const displayText = count > 0 ? count : '推';
             const safeName = storeName.replace(/'/g, "\\'").replace(/"/g, '&quot;');
             
@@ -891,10 +894,17 @@
                 <button onclick="event.stopPropagation(); toggleLike('${safeName}')" 
                         class="like-btn flex items-center justify-center gap-1.5 ${bgColor} border-2 shadow-sm rounded-full px-3 py-1.5 z-30 hover:scale-105 active:scale-95 transition-all group" 
                         data-store="${safeName}">
-                    <i class="fa-solid fa-heart ${iconColor} text-sm group-hover:scale-125 transition-transform"></i>
+                    <i class="fa-solid fa-heart ${iconColor} text-sm group-hover:scale-125 group-hover:text-pink-400 transition-all"></i>
                     <span class="text-xs font-black ${textColor} like-count">${displayText}</span>
                 </button>
             `;
+        }
+
+        // 輔助函數：處理店家名稱，讓英文字體變小
+        function formatStoreName(name) {
+            if (!name) return '';
+            // 將連續的英文字母與數字包在一層 span 中，並縮小字體
+            return name.replace(/([a-zA-Z0-9\s]+)/g, '<span class="text-[0.85em] font-extrabold tracking-wider">$1</span>');
         }
 
         // 輔助函數：過濾地址字串 (移除常見的桃園市區域碼)
@@ -1221,27 +1231,34 @@
                     : `<i class="fa-solid ${style.iconClass} text-3xl sm:text-4xl ${style.textColor} group-hover:text-themePink transition-colors opacity-80"></i>`;
 
                 return `
-                <!-- 修正：將卡片設為 flex-col 並改為 relative 讓內部絕對定位對齊，加上 pb-10 給按鈕留空間 -->
-                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-3 md:p-4 pt-5 md:pt-6 pb-12 rounded-3xl shadow-cute flex items-start gap-3 md:gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative mt-2">
+                <!-- 修改佈局：移除 pb-12，改用 Flexbox 處理內部元素排列 -->
+                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-3 md:p-4 pt-5 md:pt-6 rounded-3xl shadow-cute flex flex-col hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative mt-2 h-full">
                     
                     <!-- 小藥丸分類標籤 -->
                     <div class="absolute -top-3 right-3 md:right-4 ${style.bgColor} text-white text-[10px] md:text-xs font-black px-3 py-1 rounded-full shadow-md z-10 border-2 border-white">
                         ${item.category}
                     </div>
                     
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')} rounded-full overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center border-2 border-white">
-                        ${imgContent}
+                    <!-- 上半部：照片與店名 -->
+                    <div class="flex items-start gap-3 md:gap-4 w-full">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')} rounded-full overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center border-2 border-white">
+                            ${imgContent}
+                        </div>
+                        
+                        <div class="flex-1 pr-1 pt-1">
+                            <!-- 使用 formatStoreName 處理中英文字體大小 -->
+                            <h4 class="font-bold text-gray-800 text-sm md:text-base group-hover:text-themePink transition-colors leading-snug break-words">${formatStoreName(item.name)}</h4>
+                        </div>
                     </div>
                     
-                    <div class="flex-1 pr-1">
-                        <h4 class="font-bold text-gray-800 text-sm md:text-base group-hover:text-themePink transition-colors leading-snug break-words">${item.name}</h4>
-                        <!-- 使用 formatAddress 隱藏區域碼 -->
-                        <p class="text-xs text-gray-500 font-bold mt-1 flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="break-words">${formatAddress(item.address)}</span></p>
-                    </div>
-                    
-                    <!-- 愛心元件固定在右下角 -->
-                    <div class="absolute bottom-3 right-3 md:bottom-4 md:right-4 z-20">
-                        ${getLikesHtml(item.name)}
+                    <!-- 下半部：地址與愛心，讓愛心固定在右下角 -->
+                    <div class="flex items-end justify-between w-full mt-auto pt-3">
+                        <div class="flex-1 pr-2">
+                            <p class="text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="break-words line-clamp-2">${formatAddress(item.address)}</span></p>
+                        </div>
+                        <div class="shrink-0">
+                            ${getLikesHtml(item.name)}
+                        </div>
                     </div>
                 </div>
                 `;
