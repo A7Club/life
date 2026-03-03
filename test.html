@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/A7Club/life/refs/heads/main/faviconico.ico" type="image/x-icon">
+    <title>A7 柒樂部 🎡｜林口、龜山美食機能生活地圖指南</title>
+    <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
+    <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
+    <meta property="og:image" content="https://a7club.github.io/life/website.jpg">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts (可愛圓潤字體) -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 🗺️ 加入 Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- 🗺️ 加入 Leaflet.MarkerCluster (地標群聚套件) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', '"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        themePink: '#FF9EBB',
+                        themeBlue: '#80CFFF',
+                        themeYellow: '#FFD166',
+                        themeGreen: '#06D6A0',
+                        themePurple: '#C197FF',
+                        bgPastel: '#FDFBF7'
+                    },
+                    boxShadow: {
+                        'cute': '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
+                        'sticker': '0 0 0 4px white, 0 8px 20px rgba(0,0,0,0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            background-color: #FDFBF7; 
+            /* 可愛的圓點背景 */
+            background-image: radial-gradient(#FF9EBB 1.5px, transparent 1.5px);
+            background-size: 40px 40px;
+        }
+        /* 自訂可愛滾動條 */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #FF9EBB; border-radius: 10px; border: 2px solid #FDFBF7; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff7eb3; }
+
+        /* 隱藏橫向滾動條(強制一列時使用) */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 頁面切換動畫 */
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* 標籤氣球動畫 */
+        .floating { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* 愛心點擊的跳動動畫 */
+        .heart-beat { animation: heartBeat 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1); }
+        }
+        
+        /* 數字跳動的字體強調 */
+        .num-counter { font-family: 'Nunito', sans-serif; font-variant-numeric: tabular-nums; }
+
+        /* --- Leaflet 客製化樣式 --- */
+        .leaflet-popup-content-wrapper { border-radius: 1.5rem !important; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1) !important; padding: 4px !important; }
+        .leaflet-popup-content { margin: 10px !important; font-family: 'Nunito', '"Noto Sans TC"', sans-serif; }
+        
+        /* 為 Leaflet Popup 關閉按鈕加上白色圓形底圖與陰影 */
+        .leaflet-popup-close-button { 
+            top: 10px !important; 
+            right: 12px !important; 
+            color: #FF9EBB !important; 
+            background-color: white !important; 
+            border-radius: 50% !important; 
+            width: 24px !important; 
+            height: 24px !important; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
+            text-align: center !important;
+            line-height: 24px !important;
+            font-size: 16px !important;
+            font-weight: 900 !important;
+            padding: 0 !important;
+            z-index: 100 !important;
+        }
+        .leaflet-popup-close-button:hover { background-color: #FF9EBB !important; color: white !important; }
+        
+        .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large { background-color: rgba(255, 158, 187, 0.5) !important; }
+        .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
+            background-color: rgba(255, 158, 187, 0.9) !important; color: white !important; font-family: 'Nunito', sans-serif !important; font-weight: 900 !important;
+        }
+
+        .custom-leaflet-icon-dynamic .fa-solid { margin-bottom: 2px; margin-right: 1px; }
+
+        .leaflet-tooltip.custom-tooltip { background-color: white; color: #FF9EBB; font-weight: 900; border-radius: 0.5rem; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 4px 10px; font-family: 'Nunito', '"Noto Sans TC"', sans-serif; }
+        .leaflet-tooltip.custom-tooltip::before { border-top-color: white; }
+
+        /* 水滴圖標動畫 */
+        .floating-marker { animation: floatMarker 2.5s ease-in-out infinite; }
+        @keyframes floatMarker {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* 恢復圖標彈跳動畫 */
+        .bounce-marker { animation: bounceMarker 0.5s cubic-bezier(0.28, 0.84, 0.42, 1) infinite; }
+        @keyframes bounceMarker {
+            0% { transform: translateY(0px) scale(1, 1); }
+            45% { transform: translateY(-12px) scale(0.95, 1.05); }
+            100% { transform: translateY(0px) scale(1, 1); }
+        }
+        
+        /* Toast 提示框動畫 */
+        .toast-enter { animation: slideInUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .toast-leave { animation: fadeOutDown 0.3s ease-in forwards; }
+        @keyframes slideInUp {
+            from { transform: translate(-50%, 100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+        @keyframes fadeOutDown {
+            from { transform: translate(-50%, 0); opacity: 1; }
+            to { transform: translate(-50%, 100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
+
+    <!-- 🎪 導航列 (雲朵造型) -->
+    <nav class="sticky top-4 z-40 mx-4 sm:mx-8 lg:mx-auto max-w-6xl">
+        <div class="bg-white/90 backdrop-blur-md rounded-full shadow-cute px-6 py-3 flex justify-between items-center border-2 border-white">
+            <!-- Logo -->
+            <div class="flex items-center cursor-pointer gap-2" onclick="loadPage('home')">
+                <div class="w-10 h-10 bg-themeYellow rounded-full flex items-center justify-center text-white text-xl shadow-inner">
+                    <i class="fa-solid fa-tent"></i>
+                </div>
+                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部　</span></span>
+            </div>
+
+            <!-- 電腦版選單 -->
+            <div class="hidden md:flex space-x-2">
+                
+                <button onclick="loadPage('food')" id="nav-btn-food" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all">🍿 找美食</button>
+                <button onclick="loadPage('shopping')" id="nav-btn-shopping" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all">🛍️ 買東西</button>
+                <button onclick="loadPage('medical')" id="nav-btn-medical" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeGreen hover:text-white transition-all">🩺 救護站</button>
+                <button onclick="loadPage('explore')" id="nav-btn-explore" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all">🎠 探索柒</button>
+            </div>
+
+            <!-- 手機版選單按鈕 -->
+            <div class="md:hidden">
+                <button onclick="toggleMobileMenu()" class="text-themePink text-2xl focus:outline-none w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 手機版展開選單 -->
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
+            <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
+            <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</button>
+            <button onclick="loadPage('medical'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</button>
+            <button onclick="loadPage('explore'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</button>
+        </div>
+    </nav>
+
+    <!-- 🎈 動態內容容器 -->
+    <main id="app-root" class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 relative">
+        <!-- JS 將會把 Template 的內容注入到這裡 -->
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="bg-white border-t-4 border-dashed border-pink-200 py-8 text-center mt-auto rounded-t-[3rem]">
+        <h2 class="text-xl font-black text-themePink mb-2">🎈林口、龜山美食機能生活地圖指南
+</h2>
+        <p class="text-gray-400 text-sm font-bold">讓每天的生活都像在遊樂園一樣精彩！© 2026</p>
+    </footer>
+
+    <!-- 🍞 Toast 提示框容器 -->
+    <div id="toast-container" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[500] flex flex-col gap-2 pointer-events-none w-max max-w-[90vw]"></div>
+
+    <!-- ========================================== -->
+    <!-- 🛍️ 店家詳細資訊 Modal (彈出視窗) -->
+    <!-- ========================================== -->
+    <div id="store-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="closeStoreModal()"></div>
+        <div class="bg-white w-full max-w-lg rounded-[2rem] md:rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden flex flex-col max-h-[90vh] transform scale-95 opacity-0 transition-all duration-300" id="store-modal-content">
+            <button onclick="closeStoreModal()" class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full text-gray-500 hover:bg-themePink hover:text-white flex items-center justify-center z-20 shadow-md transition-colors border-2 border-gray-100">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <div id="store-modal-img-container" class="w-full h-48 sm:h-64 bg-gray-100 relative shrink-0">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+            </div>
+            
+            <div class="p-6 md:p-8 overflow-y-auto flex-1 hide-scrollbar bg-white">
+                <div class="flex items-center gap-2 mb-3">
+                    <span id="store-modal-tag" class="text-xs font-black px-3 py-1 rounded-lg text-white shadow-sm"></span>
+                </div>
+                <h3 id="store-modal-title" class="text-2xl sm:text-3xl font-black text-gray-800 mb-3 leading-tight"></h3>
+                <p id="store-modal-desc" class="text-sm sm:text-base text-gray-600 font-bold mb-6 leading-relaxed"></p>
+
+                <div class="space-y-3.5 mb-8 bg-gray-50 p-5 rounded-2xl border-2 border-gray-100 shadow-inner">
+                    <div class="flex items-start text-sm sm:text-base">
+                        <div class="w-8 flex justify-center mt-0.5 shrink-0"><i class="fa-solid fa-location-dot text-themePink text-lg"></i></div>
+                        <span id="store-modal-address" class="text-gray-700 font-bold leading-snug"></span>
+                    </div>
+                    <div class="flex items-start text-sm sm:text-base">
+                        <div class="w-8 flex justify-center mt-0.5 shrink-0"><i class="fa-solid fa-clock text-themeYellow text-lg"></i></div>
+                        <span id="store-modal-hours" class="text-gray-700 font-bold"></span>
+                    </div>
+                    <div id="store-modal-rating-container" class="flex items-start text-sm sm:text-base">
+                        <div class="w-8 flex justify-center mt-0.5 shrink-0"><i class="fa-solid fa-star text-themeYellow text-lg"></i></div>
+                        <span id="store-modal-rating" class="text-gray-700 font-bold">4.8 (Google 商家評分參考)</span>
+                    </div>
+                </div>
+
+                <a id="store-modal-map-btn" href="#" target="_blank" class="w-full text-white font-black py-4 rounded-xl shadow-md flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] text-lg">
+                </a>
+
+                <div id="store-modal-qr-container" class="hidden flex-col items-center justify-center bg-green-50/80 p-6 rounded-2xl border-2 border-green-100 shadow-inner">
+                    <p class="text-sm md:text-base font-black text-[#00B900] mb-3 flex items-center"><i class="fa-brands fa-line mr-1.5 text-xl"></i>掃描加入 LINE 好友</p>
+                    <div class="bg-white p-2.5 rounded-xl shadow-sm border border-gray-100">
+                        <img id="store-modal-qr-img" src="" alt="LINE QR Code" class="w-32 h-32 md:w-40 md:h-40 object-contain mix-blend-multiply">
+                    </div>
+                    <a id="store-modal-line-btn" href="#" target="_blank" class="mt-4 w-full text-white bg-[#00B900] hover:bg-[#009900] font-black py-3 rounded-xl shadow-sm flex items-center justify-center gap-2 transition-transform hover:-translate-y-1 text-sm md:text-base">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> 手機點此直接開啟
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 🧩 頁面模板區 (Template) -->
+    <!-- ========================================== -->
+
+    <!-- 🏠 1. 首頁模板 -->
+    <template id="tpl-home">
+        <div class="fade-in space-y-8">
+            <div class="bg-cover bg-center rounded-[2.5rem] shadow-sticker p-8 md:p-14 text-center relative overflow-hidden" style="background-image: url('https://github.com/A7Club/life/blob/main/A7life.png?raw=true');">
+                <div class="absolute inset-0 bg-black/30"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-themeBlue/40 to-themePink/40"></div>
+                
+                <div class="absolute -right-10 -top-10 text-white/40 text-9xl z-0"><i class="fa-solid fa-tent"></i></div>
+                <div class="absolute -left-5 -bottom-5 text-white/40 text-8xl z-0"><i class="fa-solid fa-ice-cream"></i></div>
+                
+                <h1 class="text-4xl md:text-5xl font-black text-white mb-4 relative z-10 drop-shadow-lg">探索 A7 在地生活 ✨</h1>
+                <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南<br>
+                <span class="text-sm md:text-base text-white font-bold mt-1 inline-block">― 網站３月試營運，你的建議就是我們升級的動力 ―</span>
+                </p>
+                <div class="max-w-xl mx-auto relative z-10">
+                    <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？全聯？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
+                    <button onclick="doSearch()" class="absolute right-2 top-2 bottom-2 w-12 bg-themeYellow text-white rounded-full flex items-center justify-center text-xl hover:bg-yellow-400 hover:scale-105 transition-all shadow-sm">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 捷徑卡片與店家統計 -->
+            <div id="stats-container" class="flex flex-col gap-4 md:gap-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <div onclick="loadPage('food')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePink group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-pink-100 text-themePink rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-burger"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">找美食 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-food" class="num-counter tracking-widest">...</span>)</span></h3>
+                    </div>
+                    <div onclick="loadPage('shopping')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themeYellow group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-100 text-themeYellow rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">買東西 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-shopping" class="num-counter tracking-widest">...</span>)</span></h3>
+                    </div>
+                    <div onclick="loadPage('medical')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themeGreen group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-green-100 text-themeGreen rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-briefcase-medical"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">看醫生 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-medical" class="num-counter tracking-widest">...</span>)</span></h3>
+                    </div>
+                    <div onclick="loadPage('explore')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePurple group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-purple-100 text-themePurple rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">探索柒 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-explore" class="num-counter tracking-widest">...</span>)</span></h3>
+                    </div>
+                </div>
+                
+                <div class="mx-auto bg-white/80 backdrop-blur-md rounded-full px-5 md:px-8 py-2 md:py-2.5 shadow-sm border border-pink-100 flex items-center justify-center text-xs md:text-base font-bold text-gray-500 w-fit mb-4">
+                    <i class="fa-solid fa-chart-pie mr-2 text-themePink text-sm md:text-lg"></i> 
+                    目前統計店家總計數量： <span id="counter-total" class="inline-block text-center text-themePink font-black text-base md:text-xl mx-1.5 num-counter">...</span> 家
+                </div>
+            </div>
+
+            <!-- 機捷動態區 -->
+            <div class="mb-2 bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-gray-50 flex flex-col lg:flex-row gap-6 md:gap-8 items-center relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 text-gray-100 text-8xl floating pointer-events-none z-0 opacity-50"><i class="fa-solid fa-train-subway"></i></div>
+                <div class="w-full lg:w-[35%] flex flex-col gap-3 relative z-10 shrink-0">
+                    <h2 class="text-xl md:text-2xl font-black text-purple-400 flex items-center border-b-2 border-gray-100 pb-3 mb-1">
+                        <i class="fa-solid fa-train-tram text-themePurple mr-3 text-2xl md:text-3xl"></i> 機捷到站通知
+                    </h2>
+                    <div class="flex flex-row lg:flex-col gap-3 md:gap-4 h-full">
+                        <div class="flex-1 bg-green-50 rounded-2xl p-4 shadow-sm border border-green-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                            <div>
+                                <div class="text-[10px] sm:text-xs text-green-400 font-bold mb-0.5">往台北</div>
+                                <div class="text-sm sm:text-lg font-black text-themeGreen">北上</div>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span id="mrt-time-north" class="text-3xl sm:text-4xl font-black text-themeGreen font-mono w-10 text-center">--</span>
+                                <span id="mrt-unit-north" class="text-xs sm:text-sm font-bold text-gray-500">分</span>
+                            </div>
+                        </div>
+                        <div class="flex-1 bg-blue-50 rounded-2xl p-4 shadow-sm border border-blue-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                            <div>
+                                <div class="text-[10px] sm:text-xs text-blue-400 font-bold mb-0.5">往機場/中壢</div>
+                                <div class="text-sm sm:text-lg font-black text-themeBlue">南下</div>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span id="mrt-time-south" class="text-3xl sm:text-4xl font-black text-themeBlue font-mono w-10 text-center">--</span>
+                                <span id="mrt-unit-south" class="text-xs sm:text-sm font-bold text-gray-500">分</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-[65%] relative z-10 bg-white rounded-[1.5rem] p-4 sm:p-6 border-2 border-gray-100 shadow-inner flex flex-col justify-center">
+                    <div class="flex justify-between items-center mb-8">
+                        <span class="text-xs sm:text-sm text-gray-500 font-black"><i class="fa-solid fa-location-crosshairs mr-1.5"></i>列車即時位置</span>
+                        <span class="text-[10px] sm:text-xs text-gray-400 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>系統推算中</span>
+                    </div>
+                    
+                    <div class="relative w-full px-3 sm:px-6 mb-8 mt-2">
+                        <div class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[6px] h-1.5 sm:h-2 bg-gray-200 rounded-full z-0"></div>
+                        <div id="mrt-track-container" class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] -top-3 sm:-top-2 z-20 pointer-events-none h-10"></div>
+                        <div class="flex justify-between relative z-10 w-full mt-4">
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A4</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">副都心</span>
+                            </div>
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A5</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">泰山</span>
+                            </div>
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A6</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">貴和</span>
+                            </div>
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-themePurple border-[3px] sm:border-4 border-white shadow-md z-10 -mt-0.5 sm:-mt-0.5"></div>
+                                <span class="text-[11px] sm:text-sm font-black text-themePurple mt-0.5">A7</span>
+                                <span class="text-[11px] sm:text-[15px] font-black text-gray-600 whitespace-nowrap mt-0">體大</span>
+                            </div>
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A8</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">長庚</span>
+                            </div>
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A9</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">林口</span>
+                            </div>
+                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
+                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A10</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">山鼻</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 在地新商家情報 -->
+            <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-orange-50 relative overflow-hidden">
+                <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0 pointer-events-none"><i class="fa-solid fa-shop"></i></div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2 relative z-10 gap-3">
+                    <h2 class="text-2xl font-black text-orange-400 flex items-center">
+                        <i class="fa-solid fa-gift mr-3"></i> 在地新商家情報
+                    </h2>
+                    <a href="https://line.me/ti/g2/moTJsgUwRu2-lABYleiQLH8ZqhccDhy0alxYlA" target="_blank" class="w-fit bg-[#00B900] hover:bg-[#009900] text-white text-[11px] sm:text-xs font-black px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md flex items-center gap-1.5 transition-transform hover:scale-105 hover:-translate-y-1">
+                        <i class="fa-brands fa-line text-sm sm:text-base"></i> 提供活動資訊
+                    </a>
+                </div>
+                
+                <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pt-3 pb-4 relative z-10 snap-x snap-mandatory">
+                    <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
+                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
+                        <div>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-荼木寺手搖飲以真材實料、茶香回甘聞名...</p>
+                        </div>
+                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
+                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>長青一街39號</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 樂園廣播 -->
+            <div class="bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-blue-50 relative overflow-hidden">
+                <div class="absolute top-4 right-4 text-themeBlue text-4xl floating pointer-events-none"><i class="fa-solid fa-bullhorn"></i></div>
+                <h2 class="text-2xl font-black text-themeBlue mb-5 relative z-10 flex items-center">
+                    📢 樂園廣播 <span class="text-sm text-blue-300 ml-2 font-bold hidden sm:inline-block">/ 最新動態</span>
+                </h2>
+                
+                <div class="flex flex-col lg:flex-row gap-6 relative z-10">
+                    <div class="w-full lg:w-1/2 space-y-3 flex flex-col">
+                        <h3 class="text-sm font-black text-themeBlue mb-1 flex items-center bg-blue-100/50 w-fit px-3 py-1 rounded-full">
+                            <i class="fa-solid fa-thumbtack mr-1.5"></i>樂園精選公告
+                        </h3>
+                        <div class="flex items-start bg-blue-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
+                            <span class="bg-themeBlue text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">新開幕</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">文青路「熊熊可麗餅」本週試營運！</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="dynamic-news-container" class="w-full lg:w-1/2 pt-5 lg:pt-0 border-t-2 lg:border-t-0 lg:border-l-2 border-dashed border-blue-100 lg:pl-6 flex flex-col">
+                        <div class="text-center text-blue-300 py-4 font-bold text-sm">
+                            <i class="fa-solid fa-spinner fa-spin text-xl mb-2 block"></i> 正在連線搜尋在地最新新聞...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分享在地店家 -->
+            <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-pink-50 relative text-center">
+                <div class="absolute -top-6 -right-2 text-pink-200 text-6xl floating z-0"><i class="fa-solid fa-gift"></i></div>
+                <h2 class="text-2xl font-black text-themePink mb-2 relative z-10">🙌 我要分享在地店家資訊</h2>
+                <button onclick="toggleShareForm()" class="relative z-10 bg-themePink text-white font-black py-3 px-8 rounded-full shadow-md hover:scale-105 hover:bg-pink-400 transition-all">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i> 點我填寫分享
+                </button>
+                <div id="share-form-container" class="hidden mt-6 w-full relative z-10 bg-pink-50 rounded-2xl p-2 border-2 border-pink-100 h-[600px] transition-all duration-300">
+                    <iframe src="https://forms.gle/FyEGds4dPWsiEUUZA" class="w-full h-full rounded-xl border-0 bg-white shadow-inner" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 🔍 搜尋結果模板 (Search) -->
+    <template id="tpl-search">
+        <div class="fade-in space-y-6">
+            <div class="flex items-center justify-between mb-4 bg-white p-4 rounded-3xl shadow-sm border-2 border-gray-100">
+                <h2 class="text-2xl md:text-3xl font-black text-themeYellow flex items-center">
+                    <i class="fa-solid fa-magnifying-glass mr-3"></i> 搜尋結果
+                </h2>
+                <button onclick="loadPage('home')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl font-bold hover:bg-gray-200 transition-colors text-sm md:text-base">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> 返回首頁
+                </button>
+            </div>
+            <p id="search-query-display" class="text-gray-500 font-bold px-2 text-lg">正在為您全站搜尋...</p>
+            <div id="search-results-container" class="space-y-8">
+                <div class="text-center py-16 bg-white rounded-[2.5rem] border-4 border-yellow-50 shadow-cute">
+                    <i class="fa-solid fa-spinner fa-spin text-5xl text-themeYellow mb-4"></i>
+                    <p class="font-bold text-gray-500 text-lg">正在樂園各個角落尋找中...</p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 🍿 3. 找美食模板 (Food) -->
+    <template id="tpl-food">
+        <div class="fade-in">
+            <div class="flex items-center mb-4 px-2">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
+                <h2 class="text-2xl md:text-3xl font-black text-themePink shrink-0">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 relative items-start">
+                <!-- 地圖區塊 -->
+                <div class="w-full h-[45vh] lg:h-[calc(100vh-160px)] lg:w-1/2 xl:w-5/12 sticky top-[80px] lg:top-[100px] z-20 shrink-0 shadow-lg rounded-[2rem] order-1 lg:order-2">
+                    <div class="w-full h-full bg-pink-50 rounded-[2rem] border-4 border-white overflow-hidden relative flex items-center justify-center">
+                        <div id="food-leaflet-map" class="w-full h-full relative z-10"></div>
+                        <button onclick="locateUserOnFoodMap()" title="我的位置" class="absolute top-[20px] right-[20px] z-[400] bg-white w-10 h-10 rounded-xl shadow-md flex items-center justify-center text-gray-600 hover:text-themeBlue hover:bg-blue-50 transition-colors border-2 border-gray-100 hover:border-blue-200">
+                            <i id="location-btn-icon" class="fa-solid fa-crosshairs text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 列表區塊 -->
+                <div class="w-full flex-1 lg:w-1/2 xl:w-7/12 flex flex-col bg-white/60 rounded-[2rem] p-3 md:p-4 shadow-inner border border-pink-50 order-2 lg:order-1">
+                    <div id="food-tags-container" class="flex flex-wrap overflow-x-auto hide-scrollbar justify-start gap-2 w-full mb-4"></div>
+                    
+                    <div class="bg-pink-50/80 text-pink-500 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl mb-3 flex items-center justify-center shadow-sm border border-pink-100 text-center">
+                        <i class="fa-solid fa-comment-dots mr-2 text-pink-400"></i>店家資訊皆由社群網友熱心分享，提供大家參考交流。
+                    </div>
+                    <p class="text-left text-sm text-themePink font-black mb-4"><i class="fa-solid fa-arrow-down-short-wide mr-1"></i> 點選下方店家，地圖會自動放大定位喔！</p>
+                    
+                    <div id="food-list-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 pb-12 pt-2">
+                        <div class="col-span-full text-center text-pink-300 py-8"><i class="fa-solid fa-spinner fa-spin text-3xl"></i><p class="text-sm mt-2 font-bold">搜尋樂園美食中...</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 🛍️ 4. 買東西模板 (Shopping) -->
+    <template id="tpl-shopping">
+        <div class="fade-in">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-themeYellow text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-bag-shopping"></i></div>
+                <h2 class="text-2xl font-black text-themeYellow">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
+            </div>
+            <div id="shopping-tags-container" class="flex flex-wrap lg:flex-nowrap lg:overflow-x-auto hide-scrollbar gap-2 md:gap-3 w-full mb-4"></div>
+            <div class="bg-yellow-50/80 text-yellow-600 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl mb-6 flex items-center justify-center shadow-sm border border-yellow-100 text-center w-full">
+                <i class="fa-solid fa-comment-dots mr-2 text-yellow-500"></i>店家資訊皆由社群網友熱心分享，提供大家參考交流。
+            </div>
+            <div id="shopping-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-start">
+                <div class="col-span-full text-center text-themeYellow py-12"><i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i><p class="font-bold">正在為您整理生活圈店家...</p></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 🩺 5. 看醫生模板 (Medical) -->
+    <template id="tpl-medical">
+        <div class="fade-in">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-themeGreen text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform rotate-3 shadow-md"><i class="fa-solid fa-heart-pulse"></i></div>
+                <h2 class="text-2xl font-black text-themeGreen">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
+            </div>
+
+            <!-- 緊急聯絡電話區塊 -->
+            <div class="bg-red-400 p-6 md:p-8 rounded-[2.5rem] text-white shadow-cute mb-8 relative overflow-hidden border-4 border-red-200">
+                <div class="absolute -right-6 -bottom-6 text-red-300 text-8xl floating opacity-50 z-0 pointer-events-none"><i class="fa-solid fa-truck-medical"></i></div>
+                <h3 class="text-2xl font-black mb-4 relative z-10 flex items-center"><i class="fa-solid fa-phone-volume mr-3"></i> 救護與緊急電話</h3>
+                <div class="flex flex-wrap gap-3 md:gap-4 relative z-10 items-start">
+                    <!-- 派出所 -->
+                    <details class="group bg-white rounded-[1.2rem] shadow-sm border-2 border-red-100 overflow-hidden text-gray-800 transition-all w-full md:w-auto">
+                        <summary class="font-black list-none flex justify-between items-center px-5 py-3 md:py-4 text-base md:text-lg text-red-500 cursor-pointer hover:bg-red-50 transition-colors gap-6">
+                            <span class="flex items-center whitespace-nowrap"><i class="fa-solid fa-building-shield mr-2.5 text-xl"></i> 警察局 / 派出所</span>
+                            <span class="text-red-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="px-3 pb-3 space-y-2.5 bg-white">
+                            <!-- 大埔派出所 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3 border border-red-100/50 hover:border-red-200 transition-colors">
+                                <div class="pr-2">
+                                    <div class="text-red-700 font-black text-sm md:text-base mb-1">大埔派出所</div>
+                                    <div class="text-xs text-red-400 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>桃園市龜山區文德二路80號</div>
+                                </div>
+                                <a href="tel:03-3202554" class="bg-white hover:bg-red-500 hover:text-white transition-colors text-red-500 px-3.5 py-1.5 rounded-lg shadow-sm text-sm font-black shrink-0 border border-red-100 flex items-center justify-center gap-1.5 w-fit sm:w-auto"><i class="fa-solid fa-phone-volume"></i> 03-3202554</a>
+                            </div>
+                            <!-- 坪頂派出所 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3 border border-red-100/50 hover:border-red-200 transition-colors">
+                                <div class="pr-2">
+                                    <div class="text-red-700 font-black text-sm md:text-base mb-1">坪頂派出所</div>
+                                    <div class="text-xs text-red-400 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>桃園市龜山區大湖一路65號</div>
+                                </div>
+                                <a href="tel:03-3282570" class="bg-white hover:bg-red-500 hover:text-white transition-colors text-red-500 px-3.5 py-1.5 rounded-lg shadow-sm text-sm font-black shrink-0 border border-red-100 flex items-center justify-center gap-1.5 w-fit sm:w-auto"><i class="fa-solid fa-phone-volume"></i> 03-3282570</a>
+                            </div>
+                            <!-- 龜山派出所 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3 border border-red-100/50 hover:border-red-200 transition-colors">
+                                <div class="pr-2">
+                                    <div class="text-red-700 font-black text-sm md:text-base mb-1">龜山派出所</div>
+                                    <div class="text-xs text-red-400 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>桃園市龜山區萬壽路二段931號</div>
+                                </div>
+                                <a href="tel:03-3186447" class="bg-white hover:bg-red-500 hover:text-white transition-colors text-red-500 px-3.5 py-1.5 rounded-lg shadow-sm text-sm font-black shrink-0 border border-red-100 flex items-center justify-center gap-1.5 w-fit sm:w-auto"><i class="fa-solid fa-phone-volume"></i> 03-3186447</a>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- 消防隊 -->
+                    <details class="group bg-white rounded-[1.2rem] shadow-sm border-2 border-red-100 overflow-hidden text-gray-800 transition-all w-full md:w-auto">
+                        <summary class="font-black list-none flex justify-between items-center px-5 py-3 md:py-4 text-base md:text-lg text-red-500 cursor-pointer hover:bg-red-50 transition-colors gap-6">
+                            <span class="flex items-center whitespace-nowrap"><i class="fa-solid fa-fire-extinguisher mr-2.5 text-xl"></i> 消防隊</span>
+                            <span class="text-red-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="px-3 pb-3 space-y-2.5 bg-white">
+                            <!-- 坪頂分隊 -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3 border border-red-100/50 hover:border-red-200 transition-colors">
+                                <div class="pr-2">
+                                    <div class="text-red-700 font-black text-sm md:text-base mb-1">坪頂消防分隊</div>
+                                    <div class="text-xs text-red-400 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 shrink-0"></i>桃園市龜山區復興三路80號</div>
+                                </div>
+                                <a href="tel:03-3280309" class="bg-white hover:bg-red-500 hover:text-white transition-colors text-red-500 px-3.5 py-1.5 rounded-lg shadow-sm text-sm font-black shrink-0 border border-red-100 flex items-center justify-center gap-1.5 w-fit sm:w-auto"><i class="fa-solid fa-phone-volume"></i> 03-3280309</a>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <div class="bg-blue-50/80 text-blue-600 text-xs sm:text-sm font-bold px-5 py-3 rounded-2xl mb-6 flex items-start sm:items-center shadow-sm border border-blue-100 w-full leading-relaxed gap-3">
+                <i class="fa-solid fa-circle-info text-blue-500 text-lg mt-0.5 sm:mt-0 shrink-0"></i>
+                <div>就診前請確認機構與醫事人員具合法資格。 <a href="https://ma.mohw.gov.tw/Accessibility/BASSearch/MASearchBAS" target="_blank" class="inline-flex items-center text-blue-500 hover:text-blue-700 underline mt-1 sm:mt-0">衛福部醫事機構查詢</a></div>
+            </div>
+
+            <div id="medical-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-stretch">
+                <div class="col-span-full text-center text-themeGreen py-12 bg-white rounded-[2.5rem] border-4 border-green-50 shadow-cute"><i class="fa-solid fa-spinner fa-spin text-4xl mb-5"></i><p class="font-bold">正在連線樂園救護中心庫...</p></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 🎠 6. 探索去模板 (Explore) -->
+    <template id="tpl-explore">
+        <div class="fade-in">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-themePurple text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-ticket"></i></div>
+                <h2 class="text-2xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">了解在地生活</span></h2>
+            </div>
+            <div class="mb-12">
+                <div class="flex items-center mb-6"><h2 class="text-xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門社群推薦</h2></div>
+                <div id="community-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-stretch"></div>
+            </div>
+
+            <!-- 建案分佈 -->
+            <div id="buildings-section" class="mb-8 scroll-mt-[100px]">
+                <div class="flex items-center mb-6"><h2 class="text-2xl font-black text-themeGreen flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeGreen"></i>A7 建案分佈</h2></div>
+                <div class="mb-8 flex flex-col md:flex-row gap-4 md:gap-6 items-start">
+                    <div class="w-full md:w-1/2 lg:w-5/12 relative shrink-0 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border-4 border-white shadow-cute bg-white">
+                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-auto object-contain block" alt="A7建案地圖">
+                    </div>
+                    <div class="w-full md:w-1/2 lg:w-7/12 flex flex-col">
+                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
+                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0">
+                                <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
+                            </h3>
+                            <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-3 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="buildings-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- JavaScript 路由與注入邏輯 -->
+    <script>
+        let globalMrtInterval = null;
+        let foodMapInstance = null;
+        let foodClusterGroup = null;
+        let foodMarkersMap = {}; 
+        let activeFoodMarkerName = null;
+
+        // ========================================================
+        // 💖 愛心評分系統邏輯 (Like System)
+        // ========================================================
+        
+        let globalLikesData = {}; // 存放所有店家的總愛心數 { "店家A": 10, "店家B": 5 }
+        let userLikes = {};       // 存放當前使用者按讚的狀態 { "店家A": true }
+        let isVoting = {};        // 防連點鎖定狀態
+        
+        const APPS_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwpzgiPb4sKncl1Zd_PQVUKkRSn2D5-7_A8cNpxw3QD5rjklKGyw31MMdR6mRS5Ysyu3g/exec"; 
+
+        // 取得或生成使用者的專屬 ID (存於瀏覽器 localStorage)
+        function getUserId() {
+            let uid = localStorage.getItem('a7_user_id');
+            if (!uid) {
+                // 產生簡易設備指紋 (Device Fingerprint) 增加灌票難度
+                const nav = window.navigator;
+                const screen = window.screen;
+                const fpString = nav.userAgent + nav.language + screen.colorDepth + screen.width + screen.height;
+                let hash = 0;
+                for (let i = 0; i < fpString.length; i++) {
+                    hash = ((hash << 5) - hash) + fpString.charCodeAt(i);
+                    hash |= 0;
+                }
+                const deviceFp = 'DEV' + Math.abs(hash).toString(36);
+                
+                // 結合 UUID 與設備指紋
+                const randomStr = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+                uid = `USER_${deviceFp}_${randomStr}`;
+                localStorage.setItem('a7_user_id', uid);
+            }
+            return uid;
+        }
+
+        // 顯示 Toast 提示
+        function showToast(message, isSuccess = true) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            
+            const toast = document.createElement('div');
+            const bgColor = isSuccess ? 'bg-white' : 'bg-red-50';
+            const textColor = isSuccess ? 'text-themePink' : 'text-red-500';
+            const icon = isSuccess ? '<i class="fa-solid fa-heart mr-2"></i>' : '<i class="fa-solid fa-circle-exclamation mr-2"></i>';
+            const borderColor = isSuccess ? 'border-pink-200' : 'border-red-200';
+            
+            toast.className = `${bgColor} ${textColor} border-2 ${borderColor} px-5 py-3 rounded-full shadow-cute font-black text-sm sm:text-base flex items-center toast-enter pointer-events-auto`;
+            toast.innerHTML = `${icon} ${message}`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.replace('toast-enter', 'toast-leave');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // 啟動時讀取 Google Sheet CSV 內的按讚紀錄
+        async function loadLikesData() {
+            const likesCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1295636704&single=true&output=csv';
+            try {
+                const res = await fetch(likesCsvUrl);
+                const csvText = await res.text();
+                const rows = parseCSV(csvText).slice(1);
+                const currentUid = getUserId();
+                
+                const date = new Date();
+                const curYear = String(date.getFullYear());
+                const curMonth = String(date.getMonth() + 1);
+
+                globalLikesData = {};
+                userLikes = {};
+                
+                let localHistory = JSON.parse(localStorage.getItem('a7_likes_history') || '{}');
+
+                rows.forEach(row => {
+                    if (row.length < 2) return;
+                    const rowUid = row[0] ? row[0].trim() : '';
+                    const storeName = row[1] ? row[1].trim() : '';
+                    const rowYear = row[2] ? String(row[2]).trim() : '';
+                    const rowMonth = row[3] ? String(row[3]).trim() : '';
+                    if (!storeName) return;
+
+                    globalLikesData[storeName] = (globalLikesData[storeName] || 0) + 1;
+
+                    if (rowUid === currentUid && rowYear === curYear && rowMonth === curMonth) {
+                        userLikes[storeName] = true;
+                        localHistory[storeName] = `${curYear}-${curMonth.padStart(2, '0')}`;
+                    }
+                });
+                
+                localStorage.setItem('a7_likes_history', JSON.stringify(localHistory));
+            } catch (e) {
+                console.warn("載入愛心資料失敗或無資料", e);
+            }
+        }
+
+        // 切換按讚狀態並傳送資料
+        async function toggleLike(storeName) {
+            // 防連點機制：如果正在處理中，直接返回
+            if (isVoting[storeName]) return;
+            isVoting[storeName] = true;
+
+            try {
+                const uid = getUserId();
+                const date = new Date();
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+                const currentMonthStr = `${year}-${String(month).padStart(2, '0')}`;
+                
+                let history = JSON.parse(localStorage.getItem('a7_likes_history') || '{}');
+                const lastClickedMonth = history[storeName];
+
+                if (lastClickedMonth === currentMonthStr || userLikes[storeName]) {
+                    showToast("下次等你來捧場🙌", false);
+                    return;
+                }
+
+                history[storeName] = currentMonthStr;
+                localStorage.setItem('a7_likes_history', JSON.stringify(history));
+                
+                userLikes[storeName] = true;
+                globalLikesData[storeName] = (globalLikesData[storeName] || 0) + 1;
+                
+                updateLikeUI(storeName);
+                showToast("感謝您的支持！💖", true);
+
+                if (APPS_SCRIPT_WEB_APP_URL) {
+                    try {
+                        const formData = new URLSearchParams();
+                        formData.append('userId', uid);
+                        formData.append('storeName', storeName);
+                        formData.append('year', year);
+                        formData.append('month', month);
+                        formData.append('action', 'like');
+
+                        fetch(APPS_SCRIPT_WEB_APP_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: formData.toString()
+                        }).then(response => {
+                            console.log('愛心紀錄發送成功 (Opaque Response)');
+                        }).catch(error => {
+                            console.error('發送愛心紀錄失敗', error);
+                        });
+                    } catch(e) {
+                        console.error("發送愛心紀錄發生例外錯誤", e);
+                    }
+                } else {
+                    console.log(`[模擬寫入試算表] 使用者: ${uid} | 店家: ${storeName} | 年月: ${year}/${month} | 動作: 按讚`);
+                }
+            } finally {
+                // 延遲解除鎖定，避免極限連點發送多餘請求
+                setTimeout(() => {
+                    isVoting[storeName] = false;
+                }, 1000);
+            }
+        }
+
+        // 動態更新畫面的愛心數量與狀態
+        function updateLikeUI(storeName) {
+            const buttons = document.querySelectorAll(`.like-btn[data-store="${storeName.replace(/"/g, '&quot;')}"]`);
+            const isLiked = userLikes[storeName];
+            const count = globalLikesData[storeName] || 0;
+
+            buttons.forEach(btn => {
+                const icon = btn.querySelector('i.fa-heart');
+                const countSpan = btn.querySelector('.like-count');
+                if (!icon || !countSpan) return;
+
+                if (isLiked) {
+                    icon.classList.remove('text-pink-200');
+                    icon.classList.add('text-themePink', 'heart-beat');
+                    countSpan.classList.remove('text-gray-400');
+                    countSpan.classList.add('text-pink-600');
+                    btn.classList.remove('bg-white', 'border-pink-100');
+                    btn.classList.add('bg-pink-50', 'border-pink-200');
+                    setTimeout(() => icon.classList.remove('heart-beat'), 400); 
+                } else {
+                    icon.classList.remove('text-themePink');
+                    icon.classList.add('text-pink-200');
+                    countSpan.classList.remove('text-pink-600');
+                    countSpan.classList.add('text-gray-400');
+                    btn.classList.remove('bg-pink-50', 'border-pink-200');
+                    btn.classList.add('bg-white', 'border-pink-100');
+                }
+                countSpan.innerText = count > 0 ? count : '推';
+            });
+        }
+
+        // 產生愛心按鈕的 HTML 模組
+        function getLikesHtml(storeName) {
+            const count = globalLikesData[storeName] || 0;
+            const isLiked = userLikes[storeName] || false;
+            
+            const iconColor = isLiked ? 'text-themePink' : 'text-pink-200';
+            const textColor = isLiked ? 'text-pink-600' : 'text-gray-400';
+            // 當已經點讚時，Hover 時不改變樣式，並且游標改為 default，讓使用者感覺已鎖定
+            const cursorClass = isLiked ? 'cursor-default' : 'cursor-pointer';
+            const hoverClass = isLiked ? '' : 'hover:scale-105 active:scale-95 hover:bg-red-50 hover:border-pink-300';
+            const bgColor = isLiked ? 'bg-pink-50 border-pink-200' : 'bg-white border-pink-100';
+            const groupHoverIconClass = isLiked ? '' : 'group-hover:scale-125 group-hover:text-pink-400 transition-all';
+
+            const displayText = count > 0 ? count : '推';
+            const safeName = storeName.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            
+            return `
+                <button onclick="event.stopPropagation(); toggleLike('${safeName}')" 
+                        class="like-btn flex items-center justify-center gap-1.5 ${bgColor} border-2 shadow-sm rounded-full px-3 py-1.5 z-30 transition-all group shrink-0 ${hoverClass} ${cursorClass}" 
+                        data-store="${safeName}">
+                    <i class="fa-solid fa-heart ${iconColor} text-sm ${groupHoverIconClass}"></i>
+                    <span class="text-xs font-black ${textColor} like-count">${displayText}</span>
+                </button>
+            `;
+        }
+
+        // 輔助函數：處理店家名稱，讓英文字體變小
+        function formatStoreName(name) {
+            if (!name) return '';
+            return name.replace(/([a-zA-Z0-9\s]+)/g, '<span class="text-[0.85em] font-extrabold tracking-[-0.03em]">$1</span>');
+        }
+
+        // 輔助函數：過濾地址字串
+        function formatAddress(address) {
+            if (!address) return '';
+            return address.replace(/^\d{3,5}\s*/, '');
+        }
+
+        // ========================================================
+        // 🗺️ Leaflet 地圖核心功能
+        // ========================================================
+        function initFoodMap() {
+            const mapEl = document.getElementById('food-leaflet-map');
+            if (!mapEl) return;
+
+            if (foodMapInstance) {
+                foodMapInstance.remove();
+                foodMapInstance = null;
+                foodClusterGroup = null;
+                foodMarkersMap = {};
+            }
+
+            foodMapInstance = L.map('food-leaflet-map', { zoomControl: false }).setView([25.0425, 121.3870], 15);
+            L.control.zoom({ position: 'bottomright' }).addTo(foodMapInstance);
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap &copy; CARTO',
+                maxZoom: 20
+            }).addTo(foodMapInstance);
+
+            foodClusterGroup = L.markerClusterGroup({
+                chunkedLoading: true, spiderfyOnMaxZoom: true, showCoverageOnHover: false, zoomToBoundsOnClick: true, maxClusterRadius: 40
+            });
+            foodMapInstance.addLayer(foodClusterGroup);
+        }
+
+        // ========================================================
+        // 核心初始化與路由
+        // ========================================================
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadLikesData();
+            handleRoute();
+        });
+
+        window.addEventListener('hashchange', handleRoute);
+
+        function handleRoute() {
+            let hash = window.location.hash.substring(1) || 'home';
+            if (hash.startsWith('search=')) {
+                const query = decodeURIComponent(hash.substring(7));
+                renderPage('search');
+                executeSearchLogic(query);
+            } else if (hash === 'buildings') {
+                renderPage('explore', true); 
+                setTimeout(() => {
+                    const section = document.getElementById('buildings-section');
+                    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 150);
+            } else {
+                renderPage(hash);
+            }
+        }
+
+        function loadPage(pageId) {
+            window.location.hash = pageId;
+        }
+
+        function renderPage(pageId, skipScrollTop = false) {
+            const root = document.getElementById('app-root');
+            const template = document.getElementById('tpl-' + pageId);
+            
+            if (template) {
+                root.innerHTML = '';
+                root.appendChild(template.content.cloneNode(true));
+                updateNavStyles(pageId);
+                
+                if (!skipScrollTop) window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                if (pageId === 'home') {
+                    setTimeout(() => {
+                        fetchAndUpdateHomeCounts(); 
+                        fetchLocalNews(); 
+                        updateMRTStatus();
+                        if (globalMrtInterval) clearInterval(globalMrtInterval);
+                        globalMrtInterval = setInterval(updateMRTStatus, 1000);
+                    }, 50);
+                } else {
+                    if (globalMrtInterval) { clearInterval(globalMrtInterval); globalMrtInterval = null; }
+                }
+
+                if (pageId === 'food') { setTimeout(() => { initFoodMap(); fetchFoodData(); }, 50); }
+                if (pageId === 'shopping') fetchShoppingData();
+                if (pageId === 'medical') fetchMedicalData();
+                if (pageId === 'explore') { fetchCommunityData(); fetchBuildingData(); }
+            } else {
+                console.error("找不到模板: ", pageId);
+            }
+        }
+
+        // === 相關輔助工具 (CSV 解析、Modal 開關) ===
+        function parseCSV(text) {
+            let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
+            for (l of text) {
+                if ('"' === l) {
+                    if (s && l === p) row[i] += l;
+                    s = !s;
+                } else if (',' === l && s) l = row[++i] = '';
+                else if ('\n' === l && s) {
+                    if ('\r' === p) row[i] = row[i].slice(0, -1);
+                    row = ret[++r] = [l = '']; i = 0;
+                } else row[i] += l;
+                p = l;
+            }
+            return ret.filter(r => r.join('').trim() !== '');
+        }
+
+        function openStoreModal(name, tag, tagColor, desc, address, hours, imgUrl, mapQuery) {
+            document.getElementById('store-modal-title').innerText = name;
+            const tagEl = document.getElementById('store-modal-tag');
+            tagEl.innerText = tag; tagEl.className = `text-xs font-black px-2.5 py-1 rounded-lg text-white shadow-sm ${tagColor}`;
+            document.getElementById('store-modal-desc').innerText = desc;
+            document.getElementById('store-modal-hours').innerText = hours;
+            
+            document.getElementById('store-modal-img-container').innerHTML = `
+                <img src="${imgUrl}" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+            `;
+            
+            const mapBtn = document.getElementById('store-modal-map-btn');
+            const qrContainer = document.getElementById('store-modal-qr-container');
+            const qrImg = document.getElementById('store-modal-qr-img');
+            const lineBtn = document.getElementById('store-modal-line-btn');
+            const ratingContainer = document.getElementById('store-modal-rating-container');
+            const addressEl = document.getElementById('store-modal-address');
+            
+            if (mapQuery.startsWith('http') && (mapQuery.includes('line.me') || mapQuery.includes('lin.ee'))) {
+                mapBtn.classList.add('hidden'); qrContainer.classList.remove('hidden'); qrContainer.classList.add('flex');
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(mapQuery)}`;
+                lineBtn.href = mapQuery;
+                if (ratingContainer) ratingContainer.classList.add('hidden');
+                addressEl.innerHTML = `<span class="text-[#00B900]">官方 LINE 帳號諮詢</span>`;
+            } else {
+                qrContainer.classList.add('hidden'); qrContainer.classList.remove('flex'); mapBtn.classList.remove('hidden');
+                if (ratingContainer) ratingContainer.classList.remove('hidden');
+                addressEl.innerText = address;
+                mapBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+                mapBtn.innerHTML = `<i class="fa-solid fa-map-location-dot text-xl"></i> 前往 Google Map 查看詳細資訊`;
+                mapBtn.className = "w-full text-white bg-blue-500 hover:bg-blue-600 font-black py-3.5 rounded-xl shadow-md flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] text-lg";
+            }
+
+            const modal = document.getElementById('store-modal');
+            const content = document.getElementById('store-modal-content');
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            setTimeout(() => { content.classList.remove('scale-95', 'opacity-0'); content.classList.add('scale-100', 'opacity-100'); }, 10);
+        }
+
+        function closeStoreModal() {
+            const modal = document.getElementById('store-modal');
+            const content = document.getElementById('store-modal-content');
+            content.classList.remove('scale-100', 'opacity-100'); content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
+        }
+
+        function doSearch() {
+            const input = document.getElementById('home-search-input');
+            if(!input || !input.value.trim()) return;
+            window.location.hash = 'search=' + encodeURIComponent(input.value.trim());
+        }
+
+        // ==========================================
+        // 🍿 美食販賣部 (Food) 渲染更新
+        // ==========================================
+        let globalFoodData = null;
+        
+        const FOOD_CATEGORY_STYLES = [
+            { keywords: ['早', '早餐', '早午餐'], iconClass: 'fa-egg', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '🍳' },
+            { keywords: ['素', '素食', '蔬食', '健康'], iconClass: 'fa-leaf', bgColor: 'bg-green-400', textColor: 'text-green-600', emoji: '🥗' },
+            { keywords: ['飲', '飲料', '手搖', '茶'], iconClass: 'fa-glass-water', bgColor: 'bg-teal-400', textColor: 'text-teal-600', emoji: '🧋' },
+            { keywords: ['麵', '麵食', '拉麵', '義大利麵'], iconClass: 'fa-bowl-rice', bgColor: 'bg-orange-300', textColor: 'text-orange-700', emoji: '🍜' },
+            { keywords: ['飯', '正餐', '主食', '便當', '水餃'], iconClass: 'fa-bowl-food', bgColor: 'bg-orange-400', textColor: 'text-orange-600', emoji: '🍱' },
+            { keywords: ['西餐', '美式', '漢堡', '披薩'], iconClass: 'fa-burger', bgColor: 'bg-red-400', textColor: 'text-red-600', emoji: '🍔' },
+            { keywords: ['咖啡', '甜點', '冰', '蛋糕', '麵包', '甜甜圈'], iconClass: 'fa-cookie-bite', bgColor: 'bg-themeBlue', textColor: 'text-blue-500', emoji: '🍩' },
+            { keywords: ['小吃', '宵夜', '炸', '烤', '滷味'], iconClass: 'fa-drumstick-bite', bgColor: 'bg-amber-400', textColor: 'text-amber-600', emoji: '🍗' },
+            { keywords: ['鍋', '火鍋', '鐵板'], iconClass: 'fa-fire-burner', bgColor: 'bg-red-400', textColor: 'text-red-500', emoji: '🍲' },
+            { keywords: ['異國', '日式', '韓式', '義式', '泰式'], iconClass: 'fa-earth-americas', bgColor: 'bg-indigo-400', textColor: 'text-indigo-600', emoji: '🍝' },
+            { keywords: ['預設'], iconClass: 'fa-utensils', bgColor: 'bg-themePink', textColor: 'text-pink-500', emoji: '🍽️' }
+        ];
+
+        function getFoodStyleByCategory(categoryName) {
+            if (!categoryName) return FOOD_CATEGORY_STYLES[FOOD_CATEGORY_STYLES.length - 1];
+            for (let style of FOOD_CATEGORY_STYLES) {
+                if (style.keywords.some(kw => categoryName.includes(kw))) return style;
+            }
+            return FOOD_CATEGORY_STYLES[FOOD_CATEGORY_STYLES.length - 1];
+        }
+
+        function loadSharedFoodData() {
+            return new Promise((resolve, reject) => {
+                if (globalFoodData) return resolve(globalFoodData);
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1150395419&single=true&output=csv';
+                fetch(csvUrl).then(res => res.text()).then(csvText => {
+                    const rows = parseCSV(csvText);
+                    if (rows.length < 2) return resolve([]);
+                    const headers = rows[0];
+                    const nameIdx = Math.max(0, headers.findIndex(k => k.includes('店') || k.includes('名')));
+                    const catIdx = Math.max(0, headers.findIndex(k => k.includes('分類') || k.includes('類別')));
+                    const addressIdx = Math.max(0, headers.findIndex(k => k.includes('地址') || k.includes('位置')));
+                    const imgIdx = Math.max(0, headers.findIndex(k => k.includes('照片') || k.includes('圖片')));
+                    const statusIdx = headers.findIndex(k => k.includes('審核') || k.includes('狀態'));
+                    const latIdx = headers.findIndex(k => k.includes('緯度') || k.toLowerCase().includes('lat'));
+                    const lngIdx = headers.findIndex(k => k.includes('經度') || k.toLowerCase().includes('lng'));
+
+                    let parsedData = rows.slice(1).map(row => {
+                        return {
+                            name: row[nameIdx] || '未命名',
+                            category: row[catIdx] || '未分類',
+                            address: addressIdx !== -1 && row[addressIdx] ? row[addressIdx] : '',
+                            img: imgIdx !== -1 && row[imgIdx] && row[imgIdx].startsWith('http') ? row[imgIdx].trim() : '',
+                            lat: latIdx !== -1 && row[latIdx] ? parseFloat(row[latIdx]) : null,
+                            lng: lngIdx !== -1 && row[lngIdx] ? parseFloat(row[lngIdx]) : null,
+                            status: statusIdx !== -1 ? row[statusIdx] : 'OK'
+                        };
+                    }).filter(item => item.name !== '未命名');
+
+                    globalFoodData = parsedData.filter(item => {
+                        if (statusIdx === -1) return true;
+                        const s = String(item.status).toUpperCase().trim();
+                        return s.includes('OK') || s === 'V' || s === 'O' || s.includes('是') || s === 'TRUE' || s === 'Y';
+                    });
+                    resolve(globalFoodData);
+                }).catch(reject);
+            });
+        }
+
+        function fetchFoodData() {
+            const container = document.getElementById('food-list-container');
+            if (!container) return;
+            loadSharedFoodData().then(data => {
+                if (data.length === 0) container.innerHTML = '<div class="col-span-full text-center text-gray-500 font-bold py-8">目前沒有美食資料</div>';
+                else renderFoodData(data, '全部');
+            });
+        }
+
+        function renderFoodData(data, activeCategory) {
+            const container = document.getElementById('food-list-container');
+            const tagsContainer = document.getElementById('food-tags-container');
+            if (!container) return;
+
+            const categories = ['全部', ...new Set(data.map(item => item.category).filter(c => c))];
+            const tagsHtml = categories.map(cat => {
+                const isActive = cat === activeCategory;
+                const activeClass = isActive ? 'bg-themePink text-white shadow-md scale-[1.02] md:scale-105 z-10' : 'bg-white text-gray-600 hover:bg-pink-50 shadow-sm border-2 border-transparent hover:-translate-y-1';
+                let icon = cat === '全部' ? '🎡' : getFoodStyleByCategory(cat).emoji;
+                return `<button onclick="renderFoodData(globalFoodData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-none w-auto py-2 md:py-2.5 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-pink-100 whitespace-nowrap ${activeClass}">
+                            <span class="hidden md:inline-block shrink-0">${icon}</span><span>${cat}</span>
+                        </button>`;
+            }).join('');
+
+            if (tagsContainer) tagsContainer.innerHTML = tagsHtml;
+
+            const filteredData = activeCategory === '全部' ? data : data.filter(item => item.category === activeCategory);
+            
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold py-8">這個分類還沒有店家喔！</div>';
+                return;
+            }
+
+            if (foodClusterGroup) foodClusterGroup.clearLayers();
+            foodMarkersMap = {};
+            activeFoodMarkerName = null;
+
+            filteredData.forEach(item => {
+                if (item.lat && item.lng) {
+                    const marker = L.marker([item.lat, item.lng], { icon: getCategoryIcon(item.category, 'normal') });
+                    marker.category = item.category;
+                    marker.bindTooltip(item.name, { direction: 'top', offset: [0, -50], className: 'custom-tooltip' });
+                    
+                    let popupContent = `
+                        <div class="text-center p-1 w-44 relative">
+                            <h4 class="font-black text-themePink text-sm mb-1">${item.name}</h4>
+                            <p class="text-xs text-gray-500 font-bold leading-snug"><i class="fa-solid fa-location-dot mr-1"></i>${formatAddress(item.address)}</p>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}" target="_blank" class="mt-2.5 block w-full bg-blue-100 text-blue-600 font-black py-1.5 rounded-lg text-xs hover:bg-blue-500 hover:text-white transition-colors shadow-sm">導航去</a>
+                        </div>
+                    `;
+                    marker.bindPopup(popupContent);
+                    marker.on('click', () => {
+                        if (activeFoodMarkerName && activeFoodMarkerName !== item.name && foodMarkersMap[activeFoodMarkerName]) {
+                            const prevMarker = foodMarkersMap[activeFoodMarkerName];
+                            if (prevMarker.bounceTimeout) clearTimeout(prevMarker.bounceTimeout);
+                            prevMarker.setIcon(getCategoryIcon(prevMarker.category, 'normal', false));
+                        }
+                        activeFoodMarkerName = item.name;
+                        marker.setIcon(getCategoryIcon(item.category, 'clicked', true));
+                        if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
+                        marker.bounceTimeout = setTimeout(() => {
+                            if (foodMarkersMap[item.name] && activeFoodMarkerName === item.name) {
+                                marker.setIcon(getCategoryIcon(item.category, 'clicked', false));
+                            }
+                        }, 5000);
+                    });
+                    foodClusterGroup.addLayer(marker);
+                    foodMarkersMap[item.name] = marker;
+                }
+            });
+
+            if (foodClusterGroup && foodClusterGroup.getLayers().length > 0) {
+                foodMapInstance.once('moveend', () => { setTimeout(() => foodMapInstance.setZoom(foodMapInstance.getZoom() + 1), 150); });
+                foodMapInstance.fitBounds(foodClusterGroup.getBounds(), { padding: [40, 40] });
+            }
+
+            container.innerHTML = filteredData.map(item => {
+                const style = getFoodStyleByCategory(item.category);
+                let imgContent = (item.img && item.img.startsWith('http'))
+                    ? `<img src="${item.img}" onerror="this.outerHTML='<i class=\\'fa-solid ${style.iconClass} text-4xl ${style.textColor}\\'></i>'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">`
+                    : `<i class="fa-solid ${style.iconClass} text-3xl sm:text-4xl ${style.textColor} group-hover:text-themePink transition-colors opacity-80"></i>`;
+
+                // 重新設計美食販賣部卡片排版：左圖右文，愛心在右下角，文字垂直置中
+                return `
+                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-3 md:p-4 rounded-3xl shadow-cute flex flex-row items-stretch gap-3 md:gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative mt-2 h-full">
+                    
+                    <!-- 小藥丸分類標籤 -->
+                    <div class="absolute -top-3 right-3 md:right-4 ${style.bgColor} text-white text-[10px] md:text-xs font-black px-3 py-1 rounded-full shadow-md z-10 border-2 border-white">
+                        ${item.category}
+                    </div>
+                    
+                    <!-- 左側：店家圖片 -->
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')}/60 rounded-2xl overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center border-2 border-white self-center">
+                        ${imgContent}
+                    </div>
+                    
+                    <!-- 右側：文字內容與愛心 -->
+                    <div class="flex flex-col flex-1 min-w-0 justify-center relative">
+                        <!-- 店名與地址區塊 (垂直置中) -->
+                        <div class="flex flex-col justify-center flex-1 pr-12 pb-1">
+                            <h4 class="font-bold text-gray-800 text-base sm:text-base group-hover:text-themePink transition-colors leading-snug break-words mb-1.5">${formatStoreName(item.name)}</h4>
+                            <p class="text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="break-words line-clamp-2">${formatAddress(item.address)}</span></p>
+                        </div>
+                        
+                        <!-- 愛心區塊 (絕對定位在右下角) -->
+                        <div class="absolute bottom-0 right-0 shrink-0">
+                            ${getLikesHtml(item.name)}
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // ==========================================
+        // 🛍️ 買東西 (Shopping) 渲染更新
+        // ==========================================
+        let globalShoppingData = null;
+
+        function loadSharedShoppingData() {
+            return new Promise((resolve, reject) => {
+                if (globalShoppingData) return resolve(globalShoppingData);
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1279676556&single=true&output=csv';
+                fetch(csvUrl).then(res => res.text()).then(csvText => {
+                    const rows = parseCSV(csvText);
+                    if (rows.length < 2) return resolve([]);
+                    const headers = rows[0];
+                    let nameIdx = headers.findIndex(k => k.includes('店') || k.includes('名')); if (nameIdx === -1) nameIdx = 1; 
+                    let catIdx = headers.findIndex(k => k === '生活分類' || k.includes('生活分類')); if (catIdx === -1) catIdx = 6; 
+                    let addressIdx = headers.findIndex(k => k.includes('地址') || k.includes('位置'));
+                    let statusIdx = headers.findIndex(k => k.includes('審核') || k.includes('狀態'));
+                    let imgIdx = headers.findIndex(k => k.includes('照片') || k.includes('圖片')); 
+                    
+                    let parsedData = rows.slice(1).map(row => {
+                        return {
+                            name: row[nameIdx] || '未命名',
+                            category: row[catIdx] || '未分類',
+                            address: addressIdx !== -1 && row[addressIdx] ? row[addressIdx] : '',
+                            status: statusIdx !== -1 ? row[statusIdx] : 'OK',
+                            img: imgIdx !== -1 && row[imgIdx] && row[imgIdx].startsWith('http') ? row[imgIdx].trim() : ''
+                        };
+                    }).filter(item => item.name !== '未命名');
+
+                    globalShoppingData = parsedData.filter(item => {
+                        if (statusIdx === -1) return true;
+                        const s = String(item.status).toUpperCase().trim();
+                        return s.includes('OK') || s === 'V' || s === 'O' || s.includes('是') || s === 'Y';
+                    });
+                    resolve(globalShoppingData);
+                }).catch(reject);
+            });
+        }
+
+        function fetchShoppingData() {
+            const container = document.getElementById('shopping-list-container');
+            if (!container) return;
+            loadSharedShoppingData().then(data => {
+                if (data.length === 0) container.innerHTML = '<div class="col-span-full text-center text-gray-500 font-bold py-8">目前沒有店家資料</div>';
+                else renderShoppingData(data, '全部');
+            });
+        }
+
+        function renderShoppingData(data, activeCategory = '全部') {
+            const container = document.getElementById('shopping-list-container');
+            const tagsContainer = document.getElementById('shopping-tags-container');
+            if (!container) return;
+
+            container.className = "grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-start";
+
+            if (tagsContainer) {
+                const allCategories = ['全部', ...new Set(globalShoppingData.map(item => item.category).filter(c => c))];
+                tagsContainer.innerHTML = allCategories.map(cat => {
+                    const isActive = cat === activeCategory;
+                    const activeClass = isActive ? 'bg-themeYellow text-white shadow-md scale-[1.02] z-10' : 'bg-white text-gray-600 hover:bg-yellow-50 shadow-sm border-2 border-transparent';
+                    let icon = '🛍️';
+                    if(cat.includes('生鮮') || cat.includes('超市')) icon = '🛒';
+                    if(cat.includes('居家') || cat.includes('寵物') || cat.includes('五金')) icon = '🏠';
+                    if(cat.includes('服務') || cat.includes('美容')) icon = '✂️';
+                    if(cat === '全部') icon = '🎡';
+                    return `<button onclick="renderShoppingData(globalShoppingData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-1 w-auto py-2.5 md:py-3 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-yellow-100 whitespace-nowrap ${activeClass}">
+                                <span class="hidden md:inline-block shrink-0">${icon}</span><span>${cat}</span>
+                            </button>`;
+                }).join('');
+            }
+
+            const filteredData = activeCategory === '全部' ? data : data.filter(item => item.category === activeCategory);
+            if (filteredData.length === 0) {
+                container.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold py-8">這個分類還沒有審核通過的店家喔！</div>';
+                return;
+            }
+
+            const groupedCategories = {};
+            filteredData.forEach(item => {
+                const cat = item.category || '未分類';
+                if (!groupedCategories[cat]) groupedCategories[cat] = [];
+                groupedCategories[cat].push(item);
+            });
+
+            const stylePool = [
+                { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-themeYellow', icon: 'fa-cart-shopping', emoji: '🛒' },
+                { border: 'border-blue-50', textBig: 'text-blue-100', textTitle: 'text-themeBlue', icon: 'fa-couch', emoji: '🏠' },
+                { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', icon: 'fa-scissors', emoji: '✂️' },
+                { border: 'border-green-50', textBig: 'text-green-100', textTitle: 'text-themeGreen', icon: 'fa-basket-shopping', emoji: '🛍️' },
+                { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', icon: 'fa-gift', emoji: '🎁' }
+            ];
+
+            let html = '';
+            let styleIndex = 0;
+
+            for (const [catName, items] of Object.entries(groupedCategories)) {
+                let style;
+                if (catName.includes('生鮮') || catName.includes('超市')) style = stylePool[0];
+                else if (catName.includes('居家') || catName.includes('五金')) style = stylePool[1];
+                else if (catName.includes('服務') || catName.includes('洗')) style = stylePool[2];
+                else { style = stylePool[3 + (styleIndex % 2)]; styleIndex++; }
+
+                const isPhotoCategory = catName.includes('購物中心') || catName.includes('觀光景點') || catName.includes('百貨');
+                const isFullWidth = isPhotoCategory && items.length > 2;
+                const spanClass = isFullWidth ? 'md:col-span-full' : '';
+                let itemsHtml = '';
+
+                if (isPhotoCategory) {
+                    itemsHtml = items.map(item => {
+                        const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
+                        const imgContent = item.img ? `<img src="${item.img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">` : `<i class="fa-solid ${style.icon} text-3xl sm:text-4xl text-gray-200"></i>`;
+                        return `
+                            <div class="bg-gray-50 rounded-[1.5rem] p-2 sm:p-3 shadow-sm border-2 border-transparent hover:border-${style.border.split('-')[1]}-200 hover:bg-white transition-all group flex flex-col h-full relative cursor-pointer" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${navTarget}', '_blank')">
+                                <div class="w-full h-24 sm:h-32 rounded-[1rem] mb-2 overflow-hidden bg-white flex items-center justify-center shrink-0 border border-gray-100 shadow-inner relative">
+                                    ${imgContent}
+                                    <div class="absolute bottom-2 right-2 z-20">
+                                        ${getLikesHtml(item.name)}
+                                    </div>
+                                </div>
+                                <div class="px-1 pb-1 flex flex-col flex-1">
+                                    <h4 class="font-black text-gray-800 line-clamp-1 text-sm sm:text-base">${item.name}</h4>
+                                    ${item.address ? `<p class="text-[10px] sm:text-xs text-gray-400 font-bold mt-0.5 line-clamp-1"><i class="fa-solid fa-location-dot mr-1"></i>${formatAddress(item.address)}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    itemsHtml = items.map(item => {
+                        const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
+                        return `
+                            <li class="flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group">
+                                <div class="flex items-start flex-1 overflow-hidden pr-2">
+                                    <i class="fa-solid fa-check text-green-400 mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i> 
+                                    <div class="flex flex-col overflow-hidden">
+                                        <span class="font-bold text-gray-800 line-clamp-1">${item.name}</span>
+                                        ${item.address ? `<span class="text-xs text-gray-500 mt-0.5 line-clamp-2"><i class="fa-solid fa-location-dot mr-1 text-gray-300"></i>${formatAddress(item.address)}</span>` : ''}
+                                    </div>
+                                </div>
+                                <div class="shrink-0 flex flex-col items-end gap-1.5 z-10">
+                                    <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white px-3 py-1 rounded-lg text-[10px] sm:text-xs font-black transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
+                                        <i class="fa-solid fa-location-arrow"></i> 導航
+                                    </a>
+                                    ${getLikesHtml(item.name)}
+                                </div>
+                            </li>
+                        `;
+                    }).join('');
+                }
+
+                let listClass = isPhotoCategory ? (isFullWidth ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3" : "grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-3") : "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600";
+                const containerTag = isPhotoCategory ? "div" : "ul";
+
+                html += `
+                    <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col ${spanClass}">
+                        <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
+                        <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
+                        <${containerTag} class="${listClass} relative z-10 flex-1 content-start">
+                            ${itemsHtml}
+                        </${containerTag}>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        // ==========================================
+        // 🩺 救護站 (Medical) 渲染更新
+        // ==========================================
+        let globalMedicalData = null;
+
+        function loadSharedMedicalData() {
+            return new Promise((resolve, reject) => {
+                if (globalMedicalData) return resolve(globalMedicalData);
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=368795626&single=true&output=csv';
+                fetch(csvUrl).then(res => res.text()).then(csvText => {
+                    const rows = parseCSV(csvText);
+                    if (rows.length < 2) return resolve([]);
+                    const headers = rows[0];
+                    let nameIdx = headers.findIndex(k => k.includes('名稱') || k.includes('機構')); if (nameIdx === -1) nameIdx = 0; 
+                    let catIdx = headers.findIndex(k => k.includes('醫療分類')); if (catIdx === -1) catIdx = 8;
+                    let addressIdx = headers.findIndex(k => k.includes('地址'));
+                    let phoneIdx = headers.findIndex(k => k.includes('電話'));
+                    let licenseIdx = 14; 
+
+                    let parsedData = rows.slice(1).map(row => {
+                        return {
+                            name: row[nameIdx] ? row[nameIdx].trim() : '',
+                            category: row[catIdx] ? row[catIdx].trim() : '其他醫療',
+                            address: addressIdx !== -1 && row[addressIdx] ? row[addressIdx].trim() : '',
+                            phone: phoneIdx !== -1 && row[phoneIdx] ? row[phoneIdx].trim() : '',
+                            license: row[licenseIdx] ? row[licenseIdx].trim() : ''
+                        };
+                    }).filter(item => item.name !== '');
+
+                    globalMedicalData = parsedData;
+                    resolve(globalMedicalData);
+                }).catch(reject);
+            });
+        }
+
+        function fetchMedicalData() {
+            const container = document.getElementById('medical-list-container');
+            if (!container) return;
+            loadSharedMedicalData().then(data => renderMedicalData(data));
+        }
+
+        function renderMedicalData(data) {
+            const container = document.getElementById('medical-list-container');
+            if (!container) return;
+
+            const groupedCategories = {};
+            data.forEach(item => {
+                const cat = item.category || '其他醫療';
+                if (!groupedCategories[cat]) groupedCategories[cat] = [];
+                groupedCategories[cat].push(item);
+            });
+
+            const stylePool = [
+                { border: 'border-green-50', textBig: 'text-green-100', textTitle: 'text-themeGreen', badgeBg: 'bg-themeGreen', icon: 'fa-stethoscope' },
+                { border: 'border-blue-50', textBig: 'text-blue-100', textTitle: 'text-themeBlue', badgeBg: 'bg-themeBlue', icon: 'fa-tooth' },
+                { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', badgeBg: 'bg-themePink', icon: 'fa-baby' },
+                { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-yellow-500', badgeBg: 'bg-yellow-500', icon: 'fa-eye' },
+                { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', badgeBg: 'bg-themePurple', icon: 'fa-bone' },
+                { border: 'border-orange-50', textBig: 'text-orange-100', textTitle: 'text-orange-400', badgeBg: 'bg-orange-400', icon: 'fa-pills' }
+            ];
+
+            let html = '';
+            for (const [catName, items] of Object.entries(groupedCategories)) {
+                let style;
+                if (catName.includes('牙')) style = stylePool[1];
+                else if (catName.includes('小兒') || catName.includes('婦產')) style = stylePool[2];
+                else if (catName.includes('眼')) style = stylePool[3];
+                else if (catName.includes('骨') || catName.includes('復健')) style = stylePool[4];
+                else if (catName.includes('藥')) style = stylePool[5];
+                else style = stylePool[0];
+
+                const itemsHtml = items.map(item => {
+                    const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
+                    return `
+                        <li class="bg-gray-50 p-4 rounded-2xl hover:bg-white hover:shadow-md transition-all group flex flex-col gap-2 border border-transparent hover:border-gray-100 h-full justify-between relative">
+                            <div class="flex items-start justify-between w-full">
+                                <div class="flex flex-col flex-1 pr-2">
+                                    <div class="flex items-start">
+                                        <i class="fa-solid fa-notes-medical ${style.textTitle} mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i>
+                                        <span class="font-black text-gray-800 text-lg leading-snug">${item.name}</span>
+                                    </div>
+                                    ${item.license ? `<div class="ml-6 mt-1.5 text-[10px] text-white ${style.badgeBg} px-2 py-1 rounded-md font-black w-fit shadow-sm"><i class="fa-regular fa-id-badge mr-1"></i>桃衛醫字第：${item.license} 號</div>` : ''}
+                                </div>
+                                <div class="shrink-0 flex flex-col items-end justify-center z-10">
+                                    <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white px-2.5 py-1.5 rounded-lg text-xs font-black transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
+                                        <i class="fa-solid fa-location-arrow"></i> 導航
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mt-1 space-y-1.5">
+                                ${item.phone ? `<div class="text-xs md:text-sm text-gray-500 font-bold ml-6 flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-300"></i>${item.phone}</div>` : ''}
+                                ${item.address ? `<div class="text-xs md:text-sm text-gray-500 font-bold ml-6 flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-300 mt-0.5"></i><span class="line-clamp-2">${item.address}</span></div>` : ''}
+                            </div>
+                        </li>
+                    `;
+                }).join('');
+
+                html += `
+                    <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${style.border} relative h-full flex flex-col">
+                        <div class="absolute -top-4 -right-4 text-6xl ${style.textBig} floating pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
+                        <h3 class="text-2xl font-black ${style.textTitle} mb-5 border-b-2 border-gray-100 pb-3 relative z-10 shrink-0">${catName}</h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start">
+                            ${itemsHtml}
+                        </ul>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        // ==========================================
+        // 其他原有的功能區塊 (不更動其核心)
+        // ==========================================
+
+        function fetchAndUpdateHomeCounts() {
+            Promise.all([loadSharedFoodData(), loadSharedShoppingData(), loadSharedMedicalData(), loadSharedCommunityData()])
+            .then(([foodData, shoppingData, medicalData, communityData]) => {
+                const counts = {
+                    'counter-food': foodData.length, 'counter-shopping': shoppingData.length,
+                    'counter-medical': medicalData.length, 'counter-explore': communityData.length,
+                    'counter-total': foodData.length + shoppingData.length + medicalData.length + communityData.length
+                };
+                for (const [id, target] of Object.entries(counts)) {
+                    const counter = document.getElementById(id);
+                    if (counter && target > 0) animateSingleCounter(counter, target);
+                    else if (counter) counter.innerText = '0';
+                }
+            }).catch(e => console.error(e));
+        }
+
+        function animateSingleCounter(counter, target) {
+            const duration = 2000, totalFrames = Math.round(duration / (1000/60));
+            let currentFrame = 0;
+            const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+            const updateCounter = () => {
+                currentFrame++;
+                const currentVal = Math.round(target * easeOutExpo(currentFrame / totalFrames));
+                counter.innerText = currentVal;
+                if (currentFrame < totalFrames) requestAnimationFrame(updateCounter);
+                else counter.innerText = target; 
+            };
+            counter.innerText = '0'; requestAnimationFrame(updateCounter);
+        }
+
+        function updateMRTStatus() {
+            const container = document.getElementById('mrt-track-container');
+            const nbEl = document.getElementById('mrt-time-north'), sbEl = document.getElementById('mrt-time-south');
+            if (!container || !nbEl || !sbEl) return;
+            const now = new Date(), totalMins = now.getMinutes() + now.getSeconds() / 60;
+            const baseNb = [5, 20, 35, 50], baseSb = [10, 25, 40, 55];
+            let nbHTML = '', sbHTML = '', minNb = 999, minSb = 999;
+            
+            baseNb.forEach(arr => {
+                [-60, 0, 60].forEach(offset => {
+                    let diff = (arr + offset) - totalMins;
+                    if (diff > 0 && diff < minNb) minNb = diff;
+                    if (diff >= -9 && diff <= 9) {
+                        let pos = Math.max(0, Math.min(100, 50 + (diff * (50/9))));
+                        nbHTML += `<div class="absolute -top-[16px] sm:-top-[20px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;"><div class="bg-white text-themeGreen rounded-full shadow-md border-2 border-green-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse"><i class="fa-solid fa-caret-left text-[10px]"></i><i class="fa-solid fa-train-subway text-xs sm:text-sm"></i></div></div>`;
+                    }
+                });
+            });
+            
+            baseSb.forEach(arr => {
+                [-60, 0, 60].forEach(offset => {
+                    let diff = (arr + offset) - totalMins;
+                    if (diff > 0 && diff < minSb) minSb = diff;
+                    if (diff >= -9 && diff <= 9) {
+                        let pos = Math.max(0, Math.min(100, 50 - (diff * (50/9))));
+                        sbHTML += `<div class="absolute top-[8px] sm:top-[12px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;"><div class="bg-white text-themeBlue rounded-full shadow-md border-2 border-blue-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse"><i class="fa-solid fa-train-subway text-xs sm:text-sm"></i><i class="fa-solid fa-caret-right text-[10px]"></i></div></div>`;
+                    }
+                });
+            });
+
+            container.innerHTML = nbHTML + sbHTML;
+            const updateText = (el, diff, unitId) => {
+                const u = document.getElementById(unitId);
+                if (Math.ceil(diff) <= 1 && Math.ceil(diff) >= 0) {
+                    el.innerText = '進站中'; el.className = 'text-2xl sm:text-3xl font-black text-red-400 animate-pulse mt-1.5 w-full text-center tracking-widest';
+                    if(u) u.style.display = 'none';
+                } else {
+                    el.innerText = Math.ceil(diff); el.className = el.id.includes('north') ? 'text-3xl sm:text-4xl font-black text-themeGreen font-mono w-10 text-center' : 'text-3xl sm:text-4xl font-black text-themeBlue font-mono w-10 text-center';
+                    if(u) u.style.display = 'inline';
+                }
+            };
+            updateText(nbEl, minNb, 'mrt-unit-north'); updateText(sbEl, minSb, 'mrt-unit-south');
+        }
+
+        async function fetchLocalNews() {
+            const container = document.getElementById('dynamic-news-container');
+            if (!container) return;
+            try {
+                const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${encodeURIComponent('林口 OR 龜山 OR A7重劃區')}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant`);
+                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
+                const data = await response.json();
+                if (data.status === 'ok' && data.items && data.items.length > 0) {
+                    const html = data.items.slice(0, 5).map(item => {
+                        const dateStr = new Date(item.pubDate).toISOString().split('T')[0];
+                        return `<a href="${item.link}" target="_blank" class="flex items-center bg-white/70 hover:bg-white p-2.5 rounded-xl shadow-sm border border-blue-50 hover:border-themeBlue transition-all group gap-2"><span class="bg-gray-100 text-gray-500 font-black px-2 py-0.5 rounded-md text-[10px] shrink-0 group-hover:bg-themeBlue group-hover:text-white">新聞</span><h4 class="font-bold text-gray-700 line-clamp-1 group-hover:text-themeBlue text-xs sm:text-sm flex-1">${item.title.split(' - ')[0]}</h4><span class="text-[10px] text-gray-400 font-bold shrink-0 hidden sm:block">${dateStr.slice(5)}</span></a>`;
+                    }).join('');
+                    container.innerHTML = `<h3 class="text-sm font-black text-gray-500 mb-2.5 flex items-center bg-gray-100/80 w-fit px-3 py-1 rounded-full"><i class="fa-solid fa-rss mr-1.5 text-themeBlue"></i>自動追蹤：在地媒體報報</h3><div class="flex flex-col gap-2 flex-1 overflow-y-auto hide-scrollbar max-h-[250px]">${html}</div>`;
+                } else container.innerHTML = `<div class="text-center text-gray-400 text-sm font-bold py-2 bg-gray-50 rounded-xl">暫無新聞</div>`;
+            } catch (e) { container.innerHTML = `<div class="text-center text-red-400 text-sm font-bold py-2 bg-red-50 rounded-xl">無法取得新聞資訊</div>`; }
+        }
+
+        async function executeSearchLogic(query) {
+            const display = document.getElementById('search-query-display'), container = document.getElementById('search-results-container');
+            if(display) display.innerHTML = `正在尋找 <span class="text-themePink font-black">「${query}」</span> ...`;
+            try {
+                const [food, shop, comm, build, med] = await Promise.all([loadSharedFoodData(), loadSharedShoppingData(), loadSharedCommunityData(), loadSharedBuildingData(), loadSharedMedicalData()]);
+                const q = query.toLowerCase();
+                const mF = food.filter(i => (i.name&&i.name.toLowerCase().includes(q))||(i.category&&i.category.toLowerCase().includes(q)));
+                const mS = shop.filter(i => (i.name&&i.name.toLowerCase().includes(q))||(i.category&&i.category.toLowerCase().includes(q)));
+                
+                let html = '';
+                if(mF.length) {
+                    html += `<div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-pink-50 mb-6"><h3 class="text-2xl font-black text-themePink mb-4 border-b pb-2"><i class="fa-solid fa-burger mr-2"></i> 美食 (${mF.length})</h3><div class="grid grid-cols-1 md:grid-cols-3 gap-4">` + mF.map(i => `<a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(i.name)}" target="_blank" class="bg-pink-50 p-3 rounded-2xl flex items-center gap-3"><div class="flex-1"><span class="text-[10px] bg-white text-themePink px-1.5 rounded-md font-black">${i.category}</span><h4 class="font-black text-gray-800 line-clamp-1">${i.name}</h4></div><i class="fa-solid fa-location-arrow text-pink-400"></i></a>`).join('') + `</div></div>`;
+                }
+                if(mS.length) {
+                    html += `<div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-yellow-50"><h3 class="text-2xl font-black text-themeYellow mb-4 border-b pb-2"><i class="fa-solid fa-store mr-2"></i> 購物 (${mS.length})</h3><div class="grid grid-cols-1 md:grid-cols-3 gap-4">` + mS.map(i => `<a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(i.name)}" target="_blank" class="bg-yellow-50 p-3 rounded-2xl flex items-center gap-3"><div class="flex-1"><span class="text-[10px] bg-white text-themeYellow px-1.5 rounded-md font-black">${i.category}</span><h4 class="font-black text-gray-800 line-clamp-1">${i.name}</h4></div><i class="fa-solid fa-location-arrow text-yellow-500"></i></a>`).join('') + `</div></div>`;
+                }
+                if(!html) html = `<div class="text-center py-16 bg-white rounded-[2.5rem] border-4 border-gray-100 shadow-cute"><i class="fa-solid fa-face-sad-tear text-6xl text-gray-300 mb-4"></i><p class="font-bold text-gray-500 text-xl">找不到相關內容</p></div>`;
+                container.innerHTML = html;
+                if(display) display.innerHTML = `為您找到關於 <span class="text-themePink font-black">「${query}」</span> 的結果：`;
+            } catch(e) { container.innerHTML = "發生錯誤"; }
+        }
+
+        // --- 地圖位置更新與分類樣式 ---
+        function getCategoryIcon(category, state = 'normal', isBouncing = false) {
+            const style = getFoodStyleByCategory(category);
+            let bgColorClass = state === 'clicked' ? 'bg-red-500' : style.bgColor;
+            let textColorClass = state === 'clicked' ? 'text-red-500' : style.textColor;
+            let anim = isBouncing ? 'bounce-marker' : 'floating-marker';
+            const html = `<div class="relative flex flex-col items-center justify-start w-[48px] h-[64px] pt-1"><div class="${anim} flex flex-col items-center relative z-10 w-full" style="filter: drop-shadow(0 4px 5px rgba(0,0,0,0.25)) drop-shadow(0 0 2px rgba(255,255,255,0.8));"><div class="relative w-[36px] h-[36px] ${bgColorClass} flex items-center justify-center z-10 transition-colors mt-[2px]" style="border-radius: 50% 50% 50% 0; transform: rotate(-45deg);"><div class="w-[22px] h-[22px] bg-white rounded-full flex items-center justify-center shadow-sm" style="transform: rotate(45deg);"><i class="fa-solid ${style.iconClass} ${textColorClass} text-[11px] mt-[1px]"></i></div></div></div><div class="absolute bottom-[9px] w-5 h-1.5 bg-black/25 rounded-[50%] blur-[1.5px] scale-x-[1.5] z-0"></div></div>`;
+            return L.divIcon({ className: 'custom-leaflet-icon-dynamic bg-transparent border-0', html: html, iconSize: [48, 64], iconAnchor: [24, 60], popupAnchor: [0, -45] });
+        }
+
+        let userLocationMarker = null;
+        function locateUserOnFoodMap() {
+            if (!foodMapInstance || !navigator.geolocation) return;
+            const btnIcon = document.getElementById('location-btn-icon');
+            if(btnIcon) { btnIcon.classList.remove('fa-crosshairs'); btnIcon.classList.add('fa-spinner', 'fa-spin'); }
+            navigator.geolocation.getCurrentPosition((pos) => {
+                const lat = pos.coords.latitude, lng = pos.coords.longitude;
+                foodMapInstance.flyTo([lat, lng], 18, { animate: true });
+                if (!userLocationMarker) userLocationMarker = L.marker([lat, lng], {icon: L.divIcon({ className: 'user-location-icon', html: `<div class="w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-md relative"><div class="absolute inset-0 bg-blue-500 rounded-full animate-ping opacity-75"></div></div>`, iconSize: [16, 16], iconAnchor: [8, 8] }), zIndexOffset: 1000}).addTo(foodMapInstance);
+                else userLocationMarker.setLatLng([lat, lng]);
+                if(btnIcon) { btnIcon.classList.remove('fa-spinner', 'fa-spin'); btnIcon.classList.add('fa-crosshairs', 'text-themeBlue'); }
+            }, () => { if(btnIcon) { btnIcon.classList.remove('fa-spinner', 'fa-spin'); btnIcon.classList.add('fa-crosshairs'); } });
+        }
+
+        async function updateFoodMap(address, name, preLat, preLng, category) {
+            if (foodMarkersMap[name]) {
+                const marker = foodMarkersMap[name];
+                if (activeFoodMarkerName && activeFoodMarkerName !== name && foodMarkersMap[activeFoodMarkerName]) {
+                    const prevMarker = foodMarkersMap[activeFoodMarkerName];
+                    if (prevMarker.bounceTimeout) clearTimeout(prevMarker.bounceTimeout);
+                    prevMarker.setIcon(getCategoryIcon(prevMarker.category, 'normal', false));
+                }
+                activeFoodMarkerName = name;
+                foodMapInstance.flyTo(marker.getLatLng(), 18, { animate: true, duration: 1.5 });
+                foodMapInstance.once('moveend', () => {
+                    foodClusterGroup.zoomToShowLayer(marker, () => {
+                        marker.openPopup();
+                        marker.setIcon(getCategoryIcon(category, 'clicked', true));
+                        if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
+                        marker.bounceTimeout = setTimeout(() => { if (foodMarkersMap[name] && activeFoodMarkerName === name) marker.setIcon(getCategoryIcon(category, 'clicked', false)); }, 5000);
+                    });
+                });
+            }
+        }
+
+        let globalCommunityData = null, globalBuildingData = null;
+        function loadSharedCommunityData() {
+            return new Promise((resolve) => {
+                if (globalCommunityData) return resolve(globalCommunityData);
+                fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=369381822&single=true&output=csv')
+                .then(res => res.text()).then(txt => {
+                    const rows = parseCSV(txt);
+                    // 修正：表單中的連結在 D 欄 (index 3)
+                    globalCommunityData = rows.slice(1).map(row => ({ 
+                        name: row[0] ? row[0].trim() : '', 
+                        category: row[1] ? row[1].trim() : '其他', 
+                        link: row[3] ? row[3].trim() : '#',  // 改為讀取 D 欄
+                        img: (row[4] && row[4].match(/https?:\/\/[^\s]+/)) ? row[4].match(/https?:\/\/[^\s]+/)[0] : '' 
+                    })).filter(i => i.name !== '');
+                    resolve(globalCommunityData);
+                }).catch(() => resolve([]));
+            });
+        }
+        function loadSharedBuildingData() {
+            return new Promise((resolve) => {
+                if (globalBuildingData) return resolve(globalBuildingData);
+                fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=985024788&single=true&output=csv')
+                .then(res => res.text()).then(txt => {
+                    const rows = parseCSV(txt);
+                    globalBuildingData = rows.slice(1).map(row => ({ name: row[0]?row[0].trim():'', village: row[1]?row[1].trim():'未分類', img: row[3]?row[3].trim():'' })).filter(i=>i.name!=='');
+                    resolve(globalBuildingData);
+                }).catch(() => resolve([]));
+            });
+        }
+
+        function fetchCommunityData() {
+            loadSharedCommunityData().then(data => {
+                const container = document.getElementById('community-list-container');
+                if(!container) return;
+                const grouped = { '在地社群': [] };
+                data.forEach(item => { const cat = item.category || '其他'; if(!grouped[cat]) grouped[cat]=[]; grouped[cat].push(item); });
+                if(grouped['在地社群'].length===0) delete grouped['在地社群'];
+                
+                let html = '';
+                for(const [catName, items] of Object.entries(grouped)) {
+                    const isLocal = catName === '在地社群';
+                    const itemsHtml = items.map(item => {
+                        let snsType = 'Web';
+                        let icon = 'fa-globe';
+                        let btnCls = 'bg-themePink text-white';
+                        let snsBadgeClass = 'bg-gray-500 text-white'; // 預設標籤顏色
+                        let avatarBg = 'random';
+                        let isLine = false;
+
+                        // 同時檢查名稱和連結來判斷社群類型
+                        const searchStr = (item.name + ' ' + item.link).toUpperCase();
+                        
+                        // 判斷是否為 LINE
+                        if(searchStr.includes('LINE')){ 
+                            snsType = 'LINE'; 
+                            icon = 'fa-line'; 
+                            btnCls = 'bg-[#00B900] hover:bg-[#009900] text-white'; 
+                            snsBadgeClass = 'bg-[#00B900] text-white';
+                            avatarBg = '00B900';
+                            isLine = true;
+                        } 
+                        // 判斷是否為 Facebook
+                        else if(searchStr.includes('FB') || searchStr.includes('FACEBOOK')){ 
+                            snsType = 'FB'; 
+                            icon = 'fa-facebook'; 
+                            btnCls = 'bg-[#1877F2] hover:bg-[#166FE5] text-white'; 
+                            snsBadgeClass = 'bg-[#1877F2] text-white';
+                            avatarBg = '1877F2';
+                        } 
+                        // 判斷是否為 Threads
+                        else if(searchStr.includes('THREADS')){
+                            snsType = 'Threads';
+                            icon = 'fa-threads';
+                            btnCls = 'bg-black hover:bg-gray-800 text-white';
+                            snsBadgeClass = 'bg-black text-white';
+                            avatarBg = '000000';
+                        }
+                        
+                        // 設定頭像：如果有自訂圖片就用，沒有的話如果是 Threads 則自動生成黑底文字頭像，否則使用預設
+                        let avatar = item.img;
+                        if (!avatar) {
+                            if (snsType === 'Threads') {
+                                // 修正：擷取名稱前兩個字作為頭像
+                                let initials = "TH"; 
+                                let cleanName = item.name.replace(/Threads/i, '').trim();
+                                if(cleanName.length > 0) {
+                                     // 使用陣列切片確保中文字元正確擷取前兩個字
+                                     initials = Array.from(cleanName).slice(0, 2).join('');
+                                }
+                                avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=000000&color=fff&size=150&bold=true&length=2`;
+                            } else {
+                                avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
+                            }
+                        }
+                        
+                        // 在地社群卡片排版
+                        if(isLocal) {
+                            let displayId = "點擊進入";
+                            if (snsType === 'Threads') {
+                                displayId = "前往 Threads";
+                            } else if (snsType === 'LINE') {
+                                displayId = "加入 LINE 社群";
+                            } else if (snsType === 'FB') {
+                                displayId = "前往粉絲專頁";
+                            }
+
+                            return `
+                                <a href="${item.link}" target="_blank" class="flex-1 min-w-[140px] max-w-[240px] flex flex-col bg-white rounded-[2rem] p-5 shadow-cute border-2 border-gray-100 hover:border-pink-200 transition-all hover:-translate-y-2 text-center relative overflow-hidden">
+                                    <div class="absolute -right-3 -bottom-3 text-6xl opacity-[0.03] text-gray-500 pointer-events-none"><i class="fa-brands ${icon}"></i></div>
+                                    <div class="w-20 h-20 rounded-full mx-auto mb-3 overflow-hidden shadow-sm border-2 border-gray-50"><img src="${avatar}" class="w-full h-full object-cover"></div>
+                                    <h4 class="font-black text-gray-800 line-clamp-2 leading-snug mb-4 group-hover:text-themePink transition-colors">${item.name}</h4>
+                                    <div class="w-full ${btnCls} py-2.5 rounded-xl text-xs sm:text-sm font-black mt-auto flex items-center justify-center gap-1.5 shadow-sm relative z-10">
+                                        <i class="fa-brands ${icon}"></i> <span class="truncate">${displayId}</span>
+                                    </div>
+                                </a>
+                            `;
+                        }
+                        
+                        // 一般社群列表卡片排版
+                        let rightSideContent = '';
+                        if (isLine) {
+                            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
+                            rightSideContent = `<div class="w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden shrink-0 border border-dashed border-gray-200 p-1 bg-white group-hover:border-themePink transition-colors"><img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100 transition-opacity"></div>`;
+                        } else {
+                            rightSideContent = `<div class="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden shrink-0 border-2 border-gray-100 p-0.5 bg-gray-50 group-hover:border-themePink transition-colors shadow-sm"><img src="${avatar}" class="w-full h-full object-cover rounded-full"></div>`;
+                        }
+
+                        return `
+                            <a href="${item.link}" target="_blank" class="bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 flex justify-between items-center group hover:-translate-y-1 hover:border-pink-200 transition-all h-full">
+                                <div class="flex flex-col items-start pr-2 flex-1">
+                                    <h4 class="font-black text-gray-800 text-sm md:text-base mb-2 line-clamp-2 group-hover:text-themePink transition-colors">${item.name}</h4>
+                                    <!-- 修正：確保標籤顏色正確套用 -->
+                                    <div class="${snsBadgeClass} text-[10px] md:text-xs font-black px-2 py-1 rounded-lg shadow-sm flex items-center">
+                                        <i class="fa-brands ${icon} mr-1"></i> ${snsType}
+                                    </div>
+                                </div>
+                                ${rightSideContent}
+                            </a>
+                        `;
+                    }).join('');
+                    
+                    const catIcon = catName === '在地社群' ? 'fa-thumbtack text-red-400' : 'fa-hashtag text-themePink';
+                    const catBorder = catName === '在地社群' ? 'border-red-50' : 'border-blue-50';
+                    const catBgIcon = catName === '在地社群' ? 'text-red-100' : 'text-blue-100';
+
+                    html += `
+                        <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${catBorder} relative h-full flex flex-col">
+                            <div class="absolute -top-4 -right-4 ${catBgIcon} text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
+                            <h3 class="text-xl font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0">
+                                <i class="fa-solid ${catIcon} mr-2"></i>${catName}
+                            </h3>
+                            <div class="${isLocal?'flex flex-wrap justify-center':'grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(260px,1fr))]'} gap-3 md:gap-4 relative z-10 flex-1 content-start">
+                                ${itemsHtml}
+                            </div>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            });
+        }
+
+        function fetchBuildingData() {
+            loadSharedBuildingData().then(data => {
+                const container = document.getElementById('buildings-list-container');
+                const tagsCont = document.getElementById('village-tags-container');
+                if(!container) return;
+                const grouped = {}; data.forEach(i => { if(!grouped[i.village]) grouped[i.village]=[]; grouped[i.village].push(i); });
+                
+                // 設定各行政里的專屬顏色配置
+                function getVillageStyle(villageName) {
+                    if (villageName.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
+                    if (villageName.includes('文藝')) return { border: 'border-sky-200', textTitle: 'text-sky-500', icon: 'fa-building', bg: 'bg-sky-50', iconColor: 'text-sky-300', activeIcon: 'text-sky-500', hoverBg: 'hover:bg-sky-50' };
+                    if (villageName.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-green-500', icon: 'fa-building', bg: 'bg-green-50', iconColor: 'text-green-300', activeIcon: 'text-green-500', hoverBg: 'hover:bg-green-50' };
+                    if (villageName.includes('文化')) return { border: 'border-gray-300', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-100', iconColor: 'text-gray-300', activeIcon: 'text-gray-500', hoverBg: 'hover:bg-gray-100' };
+                    if (villageName.includes('文桃')) return { border: 'border-pink-300', textTitle: 'text-pink-500', icon: 'fa-building', bg: 'bg-pink-100', iconColor: 'text-pink-300', activeIcon: 'text-pink-500', hoverBg: 'hover:bg-pink-100' };
+                    if (villageName.includes('樂善')) return { border: 'border-blue-200', textTitle: 'text-blue-500', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-300', activeIcon: 'text-blue-500', hoverBg: 'hover:bg-blue-50' };
+                    if (villageName.includes('文樂')) return { border: 'border-purple-300', textTitle: 'text-purple-500', icon: 'fa-building', bg: 'bg-purple-100', iconColor: 'text-purple-300', activeIcon: 'text-purple-500', hoverBg: 'hover:bg-purple-100' };
+                    
+                    // 預設樣式
+                    return { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-50', iconColor: 'text-gray-300', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' };
+                }
+
+                let html = '', tagsHtml = '';
+                
+                for(const [vName, items] of Object.entries(grouped)) {
+                    const style = getVillageStyle(vName);
+                    const safeId = `village-${vName.replace(/\s+/g, '')}`;
+
+                    // 更新標籤樣式，套用各里顏色
+                    tagsHtml += `
+                        <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
+                                class="py-1 px-1 sm:px-4 md:px-5 sm:py-2.5 md:py-3 sm:bg-white sm:border-2 sm:${style.border} ${style.textTitle} font-black sm:rounded-full md:rounded-2xl sm:${style.hoverBg} transition-all sm:shadow-sm text-base md:text-lg flex items-center justify-center sm:justify-start gap-2 md:gap-3 hover:opacity-70 sm:hover:opacity-100 sm:hover:-translate-y-1 w-auto text-center sm:text-left group">
+                            <div class="hidden sm:flex w-6 h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid ${style.icon} text-xs md:text-sm"></i>
+                            </div>
+                            <span class="tracking-wide whitespace-nowrap">${vName}</span>
+                        </button>
+                    `;
+
+                    // 更新列表樣式，套用各里顏色
+                    html += `
+                        <div id="${safeId}" class="bg-white rounded-[2.5rem] shadow-cute p-6 border-4 ${style.border} hover:shadow-lg transition-shadow relative overflow-hidden scroll-mt-[100px]">
+                            <div class="absolute -right-4 -bottom-4 text-6xl ${style.iconColor} opacity-50 pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
+                            <div class="flex items-center justify-between mb-4 border-b-2 border-gray-100 pb-3 relative z-10">
+                                <h3 class="text-xl font-black ${style.textTitle}">${vName} <span class="text-sm font-bold text-gray-400 ml-1">(${items.length})</span></h3>
+                                <i class="fa-solid ${style.icon} text-2xl ${style.activeIcon}"></i>
+                            </div>
+                            <div class="flex flex-wrap gap-3 relative z-10">
+                    `;
+                    
+                    html += items.map(i => `
+                                <div class="${style.bg} p-2 rounded-2xl border border-white shadow-sm flex items-center gap-3 hover:-translate-y-1 transition-transform cursor-default w-auto min-w-[120px] max-w-full">
+                                    <div class="w-12 h-12 shrink-0 rounded-xl overflow-hidden bg-white flex items-center justify-center border border-gray-100 shadow-inner">
+                                        ${i.img ? `<img src="${i.img}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-building ${style.iconColor}"></i>`}
+                                    </div>
+                                    <span class="font-bold text-gray-700 text-sm whitespace-nowrap overflow-hidden text-ellipsis">${i.name}</span>
+                                </div>
+                            `).join('');
+                            
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html; 
+                if(tagsCont) tagsCont.innerHTML = tagsHtml;
+            });
+        }
+
+        function updateNavStyles(pageId) {
+            ['food', 'shopping', 'medical', 'explore'].forEach(id => {
+                const btn = document.getElementById('nav-btn-' + id);
+                if(btn) btn.className = `nav-btn px-4 py-2 rounded-full font-bold transition-all ` + (id===pageId ? `bg-theme${id==='food'?'Pink':id==='shopping'?'Yellow':id==='medical'?'Green':'Purple'} text-white shadow-md scale-105` : `text-gray-500 hover:bg-gray-100`);
+            });
+        }
+        function toggleMobileMenu() { const m = document.getElementById('mobile-menu'); m.classList.toggle('hidden'); m.classList.toggle('flex'); }
+        function toggleShareForm() { const f = document.getElementById('share-form-container'); f.classList.toggle('hidden'); if(!f.classList.contains('hidden')) setTimeout(() => f.scrollIntoView({behavior:'smooth', block:'center'}), 150); }
+
+    </script>
+</body>
+</html>
