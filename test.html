@@ -413,16 +413,15 @@
                 <!-- 更新：加入 onclick 綁定 openStoreModal 觸發彈出視窗 -->
                 <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pt-3 pb-4 relative z-10 snap-x snap-mandatory">
                     <!-- 模擬推廣卡片 1 -->
-                    <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
+                    <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
                          class="w-[220px] sm:w-[260px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                         <div>
                             <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-荼木寺手搖飲以真材實料、茶香回甘聞名，清爽不膩口，喝得到細膩層次與職人溫度。</p>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-荼木寺手搖飲以真材實料、茶香回甘聞名...</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
                             <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>長青一街39號</span>
-                            <span class="text-orange-400 bg-orange-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-glass-water"></i></span>
                         </div>
                     </div>
 
@@ -563,6 +562,7 @@
     <!-- 🍿 3. 找美食模板 (Food) -->
     <template id="tpl-food">
         <div class="fade-in">
+            <!-- 修正：將標題單獨一列，解決桌面版標籤重疊問題 -->
             <div class="flex items-center mb-4 px-2">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
                 <h2 class="text-2xl md:text-3xl font-black text-themePink shrink-0">美食販賣部 <span class="text-base md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
@@ -968,7 +968,8 @@
         function formatStoreName(name) {
             if (!name) return '';
             // 將連續的英文字母與數字包在一層 span 中，並加入零寬度字元(&#8203;)強制允許自動換行
-            return name.replace(/([a-zA-Z0-9\s]+)/g, '&#8203;<span class="text-[0.85em] font-extrabold tracking-[-0.03em]">$1</span>&#8203;');
+            // 修改字體大小為 text-[0.75em] 讓英文更小，並加上 -mb-1 縮減行距
+            return name.replace(/([a-zA-Z0-9\s​&​]+)/g, '&#8203;<span class="text-[0.75em] font-extrabold leading-[1.1] tracking-[-0.03em] inline-block -mb-1">$1</span>&#8203;');
         }
 
         // 輔助函數：過濾地址字串
@@ -1762,10 +1763,11 @@
                 fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=369381822&single=true&output=csv')
                 .then(res => res.text()).then(txt => {
                     const rows = parseCSV(txt);
+                    // 修正：表單中的連結在 D 欄 (index 3)
                     globalCommunityData = rows.slice(1).map(row => ({ 
                         name: row[0] ? row[0].trim() : '', 
                         category: row[1] ? row[1].trim() : '其他', 
-                        link: row[3] ? row[3].trim() : '#', 
+                        link: row[3] ? row[3].trim() : '#',  // 改為讀取 D 欄
                         img: (row[4] && row[4].match(/https?:\/\/[^\s]+/)) ? row[4].match(/https?:\/\/[^\s]+/)[0] : '' 
                     })).filter(i => i.name !== '');
                     resolve(globalCommunityData);
@@ -1818,42 +1820,58 @@
                         let avatar = item.img;
                         if (!avatar) {
                             if (snsType === 'Threads') {
+                                // 修正：擷取名稱前兩個字作為頭像
                                 let initials = "TH"; 
                                 let cleanName = item.name.replace(/Threads/i, '').trim();
-                                if(cleanName.length > 0) initials = Array.from(cleanName).slice(0, 2).join('');
+                                if(cleanName.length > 0) {
+                                     // 使用陣列切片確保中文字元正確擷取前兩個字
+                                     initials = Array.from(cleanName).slice(0, 2).join('');
+                                }
                                 avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=000000&color=fff&size=150&bold=true&length=2`;
                             } else {
-                                avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=random&color=fff&size=150&font-size=0.35`;
+                                avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
                             }
                         }
-
+                        
+                        // 在地社群卡片排版
                         if(isLocal) {
                             let displayId = "點擊進入";
-                            if (snsType === 'Threads') displayId = "前往 Threads";
-                            else if (snsType === 'LINE') displayId = "加入 LINE 社群";
-                            else if (snsType === 'FB') displayId = "前往粉絲專頁";
+                            if (snsType === 'Threads') {
+                                displayId = "前往 Threads";
+                            } else if (snsType === 'LINE') {
+                                displayId = "加入 LINE 社群";
+                            } else if (snsType === 'FB') {
+                                displayId = "前往粉絲專頁";
+                            }
 
-                            return `<a href="${item.link}" target="_blank" class="w-full flex-1 min-w-[140px] max-w-[240px] flex flex-col bg-white rounded-[2rem] p-5 shadow-cute border-2 border-gray-100 hover:border-pink-200 transition-all hover:-translate-y-2 text-center relative overflow-hidden"><div class="absolute -right-3 -bottom-3 text-6xl opacity-[0.03] text-gray-500 pointer-events-none"><i class="fa-brands ${icon}"></i></div><div class="w-20 h-20 rounded-full mx-auto mb-3 overflow-hidden shadow-sm border-2 border-gray-50"><img src="${avatar}" class="w-full h-full object-cover"></div><h4 class="font-black text-gray-800 line-clamp-2 leading-snug mb-4 group-hover:text-themePink transition-colors">${item.name}</h4><div class="w-full ${btnCls} py-2.5 rounded-xl text-xs sm:text-sm font-black mt-auto flex items-center justify-center gap-1.5 shadow-sm relative z-10"><i class="fa-brands ${icon}"></i> <span class="truncate">${displayId}</span></div></a>`;
+                            return `
+                                <a href="${item.link}" target="_blank" class="flex-1 min-w-[140px] max-w-[240px] flex flex-col bg-white rounded-[2rem] p-5 shadow-cute border-2 border-gray-100 hover:border-pink-200 transition-all hover:-translate-y-2 text-center relative overflow-hidden">
+                                    <div class="absolute -right-3 -bottom-3 text-6xl opacity-[0.03] text-gray-500 pointer-events-none"><i class="fa-brands ${icon}"></i></div>
+                                    <div class="w-20 h-20 rounded-full mx-auto mb-3 overflow-hidden shadow-sm border-2 border-gray-50"><img src="${avatar}" class="w-full h-full object-cover"></div>
+                                    <h4 class="font-black text-gray-800 line-clamp-2 leading-snug mb-4 group-hover:text-themePink transition-colors">${item.name}</h4>
+                                    <div class="w-full ${btnCls} py-2.5 rounded-xl text-xs sm:text-sm font-black mt-auto flex items-center justify-center gap-1.5 shadow-sm relative z-10">
+                                        <i class="fa-brands ${icon}"></i> <span class="truncate">${displayId}</span>
+                                    </div>
+                                </a>
+                            `;
                         }
                         
+                        // 一般社群列表卡片排版
                         let rightSideContent = '';
                         if (isLine) {
                             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
-                            // 手機版隱藏 QR code，使用 hidden sm:flex 控制
                             rightSideContent = `<div class="hidden sm:flex w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden shrink-0 border border-dashed border-gray-200 p-1 bg-white group-hover:border-themePink transition-colors sm:ml-4 items-center justify-center"><img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100 transition-opacity"></div>`;
                         } else {
-                            // 手機版隱藏頭像，使用 hidden sm:flex 控制
                             rightSideContent = `<div class="hidden sm:flex w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden shrink-0 border-2 border-gray-100 p-0.5 bg-gray-50 group-hover:border-themePink transition-colors shadow-sm sm:ml-4 items-center justify-center"><img src="${avatar}" class="w-full h-full object-cover rounded-full"></div>`;
                         }
 
-                        // 其他社群卡片：移除固定寬高，改用網格系統
                         return `
-                            <a href="${item.link}" target="_blank" class="w-full bg-white rounded-[1rem] sm:rounded-[1.5rem] p-2 sm:p-3 md:p-4 shadow-sm border-2 border-gray-100 flex flex-col sm:flex-row items-center justify-center sm:justify-between group hover:-translate-y-1 hover:border-pink-200 transition-all h-full">
-                                <div class="flex flex-col items-center sm:items-start w-full flex-1 min-w-0">
-                                    <h4 class="font-black text-gray-800 text-[11px] sm:text-sm md:text-base mb-1.5 sm:mb-2 line-clamp-2 sm:line-clamp-none group-hover:text-themePink transition-colors text-center sm:text-left leading-tight sm:leading-snug w-full break-words">${item.name}</h4>
+                            <a href="${item.link}" target="_blank" class="bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 flex justify-between items-center group hover:-translate-y-1 hover:border-pink-200 transition-all h-full">
+                                <div class="flex flex-col items-start pr-2 flex-1">
+                                    <h4 class="font-black text-gray-800 text-sm md:text-base mb-2 line-clamp-2 group-hover:text-themePink transition-colors">${item.name}</h4>
                                     <!-- 修正：確保標籤顏色正確套用 -->
-                                    <div class="${snsBadgeClass} text-[9px] md:text-xs font-black px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md sm:rounded-lg shadow-sm flex items-center justify-center w-fit mx-auto sm:mx-0 shrink-0">
-                                        <i class="fa-brands ${icon} mr-1"></i> <span class="hidden sm:inline ml-1">${snsType}</span><span class="sm:hidden ml-1">前往</span>
+                                    <div class="${snsBadgeClass} text-[10px] md:text-xs font-black px-2 py-1 rounded-lg shadow-sm flex items-center">
+                                        <i class="fa-brands ${icon} mr-1"></i> ${snsType}
                                     </div>
                                 </div>
                                 ${rightSideContent}
@@ -1886,14 +1904,17 @@
                 if(!container) return;
                 const grouped = {}; data.forEach(i => { if(!grouped[i.village]) grouped[i.village]=[]; grouped[i.village].push(i); });
                 
+                // 設定各行政里的專屬顏色配置
                 function getVillageStyle(villageName) {
-                    if (villageName.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-400', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
-                    if (villageName.includes('文藝')) return { border: 'border-sky-200', textTitle: 'text-sky-400', icon: 'fa-building', bg: 'bg-sky-50', iconColor: 'text-sky-300', activeIcon: 'text-sky-500', hoverBg: 'hover:bg-sky-50' };
-                    if (villageName.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-green-400', icon: 'fa-building', bg: 'bg-green-50', iconColor: 'text-green-300', activeIcon: 'text-green-500', hoverBg: 'hover:bg-green-50' };
-                    if (villageName.includes('文化')) return { border: 'border-gray-300', textTitle: 'text-gray-400', icon: 'fa-building', bg: 'bg-gray-100', iconColor: 'text-gray-300', activeIcon: 'text-gray-500', hoverBg: 'hover:bg-gray-100' };
-                    if (villageName.includes('文桃')) return { border: 'border-pink-300', textTitle: 'text-pink-400', icon: 'fa-building', bg: 'bg-pink-100', iconColor: 'text-pink-300', activeIcon: 'text-pink-500', hoverBg: 'hover:bg-pink-100' };
-                    if (villageName.includes('樂善')) return { border: 'border-blue-200', textTitle: 'text-blue-400', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-300', activeIcon: 'text-blue-500', hoverBg: 'hover:bg-blue-50' };
+                    if (villageName.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
+                    if (villageName.includes('文藝')) return { border: 'border-sky-200', textTitle: 'text-sky-500', icon: 'fa-building', bg: 'bg-sky-50', iconColor: 'text-sky-300', activeIcon: 'text-sky-500', hoverBg: 'hover:bg-sky-50' };
+                    if (villageName.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-green-500', icon: 'fa-building', bg: 'bg-green-50', iconColor: 'text-green-300', activeIcon: 'text-green-500', hoverBg: 'hover:bg-green-50' };
+                    if (villageName.includes('文化')) return { border: 'border-gray-300', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-100', iconColor: 'text-gray-300', activeIcon: 'text-gray-500', hoverBg: 'hover:bg-gray-100' };
+                    if (villageName.includes('文桃')) return { border: 'border-pink-300', textTitle: 'text-pink-500', icon: 'fa-building', bg: 'bg-pink-100', iconColor: 'text-pink-300', activeIcon: 'text-pink-500', hoverBg: 'hover:bg-pink-100' };
+                    if (villageName.includes('樂善')) return { border: 'border-blue-200', textTitle: 'text-blue-500', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-300', activeIcon: 'text-blue-500', hoverBg: 'hover:bg-blue-50' };
                     if (villageName.includes('文樂')) return { border: 'border-purple-300', textTitle: 'text-purple-500', icon: 'fa-building', bg: 'bg-purple-100', iconColor: 'text-purple-300', activeIcon: 'text-purple-500', hoverBg: 'hover:bg-purple-100' };
+                    
+                    // 預設樣式
                     return { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-50', iconColor: 'text-gray-300', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' };
                 }
 
@@ -1903,9 +1924,10 @@
                     const style = getVillageStyle(vName);
                     const safeId = `village-${vName.replace(/\s+/g, '')}`;
 
+                    // 更新標籤樣式，套用各里顏色
                     tagsHtml += `
                         <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
-                                class="py-1 px-3 sm:px-4 md:px-5 sm:py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-sm sm:text-base md:text-lg flex items-center justify-center sm:justify-start gap-2 md:gap-3 hover:-translate-y-1 w-auto text-center sm:text-left group">
+                                class="py-1 px-1 sm:px-4 md:px-5 sm:py-2.5 md:py-3 sm:bg-white sm:border-2 sm:${style.border} ${style.textTitle} font-black sm:rounded-full md:rounded-2xl sm:${style.hoverBg} transition-all sm:shadow-sm text-base md:text-lg flex items-center justify-center sm:justify-start gap-2 md:gap-3 hover:opacity-70 sm:hover:opacity-100 sm:hover:-translate-y-1 w-auto text-center sm:text-left group">
                             <div class="hidden sm:flex w-6 h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                                 <i class="fa-solid ${style.icon} text-xs md:text-sm"></i>
                             </div>
@@ -1913,6 +1935,7 @@
                         </button>
                     `;
 
+                    // 更新列表樣式，套用各里顏色
                     html += `
                         <div id="${safeId}" class="bg-white rounded-[2.5rem] shadow-cute p-6 border-4 ${style.border} hover:shadow-lg transition-shadow relative overflow-hidden scroll-mt-[100px]">
                             <div class="absolute -right-4 -bottom-4 text-6xl ${style.iconColor} opacity-50 pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
