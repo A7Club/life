@@ -727,7 +727,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themeGreen text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform rotate-3 shadow-md"><i class="fa-solid fa-heart-pulse"></i></div>
-                <h2 class="text-2xl font-black themeGreen">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
+                <h2 class="text-2xl font-black text-themeGreen">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
             </div>
 
             <!-- 獨立保留緊急聯絡電話區塊 (改為精簡併排的摺疊選單設計) -->
@@ -882,7 +882,7 @@
             </div>
 
             <!-- 4. A7地圖及各里所擁有的建案列表 -->
-            <div class="mb-8">
+            <div id="buildings-section" class="mb-8 scroll-mt-[100px]">
                 <div class="flex items-center mb-6">
                     <h2 class="text-2xl font-black text-themeGreen flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeGreen"></i>A7 建案分佈</h2>
                 </div>
@@ -953,6 +953,16 @@
                 const query = decodeURIComponent(hash.substring(7));
                 renderPage('search');
                 executeSearchLogic(query);
+            } else if (hash === 'buildings') {
+                // 處理建案分佈的特殊書籤：載入探索頁面且不捲動至頂部
+                renderPage('explore', true); 
+                // 延遲等待 DOM 渲染與資料拉取後，平滑捲動到建案區塊
+                setTimeout(() => {
+                    const section = document.getElementById('buildings-section');
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 150);
             } else {
                 renderPage(hash);
             }
@@ -1049,7 +1059,7 @@
         }
 
         // 頁面動態注入核心函數 (原本的 loadPage 改為內部 renderPage)
-        function renderPage(pageId) {
+        function renderPage(pageId, skipScrollTop = false) {
             const root = document.getElementById('app-root');
             const template = document.getElementById('tpl-' + pageId);
             
@@ -1063,8 +1073,10 @@
                 // 3. 更新導航列樣式
                 updateNavStyles(pageId);
                 
-                // 4. 平滑滾動到頂部
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // 4. 平滑滾動到頂部 (如果是跳轉到特定錨點則略過)
+                if (!skipScrollTop) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
 
                 // 如果是首頁，觸發捲動監聽的跳動數字動畫及各種動態載入
                 if (pageId === 'home') {
