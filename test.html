@@ -564,7 +564,7 @@
             <!-- 修正：將標題單獨一列，解決桌面版標籤重疊問題 -->
             <div class="flex items-center mb-4 px-2">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
-                <h2 class="text-2xl md:text-3xl font-black text-themePink shrink-0">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
+                <h2 class="text-2xl md:text-3xl font-black text-themePink shrink-0">美食販賣部 <span class="text-base md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 relative items-start">
@@ -1866,12 +1866,12 @@
                 
                 // 設定各行政里的專屬顏色配置
                 function getVillageStyle(villageName) {
-                    if (villageName.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
-                    if (villageName.includes('文藝')) return { border: 'border-sky-200', textTitle: 'text-sky-500', icon: 'fa-building', bg: 'bg-sky-50', iconColor: 'text-sky-300', activeIcon: 'text-sky-500', hoverBg: 'hover:bg-sky-50' };
-                    if (villageName.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-green-500', icon: 'fa-building', bg: 'bg-green-50', iconColor: 'text-green-300', activeIcon: 'text-green-500', hoverBg: 'hover:bg-green-50' };
-                    if (villageName.includes('文化')) return { border: 'border-gray-300', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-100', iconColor: 'text-gray-300', activeIcon: 'text-gray-500', hoverBg: 'hover:bg-gray-100' };
-                    if (villageName.includes('文桃')) return { border: 'border-pink-300', textTitle: 'text-pink-500', icon: 'fa-building', bg: 'bg-pink-100', iconColor: 'text-pink-300', activeIcon: 'text-pink-500', hoverBg: 'hover:bg-pink-100' };
-                    if (villageName.includes('樂善')) return { border: 'border-blue-200', textTitle: 'text-blue-500', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-300', activeIcon: 'text-blue-500', hoverBg: 'hover:bg-blue-50' };
+                    if (villageName.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-400', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
+                    if (villageName.includes('文藝')) return { border: 'border-sky-200', textTitle: 'text-sky-400', icon: 'fa-building', bg: 'bg-sky-50', iconColor: 'text-sky-300', activeIcon: 'text-sky-500', hoverBg: 'hover:bg-sky-50' };
+                    if (villageName.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-green-400', icon: 'fa-building', bg: 'bg-green-50', iconColor: 'text-green-300', activeIcon: 'text-green-500', hoverBg: 'hover:bg-green-50' };
+                    if (villageName.includes('文化')) return { border: 'border-gray-300', textTitle: 'text-gray-400', icon: 'fa-building', bg: 'bg-gray-100', iconColor: 'text-gray-300', activeIcon: 'text-gray-500', hoverBg: 'hover:bg-gray-100' };
+                    if (villageName.includes('文桃')) return { border: 'border-pink-300', textTitle: 'text-pink-400', icon: 'fa-building', bg: 'bg-pink-100', iconColor: 'text-pink-300', activeIcon: 'text-pink-500', hoverBg: 'hover:bg-pink-100' };
+                    if (villageName.includes('樂善')) return { border: 'border-blue-200', textTitle: 'text-blue-400', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-300', activeIcon: 'text-blue-500', hoverBg: 'hover:bg-blue-50' };
                     if (villageName.includes('文樂')) return { border: 'border-purple-300', textTitle: 'text-purple-500', icon: 'fa-building', bg: 'bg-purple-100', iconColor: 'text-purple-300', activeIcon: 'text-purple-500', hoverBg: 'hover:bg-purple-100' };
                     
                     // 預設樣式
