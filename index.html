@@ -357,44 +357,46 @@
                         <span class="text-[10px] sm:text-xs text-gray-400 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>系統推算中</span>
                     </div>
                     
-                    <div class="relative w-full px-3 sm:px-6 mb-12 mt-2">
+                    <div class="relative w-full px-3 sm:px-6 mb-8 mt-2">
                         <div class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[6px] h-1.5 sm:h-2 bg-gray-200 rounded-full z-0"></div>
-                        <div id="mrt-track-container" class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[6px] z-20 pointer-events-none"></div>
-                        <div class="flex justify-between relative z-10 w-full ">
+                        <!-- 修改：列車容器上移避免被站點蓋住 -->
+                        <div id="mrt-track-container" class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] -top-3 sm:-top-2 z-20 pointer-events-none h-10"></div>
+                        <div class="flex justify-between relative z-10 w-full mt-4">
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A4</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">副都心</span>
+                                <!-- 修改：文字間距調整，使中文站名緊靠代號下方 -->
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A4</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">副都心</span>
                             </div>
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A5</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">泰山</span>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A5</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">泰山</span>
                             </div>
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A6</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">貴和</span>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A6</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">貴和</span>
                             </div>
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-themePurple border-[3px] sm:border-4 border-white shadow-md z-10 -mt-0.5 sm:-mt-0.5"></div>
-                                <span class="text-[11px] sm:text-sm font-black text-themePurple mt-1.5">A7</span>
-                                <span class="text-[11px] sm:text-[15px] font-black text-gray-600 whitespace-nowrap absolute top-11 sm:top-14">體大</span>
+                                <span class="text-[11px] sm:text-sm font-black text-themePurple mt-0.5">A7</span>
+                                <span class="text-[11px] sm:text-[15px] font-black text-gray-600 whitespace-nowrap mt-0">體大</span>
                             </div>
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A8</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">長庚</span>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A8</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">長庚</span>
                             </div>
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A9</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">林口</span>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A9</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">林口</span>
                             </div>
                             <div class="flex flex-col items-center w-8 sm:w-12 relative">
                                 <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A10</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">山鼻</span>
+                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-1 sm:mt-1.5">A10</span>
+                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap mt-0">山鼻</span>
                             </div>
                         </div>
                     </div>
@@ -493,14 +495,10 @@
     <!-- 🍿 3. 找美食模板 (Food) -->
     <template id="tpl-food">
         <div class="fade-in">
-            <div class="flex items-center justify-between mb-4 shrink-0 px-2 gap-4">
-                <div class="flex items-center shrink-0">
-                    <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
-                    <h2 class="text-2xl md:text-2xl font-black text-themePink shrink-0">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
-                </div>
-                <div id="food-tags-desktop" class="hidden lg:flex flex-nowrap overflow-x-auto hide-scrollbar justify-end gap-2 md:gap-3 w-auto max-w-[65%] xl:max-w-[70%]">
-                    <div class="w-full text-center text-pink-300 py-2"><i class="fa-solid fa-spinner fa-spin text-xl"></i><span class="text-xl ml-2 font-bold">載入分類中...</span></div>
-                </div>
+            <!-- 修正：將標題單獨一列，解決桌面版標籤重疊問題 -->
+            <div class="flex items-center mb-4 px-2">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
+                <h2 class="text-2xl md:text-3xl font-black text-themePink shrink-0">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 relative items-start">
@@ -516,13 +514,15 @@
 
                 <!-- 列表區塊 -->
                 <div class="w-full flex-1 lg:w-1/2 xl:w-7/12 flex flex-col bg-white/60 rounded-[2rem] p-3 md:p-4 shadow-inner border border-pink-50 order-2 lg:order-1">
-                    <div id="food-tags-mobile" class="flex lg:hidden flex-wrap overflow-x-auto hide-scrollbar justify-start gap-2 w-full mb-4"></div>
+                    <!-- 修正：將所有分類標籤統一放置於列表頂部 -->
+                    <div id="food-tags-container" class="flex flex-wrap overflow-x-auto hide-scrollbar justify-start gap-2 w-full mb-4"></div>
+                    
                     <div class="bg-pink-50/80 text-pink-500 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl mb-3 flex items-center justify-center shadow-sm border border-pink-100 text-center">
                         <i class="fa-solid fa-comment-dots mr-2 text-pink-400"></i>店家資訊皆由社群網友熱心分享，提供大家參考交流。
                     </div>
                     <p class="text-left text-sm text-themePink font-black mb-4"><i class="fa-solid fa-arrow-down-short-wide mr-1"></i> 點選下方店家，地圖會自動放大定位喔！</p>
                     
-                    <div id="food-list-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 pb-12">
+                    <div id="food-list-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 pb-12 pt-2">
                         <div class="col-span-full text-center text-pink-300 py-8"><i class="fa-solid fa-spinner fa-spin text-3xl"></i><p class="text-sm mt-2 font-bold">搜尋樂園美食中...</p></div>
                     </div>
                 </div>
@@ -1138,22 +1138,20 @@
 
         function renderFoodData(data, activeCategory) {
             const container = document.getElementById('food-list-container');
-            const desktopTagsContainer = document.getElementById('food-tags-desktop');
-            const mobileTagsContainer = document.getElementById('food-tags-mobile');
+            const tagsContainer = document.getElementById('food-tags-container');
             if (!container) return;
 
             const categories = ['全部', ...new Set(data.map(item => item.category).filter(c => c))];
             const tagsHtml = categories.map(cat => {
                 const isActive = cat === activeCategory;
-                const activeClass = isActive ? 'bg-themePink text-white shadow-md scale-[1.02] md:scale-105 z-10' : 'bg-white text-gray-600 hover:bg-pink-50 shadow-sm border-2 border-transparent hover:-translate-y-1';
+                const activeClass = isActive ? 'bg-themePink text-white shadow-md scale-[1.02] z-10' : 'bg-white text-gray-600 hover:bg-pink-50 shadow-sm border-2 border-transparent hover:-translate-y-1';
                 let icon = cat === '全部' ? '🎡' : getFoodStyleByCategory(cat).emoji;
                 return `<button onclick="renderFoodData(globalFoodData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-none w-auto py-2 md:py-2.5 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-pink-100 whitespace-nowrap ${activeClass}">
                             <span class="hidden md:inline-block shrink-0">${icon}</span><span>${cat}</span>
                         </button>`;
             }).join('');
 
-            if (desktopTagsContainer) desktopTagsContainer.innerHTML = tagsHtml;
-            if (mobileTagsContainer) mobileTagsContainer.innerHTML = tagsHtml;
+            if (tagsContainer) tagsContainer.innerHTML = tagsHtml;
 
             const filteredData = activeCategory === '全部' ? data : data.filter(item => item.category === activeCategory);
             
@@ -1206,30 +1204,31 @@
                 foodMapInstance.fitBounds(foodClusterGroup.getBounds(), { padding: [40, 40] });
             }
 
-            // 更新清單卡片 (移除導航、更換右上角藥丸標籤)
+            // 更新清單卡片
             container.innerHTML = filteredData.map(item => {
                 const style = getFoodStyleByCategory(item.category);
                 let imgContent = (item.img && item.img.startsWith('http'))
                     ? `<img src="${item.img}" onerror="this.outerHTML='<i class=\\'fa-solid ${style.iconClass} text-4xl ${style.textColor}\\'></i>'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">`
-                    : `<i class="fa-solid ${style.iconClass} text-4xl ${style.textColor} group-hover:text-themePink transition-colors opacity-80"></i>`;
+                    : `<i class="fa-solid ${style.iconClass} text-3xl sm:text-4xl ${style.textColor} group-hover:text-themePink transition-colors opacity-80"></i>`;
 
                 return `
-                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-4 pt-5 rounded-3xl shadow-cute flex items-center gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative">
-                    <!-- 小藥丸分類標籤 -->
-                    <div class="absolute -top-3 -right-2 ${style.bgColor} text-white text-[10px] sm:text-xs font-black px-3 py-1 rounded-full shadow-md z-10 border-2 border-white">
+                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-3 md:p-4 pt-5 md:pt-6 rounded-3xl shadow-cute flex items-center gap-3 md:gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative mt-2">
+                    <!-- 小藥丸分類標籤 (調整位置避免超出邊界或重疊) -->
+                    <div class="absolute -top-3 right-3 md:right-4 ${style.bgColor} text-white text-[10px] md:text-xs font-black px-3 py-1 rounded-full shadow-md z-10 border-2 border-white">
                         ${item.category}
                     </div>
                     
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')} rounded-full overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center border-4 border-white">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')} rounded-full overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center border-2 border-white">
                         ${imgContent}
                     </div>
-                    <div class="flex-1 overflow-hidden pr-1">
-                        <h4 class="font-black text-lg text-gray-800 line-clamp-1 group-hover:text-themePink transition-colors">${item.name}</h4>
-                        <p class="text-sm text-gray-500 font-bold mt-1 flex items-start"><i class="fa-solid fa-location-dot mt-1 mr-1.5 text-pink-400 shrink-0"></i><span class="line-clamp-1">${item.address}</span></p>
+                    <div class="flex-1 pr-1">
+                        <!-- 移除 line-clamp，字體大小比照 Shopping (font-bold text-gray-800 text-sm md:text-base) -->
+                        <h4 class="font-bold text-gray-800 text-sm md:text-base group-hover:text-themePink transition-colors leading-snug break-words">${item.name}</h4>
+                        <p class="text-xs text-gray-500 font-bold mt-1 flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="break-words">${item.address}</span></p>
                     </div>
                     
-                    <!-- 載入可愛愛心元件 (不再包含導航按鈕) -->
-                    <div class="flex items-center justify-center shrink-0 pl-2">
+                    <!-- 愛心元件 -->
+                    <div class="flex items-center justify-center shrink-0 pl-1">
                         ${getLikesHtml(item.name)}
                     </div>
                 </div>
@@ -1563,7 +1562,8 @@
                     if (diff > 0 && diff < minNb) minNb = diff;
                     if (diff >= -9 && diff <= 9) {
                         let pos = Math.max(0, Math.min(100, 50 + (diff * (50/9))));
-                        nbHTML += `<div class="absolute top-[4px] sm:top-[4px] -translate-y-full -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;"><div class="bg-white text-themeGreen rounded-full shadow-md border-2 border-green-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse"><i class="fa-solid fa-caret-left text-[10px]"></i><i class="fa-solid fa-train-subway text-xs sm:text-sm"></i></div></div>`;
+                        // 修正：將 top 改為負值，讓列車在軌道（文字）上方行駛
+                        nbHTML += `<div class="absolute -top-[16px] sm:-top-[20px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;"><div class="bg-white text-themeGreen rounded-full shadow-md border-2 border-green-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse"><i class="fa-solid fa-caret-left text-[10px]"></i><i class="fa-solid fa-train-subway text-xs sm:text-sm"></i></div></div>`;
                     }
                 });
             });
@@ -1574,7 +1574,8 @@
                     if (diff > 0 && diff < minSb) minSb = diff;
                     if (diff >= -9 && diff <= 9) {
                         let pos = Math.max(0, Math.min(100, 50 - (diff * (50/9))));
-                        sbHTML += `<div class="absolute top-[22px] sm:top-[28px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;"><div class="bg-white text-themeBlue rounded-full shadow-md border-2 border-blue-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse"><i class="fa-solid fa-train-subway text-xs sm:text-sm"></i><i class="fa-solid fa-caret-right text-[10px]"></i></div></div>`;
+                        // 修正：同樣將南下列車上移，錯開軌道下方文字
+                        sbHTML += `<div class="absolute top-[8px] sm:top-[12px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;"><div class="bg-white text-themeBlue rounded-full shadow-md border-2 border-blue-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse"><i class="fa-solid fa-train-subway text-xs sm:text-sm"></i><i class="fa-solid fa-caret-right text-[10px]"></i></div></div>`;
                     }
                 });
             });
