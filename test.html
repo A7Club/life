@@ -484,6 +484,7 @@
     <!-- 🍿 3. 找美食模板 (Food) -->
     <template id="tpl-food">
         <div class="fade-in">
+            <!-- 修正：將標題單獨一列，解決桌面版標籤重疊問題 -->
             <div class="flex items-center mb-4 px-2">
                 <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
                 <h2 class="text-2xl md:text-3xl font-black text-themePink shrink-0">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
@@ -502,6 +503,7 @@
 
                 <!-- 列表區塊 -->
                 <div class="w-full flex-1 lg:w-1/2 xl:w-7/12 flex flex-col bg-white/60 rounded-[2rem] p-3 md:p-4 shadow-inner border border-pink-50 order-2 lg:order-1">
+                    <!-- 修正：將所有分類標籤統一放置於列表頂部 -->
                     <div id="food-tags-container" class="flex flex-wrap overflow-x-auto hide-scrollbar justify-start gap-2 w-full mb-4"></div>
                     
                     <div class="bg-pink-50/80 text-pink-500 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl mb-3 flex items-center justify-center shadow-sm border border-pink-100 text-center">
@@ -1191,9 +1193,9 @@
                     ? `<img src="${item.img}" onerror="this.outerHTML='<i class=\\'fa-solid ${style.iconClass} text-4xl ${style.textColor}\\'></i>'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">`
                     : `<i class="fa-solid ${style.iconClass} text-3xl sm:text-4xl ${style.textColor} group-hover:text-themePink transition-colors opacity-80"></i>`;
 
-                // 重新設計美食販賣部卡片排版：左圖右文，愛心在右下角，文字垂直置中
+                // 修改排版，確保店名與地址不會重疊，並解決文字長度問題
                 return `
-                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-3 md:p-4 rounded-3xl shadow-cute flex flex-row items-stretch gap-3 md:gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative mt-2 h-full">
+                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-3 md:p-4 rounded-3xl shadow-cute flex flex-row gap-3 md:gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative mt-2 h-full">
                     
                     <!-- 小藥丸分類標籤 -->
                     <div class="absolute -top-3 right-3 md:right-4 ${style.bgColor} text-white text-[10px] md:text-xs font-black px-3 py-1 rounded-full shadow-md z-10 border-2 border-white">
@@ -1201,20 +1203,20 @@
                     </div>
                     
                     <!-- 左側：店家圖片 -->
-                    <div class="w-20 h-20 sm:w-24 sm:h-24 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')}/60 rounded-2xl overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center border-2 border-white self-center">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')} rounded-2xl overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center border-2 border-white self-center">
                         ${imgContent}
                     </div>
                     
                     <!-- 右側：文字內容與愛心 -->
-                    <div class="flex flex-col flex-1 min-w-0 justify-center relative">
-                        <!-- 店名與地址區塊 (垂直置中) -->
-                        <div class="flex flex-col justify-center flex-1 pr-12 pb-1">
-                            <h4 class="font-bold text-gray-800 text-base sm:text-base group-hover:text-themePink transition-colors leading-snug break-words mb-1.5">${formatStoreName(item.name)}</h4>
-                            <p class="text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="break-words line-clamp-2">${formatAddress(item.address)}</span></p>
+                    <div class="flex flex-col flex-1 min-w-0 h-full relative">
+                        <!-- 店名與地址區塊 (垂直排列，預留底部空間) -->
+                        <div class="flex flex-col flex-1 pr-1 pb-1">
+                            <h4 class="font-bold text-gray-800 text-base sm:text-lg group-hover:text-themePink transition-colors leading-snug break-words mb-1.5">${formatStoreName(item.name)}</h4>
+                            <p class="text-xs text-gray-500 font-bold flex items-start mb-6"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="break-words line-clamp-2">${formatAddress(item.address)}</span></p>
                         </div>
                         
-                        <!-- 愛心區塊 (絕對定位在右下角) -->
-                        <div class="absolute bottom-0 right-0 shrink-0">
+                        <!-- 愛心區塊 (絕對定位在右下角，完全避開文字) -->
+                        <div class="absolute bottom-0 right-0 shrink-0 bg-white-0 pl-2 pt-2 rounded-tl-xl">
                             ${getLikesHtml(item.name)}
                         </div>
                     </div>
