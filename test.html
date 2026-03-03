@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/A7Club/life/refs/heads/main/faviconico.ico" type="image/x-icon">
-    <title>A7 柒樂部 🎡｜林口、龜山美食機能生活地圖指南</title>
+    <title>A7 柒樂部 🎡｜林口、龜山美食生活地圖指南</title>
     <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
     <meta property="og:image" content="https://a7club.github.io/life/website.jpg">
@@ -482,7 +482,7 @@
                 </div>
             </div>
 
-            <!-- 樂園廣播 -->
+            <!-- 樂園廣播 (最新消息) - 修改為精簡版面，靜態在左，動態新聞在右 -->
             <div class="bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-blue-50 relative overflow-hidden">
                 <div class="absolute top-4 right-4 text-themeBlue text-4xl floating pointer-events-none"><i class="fa-solid fa-bullhorn"></i></div>
                 <h2 class="text-2xl font-black text-themeBlue mb-5 relative z-10 flex items-center">
@@ -490,6 +490,7 @@
                 </h2>
                 
                 <div class="flex flex-col lg:flex-row gap-6 relative z-10">
+                    <!-- 左側：靜態最新動態 -->
                     <div class="w-full lg:w-1/2 space-y-3 flex flex-col">
                         <h3 class="text-sm font-black text-themeBlue mb-1 flex items-center bg-blue-100/50 w-fit px-3 py-1 rounded-full">
                             <i class="fa-solid fa-thumbtack mr-1.5"></i>樂園精選公告
@@ -497,10 +498,20 @@
                         <div class="flex items-start bg-blue-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
                             <span class="bg-themeBlue text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">新開幕</span>
                             <div>
-                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">文青路「熊熊可麗餅」本週試營運！</h4>
+                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">桃園龜山「A7柒楽部」在地生活指南本月開放試營運！</h4>
+                                <p class="text-xs sm:text-sm text-gray-500 mt-1">憑樂園居民證(A7住戶)沒有任何折抵優惠。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start bg-pink-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
+                            <span class="bg-themePink text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">交通</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">機捷假日加開班次</h4>
+                                <p class="text-xs sm:text-sm text-gray-500 mt-1">週末往返台北車站將增加 15% 班次。</p>
                             </div>
                         </div>
                     </div>
+
+                    <!-- 右側：動態在地新聞區塊 -->
                     <div id="dynamic-news-container" class="w-full lg:w-1/2 pt-5 lg:pt-0 border-t-2 lg:border-t-0 lg:border-l-2 border-dashed border-blue-100 lg:pl-6 flex flex-col">
                         <div class="text-center text-blue-300 py-4 font-bold text-sm">
                             <i class="fa-solid fa-spinner fa-spin text-xl mb-2 block"></i> 正在連線搜尋在地最新新聞...
@@ -508,7 +519,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- 分享在地店家 -->
             <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-pink-50 relative text-center">
                 <div class="absolute -top-6 -right-2 text-pink-200 text-6xl floating z-0"><i class="fa-solid fa-gift"></i></div>
@@ -566,7 +576,6 @@
 
                 <!-- 列表區塊 -->
                 <div class="w-full flex-1 lg:w-1/2 xl:w-7/12 flex flex-col bg-white/60 rounded-[2rem] p-3 md:p-4 shadow-inner border border-pink-50 order-2 lg:order-1">
-                    <!-- 修正：將所有分類標籤統一放置於列表頂部 -->
                     <div id="food-tags-container" class="flex flex-wrap overflow-x-auto hide-scrollbar justify-start gap-2 w-full mb-4"></div>
                     
                     <div class="bg-pink-50/80 text-pink-500 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl mb-3 flex items-center justify-center shadow-sm border border-pink-100 text-center">
@@ -686,7 +695,7 @@
             </div>
             <div class="mb-12">
                 <div class="flex items-center mb-6"><h2 class="text-xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門社群推薦</h2></div>
-                <div id="community-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-stretch"></div>
+                <div id="community-list-container" class="w-full"></div>
             </div>
 
             <!-- 建案分佈 -->
@@ -701,7 +710,8 @@
                             <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
                             </h3>
-                            <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-3 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start"></div>
+                            <!-- 增加 pt-2 md:pt-4 預留上方空間，避免 hover 時被遮擋 -->
+                            <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-3 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start pt-2 md:pt-4"></div>
                         </div>
                     </div>
                 </div>
@@ -938,7 +948,8 @@
         // 輔助函數：處理店家名稱，讓英文字體變小
         function formatStoreName(name) {
             if (!name) return '';
-            return name.replace(/([a-zA-Z0-9\s]+)/g, '<span class="text-[0.85em] font-extrabold tracking-[-0.03em]">$1</span>');
+            // 將連續的英文字母與數字包在一層 span 中，並加入零寬度字元(&#8203;)強制允許自動換行
+            return name.replace(/([a-zA-Z0-9\s]+)/g, '&#8203;<span class="text-[0.85em] font-extrabold tracking-[-0.03em]">$1</span>&#8203;');
         }
 
         // 輔助函數：過濾地址字串
@@ -1256,30 +1267,24 @@
                     ? `<img src="${item.img}" onerror="this.outerHTML='<i class=\\'fa-solid ${style.iconClass} text-4xl ${style.textColor}\\'></i>'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">`
                     : `<i class="fa-solid ${style.iconClass} text-3xl sm:text-4xl ${style.textColor} group-hover:text-themePink transition-colors opacity-80"></i>`;
 
-                // 修改排版，確保店名與地址不會重疊，並解決文字長度問題
                 return `
-                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-3 md:p-4 rounded-3xl shadow-cute flex flex-row gap-3 md:gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative mt-2 h-full">
+                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-3 md:p-4 rounded-3xl shadow-cute flex flex-row items-stretch gap-3 md:gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative mt-2 h-full">
                     
-                    <!-- 小藥丸分類標籤 -->
                     <div class="absolute -top-3 right-3 md:right-4 ${style.bgColor} text-white text-[10px] md:text-xs font-black px-3 py-1 rounded-full shadow-md z-10 border-2 border-white">
                         ${item.category}
                     </div>
                     
-                    <!-- 左側：店家圖片 -->
-                    <div class="w-20 h-20 sm:w-24 sm:h-24 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')}/60 rounded-2xl overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center border-2 border-white self-center">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')} rounded-2xl overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center border-2 border-white self-center">
                         ${imgContent}
                     </div>
                     
-                    <!-- 右側：文字內容與愛心 -->
-                    <div class="flex flex-col flex-1 min-w-0 h-full relative">
-                        <!-- 店名與地址區塊 (垂直排列，預留底部空間) -->
-                        <div class="flex flex-col flex-1 pr-1 pb-1">
+                    <div class="flex flex-col flex-1 min-w-0 justify-center relative">
+                        <div class="flex flex-col justify-center flex-1 pr-12 pb-1">
                             <h4 class="font-bold text-gray-800 text-base sm:text-lg group-hover:text-themePink transition-colors leading-snug break-words mb-1.5">${formatStoreName(item.name)}</h4>
-                            <p class="text-xs text-gray-500 font-bold flex items-start mb-6"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="break-words line-clamp-2">${formatAddress(item.address)}</span></p>
+                            <p class="text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="break-words line-clamp-2">${formatAddress(item.address)}</span></p>
                         </div>
                         
-                        <!-- 愛心區塊 (絕對定位在右下角，完全避開文字) -->
-                        <div class="absolute bottom-0 right-0 shrink-0 bg-white pl-2 pt-2 rounded-tl-xl">
+                        <div class="absolute bottom-0 right-0 shrink-0">
                             ${getLikesHtml(item.name)}
                         </div>
                     </div>
@@ -1767,97 +1772,61 @@
                 for(const [catName, items] of Object.entries(grouped)) {
                     const isLocal = catName === '在地社群';
                     const itemsHtml = items.map(item => {
-                        let snsType = 'Web';
-                        let icon = 'fa-globe';
-                        let btnCls = 'bg-themePink text-white';
-                        let snsBadgeClass = 'bg-gray-500 text-white'; // 預設標籤顏色
-                        let avatarBg = 'random';
+                        let snsType = 'Web', icon = 'fa-globe', btnCls = 'bg-themePink text-white';
+                        const s = (item.name+' '+item.link).toUpperCase();
+                        let snsBadgeClass = 'bg-gray-500 text-white';
                         let isLine = false;
 
-                        // 同時檢查名稱和連結來判斷社群類型
-                        const searchStr = (item.name + ' ' + item.link).toUpperCase();
-                        
-                        // 判斷是否為 LINE
-                        if(searchStr.includes('LINE')){ 
-                            snsType = 'LINE'; 
-                            icon = 'fa-line'; 
-                            btnCls = 'bg-[#00B900] hover:bg-[#009900] text-white'; 
+                        if(s.includes('LINE')){ 
+                            snsType='LINE'; icon='fa-line'; btnCls='bg-[#00B900] hover:bg-[#009900] text-white'; 
                             snsBadgeClass = 'bg-[#00B900] text-white';
-                            avatarBg = '00B900';
                             isLine = true;
-                        } 
-                        // 判斷是否為 Facebook
-                        else if(searchStr.includes('FB') || searchStr.includes('FACEBOOK')){ 
-                            snsType = 'FB'; 
-                            icon = 'fa-facebook'; 
-                            btnCls = 'bg-[#1877F2] hover:bg-[#166FE5] text-white'; 
+                        }
+                        else if(s.includes('FB')||s.includes('FACEBOOK')){ 
+                            snsType='FB'; icon='fa-facebook'; btnCls='bg-[#1877F2] hover:bg-[#166FE5] text-white'; 
                             snsBadgeClass = 'bg-[#1877F2] text-white';
-                            avatarBg = '1877F2';
-                        } 
-                        // 判斷是否為 Threads
-                        else if(searchStr.includes('THREADS')){
-                            snsType = 'Threads';
-                            icon = 'fa-threads';
-                            btnCls = 'bg-black hover:bg-gray-800 text-white';
+                        }
+                        else if(s.includes('THREADS')){
+                            snsType = 'Threads'; icon = 'fa-threads'; btnCls = 'bg-black hover:bg-gray-800 text-white';
                             snsBadgeClass = 'bg-black text-white';
-                            avatarBg = '000000';
                         }
                         
-                        // 設定頭像：如果有自訂圖片就用，沒有的話如果是 Threads 則自動生成黑底文字頭像，否則使用預設
                         let avatar = item.img;
                         if (!avatar) {
                             if (snsType === 'Threads') {
-                                // 修正：擷取名稱前兩個字作為頭像
                                 let initials = "TH"; 
                                 let cleanName = item.name.replace(/Threads/i, '').trim();
-                                if(cleanName.length > 0) {
-                                     // 使用陣列切片確保中文字元正確擷取前兩個字
-                                     initials = Array.from(cleanName).slice(0, 2).join('');
-                                }
+                                if(cleanName.length > 0) initials = Array.from(cleanName).slice(0, 2).join('');
                                 avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=000000&color=fff&size=150&bold=true&length=2`;
                             } else {
-                                avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
+                                avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=random&color=fff&size=150&font-size=0.35`;
                             }
                         }
-                        
-                        // 在地社群卡片排版
+
                         if(isLocal) {
                             let displayId = "點擊進入";
-                            if (snsType === 'Threads') {
-                                displayId = "前往 Threads";
-                            } else if (snsType === 'LINE') {
-                                displayId = "加入 LINE 社群";
-                            } else if (snsType === 'FB') {
-                                displayId = "前往粉絲專頁";
-                            }
+                            if (snsType === 'Threads') displayId = "前往 Threads";
+                            else if (snsType === 'LINE') displayId = "加入 LINE 社群";
+                            else if (snsType === 'FB') displayId = "前往粉絲專頁";
 
-                            return `
-                                <a href="${item.link}" target="_blank" class="flex-1 min-w-[140px] max-w-[240px] flex flex-col bg-white rounded-[2rem] p-5 shadow-cute border-2 border-gray-100 hover:border-pink-200 transition-all hover:-translate-y-2 text-center relative overflow-hidden">
-                                    <div class="absolute -right-3 -bottom-3 text-6xl opacity-[0.03] text-gray-500 pointer-events-none"><i class="fa-brands ${icon}"></i></div>
-                                    <div class="w-20 h-20 rounded-full mx-auto mb-3 overflow-hidden shadow-sm border-2 border-gray-50"><img src="${avatar}" class="w-full h-full object-cover"></div>
-                                    <h4 class="font-black text-gray-800 line-clamp-2 leading-snug mb-4 group-hover:text-themePink transition-colors">${item.name}</h4>
-                                    <div class="w-full ${btnCls} py-2.5 rounded-xl text-xs sm:text-sm font-black mt-auto flex items-center justify-center gap-1.5 shadow-sm relative z-10">
-                                        <i class="fa-brands ${icon}"></i> <span class="truncate">${displayId}</span>
-                                    </div>
-                                </a>
-                            `;
+                            return `<a href="${item.link}" target="_blank" class="flex-1 min-w-[140px] max-w-[240px] flex flex-col bg-white rounded-[2rem] p-5 shadow-cute border-2 border-gray-100 hover:border-pink-200 transition-all hover:-translate-y-2 text-center relative overflow-hidden"><div class="absolute -right-3 -bottom-3 text-6xl opacity-[0.03] text-gray-500 pointer-events-none"><i class="fa-brands ${icon}"></i></div><div class="w-20 h-20 rounded-full mx-auto mb-3 overflow-hidden shadow-sm border-2 border-gray-50"><img src="${avatar}" class="w-full h-full object-cover"></div><h4 class="font-black text-gray-800 line-clamp-2 leading-snug mb-4 group-hover:text-themePink transition-colors">${item.name}</h4><div class="w-full ${btnCls} py-2.5 rounded-xl text-xs sm:text-sm font-black mt-auto flex items-center justify-center gap-1.5 shadow-sm relative z-10"><i class="fa-brands ${icon}"></i> <span class="truncate">${displayId}</span></div></a>`;
                         }
                         
-                        // 一般社群列表卡片排版
                         let rightSideContent = '';
                         if (isLine) {
                             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
-                            rightSideContent = `<div class="w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden shrink-0 border border-dashed border-gray-200 p-1 bg-white group-hover:border-themePink transition-colors"><img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100 transition-opacity"></div>`;
+                            rightSideContent = `<div class="hidden sm:flex w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden shrink-0 border border-dashed border-gray-200 p-1 bg-white group-hover:border-themePink transition-colors sm:ml-4 items-center justify-center"><img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100 transition-opacity"></div>`;
                         } else {
-                            rightSideContent = `<div class="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden shrink-0 border-2 border-gray-100 p-0.5 bg-gray-50 group-hover:border-themePink transition-colors shadow-sm"><img src="${avatar}" class="w-full h-full object-cover rounded-full"></div>`;
+                            rightSideContent = `<div class="hidden sm:flex w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden shrink-0 border-2 border-gray-100 p-0.5 bg-gray-50 group-hover:border-themePink transition-colors shadow-sm sm:ml-4 items-center justify-center"><img src="${avatar}" class="w-full h-full object-cover rounded-full"></div>`;
                         }
 
+                        // 修改其他社群卡片排版
                         return `
-                            <a href="${item.link}" target="_blank" class="bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 flex justify-between items-center group hover:-translate-y-1 hover:border-pink-200 transition-all h-full">
-                                <div class="flex flex-col items-start pr-2 flex-1">
-                                    <h4 class="font-black text-gray-800 text-sm md:text-base mb-2 line-clamp-2 group-hover:text-themePink transition-colors">${item.name}</h4>
+                            <a href="${item.link}" target="_blank" class="bg-white rounded-[1rem] sm:rounded-[1.5rem] p-2 sm:p-3 md:p-4 shadow-sm border-2 border-gray-100 flex flex-col sm:flex-row items-center justify-center sm:justify-between group hover:-translate-y-1 hover:border-pink-200 transition-all h-full sm:h-auto sm:w-fit">
+                                <div class="flex flex-col items-center sm:items-start w-full sm:w-auto flex-1 min-w-0">
+                                    <h4 class="font-black text-gray-800 text-[11px] sm:text-sm md:text-base mb-1.5 sm:mb-2 line-clamp-2 sm:line-clamp-none group-hover:text-themePink transition-colors text-center sm:text-left leading-tight sm:leading-snug w-full break-words">${item.name}</h4>
                                     <!-- 修正：確保標籤顏色正確套用 -->
-                                    <div class="${snsBadgeClass} text-[10px] md:text-xs font-black px-2 py-1 rounded-lg shadow-sm flex items-center">
+                                    <div class="${snsBadgeClass} text-[9px] md:text-xs font-black px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md sm:rounded-lg shadow-sm flex items-center justify-center w-fit mx-auto sm:mx-0 shrink-0">
                                         <i class="fa-brands ${icon} mr-1"></i> ${snsType}
                                     </div>
                                 </div>
@@ -1869,18 +1838,10 @@
                     const catIcon = catName === '在地社群' ? 'fa-thumbtack text-red-400' : 'fa-hashtag text-themePink';
                     const catBorder = catName === '在地社群' ? 'border-red-50' : 'border-blue-50';
                     const catBgIcon = catName === '在地社群' ? 'text-red-100' : 'text-blue-100';
+                    
+                    const gridClass = isLocal ? 'flex flex-wrap justify-center' : 'grid grid-cols-3 sm:flex sm:flex-wrap';
 
-                    html += `
-                        <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${catBorder} relative h-full flex flex-col">
-                            <div class="absolute -top-4 -right-4 ${catBgIcon} text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
-                            <h3 class="text-xl font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0">
-                                <i class="fa-solid ${catIcon} mr-2"></i>${catName}
-                            </h3>
-                            <div class="${isLocal?'flex flex-wrap justify-center':'grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(260px,1fr))]'} gap-3 md:gap-4 relative z-10 flex-1 content-start">
-                                ${itemsHtml}
-                            </div>
-                        </div>
-                    `;
+                    html += `<div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${catBorder} relative h-full flex flex-col"><div class="absolute -top-4 -right-4 ${catBgIcon} text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div><h3 class="text-xl font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0"><i class="fa-solid ${catIcon} mr-2"></i>${catName}</h3><div class="${gridClass} gap-2 sm:gap-3 md:gap-4 relative z-10 flex-1 content-start">${itemsHtml}</div></div>`;
                 }
                 container.innerHTML = html;
             });
@@ -1895,13 +1856,13 @@
                 
                 // 設定各行政里的專屬顏色配置
                 function getVillageStyle(villageName) {
-                    if (villageName.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-400', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
-                    if (villageName.includes('文藝')) return { border: 'border-sky-200', textTitle: 'text-sky-400', icon: 'fa-building', bg: 'bg-sky-50', iconColor: 'text-sky-300', activeIcon: 'text-sky-500', hoverBg: 'hover:bg-sky-50' };
-                    if (villageName.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-green-400', icon: 'fa-building', bg: 'bg-green-50', iconColor: 'text-green-300', activeIcon: 'text-green-500', hoverBg: 'hover:bg-green-50' };
-                    if (villageName.includes('文化')) return { border: 'border-gray-300', textTitle: 'text-gray-400', icon: 'fa-building', bg: 'bg-gray-100', iconColor: 'text-gray-300', activeIcon: 'text-gray-500', hoverBg: 'hover:bg-gray-100' };
-                    if (villageName.includes('文桃')) return { border: 'border-pink-300', textTitle: 'text-pink-400', icon: 'fa-building', bg: 'bg-pink-100', iconColor: 'text-pink-300', activeIcon: 'text-pink-500', hoverBg: 'hover:bg-pink-100' };
-                    if (villageName.includes('樂善')) return { border: 'border-blue-200', textTitle: 'text-blue-400', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-300', activeIcon: 'text-blue-500', hoverBg: 'hover:bg-blue-50' };
-                    if (villageName.includes('文樂')) return { border: 'border-purple-300', textTitle: 'text-purple-400', icon: 'fa-building', bg: 'bg-purple-100', iconColor: 'text-purple-300', activeIcon: 'text-purple-500', hoverBg: 'hover:bg-purple-100' };
+                    if (villageName.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
+                    if (villageName.includes('文藝')) return { border: 'border-sky-200', textTitle: 'text-sky-500', icon: 'fa-building', bg: 'bg-sky-50', iconColor: 'text-sky-300', activeIcon: 'text-sky-500', hoverBg: 'hover:bg-sky-50' };
+                    if (villageName.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-green-500', icon: 'fa-building', bg: 'bg-green-50', iconColor: 'text-green-300', activeIcon: 'text-green-500', hoverBg: 'hover:bg-green-50' };
+                    if (villageName.includes('文化')) return { border: 'border-gray-300', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-100', iconColor: 'text-gray-300', activeIcon: 'text-gray-500', hoverBg: 'hover:bg-gray-100' };
+                    if (villageName.includes('文桃')) return { border: 'border-pink-300', textTitle: 'text-pink-500', icon: 'fa-building', bg: 'bg-pink-100', iconColor: 'text-pink-300', activeIcon: 'text-pink-500', hoverBg: 'hover:bg-pink-100' };
+                    if (villageName.includes('樂善')) return { border: 'border-blue-200', textTitle: 'text-blue-500', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-300', activeIcon: 'text-blue-500', hoverBg: 'hover:bg-blue-50' };
+                    if (villageName.includes('文樂')) return { border: 'border-purple-300', textTitle: 'text-purple-500', icon: 'fa-building', bg: 'bg-purple-100', iconColor: 'text-purple-300', activeIcon: 'text-purple-500', hoverBg: 'hover:bg-purple-100' };
                     
                     // 預設樣式
                     return { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-50', iconColor: 'text-gray-300', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' };
@@ -1913,10 +1874,10 @@
                     const style = getVillageStyle(vName);
                     const safeId = `village-${vName.replace(/\s+/g, '')}`;
 
-                    // 更新標籤樣式，套用各里顏色
+                    // 更新標籤樣式，確保手機板也顯示背景和邊框 (移除 sm:bg-white 和 sm:border-2 的 sm 前綴限制)
                     tagsHtml += `
                         <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
-                                class="py-1 px-1 sm:px-4 md:px-5 sm:py-2.5 md:py-3 sm:bg-white sm:border-2 sm:${style.border} ${style.textTitle} font-black sm:rounded-full md:rounded-2xl sm:${style.hoverBg} transition-all sm:shadow-sm text-base md:text-lg flex items-center justify-center sm:justify-start gap-2 md:gap-3 hover:opacity-70 sm:hover:opacity-100 sm:hover:-translate-y-1 w-auto text-center sm:text-left group">
+                                class="py-1 px-3 sm:px-4 md:px-5 sm:py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-sm sm:text-base md:text-lg flex items-center justify-center sm:justify-start gap-2 md:gap-3 hover:-translate-y-1 w-auto text-center sm:text-left group">
                             <div class="hidden sm:flex w-6 h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                                 <i class="fa-solid ${style.icon} text-xs md:text-sm"></i>
                             </div>
