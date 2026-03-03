@@ -151,19 +151,16 @@
             to { transform: translate(-50%, 100%); opacity: 0; }
         }
     </style>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-W2RDNWPW');</script>
-<!-- End Google Tag Manager -->
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-YJ9RJC2DRS');
 </script>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2RDNWPW"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 <body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
 
     <!-- 🎪 導航列 (雲朵造型) -->
@@ -900,6 +897,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             `;
         }
 
+        // 輔助函數：過濾地址字串 (移除常見的桃園市區域碼)
+        function formatAddress(address) {
+            if (!address) return '';
+            let formatted = address.replace(/^桃園市\s*龜山區\s*/, '');
+            formatted = formatted.replace(/^桃園市\s*林口區\s*/, ''); // 雖然林口區是新北市，但以防資料填錯也加入過濾
+            formatted = formatted.replace(/^新北市\s*林口區\s*/, '');
+            return formatted;
+        }
+
         // ========================================================
         // 🗺️ Leaflet 地圖核心功能 (移至前方宣告)
         // ========================================================
@@ -1177,7 +1183,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     let popupContent = `
                         <div class="text-center p-1 w-44 relative">
                             <h4 class="font-black text-themePink text-sm mb-1">${item.name}</h4>
-                            <p class="text-xs text-gray-500 font-bold leading-snug"><i class="fa-solid fa-location-dot mr-1"></i>${item.address}</p>
+                            <p class="text-xs text-gray-500 font-bold leading-snug"><i class="fa-solid fa-location-dot mr-1"></i>${formatAddress(item.address)}</p>
                             <a href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}" target="_blank" class="mt-2.5 block w-full bg-blue-100 text-blue-600 font-black py-1.5 rounded-lg text-xs hover:bg-blue-500 hover:text-white transition-colors shadow-sm">導航去</a>
                         </div>
                     `;
@@ -1215,8 +1221,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     : `<i class="fa-solid ${style.iconClass} text-3xl sm:text-4xl ${style.textColor} group-hover:text-themePink transition-colors opacity-80"></i>`;
 
                 return `
-                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-3 md:p-4 pt-5 md:pt-6 rounded-3xl shadow-cute flex items-center gap-3 md:gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative mt-2">
-                    <!-- 小藥丸分類標籤 (調整位置避免超出邊界或重疊) -->
+                <!-- 修正：將卡片設為 flex-col 並改為 relative 讓內部絕對定位對齊，加上 pb-10 給按鈕留空間 -->
+                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-3 md:p-4 pt-5 md:pt-6 pb-12 rounded-3xl shadow-cute flex items-start gap-3 md:gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative mt-2">
+                    
+                    <!-- 小藥丸分類標籤 -->
                     <div class="absolute -top-3 right-3 md:right-4 ${style.bgColor} text-white text-[10px] md:text-xs font-black px-3 py-1 rounded-full shadow-md z-10 border-2 border-white">
                         ${item.category}
                     </div>
@@ -1224,14 +1232,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="w-14 h-14 sm:w-16 sm:h-16 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')} rounded-full overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center border-2 border-white">
                         ${imgContent}
                     </div>
+                    
                     <div class="flex-1 pr-1">
-                        <!-- 移除 line-clamp，字體大小比照 Shopping (font-bold text-gray-800 text-sm md:text-base) -->
                         <h4 class="font-bold text-gray-800 text-sm md:text-base group-hover:text-themePink transition-colors leading-snug break-words">${item.name}</h4>
-                        <p class="text-xs text-gray-500 font-bold mt-1 flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="break-words">${item.address}</span></p>
+                        <!-- 使用 formatAddress 隱藏區域碼 -->
+                        <p class="text-xs text-gray-500 font-bold mt-1 flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="break-words">${formatAddress(item.address)}</span></p>
                     </div>
                     
-                    <!-- 愛心元件 -->
-                    <div class="flex items-center justify-center shrink-0 pl-1">
+                    <!-- 愛心元件固定在右下角 -->
+                    <div class="absolute bottom-3 right-3 md:bottom-4 md:right-4 z-20">
                         ${getLikesHtml(item.name)}
                     </div>
                 </div>
@@ -1361,7 +1370,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 </div>
                                 <div class="px-1 pb-1 flex flex-col flex-1">
                                     <h4 class="font-black text-gray-800 line-clamp-1 text-sm sm:text-base">${item.name}</h4>
-                                    ${item.address ? `<p class="text-[10px] sm:text-xs text-gray-400 font-bold mt-0.5 line-clamp-1"><i class="fa-solid fa-location-dot mr-1"></i>${item.address}</p>` : ''}
+                                    <!-- 使用 formatAddress 隱藏區域碼 -->
+                                    ${item.address ? `<p class="text-[10px] sm:text-xs text-gray-400 font-bold mt-0.5 line-clamp-1"><i class="fa-solid fa-location-dot mr-1"></i>${formatAddress(item.address)}</p>` : ''}
                                 </div>
                             </div>
                         `;
@@ -1375,7 +1385,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                     <i class="fa-solid fa-check text-green-400 mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i> 
                                     <div class="flex flex-col overflow-hidden">
                                         <span class="font-bold text-gray-800 line-clamp-1">${item.name}</span>
-                                        ${item.address ? `<span class="text-xs text-gray-500 mt-0.5 line-clamp-2"><i class="fa-solid fa-location-dot mr-1 text-gray-300"></i>${item.address}</span>` : ''}
+                                        <!-- 使用 formatAddress 隱藏區域碼 -->
+                                        ${item.address ? `<span class="text-xs text-gray-500 mt-0.5 line-clamp-2"><i class="fa-solid fa-location-dot mr-1 text-gray-300"></i>${formatAddress(item.address)}</span>` : ''}
                                     </div>
                                 </div>
                                 <div class="shrink-0 flex flex-col items-end gap-1.5 z-10">
@@ -1761,4 +1772,3 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </script>
 </body>
 </html>
-
