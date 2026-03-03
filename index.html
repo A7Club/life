@@ -904,7 +904,7 @@
         function formatStoreName(name) {
             if (!name) return '';
             // 將連續的英文字母與數字包在一層 span 中，並縮小字體
-            return name.replace(/([a-zA-Z0-9\s]+)/g, '<span class="text-[0.85em] font-extrabold tracking-wider">$1</span>');
+            return name.replace(/([a-zA-Z0-9\s]+)/g, '<span class="text-[0.85em] font-extrabold tracking-[-0.03em]">$1</span>');
         }
 
         // 輔助函數：過濾地址字串 (移除常見的桃園市區域碼)
