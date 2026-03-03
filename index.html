@@ -826,7 +826,7 @@
             <!-- 1. 熱門社群推薦 (動態載入區塊) -->
             <div class="mb-12">
                 <div class="flex items-center mb-6">
-                    <h2 class="text-2xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門社群推薦</h2>
+                    <h2 class="text-xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門社群推薦</h2>
                 </div>
                 <!-- 應用 auto-fit 網格：自動根據螢幕與項目框度延伸並排 -->
                 <div id="community-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-stretch">
@@ -2748,7 +2748,7 @@
                 html += `
                     <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${catBorder} relative h-full flex flex-col">
                         <div class="absolute -top-4 -right-4 ${catBgIcon} text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
-                        <h3 class="text-2xl font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0">
+                        <h3 class="text-xl font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0">
                             <i class="fa-solid ${catIcon} mr-2"></i>${catName}
                         </h3>
                         <!-- 應用動態網格：根據是否為在地社群決定彈性或網格 -->
@@ -2884,7 +2884,7 @@
                     <div id="${safeId}" class="bg-white rounded-[2.5rem] shadow-cute p-6 border-4 ${style.border} hover:shadow-lg transition-shadow relative overflow-hidden scroll-mt-[100px]">
                         <div class="absolute -right-4 -bottom-4 text-6xl ${style.iconColor} opacity-50 pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
                         <div class="flex items-center justify-between mb-4 border-b-2 border-gray-100 pb-3 relative z-10">
-                            <h3 class="text-xl font-black ${style.textTitle}">${villageName}</h3>
+                            <h3 class="text-xl font-black ${style.textTitle}">${villageName} <span class="text-sm font-bold text-gray-400 ml-1">(${items.length})</span></h3>
                             <i class="fa-solid ${style.icon} text-2xl ${style.activeIcon}"></i>
                         </div>
                         <div class="flex flex-wrap gap-3 relative z-10">
