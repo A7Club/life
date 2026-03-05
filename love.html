@@ -646,16 +646,16 @@
     <!-- 🍿 3. 找美食模板 (Food) -->
     <template id="tpl-food">
         <div class="fade-in">
-            <!-- 標題與 TAG 分類容器：修改排版以確保不管螢幕多大都不會遮蔽標題 -->
-            <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between mb-4 shrink-0 px-2 gap-4 w-full">
-                <!-- 左側：標題區 -->
+            <!-- 標題與 TAG 分類容器：改為垂直排列，標籤區塊獨立一行並自動換行 -->
+            <div class="flex flex-col mb-6 shrink-0 px-2 gap-4 w-full">
+                <!-- 上半部：標題區 -->
                 <div class="flex items-center shrink-0">
                     <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
                     <h2 class="text-2xl md:text-2xl font-black text-themePink shrink-0 whitespace-nowrap">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
                 </div>
 
-                <!-- 右側：電腦版 TAG 分類按鈕 (改為 flex-1 並設定 min-w-0 以啟用 flex 子元素的截斷/捲動，使用 justify-start 避免往左溢出遮擋標題) -->
-                <div id="food-tags-desktop" class="hidden lg:flex flex-nowrap overflow-x-auto hide-scrollbar justify-start gap-2 md:gap-3 w-full xl:w-auto xl:flex-1 min-w-0 py-1 xl:pl-4">
+                <!-- 下半部：電腦版 TAG 分類按鈕 (改為 flex-wrap 允許換行，不再和標題擠在一起) -->
+                <div id="food-tags-desktop" class="hidden lg:flex flex-wrap justify-start gap-2 md:gap-3 w-full">
                     <div class="w-full text-center text-pink-300 py-2"><i class="fa-solid fa-spinner fa-spin text-xl"></i><span class="text-xl ml-2 font-bold">載入分類中...</span></div>
                 </div>
             </div>
@@ -2976,17 +2976,20 @@
                     // 預設文字頭像 URL (使用品牌色或隨機色)
                     let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
 
-                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 顯示 item.name 前兩字
+                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 顯示 item.name 或 帳號名稱
+                    let fallbackName = item.name;
                     if (item.img) {
                         avatarUrl = item.img;
                     } else if (snsType === 'Threads') {
-                        // 1. 取得店家名稱的前兩個字 (substring 0 到 2)
-                        const displayName = item.name ? item.name.substring(0, 2) : "A7";
-    
-                        // 2. 生成頭像網址：
-                        // length=2 代表顯示兩個字
-                        // background=000000 為黑底 (Threads 風格)
-                        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=000000&color=fff&size=150&bold=true&length=2`;
+                        if (item.link.includes('@')) {
+                            // 嘗試從網址抓取真實帳號名稱 (保留英文與數字)
+                            const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
+                            if (match && match[1]) {
+                                fallbackName = match[1];
+                            }
+                        }
+                        // 將名稱設定給 ui-avatars 產生頭像
+                        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(fallbackName)}&background=000000&color=fff&size=150&bold=true&length=3`;
                     }
 
                     // 取得社群 ID 顯示文字 (自動過濾網址擷取並移除 @)
