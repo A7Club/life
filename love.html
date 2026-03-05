@@ -2512,6 +2512,22 @@
                 groupedCategories[cat].push(item);
             });
 
+            // 為了確保分類的先後順序，我們手動指定優先權 (機捷 > 觀光照片 > 一般分類)
+            const categoryPriority = [
+                '機場捷運', '捷運', '機捷',
+                '觀光景點', '購物中心', '百貨', '商場',
+                '生鮮超市', '服務據點', '居家用品', '五金', '電器'
+            ];
+
+            const sortedCategories = Object.entries(groupedCategories).sort((a, b) => {
+                let idxA = categoryPriority.findIndex(k => a[0].includes(k));
+                let idxB = categoryPriority.findIndex(k => b[0].includes(k));
+                if (idxA === -1) idxA = 999;
+                if (idxB === -1) idxB = 999;
+                if (idxA !== idxB) return idxA - idxB;
+                return a[0].localeCompare(b[0]); // 優先權相同時依名稱排序
+            });
+
             // 為不同分類預備的可愛色彩池
             const stylePool = [
                 { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-themeYellow', icon: 'fa-cart-shopping', emoji: '🛒' },
@@ -2526,7 +2542,7 @@
             let textBlocks = [];
             let styleIndex = 0;
 
-            for (const [catName, items] of Object.entries(groupedCategories)) {
+            for (const [catName, items] of sortedCategories) {
                 // 依照愛心數量由高至低排序 (以 O 欄數字為主)
                 items.sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
 
@@ -2664,13 +2680,13 @@
             if (mrtBlock) finalOutput += mrtBlock;
 
             while (textBlocks.length > 0 || photoBlocks.length > 0) {
-                if (textBlocks.length > 0) {
-                    // 每次取 3 個文字分類組成一個瀑布流區塊 (約佔 1 排)，避免連續文字區塊，與照片區塊完美穿插
-                    let chunk = textBlocks.splice(0, 3);
-                    finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-3 w-full">${chunk.join('')}</div>`;
-                }
                 if (photoBlocks.length > 0) {
                     finalOutput += photoBlocks.shift();
+                }
+                if (textBlocks.length > 0) {
+                    // 每次取 5 個文字分類組成一個瀑布流區塊，確保有足夠的卡片能堆疊 (例如讓居家用品能排在服務據點下方)
+                    let chunk = textBlocks.splice(0, 5);
+                    finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full mb-6">${chunk.join('')}</div>`;
                 }
             }
 
