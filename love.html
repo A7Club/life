@@ -2521,9 +2521,9 @@
                 { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', icon: 'fa-gift', emoji: '🎁' }
             ];
 
-            let mrtBlocksHtml = '';
-            let photoBlocksHtml = '';
-            let listBlocksHtml = '';
+            let mrtBlock = '';
+            let photoBlocks = [];
+            let textBlocks = [];
             let styleIndex = 0;
 
             for (const [catName, items] of Object.entries(groupedCategories)) {
@@ -2584,7 +2584,7 @@
                     // 獨立照片類別排版：滿版設定，不再受 Masonry 壓縮影響，大螢幕 (xl) 可排成 5 列並排一排
                     let listClass = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 relative z-10 flex-1 content-start";
                     
-                    photoBlocksHtml += `
+                    photoBlocks.push(`
                         <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col w-full">
                             <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
                             <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
@@ -2592,7 +2592,7 @@
                                 ${itemsHtml}
                             </div>
                         </div>
-                    `;
+                    `);
 
                 } else {
                     // 一般分類 (含機捷)，維持原本的高效率列表排版
@@ -2630,9 +2630,9 @@
                     }).join('');
 
                     if (isMRT) {
-                        // 機捷專屬排版：強制滿版並且獨立存放在 mrtBlocksHtml 中
+                        // 機捷專屬排版：強制滿版並且獨立存放在 mrtBlock 中
                         let listClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
-                        mrtBlocksHtml += `
+                        mrtBlock = `
                             <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col w-full">
                                 <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid fa-train-subway"></i></div>
                                 <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">🚇 ${catName}</h3>
@@ -2644,7 +2644,7 @@
                     } else {
                         // 一般文字分類：放入 Masonry 結構，維持緊湊排版避免留白
                         let listClass = "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
-                        listBlocksHtml += `
+                        textBlocks.push(`
                             <div class="break-inside-avoid mb-6 w-full inline-block">
                                 <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col h-full">
                                     <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
@@ -2654,16 +2654,25 @@
                                     </ul>
                                 </div>
                             </div>
-                        `;
+                        `);
                     }
                 }
             }
 
-            // 合併渲染：機捷絕對置頂第一、照片滿版第二、文字瀑布流第三
+            // 合併渲染：機捷絕對置頂第一、然後穿插照片滿版與文字瀑布流
             let finalOutput = '';
-            if (mrtBlocksHtml) finalOutput += mrtBlocksHtml;
-            if (photoBlocksHtml) finalOutput += photoBlocksHtml;
-            if (listBlocksHtml) finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full">${listBlocksHtml}</div>`;
+            if (mrtBlock) finalOutput += mrtBlock;
+
+            while (textBlocks.length > 0 || photoBlocks.length > 0) {
+                if (textBlocks.length > 0) {
+                    // 每次取 6 個文字分類組成一個瀑布流區塊 (約佔 2 排)，避免連續照片區塊
+                    let chunk = textBlocks.splice(0, 6);
+                    finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full">${chunk.join('')}</div>`;
+                }
+                if (photoBlocks.length > 0) {
+                    finalOutput += photoBlocks.shift();
+                }
+            }
 
             container.innerHTML = finalOutput;
         }
