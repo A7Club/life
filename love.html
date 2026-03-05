@@ -2659,36 +2659,24 @@
                 }
             }
 
-           // 合併渲染：機捷絕對置頂第一、然後穿插照片滿版與文字瀑布流
-let finalOutput = '';
-if (mrtBlock) finalOutput += mrtBlock;
+            // 合併渲染：機捷絕對置頂第一、然後穿插照片滿版與文字瀑布流
+            let finalOutput = '';
+            if (mrtBlock) finalOutput += mrtBlock;
 
-while (textBlocks.length > 0 || photoBlocks.length > 0) {
-    if (textBlocks.length > 0) {
-        // 每次取 3 個文字分類組成一個瀑布流區塊
-        let chunk = textBlocks.splice(0, 3);
-        
-        // 【優化點 1】外層容器加入 mb-8 視覺呼吸區與 break-inside 控制
-        // 【優化點 2】針對單一分類高度，建議在渲染 block 之前於 CSS 定義 .category-card { max-height: 450px; overflow-y: auto; }
-        finalOutput += `
-            <div class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full mb-8 space-y-6 [column-fill:balance]">
-                ${chunk.map(block => `
-                    <div class="break-inside-avoid mb-6 bg-white rounded-3xl shadow-cute border-2 border-transparent hover:border-pink-100 transition-all overflow-hidden max-h-[500px] flex flex-col">
-                        <div class="overflow-y-auto hide-scrollbar p-1">
-                            ${block}
-                        </div>
-                    </div>
-                `).join('')}
-            </div>`;
-    }
-    
-    if (photoBlocks.length > 0) {
-        // 照片滿版區塊，維持穿插節奏
-        finalOutput += `<div class="w-full mb-8 transform hover:scale-[1.01] transition-transform">${photoBlocks.shift()}</div>`;
-    }
-}
+            while (textBlocks.length > 0 || photoBlocks.length > 0) {
+                if (textBlocks.length > 0) {
+                    // 每次取 3 個文字分類組成一個瀑布流區塊 (約佔 1 排)，避免連續文字區塊，與照片區塊完美穿插
+                    let chunk = textBlocks.splice(0, 3);
+                    finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full">${chunk.join('')}</div>`;
+                }
+                if (photoBlocks.length > 0) {
+                    finalOutput += photoBlocks.shift();
+                }
+            }
 
-container.innerHTML = finalOutput;
+            container.innerHTML = finalOutput;
+        }
+
         // --- 首頁景點功能 ---
         function fetchAttractionsData() {
             const container = document.getElementById('attractions-list-container');
