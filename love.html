@@ -203,7 +203,7 @@
 
     <!-- 頁腳 -->
     <footer class="bg-white border-t-4 border-dashed border-pink-200 py-8 text-center mt-auto rounded-t-[3rem]">
-        <h2 class="text-xl font-black text-themePink mb-2">🎈林口、龜山美食機能生活地圖指南 </h2>
+        <h2 class="text-xl font-black text-themePink mb-2">A7 柒楽部 ᴄʟᴜʙ🎈林口、龜山美食機能生活地圖指南 </h2>
         <p class="text-gray-400 text-sm font-bold">讓每天的生活都像在遊樂園一樣精彩！© 2026</p>
     </footer>
 
@@ -500,7 +500,7 @@
                         </div>
                     </div>
                     <!-- 模擬推廣卡片 5 (LINE 推廣) -->
-                    <div onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeGreen', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://github.com/A7Club/life/blob/main/layoutdesing.jpg?raw=true', 'https://line.me/R/ti/p/@791bjdaj')"
+                    <div onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeGreen', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-6/557625490_122099376537050143_7652911928985195767_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_ohc=cAyS2JwPYPcQ7kNvwH8yhfR&_nc_oc=Adn1fFFR7iaohr6kQqAOJrNBEwwjaCxoU_702q2yFPFEybORcbEcwR017IU0hPNy4-w&_nc_zt=23&_nc_ht=scontent-tpe1-1.xx&_nc_gid=arA4q1C1ex4sz21ASksVuQ&_nc_ss=8&oh=00_Afy1Pv_ArN6TzNw6ZOjP658jOtFg5yY_36Wt0jaVmdgfdQ&oe=69AEDA3F', 'https://line.me/R/ti/p/@791bjdaj')"
                          class="w-[220px] sm:w-[260px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
                         <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">統包裝潢</div>
                         <div>
@@ -927,7 +927,7 @@
                             <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
                             </h3>
-                            <!-- 手機版縮小 gap 使按鈕更緊密排成兩行，新增 pt-2 預留 Hover 上彈空間 -->
+                            <!-- 手機版採用 flex-wrap 純文字雲排版，平板以上維持原按鈕排版，新增 pt-2 預留 Hover 上彈空間 -->
                             <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-1.5 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start pt-2">
                                 <!-- 這裡會動態載入各里小標籤 -->
                             </div>
@@ -1204,13 +1204,13 @@
                     (item.name && item.name.toLowerCase().includes(q)) || 
                     (item.category && item.category.toLowerCase().includes(q)) ||
                     (item.address && item.address.toLowerCase().includes(q))
-                ).sort((a, b) => ((globalLikesData[b.name]?.count || 0) - (globalLikesData[a.name]?.count || 0)));
+                ).sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
 
                 const matchedShopping = shoppingData.filter(item => 
                     (item.name && item.name.toLowerCase().includes(q)) || 
                     (item.category && item.category.toLowerCase().includes(q)) ||
                     (item.address && item.address.toLowerCase().includes(q))
-                ).sort((a, b) => ((globalLikesData[b.name]?.count || 0) - (globalLikesData[a.name]?.count || 0)));
+                ).sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
 
                 const matchedCommunity = communityData.filter(item => 
                     (item.name && item.name.toLowerCase().includes(q)) || 
@@ -1698,7 +1698,7 @@
                     }).join('');
                     
                     container.innerHTML = `
-                        <h3 class="text-sm font-black text-gray-400 mb-2.5 flex items-center bg-gray-100/80 w-fit px-3 py-1 rounded-full shrink-0">
+                        <h3 class="text-sm font-black text-gray-500 mb-2.5 flex items-center bg-gray-100/80 w-fit px-3 py-1 rounded-full shrink-0">
                             <i class="fa-solid fa-rss mr-1.5 text-themeBlue"></i>自動追蹤：在地媒體報報
                         </h3>
                         <div class="flex flex-col gap-2 flex-1 overflow-y-auto hide-scrollbar max-h-[250px] pr-1">${newsHtml}</div>
@@ -1822,12 +1822,12 @@
         }
         const currentUserId = getUserId();
 
-        // 讀取愛心表單資料 (含與 LocalStorage 快取的整合)
+        // 讀取愛心表單資料 (僅用於確認自己有沒有點過讚)
         function loadSharedLikesData() {
             return new Promise((resolve) => {
                 if (globalLikesData) return resolve(globalLikesData);
                 
-                // 你的愛心評分 Google Sheet CSV 網址
+                // 你的愛心評分 Google Sheet CSV 網址 (likeClick)
                 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1295636704&single=true&output=csv';
                 
                 fetch(csvUrl).then(res => res.text()).then(csvText => {
@@ -1836,12 +1836,9 @@
                     
                     if (rows.length > 1) {
                         const headers = rows[0];
-                        
-                        // 判斷是否為新的「紀錄表格式」(時間, 使用者ID, 店家)
                         const isLogFormat = headers.some(h => h.includes('時間')) && headers.some(h => h.includes('ID')) && headers.some(h => h.includes('店'));
 
                         if (isLogFormat) {
-                            const timeIdx = headers.findIndex(k => k.includes('時間'));
                             const userIdx = headers.findIndex(k => k.includes('ID') || k.includes('使用者'));
                             const storeIdx = headers.findIndex(k => k.includes('店'));
 
@@ -1851,38 +1848,23 @@
                                 if (!storeName || !userId) return;
 
                                 if (!likesMap[storeName]) {
-                                    likesMap[storeName] = { count: 0, users: [] };
+                                    likesMap[storeName] = { users: [] };
                                 }
-                                // 將按讚的使用者加入名單，藉此自動統計該店家的總愛心數
                                 if (!likesMap[storeName].users.includes(userId)) {
                                     likesMap[storeName].users.push(userId);
-                                    likesMap[storeName].count++;
                                 }
-                            });
-                        } else {
-                            // 舊版格式相容 (若還沒改表單欄位則使用此邏輯)
-                            const nameIdx = headers.findIndex(k => k.includes('店') || k.includes('名稱')) !== -1 ? headers.findIndex(k => k.includes('店') || k.includes('名稱')) : 0;
-                            const countIdx = headers.findIndex(k => k.includes('愛心') || k.includes('總數') || k.includes('數量')) !== -1 ? headers.findIndex(k => k.includes('愛心') || k.includes('總數') || k.includes('數量')) : 1;
-                            const usersIdx = headers.findIndex(k => k.includes('ID') || k.includes('名單') || k.includes('用戶')) !== -1 ? headers.findIndex(k => k.includes('ID') || k.includes('名單') || k.includes('用戶')) : 2;
-                            
-                            rows.slice(1).forEach(row => {
-                                const storeName = row[nameIdx];
-                                if (!storeName) return;
-                                
-                                const count = parseInt(row[countIdx]) || 0;
-                                const usersStr = row[usersIdx] || '';
-                                const users = usersStr.split(',').map(u => u.trim()).filter(u => u);
-                                
-                                likesMap[storeName] = { count, users };
                             });
                         }
                     }
                     
-                    // 結合 LocalStorage 暫存的按讚資料 (模擬寫入成功後保留的狀態)
+                    // 結合 LocalStorage 暫存的按讚資料
                     const localCache = JSON.parse(localStorage.getItem('a7club_likes_cache') || '{}');
                     for (let store in localCache) {
-                        // 確保本地的暫存不會被舊的 CSV 資料蓋掉
-                        likesMap[store] = localCache[store];
+                        if(!likesMap[store]) likesMap[store] = { users: [] };
+                        // 將本地已紀錄的 user 合併進去
+                        localCache[store].users.forEach(u => {
+                            if(!likesMap[store].users.includes(u)) likesMap[store].users.push(u);
+                        });
                     }
                     
                     globalLikesData = likesMap;
@@ -1895,12 +1877,12 @@
             });
         }
 
-        // 處理愛心點擊 (樂觀 UI 更新)
+        // 處理愛心點擊 (樂觀 UI 更新：直接改 DOM 數字)
         function toggleLike(event, storeName) {
             event.stopPropagation(); // 避免點擊愛心時觸發外層卡片的彈出視窗或導航
             
             if (!globalLikesData[storeName]) {
-                globalLikesData[storeName] = { count: 0, users: [] };
+                globalLikesData[storeName] = { users: [] };
             }
             
             const storeLikes = globalLikesData[storeName];
@@ -1910,21 +1892,22 @@
             const btn = event.currentTarget;
             const icon = btn.querySelector('i.fa-heart');
             const countSpan = btn.querySelector('span');
+            let currentCount = parseInt(countSpan.innerText) || 0;
             
             if (isLiked) {
                 // 已按讚 -> 取消讚
                 storeLikes.users.splice(userIndex, 1);
-                storeLikes.count = Math.max(0, storeLikes.count - 1);
                 icon.classList.remove('fa-solid', 'heart-beat-active', 'text-[#FF4785]');
                 icon.classList.add('fa-regular', 'text-pink-400');
                 btn.classList.remove('bg-pink-50', 'border-pink-300');
+                countSpan.innerText = Math.max(0, currentCount - 1);
             } else {
                 // 未按讚 -> 新增讚
                 storeLikes.users.push(currentUserId);
-                storeLikes.count++;
                 icon.classList.remove('fa-regular', 'text-pink-400');
                 icon.classList.add('fa-solid', 'heart-beat-active', 'text-[#FF4785]');
                 btn.classList.add('bg-pink-50', 'border-pink-300');
+                countSpan.innerText = currentCount + 1;
                 
                 // 動態產生飛出的可愛小愛心
                 const flyingHeart = document.createElement('i');
@@ -1938,33 +1921,26 @@
                 setTimeout(() => flyingHeart.remove(), 800);
             }
             
-            if (countSpan) countSpan.innerText = storeLikes.count;
-            
-            // 將更新狀態存入本地快取
+            // 將更新狀態存入本地快取 (只存 users 陣列，不存 count，count 永遠以表單 O 欄為準)
             localStorage.setItem('a7club_likes_cache', JSON.stringify(globalLikesData));
 
             // ==== 串接 Google Apps Script 寫入 ====
-            // 請將下方的網址替換為你部署 Apps Script 產生的 Web App URL
             const GAS_URL = 'https://script.google.com/macros/s/AKfycbzyH7yhuVfi-Ajb0u9hwob8plKXqvm2Bbas4H-TFiDFQ2_aKmZQI6vhfHJyvLO7xhB1WA/exec';
-            
-            // 取得目前的台北時間
             const now = new Date();
             const timeString = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
             
-            // 將判斷式移除，只要 GAS_URL 有值就會發送請求
             if (GAS_URL) {
                 fetch(GAS_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // 允許跨域不回傳阻擋
+                    mode: 'no-cors',
                     headers: { 
-                        // 使用 text/plain 避免觸發預檢請求 (Preflight OPTIONS) 導致跨域報錯
                         'Content-Type': 'text/plain;charset=utf-8' 
                     },
                     body: JSON.stringify({
                         storeName: storeName,
                         userId: currentUserId,
                         action: isLiked ? 'unlike' : 'like',
-                        timestamp: timeString // 追加傳送點擊時間
+                        timestamp: timeString 
                     })
                 }).catch(e => console.log('傳送愛心資料失敗', e));
             }
@@ -2030,7 +2006,8 @@
                             img: finalImg,
                             lat: latIdx !== -1 && row[latIdx] ? parseFloat(row[latIdx]) : null,
                             lng: lngIdx !== -1 && row[lngIdx] ? parseFloat(row[lngIdx]) : null,
-                            status: statusIdx !== -1 ? row[statusIdx] : 'OK'
+                            status: statusIdx !== -1 ? row[statusIdx] : 'OK',
+                            likesCount: parseInt(row[14]) || 0 // 讀取 O 欄作為絕對愛心數量
                         };
                     }).filter(item => item.name !== '未命名' && item.name.trim() !== '');
 
@@ -2195,12 +2172,8 @@
             // 過濾資料
             const filteredData = activeCategory === '全部' ? data : data.filter(item => item.category === activeCategory);
             
-            // 依照愛心數量由高至低排序
-            filteredData.sort((a, b) => {
-                const likesA = globalLikesData[a.name] ? globalLikesData[a.name].count : 0;
-                const likesB = globalLikesData[b.name] ? globalLikesData[b.name].count : 0;
-                return likesB - likesA;
-            });
+            // 依照愛心數量由高至低排序 (改用 O 欄的 item.likesCount 作為基準)
+            filteredData.sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
             
             if (filteredData.length === 0) {
                 container.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold py-8">這個分類還沒有審核通過的店家喔！</div>';
@@ -2271,9 +2244,10 @@
                 const style = getFoodStyleByCategory(item.category);
                 
                 // 取得該店家的愛心資料
-                const storeLikes = globalLikesData[item.name] || { count: 0, users: [] };
-                const likeCount = storeLikes.count;
+                const storeLikes = globalLikesData[item.name] || { users: [] };
                 const isLiked = storeLikes.users.includes(currentUserId);
+                // 直接使用表單 O 欄數字
+                const likeCount = item.likesCount || 0;
                 
                 if (item.img && item.img.startsWith('http')) {
                     imgContent = `<img src="${item.img}" onerror="this.outerHTML='<i class=\\'fa-solid ${style.iconClass} text-4xl ${style.textColor}\\'></i>'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">`;
@@ -2452,7 +2426,8 @@
                                 category: row[catIdx] || '未分類',
                                 address: addressIdx !== -1 && row[addressIdx] ? formatAddress(row[addressIdx].trim()) : '',
                                 status: statusIdx !== -1 ? row[statusIdx] : 'OK',
-                                img: finalImg
+                                img: finalImg,
+                                likesCount: parseInt(row[14]) || 0 // 讀取 O 欄作為絕對愛心數量
                             };
                         }).filter(item => item.name !== '未命名' && item.name.trim() !== '');
 
@@ -2550,12 +2525,8 @@
             let styleIndex = 0;
 
             for (const [catName, items] of Object.entries(groupedCategories)) {
-                // 依照愛心數量由高至低排序
-                items.sort((a, b) => {
-                    const likesA = globalLikesData[a.name] ? globalLikesData[a.name].count : 0;
-                    const likesB = globalLikesData[b.name] ? globalLikesData[b.name].count : 0;
-                    return likesB - likesA;
-                });
+                // 依照愛心數量由高至低排序 (以 O 欄數字為主)
+                items.sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
 
                 // 智慧配對：依分類名稱關鍵字給予適合的顏色與圖示，若無則按順序取用
                 let style;
@@ -2584,9 +2555,9 @@
                             ? `<img src="${item.img}" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">` 
                             : `<i class="fa-solid ${style.icon} text-3xl sm:text-4xl text-gray-200"></i>`; // 沒有照片時的備用圖示
                             
-                        const storeLikes = globalLikesData[item.name] || { count: 0, users: [] };
-                        const likeCount = storeLikes.count;
+                        const storeLikes = globalLikesData[item.name] || { users: [] };
                         const isLiked = storeLikes.users.includes(currentUserId);
+                        const likeCount = item.likesCount || 0;
                         
                         // 判斷是否為機場捷運，是的話隱藏愛心
                         const isMRT = item.category.includes('捷運') || item.category === '機場捷運';
@@ -2618,9 +2589,9 @@
                     itemsHtml = items.map(item => {
                         const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
                         
-                        const storeLikes = globalLikesData[item.name] || { count: 0, users: [] };
-                        const likeCount = storeLikes.count;
+                        const storeLikes = globalLikesData[item.name] || { users: [] };
                         const isLiked = storeLikes.users.includes(currentUserId);
+                        const likeCount = item.likesCount || 0;
                         
                         // 判斷是否為機場捷運，是的話隱藏愛心
                         const isMRT = item.category.includes('捷運') || item.category === '機場捷運';
@@ -3001,6 +2972,7 @@
                     let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
 
                     // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 顯示社群名稱前兩個字
+                    let fallbackName = item.name;
                     if (item.img) {
                         avatarUrl = item.img;
                     } else if (snsType === 'Threads') {
