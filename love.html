@@ -733,9 +733,9 @@
                 <i class="fa-solid fa-comment-dots mr-2 text-yellow-500"></i>店家資訊皆由社群網友熱心分享，提供大家參考交流。
             </div>
 
-            <!-- 2. 動態注入的購物分類清單容器 (改為 items-start 讓每個分類根據內容決定高度) -->
-            <div id="shopping-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-start">
-                <div class="col-span-full text-center text-themeYellow py-12">
+            <!-- 2. 動態注入的購物分類清單容器 (移除 columns-1 改用 flex flex-col 搭配內部 Grid) -->
+            <div id="shopping-list-container" class="flex flex-col gap-6 w-full">
+                <div class="w-full text-center text-themeYellow py-12">
                     <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
                     <p class="font-bold">正在為您整理生活圈店家...</p>
                 </div>
@@ -824,9 +824,9 @@
                 </div>
             </div>
 
-            <!-- 動態醫療分類清單：套用自動自適應網格 -->
-            <div id="medical-list-container" class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-stretch">
-                <div class="col-span-full text-center text-themeGreen py-12 bg-white rounded-[2.5rem] border-4 border-green-50 shadow-cute">
+            <!-- 動態醫療分類清單：改用 flex-col 以支援內部 Grid 滿版 -->
+            <div id="medical-list-container" class="flex flex-col gap-6 w-full">
+                <div class="w-full text-center text-themeGreen py-12 bg-white rounded-[2.5rem] border-4 border-green-50 shadow-cute">
                     <i class="fa-solid fa-spinner fa-spin text-4xl mb-5"></i>
                     <p class="font-bold">正在連線樂園救護中心庫...</p>
                 </div>
@@ -1033,7 +1033,7 @@
             const ratingContainer = document.getElementById('store-modal-rating-container');
             const addressEl = document.getElementById('store-modal-address');
             
-            // 判斷若是 LINE 網址，顯示 QR Code 區塊並隱藏 Google Map 按鈕
+            // 判判若是 LINE 網址，顯示 QR Code 區塊並隱藏 Google Map 按鈕
             if (mapQuery.startsWith('http') && (mapQuery.includes('line.me') || mapQuery.includes('lin.ee'))) {
                 mapBtn.classList.add('hidden');
                 qrContainer.classList.remove('hidden');
@@ -2465,8 +2465,8 @@
             const tagsContainer = document.getElementById('shopping-tags-container');
             if (!container) return;
 
-            // 確保外層容器改為瀑布流 (Masonry) 排版，解決分類高度不同造成的空白空間
-            container.className = "columns-1 md:columns-2 xl:columns-3 gap-6 w-full";
+            // 取消瀑布流，改為單一直列佈局 (因為會將圖片分類獨立抽離出來)
+            container.className = "flex flex-col gap-6 w-full";
 
             // --- 1. 渲染上方分類 TAG ---
             if (tagsContainer) {
@@ -2521,7 +2521,8 @@
                 { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', icon: 'fa-gift', emoji: '🎁' }
             ];
 
-            let html = '';
+            let photoBlocksHtml = '';
+            let listBlocksHtml = '';
             let styleIndex = 0;
 
             for (const [catName, items] of Object.entries(groupedCategories)) {
@@ -2540,10 +2541,6 @@
 
                 // 判斷是否為需要顯示照片的「購物中心/觀光景點」類別
                 const isPhotoCategory = catName.includes('購物中心') || catName.includes('觀光景點') || catName.includes('百貨') || catName.includes('商場');
-
-                // 如果分類中有照片且數量過多 (大於2)，改為獨立一欄並橫跨所有欄位
-                const isFullWidth = isPhotoCategory && items.length > 2;
-                const columnSpanStyle = isFullWidth ? 'style="column-span: all;"' : '';
 
                 let itemsHtml = '';
 
@@ -2584,6 +2581,21 @@
                             </div>
                         `;
                     }).join('');
+
+                    // 獨立照片類別排版：不再使用 break-inside-avoid 或 multi-column 壓縮
+                    // 改用滿版設定，並在內部使用正常的 grid
+                    let listClass = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 relative z-10 flex-1 content-start";
+                    
+                    photoBlocksHtml += `
+                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col w-full">
+                            <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
+                            <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
+                            <div class="${listClass}">
+                                ${itemsHtml}
+                            </div>
+                        </div>
+                    `;
+
                 } else {
                     // 一般分類，維持原本的高效率列表排版
                     itemsHtml = items.map(item => {
@@ -2619,39 +2631,34 @@
                             </li>
                         `;
                     }).join('');
-                }
 
-                // 根據是否為照片卡片及是否為獨立滿版，切換對應的網格佈局
-                let listClass = '';
-                if (isPhotoCategory) {
-                    if (isFullWidth) {
-                        listClass = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 relative z-10 flex-1 content-start";
-                    } else {
-                        listClass = "grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-3 relative z-10 flex-1 content-start";
-                    }
-                } else {
-                    listClass = "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
-                }
-                
-                const containerTag = isPhotoCategory ? "div" : "ul";
-
-                // 改用瀑布流卡片結構
-                html += `
-                    <div class="break-inside-avoid mb-6 w-full inline-block" ${columnSpanStyle}>
-                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col h-full">
-                            <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
-                            <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
-                            
-                            <!-- 動態套用不同的網格排版 -->
-                            <${containerTag} class="${listClass}">
-                                ${itemsHtml}
-                            </${containerTag}>
+                    let listClass = "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
+                    
+                    // 一般列表放入需要 Masonry 佈局的結構中
+                    listBlocksHtml += `
+                        <div class="break-inside-avoid mb-6 w-full inline-block">
+                            <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col h-full">
+                                <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
+                                <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
+                                <ul class="${listClass}">
+                                    ${itemsHtml}
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                }
             }
 
-            container.innerHTML = html;
+            // 合併渲染：讓滿版的圖片區塊先獨立呈現於上方，再把文字列表區塊放進下方的瀑布流排版中
+            let finalOutput = '';
+            if (photoBlocksHtml) {
+                finalOutput += photoBlocksHtml;
+            }
+            if (listBlocksHtml) {
+                finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full">${listBlocksHtml}</div>`;
+            }
+
+            container.innerHTML = finalOutput;
         }
 
         // --- 首頁景點功能 ---
@@ -3162,7 +3169,7 @@
                 // 生成各里的快速跳轉標籤 (手機版縮小 padding、字體、圖示及內部 gap)
                 tagsHtml += `
                     <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
-                            class="py-1 px-2.5 sm:px-4 md:px-5 sm:py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-xs sm:text-base md:text-lg flex items-center justify-center sm:justify-start gap-1 sm:gap-2 md:gap-3 hover:-translate-y-1 w-auto text-center sm:text-left group">
+                            class="py-1.5 px-3 sm:px-4 md:px-5 sm:py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-xs sm:text-base md:text-lg flex items-center justify-center sm:justify-start gap-1 sm:gap-2 md:gap-3 hover:-translate-y-1 w-auto text-center sm:text-left group">
                         <div class="flex w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                             <i class="fa-solid ${style.icon} text-[9px] sm:text-xs md:text-sm"></i>
                         </div>
