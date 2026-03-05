@@ -428,20 +428,25 @@
             </div>
 
             <!-- 🎉 在地新商家情報 -->
-            <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-orange-50 relative overflow-hidden">
+            <div class="bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-orange-50 relative overflow-hidden">
                 <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0 pointer-events-none"><i class="fa-solid fa-shop"></i></div>
                 
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2 relative z-10 gap-3">
-                    <h2 class="text-2xl font-black text-orange-400 flex items-center">
-                        <i class="fa-solid fa-gift mr-3"></i> 在地新商家情報
+                <div class="flex items-center justify-between mb-1 relative z-10 gap-2">
+                    <h2 class="text-lg sm:text-2xl font-black text-orange-400 flex items-center whitespace-nowrap shrink-0">
+                        <i class="fa-solid fa-gift mr-2 sm:mr-3"></i> 在地新商家情報
                     </h2>
-                    <a href="https://line.me/ti/g2/moTJsgUwRu2-lABYleiQLH8ZqhccDhy0alxYlA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="w-fit bg-[#00B900] hover:bg-[#009900] text-white text-[11px] sm:text-xs font-black px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md flex items-center gap-1.5 transition-transform hover:scale-105 hover:-translate-y-1">
-                        <i class="fa-brands fa-line text-sm sm:text-base"></i> 提供活動資訊
+                    <a href="https://line.me/ti/g2/moTJsgUwRu2-lABYleiQLH8ZqhccDhy0alxYlA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="w-fit bg-[#00B900] hover:bg-[#009900] text-white text-[11px] sm:text-xs font-black px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md flex items-center gap-1.5 transition-transform hover:scale-105 shrink-0">
+                        <i class="fa-brands fa-line text-sm sm:text-base"></i> <span class="hidden sm:inline">提供活動資訊</span><span class="sm:hidden">提供資訊</span>
                     </a>
                 </div>
                 
-                <!-- 卡片區塊：改為 Grid 自動換行，解除固定寬度限制 -->
-                <div class="flex gap-4 overflow-x-auto hide-scrollbar pt-3 pb-4 relative z-10 snap-x snap-mandatory lg:grid lg:grid-cols-2 xl:grid-cols-4 lg:overflow-visible lg:snap-none">
+                <!-- 手機版向右滑動提示 -->
+                <div class="text-right text-orange-400 text-[10px] sm:text-xs font-black mb-2 lg:hidden animate-pulse relative z-10">
+                    向右滑動查看更多 <i class="fa-solid fa-arrow-right-long ml-0.5"></i>
+                </div>
+                
+                <!-- 卡片區塊：移除 hide-scrollbar 讓橫向捲動條顯示，並保持 Grid 自動換行 -->
+                <div class="flex gap-3 md:gap-4 overflow-x-auto pt-1 pb-4 relative z-10 snap-x snap-mandatory lg:grid lg:grid-cols-2 xl:grid-cols-4 lg:overflow-visible lg:snap-none">
                     <!-- 模擬推廣卡片 1 -->
                     <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
                          class="w-[260px] lg:w-full bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
@@ -537,7 +542,7 @@
                             </div>
                         </div>
                         <div class="flex items-start bg-pink-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
-                            <span class="bg-themePink text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">交通</span>
+                            <span class="bg-themePink text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">停水通知</span>
                             <div>
                                 <h4 class="font-bold text-gray-800 text-sm sm:text-base">大桃園停水公告</h4>
                                 <p class="text-xs sm:text-sm text-gray-500 mt-1">為強化大桃園供水的韌性，保障民眾用水穩定及避免多次停水早成民眾不便。<br>自115年3月9日8時起，至115年3月9日止，共21小時暫停供水。</p>
