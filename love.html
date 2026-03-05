@@ -86,12 +86,12 @@
         .leaflet-popup-content-wrapper { border-radius: 1.5rem !important; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1) !important; padding: 4px !important; }
         .leaflet-popup-content { margin: 10px !important; font-family: 'Nunito', '"Noto Sans TC"', sans-serif; }
         
-        /* 為 Leaflet Popup 關閉按鈕加上白色圓形底圖與陰影 */
+        /* 為 Leaflet Popup 關閉按鈕加上粉紅底圖與白色X */
         .leaflet-popup-close-button { 
-            top: 10px !important; ''
+            top: 10px !important; 
             right: 12px !important; 
-            color: #FF9EBB !important; 
-            background-color: white !important; 
+            color: white !important; 
+            background-color: #FF9EBB !important; 
             border-radius: 50% !important; 
             width: 24px !important; 
             height: 24px !important; 
@@ -103,7 +103,7 @@
             padding: 0 !important;
             z-index: 100 !important;
         }
-        .leaflet-popup-close-button:hover { background-color: #FF9EBB !important; color: white !important; }
+        .leaflet-popup-close-button:hover { background-color: #ff7eb3 !important; color: white !important; transform: scale(1.1); transition: transform 0.2s ease;}
         
         .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large { background-color: rgba(255, 158, 187, 0.5) !important; }
         .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
@@ -647,15 +647,15 @@
     <template id="tpl-food">
         <div class="fade-in">
             <!-- 標題與 TAG 分類容器：修改排版以確保不管螢幕多大都不會遮蔽標題 -->
-            <div class="flex items-center justify-between mb-4 shrink-0 px-2 gap-4 w-full">
+            <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between mb-4 shrink-0 px-2 gap-4 w-full">
                 <!-- 左側：標題區 -->
                 <div class="flex items-center shrink-0">
                     <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
                     <h2 class="text-2xl md:text-2xl font-black text-themePink shrink-0 whitespace-nowrap">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
                 </div>
 
-                <!-- 右側：電腦版 TAG 分類按鈕 (改為 flex-1 並設定 min-w-0 以啟用 flex 子元素的截斷/捲動) -->
-                <div id="food-tags-desktop" class="hidden lg:flex flex-nowrap overflow-x-auto hide-scrollbar justify-end gap-2 md:gap-3 flex-1 min-w-0 pl-4">
+                <!-- 右側：電腦版 TAG 分類按鈕 (改為 flex-1 並設定 min-w-0 以啟用 flex 子元素的截斷/捲動，使用 justify-start 避免往左溢出遮擋標題) -->
+                <div id="food-tags-desktop" class="hidden lg:flex flex-nowrap overflow-x-auto hide-scrollbar justify-start gap-2 md:gap-3 w-full xl:w-auto xl:flex-1 min-w-0 py-1 xl:pl-4">
                     <div class="w-full text-center text-pink-300 py-2"><i class="fa-solid fa-spinner fa-spin text-xl"></i><span class="text-xl ml-2 font-bold">載入分類中...</span></div>
                 </div>
             </div>
@@ -920,8 +920,8 @@
                             <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
                             </h3>
-                            <!-- 手機版採用 flex-wrap 純文字雲排版，平板以上維持原按鈕排版 -->
-                            <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-3 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start">
+                            <!-- 手機版採用 flex-wrap 純文字雲排版，平板以上維持原按鈕排版，新增 pt-2 預留 Hover 上彈空間 -->
+                            <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-3 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start pt-2">
                                 <!-- 這裡會動態載入各里小標籤 -->
                             </div>
                         </div>
@@ -2976,24 +2976,17 @@
                     // 預設文字頭像 URL (使用品牌色或隨機色)
                     let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
 
-                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 顯示文字，若無則顯示帳號首字母
-                    let fallbackName = item.name;
+                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 顯示 item.name 前兩字
                     if (item.img) {
                         avatarUrl = item.img;
                     } else if (snsType === 'Threads') {
-                        if (item.link.includes('@')) {
-                            const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
-                            if (match && match[1]) {
-                                // 嘗試取得帳號前三個字母
-                                const alphaMatch = match[1].replace(/[^a-zA-Z]/g, '');
-                                if(alphaMatch.length > 0) {
-                                    fallbackName = alphaMatch.substring(0, 3);
-                                } else {
-                                    fallbackName = match[1].substring(0, 3);
-                                }
-                            }
-                        }
-                        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(fallbackName)}&background=000000&color=fff&size=150&bold=true&length=3`;
+                        // 1. 取得店家名稱的前兩個字 (substring 0 到 2)
+                        const displayName = item.name ? item.name.substring(0, 2) : "A7";
+    
+                        // 2. 生成頭像網址：
+                        // length=2 代表顯示兩個字
+                        // background=000000 為黑底 (Threads 風格)
+                        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=000000&color=fff&size=150&bold=true&length=2`;
                     }
 
                     // 取得社群 ID 顯示文字 (自動過濾網址擷取並移除 @)
