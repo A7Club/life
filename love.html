@@ -543,7 +543,7 @@
                             <span class="bg-themeBlue text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">新開幕</span>
                             <div>
                                 <h4 class="font-bold text-gray-800 text-sm sm:text-base">「A7 柒樂部 ᴄʟᴜʙ」本月封測營運中🎡</h4>
-                                <p class="text-xs sm:text-sm text-gray-500 mt-1">憑樂園居民證 (A7住戶) 沒有享受任何折抵優惠。</p>
+                                <p class="text-xs sm:text-sm text-gray-500 mt-1">憑樂園居民證(A7住戶)沒有享受任何折抵優惠。</p>
                             </div>
                         </div>
                         <div class="flex items-start bg-purple-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
@@ -1188,28 +1188,29 @@
 
             try {
                 // 等待所有資料庫完整載入 (並行處理加速)
-                const [foodData, shoppingData, communityData, buildingData, medicalData] = await Promise.all([
+                const [foodData, shoppingData, communityData, buildingData, medicalData, likesData] = await Promise.all([
                     loadSharedFoodData(),
                     loadSharedShoppingData(),
                     loadSharedCommunityData(),
                     loadSharedBuildingData(),
-                    loadSharedMedicalData()
+                    loadSharedMedicalData(),
+                    loadSharedLikesData()
                 ]);
 
                 const q = query.toLowerCase();
 
-                // 執行過濾比對
+                // 執行過濾比對 (並依照愛心數量排序)
                 const matchedFood = foodData.filter(item => 
                     (item.name && item.name.toLowerCase().includes(q)) || 
                     (item.category && item.category.toLowerCase().includes(q)) ||
                     (item.address && item.address.toLowerCase().includes(q))
-                );
+                ).sort((a, b) => ((globalLikesData[b.name]?.count || 0) - (globalLikesData[a.name]?.count || 0)));
 
                 const matchedShopping = shoppingData.filter(item => 
                     (item.name && item.name.toLowerCase().includes(q)) || 
                     (item.category && item.category.toLowerCase().includes(q)) ||
                     (item.address && item.address.toLowerCase().includes(q))
-                );
+                ).sort((a, b) => ((globalLikesData[b.name]?.count || 0) - (globalLikesData[a.name]?.count || 0)));
 
                 const matchedCommunity = communityData.filter(item => 
                     (item.name && item.name.toLowerCase().includes(q)) || 
@@ -2194,6 +2195,13 @@
             // 過濾資料
             const filteredData = activeCategory === '全部' ? data : data.filter(item => item.category === activeCategory);
             
+            // 依照愛心數量由高至低排序
+            filteredData.sort((a, b) => {
+                const likesA = globalLikesData[a.name] ? globalLikesData[a.name].count : 0;
+                const likesB = globalLikesData[b.name] ? globalLikesData[b.name].count : 0;
+                return likesB - likesA;
+            });
+            
             if (filteredData.length === 0) {
                 container.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold py-8">這個分類還沒有審核通過的店家喔！</div>';
                 return;
@@ -2542,6 +2550,13 @@
             let styleIndex = 0;
 
             for (const [catName, items] of Object.entries(groupedCategories)) {
+                // 依照愛心數量由高至低排序
+                items.sort((a, b) => {
+                    const likesA = globalLikesData[a.name] ? globalLikesData[a.name].count : 0;
+                    const likesB = globalLikesData[b.name] ? globalLikesData[b.name].count : 0;
+                    return likesB - likesA;
+                });
+
                 // 智慧配對：依分類名稱關鍵字給予適合的顏色與圖示，若無則按順序取用
                 let style;
                 if (catName.includes('生鮮') || catName.includes('超市') || catName.includes('採買') || catName.includes('食品') || catName.includes('市場')) style = stylePool[0];
