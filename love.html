@@ -2488,7 +2488,7 @@
                     if(cat.includes('服務') || cat.includes('洗') || cat.includes('美容') || cat.includes('修繕')) icon = '✂️';
                     if(cat === '全部') icon = '🎡';
                     
-                    // 手機版根據內容自適應寬度 (flex-auto)，大螢幕維持一列 (lg:flex-1 或 flex-none)，文字縮小一級，改為全圓角藥丸形狀
+                    // 手機版根據內容自適應寬度 (flex-auto)，大螢幕維持一列 (lg:flex-none)，文字縮小一級，改為全圓角藥丸形狀
                     return `<button onclick="renderShoppingData(globalShoppingData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-1 w-auto py-2.5 md:py-3 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-yellow-100 whitespace-nowrap ${activeClass}">
                                 <span class="hidden md:inline-block shrink-0">${icon}</span>
                                 <span>${cat}</span>
