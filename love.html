@@ -2666,8 +2666,8 @@
             while (textBlocks.length > 0 || photoBlocks.length > 0) {
                 if (textBlocks.length > 0) {
                     // 每次取 6 個文字分類組成一個瀑布流區塊 (約佔 2 排)，避免連續照片區塊
-                    let chunk = textBlocks.splice(0, 6);
-                    finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-3 w-full">${chunk.join('')}</div>`;
+                    let chunk = textBlocks.splice(0, 3);
+                    finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full">${chunk.join('')}</div>`;
                 }
                 if (photoBlocks.length > 0) {
                     finalOutput += photoBlocks.shift();
