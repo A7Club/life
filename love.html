@@ -203,7 +203,7 @@
 
     <!-- 頁腳 -->
     <footer class="bg-white border-t-4 border-dashed border-pink-200 py-8 text-center mt-auto rounded-t-[3rem]">
-        <h2 class="text-xl font-black text-themePink mb-2">A7 柒楽部 ᴄʟᴜʙ🎈林口、龜山美食機能生活地圖指南 </h2>
+        <h2 class="text-xl font-black text-themePink mb-2">🎈林口、龜山美食機能生活地圖指南 </h2>
         <p class="text-gray-400 text-sm font-bold">讓每天的生活都像在遊樂園一樣精彩！© 2026</p>
     </footer>
 
@@ -542,15 +542,22 @@
                         <div class="flex items-start bg-blue-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
                             <span class="bg-themeBlue text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">新開幕</span>
                             <div>
-                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">「A7 柒樂部 ᴄʟᴜʙ」本月封閉測試營運中🎡</h4>
+                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">「A7 柒樂部 ᴄʟᴜʙ」本月封測營運中🎡</h4>
                                 <p class="text-xs sm:text-sm text-gray-500 mt-1">憑樂園居民證 (A7住戶) 沒有享受任何折抵優惠。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start bg-Purple-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
+                            <span class="bg-themePurple text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">交通</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">機捷因應旅客需求21日起早晚各加1班次</h4>
+                                <p class="text-xs sm:text-sm text-gray-500 mt-1">桃園大眾捷運股份有限公司宣布A22站發車班次21日起早晚各加一班，未來最早清晨5時33分就有車能坐到台北，最晚凌晨0時23分有車能抵達機場。</p>
                             </div>
                         </div>
                         <div class="flex items-start bg-pink-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
                             <span class="bg-themePink text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">交通</span>
                             <div>
-                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">機捷因應旅客需求21日起早晚各加1班次</h4>
-                                <p class="text-xs sm:text-sm text-gray-500 mt-1">桃園大眾捷運股份有限公司宣布A22站發車班次21日起早晚各加一班，未來最早清晨5時33分就有車能坐到台北，最晚凌晨0時23分有車能抵達機場。</p>
+                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">大桃園停水公告</h4>
+                                <p class="text-xs sm:text-sm text-gray-500 mt-1">為強化大桃園供水的韌性，保障民眾用水穩定及避免多次停水早成民眾不便。<br>自115年3月9日8時起，至115年3月9日止，共21小時暫停供水。</p>
                             </div>
                         </div>
                     </div>
@@ -1635,7 +1642,7 @@
 
             try {
                 // 鎖定「林口」、「龜山」、「A7」為搜尋關鍵字，並透過 rss2json 將 Google News RSS 轉為 JSON
-                const keyword = encodeURIComponent('林口 OR 龜山 OR A7重劃區 OR A7體育大學');
+                const keyword = encodeURIComponent('林口 OR 龜山 OR A7重劃區 OR A7體育大學 OR 桃園龜山 OR 文青里 OR 文藝里 OR 長樂里 OR 文化里 OR 文桃里 OR 樂善里 OR 文樂里');
                 const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${keyword}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant`);
                 const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
                 
@@ -1672,7 +1679,7 @@
 
                 if (data && data.status === 'ok' && data.items && data.items.length > 0) {
                     // 只取前五則新聞，改用單行精簡排版以縮短版面
-                    const newsHtml = data.items.slice(0, 5).map(item => {
+                    const newsHtml = data.items.slice(0, 3).map(item => {
                         // 整理時間格式
                         const pubDate = new Date(item.pubDate);
                         const dateStr = `${pubDate.getFullYear()}-${String(pubDate.getMonth() + 1).padStart(2, '0')}-${String(pubDate.getDate()).padStart(2, '0')}`;
@@ -2979,19 +2986,11 @@
                     let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
 
                     // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 顯示社群名稱前兩個字
-                    let fallbackName = item.name;
                     if (item.img) {
                         avatarUrl = item.img;
                     } else if (snsType === 'Threads') {
-                        if (item.link.includes('@')) {
-                            // 抓取 @ 後面的帳號名稱
-                            const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
-                            if (match && match[1]) {
-                                fallbackName = match[1];
-                            }
-                        }
-                        // 將名稱設定給 ui-avatars 產生頭像
-                        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(fallbackName)}&background=000000&color=fff&size=150&bold=true&length=3`;
+                        let fallbackName = item.name.substring(0, 2);
+                        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(fallbackName)}&background=000000&color=fff&size=150&bold=true&length=2&font-size=0.4`;
                     }
 
                     // 取得社群 ID 顯示文字 (自動過濾網址擷取並移除 @)
