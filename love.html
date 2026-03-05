@@ -457,18 +457,17 @@
                         </div>
                     </div>
 
-                    <!-- 模擬推廣卡片 Blue  -->
-                    <div style="display: none;" onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeBlue', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiShTBJexn0395iVhq7Vktqa_pNYHjVBn1jQ&s', 'https://line.me/R/ti/p/@791bjdaj')"
-                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 bg-themeBlue text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">裝潢統包</div>
+                    <!-- 模擬推廣卡片 1 -->
+                    <div onclick="openStoreModal('光川製麵－長庚店', '試營運', 'bg-blue-500', '主打現做手工麵與濃郁湯頭，搭配簡單卻用心的配料，每一口都吃得到麵香與溫暖。喜歡麵食的朋友不妨趁試營運期間來嚐鮮，一起為在地新店家加油，也感受一碗熱騰騰的日常美味。 🍜', '桃園市龜山區文興路222號', '11:00–14:00, 17:00–20:00 (星期一公休)', 'https://s3-ap-northeast-1.amazonaws.com/ichef-images/7fbe9940-c295-443c-b624-e9af61a5235d/online_restaurant_default/e684f0f3-1bb5-4fb0-adb6-1ef9ea4cc4a2.jpg?channel=online-restaurant', '光川製麵－長庚店')" 
+                         class="w-[220px] sm:w-[260px] bg-gradient-to-br from-blue-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                         <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeBlue transition-colors line-clamp-1">凱驛空間</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">LINE群友推薦 https://line.me/R/ti/p/@791bjdaj</p>
+                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-blue-500 transition-colors line-clamp-1">光川製麵－長庚店</h4>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">主打手工麵與暖心湯頭，歡迎大家來嚐鮮，一起為在地新店家加油！</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" 避免觸發卡片的放大視窗 -->
-                            <a href="https://line.me/R/ti/p/@791bjdaj" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-pink-50 px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
-                            <span class="text-themeBlue bg-blue-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-paw"></i></span>
+                            <span class="text-blue-500 bg-white px-2 py-1 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>文興路222號</span>
+                            <span class="text-blue-400 bg-blue-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-bowl-food"></i></span>
                         </div>
                     </div>
 
@@ -2684,8 +2683,8 @@
                     finalOutput += photoBlocks.shift();
                 }
                 if (textBlocks.length > 0) {
-                    // 每次取 5 個文字分類組成一個瀑布流區塊，確保有足夠的卡片能堆疊 (例如讓居家用品能排在服務據點下方)
-                    let chunk = textBlocks.splice(0, 5);
+                    // 每次取 6 個文字分類組成一個瀑布流區塊，確保有足夠的卡片能堆疊 (例如讓居家用品能排在服務據點下方)
+                    let chunk = textBlocks.splice(0, 6);
                     finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full mb-6">${chunk.join('')}</div>`;
                 }
             }
