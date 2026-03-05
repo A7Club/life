@@ -658,7 +658,7 @@
                 <!-- 上半部：標題區 -->
                 <div class="flex items-center shrink-0">
                     <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
-                    <h2 class="text-2xl md:text-2xl font-black text-themePink shrink-0 whitespace-nowrap">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
+                    <h2 class="text-2xl md:text-2xl font-black text-themePink shrink-0 whitespace-nowrap">美食販賣部 <span class="text-base md:text-lg text-gray-400 font-bold ml-2">吃飽才有力氣玩</span></h2>
                 </div>
 
                 <!-- 下半部：電腦版 TAG 分類按鈕 (改為 flex-wrap 允許換行，不再和標題擠在一起) -->
@@ -2267,10 +2267,10 @@
                     <div class="w-20 h-20 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')}/60 rounded-[1.2rem] overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center mt-1">
                         ${imgContent}
                     </div>
-                    <div class="flex-1 overflow-hidden pr-2 flex flex-col justify-center h-full pt-4">
+                    <div class="flex-1 overflow-hidden flex flex-col justify-center h-full pt-4 relative">
                         <div>
                             <h4 class="font-black text-lg leading-[1.1] text-gray-800 line-clamp-2 group-hover:text-themePink transition-colors pr-10">${formatStoreName(item.name)}</h4>
-                            <p class="text-sm text-gray-500 font-bold mt-1.5 flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="line-clamp-2">${item.address}</span></p>
+                            <p class="text-sm text-gray-500 font-bold mt-1.5 flex items-start pr-16 sm:pr-20"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="line-clamp-2">${item.address}</span></p>
                         </div>
                     </div>
                     
@@ -2465,8 +2465,8 @@
             const tagsContainer = document.getElementById('shopping-tags-container');
             if (!container) return;
 
-            // 確保外層容器不會強制拉伸內容高度，改為 items-start 讓每個分類依照內容高度自然顯示
-            container.className = "grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6 items-start";
+            // 確保外層容器改為瀑布流 (Masonry) 排版，解決分類高度不同造成的空白空間
+            container.className = "columns-1 md:columns-2 xl:columns-3 gap-6 w-full";
 
             // --- 1. 渲染上方分類 TAG ---
             if (tagsContainer) {
@@ -2541,9 +2541,9 @@
                 // 判斷是否為需要顯示照片的「購物中心/觀光景點」類別
                 const isPhotoCategory = catName.includes('購物中心') || catName.includes('觀光景點') || catName.includes('百貨') || catName.includes('商場');
 
-                // 如果分類中有照片且數量過多 (大於2)，請改用獨立一欄
+                // 如果分類中有照片且數量過多 (大於2)，改為獨立一欄並橫跨所有欄位
                 const isFullWidth = isPhotoCategory && items.length > 2;
-                const spanClass = isFullWidth ? 'md:col-span-full' : '';
+                const columnSpanStyle = isFullWidth ? 'style="column-span: all;"' : '';
 
                 let itemsHtml = '';
 
@@ -2635,16 +2635,18 @@
                 
                 const containerTag = isPhotoCategory ? "div" : "ul";
 
-                // 移除外層容器的 h-full，並加上 spanClass 動態支援滿版獨立欄位
+                // 改用瀑布流卡片結構
                 html += `
-                    <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col ${spanClass}">
-                        <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
-                        <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
-                        
-                        <!-- 動態套用不同的網格排版 -->
-                        <${containerTag} class="${listClass}">
-                            ${itemsHtml}
-                        </${containerTag}>
+                    <div class="break-inside-avoid mb-6 w-full inline-block" ${columnSpanStyle}>
+                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col h-full">
+                            <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
+                            <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
+                            
+                            <!-- 動態套用不同的網格排版 -->
+                            <${containerTag} class="${listClass}">
+                                ${itemsHtml}
+                            </${containerTag}>
+                        </div>
                     </div>
                 `;
             }
@@ -2762,6 +2764,9 @@
             const container = document.getElementById('medical-list-container');
             if (!container) return;
 
+            // 確保外層容器改為瀑布流排版
+            container.className = "columns-1 md:columns-2 xl:columns-3 gap-6 w-full";
+
             // 依照醫療分類(I欄) 群組化資料
             const groupedCategories = {};
             data.forEach(item => {
@@ -2815,16 +2820,18 @@
                     `;
                 }).join('');
 
-                // 外層大卡片 (套用 flex 與 h-full 確保等高)
+                // 瀑布流大卡片結構
                 html += `
-                    <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${style.border} relative h-full flex flex-col">
-                        <div class="absolute -top-4 -right-4 text-6xl ${style.textBig} floating pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
-                        <h3 class="text-2xl font-black ${style.textTitle} mb-5 border-b-2 border-gray-100 pb-3 relative z-10 shrink-0">
-                            ${catName}
-                        </h3>
-                        <ul class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start">
-                            ${itemsHtml}
-                        </ul>
+                    <div class="break-inside-avoid mb-6 w-full inline-block">
+                        <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${style.border} relative h-full flex flex-col">
+                            <div class="absolute -top-4 -right-4 text-6xl ${style.textBig} floating pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
+                            <h3 class="text-2xl font-black ${style.textTitle} mb-5 border-b-2 border-gray-100 pb-3 relative z-10 shrink-0">
+                                ${catName}
+                            </h3>
+                            <ul class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start">
+                                ${itemsHtml}
+                            </ul>
+                        </div>
                     </div>
                 `;
             }
