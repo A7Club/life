@@ -246,7 +246,7 @@
                     </div>
                     <div id="store-modal-rating-container" class="flex items-start text-sm sm:text-base">
                         <div class="w-8 flex justify-center mt-0.5 shrink-0"><i class="fa-solid fa-star text-themeYellow text-lg"></i></div>
-                        <span id="store-modal-rating" class="text-gray-700 font-bold">4.8 (Google 商家評分參考)</span>
+                        <span id="store-modal-rating" class="text-gray-700 font-bold">4.4 (Google 商家評分參考)</span>
                     </div>
                 </div>
 
@@ -428,7 +428,7 @@
             </div>
 
             <!-- 🎉 在地新商家情報 -->
-            <div class="bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-orange-50 relative overflow-hidden">
+            <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-orange-50 relative overflow-hidden">
                 <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0 pointer-events-none"><i class="fa-solid fa-shop"></i></div>
                 
                 <div class="flex items-center justify-between mb-1 relative z-10 gap-2">
@@ -441,7 +441,7 @@
                 </div>
                 
                 <!-- 手機版向右滑動提示 -->
-                <div class="text-right text-orange-400 text-[10px] sm:text-xs font-black mb-2 lg:hidden animate-pulse relative z-10">
+                <div class="text-left text-orange-400 text-[10px] sm:text-xs font-black mb-2 lg:hidden animate-pulse relative z-10">
                     向右滑動查看更多 <i class="fa-solid fa-arrow-right-long ml-0.5"></i>
                 </div>
                 
@@ -453,10 +453,10 @@
                         <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                         <div>
                             <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-荼木寺手搖飲以真材實料、茶香回甘聞名，清爽不膩口，喝得到細膩層次與職人溫度。</p>
+                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-沐荼寺手搖飲以真材實料、茶香回甘聞名，清爽不膩口，喝得到細膩層次與職人溫度。</p>
                         </div>
                         <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>長青一街39號</span>
+                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>長慶一街39號</span>
                             <span class="text-orange-400 bg-orange-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-glass-water"></i></span>
                         </div>
                     </div>
@@ -1517,7 +1517,7 @@
                 }
             } catch (error) {
                 console.error("取得統計數字失敗:", error);
-                // 發生錯誤時顯示 0
+                // 如果遇到錯誤，使用預設的空陣列或保持數字為 0
                 document.querySelectorAll('.num-counter').forEach(el => el.innerText = '0');
             }
         }
@@ -1648,7 +1648,13 @@
                         const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
                         const response = await fetch(proxyUrl);
                         if (!response.ok) throw new Error('Proxy response was not ok');
-                        data = await response.json();
+                        const proxyData = await response.json();
+                        // allorigins 回傳的資料包在 contents 屬性中，為字串，需再次解析
+                        if (proxyData && proxyData.contents) {
+                            data = JSON.parse(proxyData.contents);
+                        } else {
+                            throw new Error('Invalid proxy data format');
+                        }
                     } catch (e2) {
                         console.warn("Proxy also failed, using fallback data.", e2);
                         // 雙重失敗時，提供靜態備用資料確保版面不破損
@@ -2005,7 +2011,10 @@
                         return s.includes('OK') || s === 'V' || s === 'O' || s.includes('是') || s.includes('通過') || s === 'TRUE' || s === 'Y';
                     });
                     resolve(globalFoodData);
-                }).catch(reject);
+                }).catch(err => {
+                    console.error('Fetch Food Data Error:', err);
+                    resolve([]); // 發生錯誤時回傳空陣列，避免卡住
+                });
             });
         }
 
@@ -2427,7 +2436,10 @@
 
                         resolve(globalShoppingData);
                     })
-                    .catch(err => reject(err));
+                    .catch(err => {
+                        console.error('Fetch Shopping Data Error:', err);
+                        resolve([]); // 發生錯誤時回傳空陣列，避免卡住
+                    });
             });
         }
 
@@ -2672,8 +2684,8 @@
                     finalOutput += photoBlocks.shift();
                 }
                 if (textBlocks.length > 0) {
-                    // 每次取 6 個文字分類組成一個瀑布流區塊，確保有足夠的卡片能堆疊 (例如讓居家用品能排在服務據點下方)
-                    let chunk = textBlocks.splice(0, 6);
+                    // 每次取 5 個文字分類組成一個瀑布流區塊，確保有足夠的卡片能堆疊 (例如讓居家用品能排在服務據點下方)
+                    let chunk = textBlocks.splice(0, 5);
                     finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full mb-6">${chunk.join('')}</div>`;
                 }
             }
