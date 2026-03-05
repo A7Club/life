@@ -167,7 +167,7 @@
                 <div class="w-10 h-10 bg-themeYellow rounded-full flex items-center justify-center text-white text-xl shadow-inner">
                     <i class="fa-solid fa-tent"></i>
                 </div>
-                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部　</span></span>
+                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">楽部　</span></span>
             </div>
 
             <!-- 電腦版選單 -->
@@ -203,7 +203,7 @@
 
     <!-- 頁腳 -->
     <footer class="bg-white border-t-4 border-dashed border-pink-200 py-8 text-center mt-auto rounded-t-[3rem]">
-        <h2 class="text-xl font-black text-themePink mb-2">A7 柒樂部 ᴄʟᴜʙ🎈林口、龜山美食機能生活地圖指南 </h2>
+        <h2 class="text-xl font-black text-themePink mb-2">A7 柒楽部 ᴄʟᴜʙ🎈林口、龜山美食機能生活地圖指南 </h2>
         <p class="text-gray-400 text-sm font-bold">讓每天的生活都像在遊樂園一樣精彩！© 2026</p>
     </footer>
 
@@ -326,7 +326,7 @@
                 </div>
             </div>
 
-            <!-- 🚇 機捷 A7 體育大學站 列車動態 (極簡清晰排版) -->
+            <!-- 🚇 機捷 A7 體育大學站 列車動態 (排版優化) -->
             <div class="mb-2 bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-gray-50 flex flex-col lg:flex-row gap-6 md:gap-8 items-center relative overflow-hidden">
                 <!-- 背景裝飾 -->
                 <div class="absolute -right-4 -top-4 text-gray-100 text-8xl floating pointer-events-none z-0 opacity-50"><i class="fa-solid fa-train-subway"></i></div>
@@ -366,63 +366,62 @@
 
                 <!-- 右側：軌道與列車動畫圖 (前後3站: A4~A10) -->
                 <div class="w-full lg:w-[65%] relative z-10 bg-white rounded-[1.5rem] p-4 sm:p-6 border-2 border-gray-100 shadow-inner flex flex-col justify-center">
-                    <div class="flex justify-between items-center mb-8">
+                    <div class="flex justify-between items-center mb-6">
                         <span class="text-xs sm:text-sm text-gray-500 font-black"><i class="fa-solid fa-location-crosshairs mr-1.5"></i>列車即時位置</span>
                         <span class="text-[10px] sm:text-xs text-gray-400 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>系統推算中</span>
                     </div>
                     
-                    <!-- 預留 mb-12 空間避免下方文字被遮蔽 -->
-                    <div class="relative w-full px-3 sm:px-6 mb-12 mt-2">
+                    <!-- 動態列車與軌道區域 -->
+                    <div class="relative w-full px-3 sm:px-6 mt-2 mb-4 h-[40px]">
                         <!-- 軌道底線 -->
-                        <div class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[6px] h-1.5 sm:h-2 bg-gray-200 rounded-full z-0"></div>
-                        
+                        <div class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[16px] h-1.5 sm:h-2 bg-gray-200 rounded-full z-0"></div>
                         <!-- 動態列車注入點 -->
-                        <div id="mrt-track-container" class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[6px] z-20 pointer-events-none"></div>
+                        <div id="mrt-track-container" class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[0px] z-20 pointer-events-none w-full h-full"></div>
+                    </div>
                         
-                        <!-- 站點配置 (使用 justify-between 自動均分 A4 到 A10) -->
-                        <div class="flex justify-between relative z-10 w-full ">
-                            <!-- A4 -->
-                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
-                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A4</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">副都心</span>
-                            </div>
-                            <!-- A5 -->
-                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
-                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A5</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">泰山</span>
-                            </div>
-                            <!-- A6 -->
-                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
-                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A6</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">貴和</span>
-                            </div>
-                            <!-- A7 (放大醒目) -->
-                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
-                                <div class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-themePurple border-[3px] sm:border-4 border-white shadow-md z-10 -mt-0.5 sm:-mt-0.5"></div>
-                                <span class="text-[11px] sm:text-sm font-black text-themePurple mt-1.5">A7</span>
-                                <span class="text-[11px] sm:text-[15px] font-black text-gray-600 whitespace-nowrap absolute top-11 sm:top-14">體大</span>
-                            </div>
-                            <!-- A8 -->
-                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
-                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A8</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">長庚</span>
-                            </div>
-                            <!-- A9 -->
-                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
-                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A9</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">林口</span>
-                            </div>
-                            <!-- A10 -->
-                            <div class="flex flex-col items-center w-8 sm:w-12 relative">
-                                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full bg-white border-[3px] sm:border-4 border-gray-300 z-10"></div>
-                                <span class="text-[9px] sm:text-xs font-bold text-gray-400 mt-2">A10</span>
-                                <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap absolute top-11 sm:top-14">山鼻</span>
-                            </div>
+                    <!-- 站點配置獨立出來，緊鄰站名 -->
+                    <div class="flex justify-between relative z-10 w-full px-3 sm:px-6">
+                        <!-- A4 -->
+                        <div class="flex flex-col items-center w-8 sm:w-12">
+                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div>
+                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A4</span>
+                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">副都心</span>
+                        </div>
+                        <!-- A5 -->
+                        <div class="flex flex-col items-center w-8 sm:w-12">
+                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div>
+                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A5</span>
+                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">泰山</span>
+                        </div>
+                        <!-- A6 -->
+                        <div class="flex flex-col items-center w-8 sm:w-12">
+                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div>
+                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A6</span>
+                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">貴和</span>
+                        </div>
+                        <!-- A7 (放大醒目) -->
+                        <div class="flex flex-col items-center w-8 sm:w-12">
+                            <div class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-themePurple border-[3px] border-white shadow-md z-10 mb-1"></div>
+                            <span class="text-[11px] sm:text-sm font-black text-themePurple">A7</span>
+                            <span class="text-[11px] sm:text-[15px] font-black text-gray-600 whitespace-nowrap">體大</span>
+                        </div>
+                        <!-- A8 -->
+                        <div class="flex flex-col items-center w-8 sm:w-12">
+                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div>
+                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A8</span>
+                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">長庚</span>
+                        </div>
+                        <!-- A9 -->
+                        <div class="flex flex-col items-center w-8 sm:w-12">
+                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div>
+                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A9</span>
+                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">林口</span>
+                        </div>
+                        <!-- A10 -->
+                        <div class="flex flex-col items-center w-8 sm:w-12">
+                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div>
+                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A10</span>
+                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">山鼻</span>
                         </div>
                     </div>
                 </div>
@@ -644,19 +643,19 @@
         </div>
     </template>
 
-    <!-- 🍿 3. 找美食模板 (Food) - 更新為主標右側配置 -->
+    <!-- 🍿 3. 找美食模板 (Food) -->
     <template id="tpl-food">
         <div class="fade-in">
-            <!-- 標題與 TAG 分類容器 (修改：手機版標題獨立，電腦版才顯示右側標籤) -->
-            <div class="flex items-center justify-between mb-4 shrink-0 px-2 gap-4">
+            <!-- 標題與 TAG 分類容器：修改排版以確保不管螢幕多大都不會遮蔽標題 -->
+            <div class="flex items-center justify-between mb-4 shrink-0 px-2 gap-4 w-full">
                 <!-- 左側：標題區 -->
                 <div class="flex items-center shrink-0">
                     <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
-                    <h2 class="text-2xl md:text-2xl font-black text-themePink shrink-0">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
+                    <h2 class="text-2xl md:text-2xl font-black text-themePink shrink-0 whitespace-nowrap">美食販賣部 <span class="text-sm md:text-lg text-gray-400 font-bold ml-2 hidden sm:inline-block">吃飽才有力氣玩</span></h2>
                 </div>
 
-                <!-- 右側：電腦版 TAG 分類按鈕 (僅大螢幕顯示，靠右對齊) -->
-                <div id="food-tags-desktop" class="hidden lg:flex flex-nowrap overflow-x-auto hide-scrollbar justify-end gap-2 md:gap-3 w-auto max-w-[65%] xl:max-w-[70%]">
+                <!-- 右側：電腦版 TAG 分類按鈕 (改為 flex-1 並設定 min-w-0 以啟用 flex 子元素的截斷/捲動) -->
+                <div id="food-tags-desktop" class="hidden lg:flex flex-nowrap overflow-x-auto hide-scrollbar justify-end gap-2 md:gap-3 flex-1 min-w-0 pl-4">
                     <div class="w-full text-center text-pink-300 py-2"><i class="fa-solid fa-spinner fa-spin text-xl"></i><span class="text-xl ml-2 font-bold">載入分類中...</span></div>
                 </div>
             </div>
@@ -1310,7 +1309,7 @@
                                     if (item.img) {
                                         avatarUrl = item.img;
                                     } else if (snsType === 'Threads' && item.link.includes('@')) {
-                                        const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
+                                        const match = item.link.match(/@([a-zA-Z0-9\&_.]+)/);
                                         if (match && match[1]) {
                                             avatarUrl = `https://unavatar.io/instagram/${match[1]}?fallback=${encodeURIComponent(avatarUrl)}`;
                                         }
@@ -1438,7 +1437,7 @@
                         let pos = 50 + (diff * (50/9));
                         pos = Math.max(0, Math.min(100, pos));
                         
-                        nbTrainsHTML += `<div class="absolute top-[4px] sm:top-[4px] -translate-y-full -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
+                        nbTrainsHTML += `<div class="absolute top-[0px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
                             <div class="bg-white text-themeGreen rounded-full shadow-md border-2 border-green-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
                                 <i class="fa-solid fa-caret-left text-[10px]"></i>
                                 <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
@@ -1462,7 +1461,7 @@
                         let pos = 50 - (diff * (50/9));
                         pos = Math.max(0, Math.min(100, pos));
                         
-                        sbTrainsHTML += `<div class="absolute top-[22px] sm:top-[28px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
+                        sbTrainsHTML += `<div class="absolute top-[26px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
                             <div class="bg-white text-themeBlue rounded-full shadow-md border-2 border-blue-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
                                 <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
                                 <i class="fa-solid fa-caret-right text-[10px]"></i>
@@ -1754,6 +1753,13 @@
             return ret.filter(r => r.join('').trim() !== '');
         }
 
+        // 輔助函數：自動隱藏台灣地址開頭的 3~6 碼郵遞區號
+        function formatAddress(address) {
+            if (!address) return '';
+            // 正則表達式：比對開頭的 3 到 6 個數字，以及可能緊接在後的空白並將其移除
+            return address.replace(/^\d{3,6}\s*/, '');
+        }
+
         // 輔助函數：格式化店家名稱，將英文縮小
         function formatStoreName(name) {
             // 利用正則表達式，將英文與其周圍的空格包覆在較小字級的 span 中
@@ -1940,13 +1946,16 @@
             { keywords: ['早', '早餐', '早午餐'], iconClass: 'fa-egg', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '🍳' },
             { keywords: ['素', '素食', '蔬食', '健康'], iconClass: 'fa-leaf', bgColor: 'bg-green-400', textColor: 'text-green-600', emoji: '🥗' },
             { keywords: ['飲', '飲料', '手搖', '茶'], iconClass: 'fa-glass-water', bgColor: 'bg-teal-400', textColor: 'text-teal-600', emoji: '🧋' },
-            { keywords: ['飯', '麵', '正餐', '主食', '便當', '水餃'], iconClass: 'fa-bowl-food', bgColor: 'bg-orange-400', textColor: 'text-orange-600', emoji: '🍱' },
-            { keywords: ['咖啡', '甜點', '冰', '蛋糕'], iconClass: 'fa-mug-hot', bgColor: 'bg-themeBlue', textColor: 'text-blue-500', emoji: '☕' },
+            { keywords: ['甜點', '冰', '蛋糕', '麵包', '甜甜圈'], iconClass: 'fa-bread-slice', bgColor: 'bg-pink-400', textColor: 'text-pink-600', emoji: '🍩' },
+            { keywords: ['咖啡'], iconClass: 'fa-mug-hot', bgColor: 'bg-themeBlue', textColor: 'text-blue-500', emoji: '☕' },
+            { keywords: ['西餐', '美式', '漢堡', '義式', '披薩'], iconClass: 'fa-burger', bgColor: 'bg-orange-500', textColor: 'text-orange-700', emoji: '🍔' },
+            { keywords: ['麵', '麵食', '拉麵'], iconClass: 'fa-bowl-food', bgColor: 'bg-amber-500', textColor: 'text-amber-700', emoji: '🍜' },
+            { keywords: ['飯', '正餐', '主食', '便當', '水餃'], iconClass: 'fa-bowl-rice', bgColor: 'bg-orange-400', textColor: 'text-orange-600', emoji: '🍱' },
             { keywords: ['小吃', '宵夜', '炸', '烤', '滷味'], iconClass: 'fa-drumstick-bite', bgColor: 'bg-amber-400', textColor: 'text-amber-600', emoji: '🍗' },
             { keywords: ['鍋', '火鍋', '鐵板'], iconClass: 'fa-fire-burner', bgColor: 'bg-red-400', textColor: 'text-red-500', emoji: '🍲' },
-            { keywords: ['異國', '日式', '韓式', '義式', '美式', '泰式'], iconClass: 'fa-earth-americas', bgColor: 'bg-indigo-400', textColor: 'text-indigo-600', emoji: '🍝' },
+            { keywords: ['異國', '日式', '韓式', '泰式'], iconClass: 'fa-earth-americas', bgColor: 'bg-indigo-400', textColor: 'text-indigo-600', emoji: '🍛' },
             // 預設分類 (當都比對不到時的預設值)
-            { keywords: ['預設'], iconClass: 'fa-utensils', bgColor: 'bg-themePink', textColor: 'text-pink-500', emoji: '🍩' }
+            { keywords: ['預設'], iconClass: 'fa-utensils', bgColor: 'bg-themePink', textColor: 'text-pink-500', emoji: '🍽️' }
         ];
 
         // 輔助函數：透過分類名稱，找出最適合的樣式設定
@@ -1983,7 +1992,7 @@
                         return {
                             name: row[nameIdx] || '未命名',
                             category: row[catIdx] || '未分類',
-                            address: addressIdx !== -1 && row[addressIdx] ? row[addressIdx] : '',
+                            address: addressIdx !== -1 && row[addressIdx] ? formatAddress(row[addressIdx].trim()) : '',
                             img: finalImg,
                             lat: latIdx !== -1 && row[latIdx] ? parseFloat(row[latIdx]) : null,
                             lng: lngIdx !== -1 && row[lngIdx] ? parseFloat(row[lngIdx]) : null,
@@ -2231,19 +2240,18 @@
                     imgContent = `<i class="fa-solid ${style.iconClass} text-4xl ${style.textColor} group-hover:text-themePink transition-colors opacity-80"></i>`;
                 }
 
-                // 卡片的標籤顏色也同步使用比對池的顏色。加入 leading-[1.1] 及英文縮小
+                // 店家卡片：移除右上角大標籤，改用小藥丸標籤放在名稱上方
                 return `
-                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-4 pt-6 rounded-3xl shadow-cute flex items-center gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative">
-                    <!-- 右上角分類標籤 (顏色與地圖圖釘同步) -->
-                    <div class="absolute top-0 right-0 ${style.bgColor} text-white text-[10px] sm:text-xs font-black px-3 py-1 sm:py-1.5 rounded-tr-3xl rounded-bl-xl shadow-sm z-10 flex items-center gap-1">
-                        <i class="fa-solid ${style.iconClass}"></i> ${item.category}
-                    </div>
-                    
+                <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-4 rounded-3xl shadow-cute flex items-center gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative">
                     <div class="w-20 h-20 ${style.bgColor.replace('bg-', 'bg-').replace('400', '50')} rounded-[1.2rem] overflow-hidden shrink-0 shadow-inner relative flex items-center justify-center">
                         ${imgContent}
                     </div>
-                    <div class="flex-1 overflow-hidden pr-2 flex flex-col justify-between">
+                    <div class="flex-1 overflow-hidden pr-2 flex flex-col justify-between h-full py-1">
                         <div>
+                            <!-- 新增小藥丸標籤 -->
+                            <div class="mb-1.5 flex items-center">
+                                <span class="${style.bgColor} text-white text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full shadow-sm tracking-wider inline-block">${item.category}</span>
+                            </div>
                             <h4 class="font-black text-lg leading-[1.1] text-gray-800 line-clamp-2 group-hover:text-themePink transition-colors">${formatStoreName(item.name)}</h4>
                             <p class="text-sm text-gray-500 font-bold mt-1.5 flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="line-clamp-2">${item.address}</span></p>
                         </div>
@@ -2272,11 +2280,17 @@
                 }
                 activeFoodMarkerName = name; // 更新當前選取店家
                 
-                // 單純使用 flyTo 從目前位置平滑飛躍到目標店家 (zoom level 18)
-                foodMapInstance.flyTo(marker.getLatLng(), 18, { animate: true, duration: 1.5 });
+                // 計算下修偏移量，讓圖釘落在地圖下方 1/3 處保留上方資訊卡空間
+                const targetZoom = 18;
+                const pt = foodMapInstance.project(marker.getLatLng(), targetZoom);
+                // 將視角中心往上移 (Y軸減去高度的 1/3.5)，讓圖釘在畫面中往下掉
+                pt.y -= foodMapInstance.getSize().y / 3.5; 
+                const offsetLatLng = foodMapInstance.unproject(pt, targetZoom);
+                
+                // 單純使用 flyTo 從目前位置平滑飛躍到目標店家
+                foodMapInstance.flyTo(offsetLatLng, targetZoom, { animate: true, duration: 1.5 });
                 
                 // 必須等飛躍動畫完全結束 ('moveend') 後，再執行地標展開與變色
-                // 這樣能徹底避免 zoomToShowLayer 的平移與 flyTo 互相衝突所造成的畫面拉扯/顫抖
                 foodMapInstance.once('moveend', () => {
                     foodClusterGroup.zoomToShowLayer(marker, () => {
                         marker.openPopup();
@@ -2319,7 +2333,12 @@
                 }
 
                 if (targetLat && targetLng) {
-                    foodMapInstance.flyTo([targetLat, targetLng], 18, { animate: true, duration: 1.5 });
+                    const targetZoom = 18;
+                    const pt = foodMapInstance.project([targetLat, targetLng], targetZoom);
+                    pt.y -= foodMapInstance.getSize().y / 3.5;
+                    const offsetLatLng = foodMapInstance.unproject(pt, targetZoom);
+
+                    foodMapInstance.flyTo(offsetLatLng, targetZoom, { animate: true, duration: 1.5 });
                     setTimeout(() => {
                         L.popup({ className: 'custom-popup-temporary' })
                             .setLatLng([targetLat, targetLng])
@@ -2386,7 +2405,7 @@
                             return {
                                 name: row[nameIdx] || '未命名',
                                 category: row[catIdx] || '未分類',
-                                address: addressIdx !== -1 && row[addressIdx] ? row[addressIdx] : '',
+                                address: addressIdx !== -1 && row[addressIdx] ? formatAddress(row[addressIdx].trim()) : '',
                                 status: statusIdx !== -1 ? row[statusIdx] : 'OK',
                                 img: finalImg
                             };
@@ -2690,7 +2709,7 @@
                         return {
                             name: row[nameIdx] ? row[nameIdx].trim() : '',
                             category: row[catIdx] ? row[catIdx].trim() : '其他醫療',
-                            address: addressIdx !== -1 && row[addressIdx] ? row[addressIdx].trim() : '',
+                            address: addressIdx !== -1 && row[addressIdx] ? formatAddress(row[addressIdx].trim()) : '',
                             phone: phoneIdx !== -1 && row[phoneIdx] ? row[phoneIdx].trim() : '',
                             license: row[licenseIdx] ? row[licenseIdx].trim() : ''
                         };
@@ -2926,17 +2945,17 @@
                     // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 預設顯示黑色 ID 前三碼
                     if (item.img) {
                         avatarUrl = item.img;
-                    } else if (snsType === 'Threads') {
+                    } else if (snsType === 'Threads' && item.link.includes('@')) {
                         let initials = "THR"; // 預設字元
                         // 嘗試從網址擷取帳號，拿前 3 個英文字母當頭像
-                        if (item.link.includes('@')) {
-                            const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
-                            if (match && match[1]) {
-                                const alphaMatch = match[1].replace(/[^a-zA-Z]/g, '');
-                                initials = alphaMatch.length > 0 ? alphaMatch.substring(0, 3) : match[1].substring(0, 3);
-                            }
+                        const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
+                        if (match && match[1]) {
+                            const alphaMatch = match[1].replace(/[^a-zA-Z]/g, '');
+                            initials = alphaMatch.length > 0 ? alphaMatch.substring(0, 3) : match[1].substring(0, 3);
                         }
                         avatarUrl = `https://ui-avatars.com/api/?name=${initials}&background=000000&color=fff&size=150&bold=true&length=3`;
+                    } else if (snsType === 'Threads') {
+                        avatarUrl = `https://ui-avatars.com/api/?name=THR&background=000000&color=fff&size=150&bold=true&length=3`;
                     }
 
                     // 取得社群 ID 顯示文字 (自動過濾網址擷取並移除 @)
