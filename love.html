@@ -546,7 +546,7 @@
                                 <p class="text-xs sm:text-sm text-gray-500 mt-1">憑樂園居民證 (A7住戶) 沒有享受任何折抵優惠。</p>
                             </div>
                         </div>
-                        <div class="flex items-start bg-Purple-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
+                        <div class="flex items-start bg-purple-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
                             <span class="bg-themePurple text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">交通</span>
                             <div>
                                 <h4 class="font-bold text-gray-800 text-sm sm:text-base">機捷因應旅客需求21日起早晚各加1班次</h4>
@@ -927,8 +927,8 @@
                             <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0">
                                 <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
                             </h3>
-                            <!-- 手機版採用 flex-wrap 純文字雲排版，平板以上維持原按鈕排版，新增 pt-2 預留 Hover 上彈空間 -->
-                            <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-3 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start pt-2">
+                            <!-- 手機版縮小 gap 使按鈕更緊密排成兩行，新增 pt-2 預留 Hover 上彈空間 -->
+                            <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-1.5 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start pt-2">
                                 <!-- 這裡會動態載入各里小標籤 -->
                             </div>
                         </div>
@@ -1697,7 +1697,7 @@
                     }).join('');
                     
                     container.innerHTML = `
-                        <h3 class="text-sm font-black text-gray-500 mb-2.5 flex items-center bg-gray-100/80 w-fit px-3 py-1 rounded-full shrink-0">
+                        <h3 class="text-sm font-black text-gray-400 mb-2.5 flex items-center bg-gray-100/80 w-fit px-3 py-1 rounded-full shrink-0">
                             <i class="fa-solid fa-rss mr-1.5 text-themeBlue"></i>自動追蹤：在地媒體報報
                         </h3>
                         <div class="flex flex-col gap-2 flex-1 overflow-y-auto hide-scrollbar max-h-[250px] pr-1">${newsHtml}</div>
@@ -3165,12 +3165,12 @@
                 // 產生安全且唯一的 ID 供錨點跳轉使用
                 const safeId = `village-${villageName.replace(/\s+/g, '')}`;
 
-                // 生成各里的快速跳轉標籤 (手機版恢復外框、背景與圖示樣式)
+                // 生成各里的快速跳轉標籤 (手機版縮小 padding、字體、圖示及內部 gap)
                 tagsHtml += `
                     <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
-                            class="py-1.5 px-3 sm:px-4 md:px-5 sm:py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-sm sm:text-base md:text-lg flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 md:gap-3 hover:-translate-y-1 w-auto text-center sm:text-left group">
-                        <div class="flex w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid ${style.icon} text-[10px] sm:text-xs md:text-sm"></i>
+                            class="py-1 px-2.5 sm:px-4 md:px-5 sm:py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-xs sm:text-base md:text-lg flex items-center justify-center sm:justify-start gap-1 sm:gap-2 md:gap-3 hover:-translate-y-1 w-auto text-center sm:text-left group">
+                        <div class="flex w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid ${style.icon} text-[9px] sm:text-xs md:text-sm"></i>
                         </div>
                         <span class="tracking-wide whitespace-nowrap">${villageName}</span>
                     </button>
