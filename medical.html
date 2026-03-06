@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>樂園救護站 🩺｜A7 柒樂部</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', '"Noto Sans TC"', 'sans-serif'] }, colors: { themePink: '#FF9EBB', themeBlue: '#80CFFF', themeYellow: '#FFD166', themeGreen: '#06D6A0', themePurple: '#C197FF' }, boxShadow: { 'cute': '0 10px 25px -5px rgba(0, 0, 0, 0.08)' } } } }
+    </script>
+    <style>
+        body { background-color: #FDFBF7; background-image: radial-gradient(#06D6A0 1.5px, transparent 1.5px); background-size: 40px 40px; }
+        ::-webkit-scrollbar { width: 10px; height: 10px; } ::-webkit-scrollbar-thumb { background: #06D6A0; border-radius: 10px; border: 2px solid #FDFBF7; }
+        .floating { animation: float 3s ease-in-out infinite; } @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+    </style>
+</head>
+<body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
+
+    <nav class="sticky top-4 z-40 mx-4 sm:mx-8 lg:mx-auto max-w-6xl">
+        <div class="bg-white/90 backdrop-blur-md rounded-full shadow-cute px-6 py-3 flex justify-between items-center border-2 border-white">
+            <a href="index.html" class="flex items-center cursor-pointer gap-2">
+                <div class="w-10 h-10 bg-themeYellow rounded-full flex items-center justify-center text-white text-xl shadow-inner"><i class="fa-solid fa-tent"></i></div>
+                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部　</span></span>
+            </a>
+            <div class="hidden md:flex space-x-2">
+                <a href="food.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all">🍿 找美食</a>
+                <a href="shop.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all">🛍️ 買東西</a>
+                <a href="medical.html" class="nav-btn px-4 py-2 rounded-full font-black bg-themeGreen text-white shadow-md transform scale-105 transition-all">🩺 救護站</a>
+                <a href="explore.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all">🎠 探索柒</a>
+            </div>
+            <div class="md:hidden">
+                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden'); document.getElementById('mobile-menu').classList.toggle('flex');" class="text-themePink text-2xl focus:outline-none w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
+            <a href="food.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm block">🍿 美食販賣部</a>
+            <a href="shop.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm block">🛍️ 購物與生活</a>
+            <a href="medical.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm block">🩺 樂園救護站</a>
+            <a href="explore.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm block">🎠 探索在地A7</a>
+        </div>
+    </nav>
+
+    <main id="app-root" class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 relative">
+        <div class="flex items-center mb-8">
+            <div class="w-12 h-12 bg-themeGreen text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform rotate-3 shadow-md"><i class="fa-solid fa-heart-pulse"></i></div>
+            <h2 class="text-2xl font-black text-themeGreen">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
+        </div>
+
+        <div class="bg-red-400 p-6 md:p-8 rounded-[2.5rem] text-white shadow-cute mb-8 relative overflow-hidden border-4 border-red-200">
+            <div class="absolute -right-6 -bottom-6 text-red-300 text-8xl floating opacity-50"><i class="fa-solid fa-truck-medical"></i></div>
+            <h3 class="text-2xl font-black mb-4 relative z-10 flex items-center"><i class="fa-solid fa-phone-volume mr-3"></i> 救護與緊急電話</h3>
+            <div class="flex flex-wrap gap-3 md:gap-4 relative z-10 items-start">
+                <details class="group bg-white rounded-[1.2rem] shadow-sm border-2 border-red-100 overflow-hidden text-gray-800 transition-all w-full md:w-auto">
+                    <summary class="font-black list-none flex justify-between items-center px-5 py-3 md:py-4 text-base md:text-lg text-red-500 cursor-pointer hover:bg-red-50 gap-6"><span class="flex items-center whitespace-nowrap"><i class="fa-solid fa-building-shield mr-2.5 text-xl"></i> 警察局 / 派出所</span><span class="text-red-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                    <div class="px-3 pb-3 space-y-2.5 bg-white">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3"><div class="pr-2"><div class="text-red-700 font-black mb-1">大埔派出所</div><div class="text-xs text-red-400 font-bold"><i class="fa-solid fa-location-dot"></i> 桃園市龜山區文德二路80號</div></div><a href="tel:03-3202554" class="bg-white hover:bg-red-500 hover:text-white text-red-500 px-3.5 py-1.5 rounded-lg text-sm font-black border border-red-100"><i class="fa-solid fa-phone-volume"></i> 03-3202554</a></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3"><div class="pr-2"><div class="text-red-700 font-black mb-1">坪頂派出所</div><div class="text-xs text-red-400 font-bold"><i class="fa-solid fa-location-dot"></i> 桃園市龜山區大湖一路65號</div></div><a href="tel:03-3282570" class="bg-white hover:bg-red-500 hover:text-white text-red-500 px-3.5 py-1.5 rounded-lg text-sm font-black border border-red-100"><i class="fa-solid fa-phone-volume"></i> 03-3282570</a></div>
+                    </div>
+                </details>
+                <details class="group bg-white rounded-[1.2rem] shadow-sm border-2 border-red-100 overflow-hidden text-gray-800 transition-all w-full md:w-auto">
+                    <summary class="font-black list-none flex justify-between items-center px-5 py-3 md:py-4 text-base md:text-lg text-red-500 cursor-pointer hover:bg-red-50 gap-6"><span class="flex items-center whitespace-nowrap"><i class="fa-solid fa-fire-extinguisher mr-2.5 text-xl"></i> 消防隊</span><span class="text-red-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span></summary>
+                    <div class="px-3 pb-3 space-y-2.5 bg-white">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-red-50 p-3.5 rounded-xl gap-3"><div class="pr-2"><div class="text-red-700 font-black mb-1">坪頂消防分隊</div><div class="text-xs text-red-400 font-bold"><i class="fa-solid fa-location-dot"></i> 桃園市龜山區復興三路80號</div></div><a href="tel:03-3280309" class="bg-white hover:bg-red-500 hover:text-white text-red-500 px-3.5 py-1.5 rounded-lg text-sm font-black border border-red-100"><i class="fa-solid fa-phone-volume"></i> 03-3280309</a></div>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <div class="bg-blue-50/80 text-blue-600 text-xs sm:text-sm font-bold px-5 py-3 rounded-2xl mb-6 flex items-start sm:items-center shadow-sm border border-blue-100 w-full gap-3">
+            <i class="fa-solid fa-circle-info text-blue-500 text-lg"></i><div>就診前請確認機構與醫事人員具合法資格。<br class="hidden sm:block"><a href="https://ma.mohw.gov.tw/Accessibility/BASSearch/MASearchBAS" target="_blank" class="inline-flex items-center text-blue-500 hover:underline"><i class="fa-solid fa-magnifying-glass mr-1.5"></i>衛福部醫事機構查詢系統</a></div>
+        </div>
+
+        <div id="medical-list-container" class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full">
+            <div class="w-full text-center text-themeGreen py-12"><i class="fa-solid fa-spinner fa-spin text-4xl mb-5"></i><p class="font-bold">載入中...</p></div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t-4 border-dashed border-green-200 py-8 text-center mt-auto rounded-t-[3rem]">
+        <p class="text-gray-400 text-sm font-bold">© 2026 A7 柒樂部</p>
+    </footer>
+
+    <script>
+        function parseCSV(t){let p='',r=[''],ret=[r],i=0,j=0,s=!0,l;for(l of t){if('"'===l){if(s&&l===p)r[i]+=l;s=!s;}else if(','===l&&s)l=r[++i]='';else if('\n'===l&&s){if('\r'===p)r[i]=r[i].slice(0,-1);r=ret[++j]=[l=''];i=0;}else r[i]+=l;p=l;}return ret.filter(a=>a.join('').trim()!=='');}
+        function formatAddress(address) { return address ? address.replace(/^\d{3,6}\s*/, '') : ''; }
+
+        function loadMedicalData() {
+            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=368795626&single=true&output=csv').then(r=>r.text()).then(txt=>{
+                const data = parseCSV(txt).slice(1).map(r=>({name:r[0], category:r[8]||'其他醫療', address:formatAddress(r[3]), phone:r[5], license:r[14]})).filter(i=>i.name);
+                renderMedical(data);
+            });
+        }
+
+        function renderMedical(data) {
+            const container = document.getElementById('medical-list-container');
+            const gc = {}; data.forEach(i=>{if(!gc[i.category])gc[i.category]=[]; gc[i.category].push(i);});
+            const stPool=[{bd:'border-green-50',txt:'text-themeGreen',bg:'bg-themeGreen',ic:'fa-stethoscope'},{bd:'border-blue-50',txt:'text-themeBlue',bg:'bg-themeBlue',ic:'fa-tooth'},{bd:'border-pink-50',txt:'text-themePink',bg:'bg-themePink',ic:'fa-baby'},{bd:'border-yellow-50',txt:'text-yellow-500',bg:'bg-yellow-500',ic:'fa-eye'},{bd:'border-purple-50',txt:'text-themePurple',bg:'bg-themePurple',ic:'fa-bone'},{bd:'border-orange-50',txt:'text-orange-400',bg:'bg-orange-400',ic:'fa-pills'}];
+            let html='';
+            for(let [cName, items] of Object.entries(gc)) {
+                let st; if(cName.includes('牙'))st=stPool[1]; else if(cName.includes('兒')||cName.includes('婦'))st=stPool[2]; else if(cName.includes('眼'))st=stPool[3]; else if(cName.includes('骨')||cName.includes('復健'))st=stPool[4]; else if(cName.includes('藥'))st=stPool[5]; else st=stPool[0];
+                const iHtml = items.map(i=>`<li class="bg-gray-50 p-4 rounded-2xl hover:bg-white transition-all flex flex-col gap-2 h-full"><div class="flex items-start justify-between w-full"><div class="flex-1 pr-2"><div class="flex items-start"><i class="fa-solid fa-notes-medical ${st.txt} mr-2 mt-1"></i><span class="font-black text-gray-800 text-lg">${i.name}</span></div>${i.license?`<div class="ml-6 mt-1.5 text-[10px] text-white ${st.bg} px-2 py-1 rounded-md w-fit font-black"><i class="fa-regular fa-id-badge"></i> ${i.license} 號</div>`:''}</div><a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(i.address||i.name)}" target="_blank" class="bg-blue-100 text-blue-600 px-2.5 py-1.5 rounded-lg text-xs font-black"><i class="fa-solid fa-location-arrow"></i></a></div><div class="mt-1 space-y-1.5">${i.phone?`<div class="text-sm text-gray-500 font-bold ml-6"><i class="fa-solid fa-phone mr-1"></i>${i.phone}</div>`:''}${i.address?`<div class="text-sm text-gray-500 font-bold ml-6 line-clamp-1"><i class="fa-solid fa-location-dot mr-1"></i>${i.address}</div>`:''}</div></li>`).join('');
+                html += `<div class="break-inside-avoid mb-6 w-full inline-block"><div class="bg-white rounded-[2.5rem] p-6 shadow-cute border-4 ${st.bd} relative flex flex-col h-full"><div class="absolute -top-4 -right-4 text-6xl opacity-20"><i class="fa-solid ${st.ic}"></i></div><h3 class="text-2xl font-black ${st.txt} mb-5 border-b-2 border-gray-100 pb-3">${cName}</h3><ul class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3">${iHtml}</ul></div></div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        document.addEventListener('DOMContentLoaded', loadMedicalData);
+    </script>
+</body>
+</html>
