@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/A7Club/life/refs/heads/main/faviconico.ico" type="image/x-icon">
+    <title>A7 柒樂部🎡｜林口、龜山美食生活地圖指南</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Nunito', '"Noto Sans TC"', 'sans-serif'] },
+                    colors: { themePink: '#FF9EBB', themeBlue: '#80CFFF', themeYellow: '#FFD166', themeGreen: '#06D6A0', themePurple: '#C197FF', bgPastel: '#FDFBF7' },
+                    boxShadow: { 'cute': '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04)', 'sticker': '0 0 0 4px white, 0 8px 20px rgba(0,0,0,0.1)' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FDFBF7; background-image: radial-gradient(#FF9EBB 1.5px, transparent 1.5px); background-size: 40px 40px; }
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #FF9EBB; border-radius: 10px; border: 2px solid #FDFBF7; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff7eb3; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .floating { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        .num-counter { font-family: 'Nunito', sans-serif; font-variant-numeric: tabular-nums; }
+        @keyframes heartBeat { 0% { transform: scale(1); } 14% { transform: scale(1.35); } 28% { transform: scale(1); } 42% { transform: scale(1.35); } 70% { transform: scale(1); } }
+        .heart-beat-active { animation: heartBeat 0.6s ease-in-out; }
+        @keyframes flyUpFade { 0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; } 100% { transform: translateY(-60px) scale(1.5) rotate(15deg); opacity: 0; } }
+        .flying-heart { position: fixed; pointer-events: none; animation: flyUpFade 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; color: #FF4785; font-size: 1.5rem; z-index: 9999; text-shadow: 0 4px 8px rgba(255, 71, 133, 0.3); }
+    </style>
+</head>
+<body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
+
+    <nav class="sticky top-4 z-40 mx-4 sm:mx-8 lg:mx-auto max-w-6xl">
+        <div class="bg-white/90 backdrop-blur-md rounded-full shadow-cute px-6 py-3 flex justify-between items-center border-2 border-white">
+            <a href="index.html" class="flex items-center cursor-pointer gap-2">
+                <div class="w-10 h-10 bg-themeYellow rounded-full flex items-center justify-center text-white text-xl shadow-inner"><i class="fa-solid fa-tent"></i></div>
+                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部　</span></span>
+            </a>
+            <div class="hidden md:flex space-x-2">
+                <a href="food.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all">🍿 找美食</a>
+                <a href="shop.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all">🛍️ 買東西</a>
+                <a href="medical.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeGreen hover:text-white transition-all">🩺 救護站</a>
+                <a href="explore.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all">🎠 探索柒</a>
+            </div>
+            <div class="md:hidden">
+                <button onclick="toggleMobileMenu()" class="text-themePink text-2xl focus:outline-none w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
+            <a href="food.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform block">🍿 美食販賣部</a>
+            <a href="shop.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform block">🛍️ 購物與生活</a>
+            <a href="medical.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform block">🩺 樂園救護站</a>
+            <a href="explore.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform block">🎠 探索在地A7</a>
+        </div>
+    </nav>
+
+    <main id="app-root" class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 relative">
+        
+        <!-- ================= 首頁內容 ================= -->
+        <div id="home-view" class="fade-in space-y-8">
+            <div class="bg-cover bg-center rounded-[2.5rem] shadow-sticker p-8 md:p-14 text-center relative overflow-hidden" style="background-image: url('https://github.com/A7Club/life/blob/main/A7life.png?raw=true');">
+                <div class="absolute inset-0 bg-black/30"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-themeBlue/40 to-themePink/40"></div>
+                <div class="absolute -right-10 -top-10 text-white/40 text-9xl z-0"><i class="fa-solid fa-tent"></i></div>
+                <div class="absolute -left-5 -bottom-5 text-white/40 text-8xl z-0"><i class="fa-solid fa-ice-cream"></i></div>
+                
+                <h1 class="text-4xl md:text-5xl font-black text-white mb-4 relative z-10 drop-shadow-lg">探索 A7 在地生活 ✨</h1>
+                <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南<br>
+                <span class="text-sm md:text-base text-white font-bold mt-1 inline-block">― 網站３月試營運，你的建議就是我們升級的動力 ―</span>
+                </p>
+                <div class="max-w-xl mx-auto relative z-10">
+                    <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？全聯？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
+                    <button onclick="doSearch()" class="absolute right-2 top-2 bottom-2 w-12 bg-themeYellow text-white rounded-full flex items-center justify-center text-xl hover:bg-yellow-400 hover:scale-105 transition-all shadow-sm"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+
+            <div id="stats-container" class="flex flex-col gap-4 md:gap-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <a href="food.html" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePink group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-pink-100 text-themePink rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-burger"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">找美食 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-food" class="num-counter tracking-widest">...</span>)</span></h3>
+                    </a>
+                    <a href="shop.html" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themeYellow group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-100 text-themeYellow rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">買東西 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-shopping" class="num-counter tracking-widest">...</span>)</span></h3>
+                    </a>
+                    <a href="medical.html" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themeGreen group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-green-100 text-themeGreen rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-briefcase-medical"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">看醫生 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-medical" class="num-counter tracking-widest">...</span>)</span></h3>
+                    </a>
+                    <a href="explore.html" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePurple group flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-purple-100 text-themePurple rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">探索柒 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-explore" class="num-counter tracking-widest">...</span>)</span></h3>
+                    </a>
+                </div>
+                
+                <div class="mx-auto bg-white/80 backdrop-blur-md rounded-full px-5 md:px-8 py-2 md:py-2.5 shadow-sm border border-pink-100 flex items-center justify-center text-xs md:text-base font-bold text-gray-500 w-fit mb-4">
+                    <i class="fa-solid fa-chart-pie mr-2 text-themePink text-sm md:text-lg"></i> 
+                    目前統計店家總計數量： <span id="counter-total" class="inline-block text-center text-themePink font-black text-base md:text-xl mx-1.5 num-counter">...</span> 家
+                </div>
+            </div>
+
+            <!-- 機捷列車動態 -->
+            <div class="mb-2 bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-gray-50 flex flex-col lg:flex-row gap-6 md:gap-8 items-center relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 text-gray-100 text-8xl floating pointer-events-none z-0 opacity-50"><i class="fa-solid fa-train-subway"></i></div>
+                <div class="w-full lg:w-[35%] flex flex-col gap-3 relative z-10 shrink-0">
+                    <h2 class="text-xl md:text-2xl font-black text-purple-400 flex items-center border-b-2 border-gray-100 pb-3 mb-1">
+                        <i class="fa-solid fa-train-tram text-themePurple mr-3 text-2xl md:text-3xl"></i> 機捷到站通知
+                    </h2>
+                    <div class="flex flex-row lg:flex-col gap-3 md:gap-4 h-full">
+                        <div class="flex-1 bg-green-50 rounded-2xl p-4 shadow-sm border border-green-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                            <div><div class="text-[10px] sm:text-xs text-green-400 font-bold mb-0.5">往台北</div><div class="text-sm sm:text-lg font-black text-themeGreen">北上</div></div>
+                            <div class="flex items-baseline gap-1"><span id="mrt-time-north" class="text-3xl sm:text-4xl font-black text-themeGreen font-mono w-10 text-center">--</span><span id="mrt-unit-north" class="text-xs sm:text-sm font-bold text-gray-500">分</span></div>
+                        </div>
+                        <div class="flex-1 bg-blue-50 rounded-2xl p-4 shadow-sm border border-blue-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                            <div><div class="text-[10px] sm:text-xs text-blue-400 font-bold mb-0.5">往機場/中壢</div><div class="text-sm sm:text-lg font-black text-themeBlue">南下</div></div>
+                            <div class="flex items-baseline gap-1"><span id="mrt-time-south" class="text-3xl sm:text-4xl font-black text-themeBlue font-mono w-10 text-center">--</span><span id="mrt-unit-south" class="text-xs sm:text-sm font-bold text-gray-500">分</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-[65%] relative z-10 bg-white rounded-[1.5rem] p-4 sm:p-6 border-2 border-gray-100 shadow-inner flex flex-col justify-center">
+                    <div class="flex justify-between items-center mb-6"><span class="text-xs sm:text-sm text-gray-500 font-black"><i class="fa-solid fa-location-crosshairs mr-1.5"></i>列車即時位置</span><span class="text-[10px] sm:text-xs text-gray-400 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>系統推算中</span></div>
+                    <div class="relative w-full px-3 sm:px-6 mt-2 mb-4 h-[40px]">
+                        <div class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[16px] h-1.5 sm:h-2 bg-gray-200 rounded-full z-0"></div>
+                        <div id="mrt-track-container" class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[0px] z-20 pointer-events-none w-full h-full"></div>
+                    </div>
+                    <div class="flex justify-between relative z-10 w-full px-3 sm:px-6">
+                        <div class="flex flex-col items-center w-8 sm:w-12"><div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div><span class="text-[9px] sm:text-xs font-bold text-gray-400">A4</span></div>
+                        <div class="flex flex-col items-center w-8 sm:w-12"><div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div><span class="text-[9px] sm:text-xs font-bold text-gray-400">A5</span></div>
+                        <div class="flex flex-col items-center w-8 sm:w-12"><div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div><span class="text-[9px] sm:text-xs font-bold text-gray-400">A6</span></div>
+                        <div class="flex flex-col items-center w-8 sm:w-12"><div class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-themePurple border-[3px] border-white shadow-md z-10 mb-1"></div><span class="text-[11px] sm:text-sm font-black text-themePurple">A7</span><span class="text-[11px] sm:text-[15px] font-black text-gray-600 whitespace-nowrap">體大</span></div>
+                        <div class="flex flex-col items-center w-8 sm:w-12"><div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div><span class="text-[9px] sm:text-xs font-bold text-gray-400">A8</span></div>
+                        <div class="flex flex-col items-center w-8 sm:w-12"><div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div><span class="text-[9px] sm:text-xs font-bold text-gray-400">A9</span></div>
+                        <div class="flex flex-col items-center w-8 sm:w-12"><div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-gray-300 z-10 mb-1"></div><span class="text-[9px] sm:text-xs font-bold text-gray-400">A10</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 在地新商家情報 -->
+            <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-orange-50 relative overflow-hidden">
+                <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0 pointer-events-none"><i class="fa-solid fa-shop"></i></div>
+                <div class="flex items-center justify-between mb-1 relative z-10 gap-2">
+                    <h2 class="text-lg sm:text-2xl font-black text-orange-400 flex items-center whitespace-nowrap shrink-0"><i class="fa-solid fa-gift mr-2 sm:mr-3"></i> 在地新商家情報</h2>
+                </div>
+                <div class="flex gap-3 md:gap-4 overflow-x-auto pt-1 pb-4 relative z-10 snap-x snap-mandatory">
+                    <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門...', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" class="w-[260px] lg:w-[280px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                        <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl">全新開幕</div>
+                        <div><h4 class="font-black text-gray-800 text-base sm:text-lg mb-1">沐荼寺林口龜山店</h4><p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-沐荼寺手搖飲以真材實料、茶香回甘聞名...</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 樂園廣播 -->
+            <div class="bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-blue-50 relative overflow-hidden">
+                <h2 class="text-2xl font-black text-themeBlue mb-5 relative z-10">📢 樂園廣播 <span class="text-sm text-blue-300 ml-2 font-bold hidden sm:inline-block">/ 最新動態</span></h2>
+                <div class="flex flex-col lg:flex-row gap-6 relative z-10">
+                    <div class="w-full lg:w-1/2 space-y-3">
+                        <div class="flex items-start bg-blue-50 p-3.5 rounded-2xl shadow-sm"><span class="bg-themeBlue text-white font-bold px-2.5 py-1 rounded-full text-[10px] mr-3">新開幕</span><div><h4 class="font-bold text-gray-800 text-sm">「A7 柒樂部 ᴄʟᴜʙ」本月封測營運中🎡</h4></div></div>
+                    </div>
+                    <div id="dynamic-news-container" class="w-full lg:w-1/2 pt-5 lg:pt-0 border-t-2 lg:border-t-0 lg:border-l-2 border-dashed border-blue-100 lg:pl-6 flex flex-col">
+                        <div class="text-center text-blue-300 py-4 font-bold text-sm"><i class="fa-solid fa-spinner fa-spin text-xl mb-2 block"></i> 正在連線搜尋在地最新新聞...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分享在地店家 -->
+            <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-pink-50 relative text-center">
+                <h2 class="text-2xl font-black text-themePink mb-2 relative z-10">🙌 我要分享在地店家資訊</h2>
+                <button onclick="toggleShareForm()" class="relative z-10 bg-themePink text-white font-black py-3 px-8 rounded-full shadow-md hover:scale-105 transition-all">點我填寫分享</button>
+                <div id="share-form-container" class="hidden mt-6 w-full relative z-10 bg-pink-50 rounded-2xl p-2 h-[600px]"><iframe src="https://forms.gle/FyEGds4dPWsiEUUZA" class="w-full h-full rounded-xl border-0 bg-white" frameborder="0">載入中…</iframe></div>
+            </div>
+        </div>
+
+        <!-- ================= 搜尋結果視窗 (預設隱藏) ================= -->
+        <div id="search-view" class="hidden fade-in space-y-6">
+            <div class="flex items-center justify-between mb-4 bg-white p-4 rounded-3xl shadow-sm border-2 border-gray-100">
+                <h2 class="text-2xl md:text-3xl font-black text-themeYellow flex items-center"><i class="fa-solid fa-magnifying-glass mr-3"></i> 搜尋結果</h2>
+                <button onclick="closeSearch()" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl font-bold hover:bg-gray-200 transition-colors text-sm md:text-base"><i class="fa-solid fa-arrow-left mr-1"></i> 返回首頁</button>
+            </div>
+            <p id="search-query-display" class="text-gray-500 font-bold px-2 text-lg">正在為您全站搜尋...</p>
+            <div id="search-results-container" class="space-y-8"></div>
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t-4 border-dashed border-pink-200 py-8 text-center mt-auto rounded-t-[3rem]">
+        <h2 class="text-xl font-black text-themePink mb-2">🎈林口、龜山美食機能生活地圖指南 </h2>
+        <p class="text-gray-400 text-sm font-bold">讓每天的生活都像在遊樂園一樣精彩！© 2026</p>
+    </footer>
+
+    <!-- 店家 Modal -->
+    <div id="store-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="closeStoreModal()"></div>
+        <div class="bg-white w-full max-w-lg rounded-[2rem] shadow-2xl relative z-10 overflow-hidden flex flex-col max-h-[90vh]" id="store-modal-content">
+            <button onclick="closeStoreModal()" class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full text-gray-500 hover:bg-themePink hover:text-white flex items-center justify-center z-20 shadow-md"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div id="store-modal-img-container" class="w-full h-48 sm:h-64 bg-gray-100 relative shrink-0"></div>
+            <div class="p-6 md:p-8 overflow-y-auto flex-1 hide-scrollbar bg-white">
+                <div class="flex items-center gap-2 mb-3"><span id="store-modal-tag" class="text-xs font-black px-3 py-1 rounded-lg text-white shadow-sm"></span></div>
+                <h3 id="store-modal-title" class="text-2xl sm:text-3xl font-black text-gray-800 mb-3 leading-tight"></h3>
+                <p id="store-modal-desc" class="text-sm sm:text-base text-gray-600 font-bold mb-6"></p>
+                <div class="space-y-3.5 mb-8 bg-gray-50 p-5 rounded-2xl border-2 border-gray-100 shadow-inner">
+                    <div class="flex items-start text-sm sm:text-base"><div class="w-8 flex justify-center shrink-0"><i class="fa-solid fa-location-dot text-themePink"></i></div><span id="store-modal-address" class="text-gray-700 font-bold"></span></div>
+                    <div class="flex items-start text-sm sm:text-base"><div class="w-8 flex justify-center shrink-0"><i class="fa-solid fa-clock text-themeYellow"></i></div><span id="store-modal-hours" class="text-gray-700 font-bold"></span></div>
+                    <div id="store-modal-rating-container" class="flex items-start text-sm sm:text-base"><div class="w-8 flex justify-center shrink-0"><i class="fa-solid fa-star text-themeYellow"></i></div><span id="store-modal-rating" class="text-gray-700 font-bold">4.4 (Google 商家評分參考)</span></div>
+                </div>
+                <a id="store-modal-map-btn" href="#" target="_blank" class="w-full text-white font-black py-4 rounded-xl shadow-md flex items-center justify-center gap-2 text-lg"></a>
+                <div id="store-modal-qr-container" class="hidden flex-col items-center justify-center bg-green-50/80 p-6 rounded-2xl border-2 border-green-100">
+                    <img id="store-modal-qr-img" src="" alt="LINE QR Code" class="w-32 h-32 object-contain mix-blend-multiply">
+                    <a id="store-modal-line-btn" href="#" target="_blank" class="mt-4 w-full text-white bg-[#00B900] font-black py-3 rounded-xl shadow-sm flex items-center justify-center">開啟 LINE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+        function toggleShareForm() {
+            document.getElementById('share-form-container').classList.toggle('hidden');
+        }
+        function closeSearch() {
+            document.getElementById('search-view').classList.add('hidden');
+            document.getElementById('home-view').classList.remove('hidden');
+            document.getElementById('home-search-input').value = '';
+        }
+        function openStoreModal(name, tag, tagColor, desc, address, hours, imgUrl, mapQuery) {
+            document.getElementById('store-modal-title').innerText = name;
+            const tagEl = document.getElementById('store-modal-tag');
+            tagEl.innerText = tag; tagEl.className = `text-xs font-black px-2.5 py-1 rounded-lg text-white shadow-sm ${tagColor}`;
+            document.getElementById('store-modal-desc').innerText = desc;
+            document.getElementById('store-modal-hours').innerText = hours;
+            document.getElementById('store-modal-img-container').innerHTML = `<img src="${imgUrl}" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>`;
+            const mapBtn = document.getElementById('store-modal-map-btn');
+            const qrContainer = document.getElementById('store-modal-qr-container');
+            if (mapQuery && mapQuery.startsWith('http') && mapQuery.includes('line')) {
+                mapBtn.classList.add('hidden'); qrContainer.classList.remove('hidden'); qrContainer.classList.add('flex');
+                document.getElementById('store-modal-qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(mapQuery)}`;
+                document.getElementById('store-modal-line-btn').href = mapQuery;
+                document.getElementById('store-modal-address').innerHTML = `<span class="text-[#00B900]">官方 LINE 帳號諮詢</span>`;
+            } else {
+                qrContainer.classList.add('hidden'); qrContainer.classList.remove('flex'); mapBtn.classList.remove('hidden');
+                document.getElementById('store-modal-address').innerText = address;
+                mapBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery || name)}`;
+                mapBtn.innerHTML = `<i class="fa-solid fa-map-location-dot text-xl"></i> 前往 Google Map 查看詳細資訊`;
+                mapBtn.className = "w-full text-white bg-blue-500 hover:bg-blue-600 font-black py-3.5 rounded-xl shadow-md flex items-center justify-center gap-2";
+            }
+            const modal = document.getElementById('store-modal');
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+        }
+        function closeStoreModal() {
+            document.getElementById('store-modal').classList.remove('flex');
+            document.getElementById('store-modal').classList.add('hidden');
+        }
+
+        // CSV 共用解析
+        function parseCSV(text) {
+            let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
+            for (l of text) {
+                if ('"' === l) { if (s && l === p) row[i] += l; s = !s; }
+                else if (',' === l && s) l = row[++i] = '';
+                else if ('\n' === l && s) { if ('\r' === p) row[i] = row[i].slice(0, -1); row = ret[++r] = [l = '']; i = 0; }
+                else row[i] += l; p = l;
+            }
+            return ret.filter(r => r.join('').trim() !== '');
+        }
+        function formatAddress(address) { return address ? address.replace(/^\d{3,6}\s*/, '') : ''; }
+
+        // Data Fetchers for Counts & Search
+        let globalFoodData = null, globalShoppingData = null, globalMedicalData = null, globalCommunityData = null, globalBuildingData = null;
+        function loadSharedFoodData() {
+            return new Promise((resolve) => {
+                if(globalFoodData) return resolve(globalFoodData);
+                fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1150395419&single=true&output=csv')
+                .then(res => res.text()).then(txt => {
+                    const rows = parseCSV(txt);
+                    globalFoodData = rows.slice(1).map(row => ({ name: row[0], category: row[1], address: formatAddress(row[3]), likesCount: parseInt(row[14]) || 0 })).filter(i => i.name);
+                    resolve(globalFoodData);
+                }).catch(() => resolve([]));
+            });
+        }
+        function loadSharedShoppingData() {
+            return new Promise((resolve) => {
+                if(globalShoppingData) return resolve(globalShoppingData);
+                fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1279676556&single=true&output=csv')
+                .then(res => res.text()).then(txt => {
+                    const rows = parseCSV(txt);
+                    globalShoppingData = rows.slice(1).map(row => ({ name: row[1], category: row[6], address: formatAddress(row[2]) })).filter(i => i.name);
+                    resolve(globalShoppingData);
+                }).catch(() => resolve([]));
+            });
+        }
+        function loadSharedMedicalData() {
+            return new Promise((resolve) => {
+                if(globalMedicalData) return resolve(globalMedicalData);
+                fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=368795626&single=true&output=csv')
+                .then(res => res.text()).then(txt => {
+                    globalMedicalData = parseCSV(txt).slice(1).map(row => ({ name: row[0], category: row[8] })).filter(i => i.name);
+                    resolve(globalMedicalData);
+                }).catch(() => resolve([]));
+            });
+        }
+        function loadSharedCommunityData() {
+            return new Promise((resolve) => {
+                if(globalCommunityData) return resolve(globalCommunityData);
+                fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=369381822&single=true&output=csv')
+                .then(res => res.text()).then(txt => {
+                    globalCommunityData = parseCSV(txt).slice(1).map(row => ({ name: row[0], link: row[2] })).filter(i => i.name);
+                    resolve(globalCommunityData);
+                }).catch(() => resolve([]));
+            });
+        }
+
+        // MRT and News Logic
+        function updateMRTStatus() {
+            const container = document.getElementById('mrt-track-container');
+            if(!container) return;
+            const now = new Date();
+            const cm = now.getMinutes() + now.getSeconds() / 60;
+            const bNb = [5, 20, 35, 50], bSb = [10, 25, 40, 55];
+            let nH = '', mN = 999;
+            bNb.forEach(a => [-60,0,60].forEach(o => {
+                let d = (a+o)-cm; if(d>0 && d<mN) mN=d;
+                if(d>=-9 && d<=9) { let p=50+(d*(50/9)); nH += `<div class="absolute top-[0px] -translate-x-1/2 z-20" style="left: ${Math.max(0,Math.min(100,p))}%;"><div class="bg-white text-themeGreen rounded-full shadow-md border-2 border-green-200 px-2 py-1"><i class="fa-solid fa-train-subway"></i></div></div>`; }
+            }));
+            let sH = '', mS = 999;
+            bSb.forEach(a => [-60,0,60].forEach(o => {
+                let d = (a+o)-cm; if(d>0 && d<mS) mS=d;
+                if(d>=-9 && d<=9) { let p=50-(d*(50/9)); sH += `<div class="absolute top-[26px] -translate-x-1/2 z-20" style="left: ${Math.max(0,Math.min(100,p))}%;"><div class="bg-white text-themeBlue rounded-full shadow-md border-2 border-blue-200 px-2 py-1"><i class="fa-solid fa-train-subway"></i></div></div>`; }
+            }));
+            container.innerHTML = nH + sH;
+            document.getElementById('mrt-time-north').innerText = mN <= 1 ? '進站中' : Math.ceil(mN);
+            document.getElementById('mrt-time-south').innerText = mS <= 1 ? '進站中' : Math.ceil(mS);
+        }
+
+        async function fetchLocalNews() {
+            try {
+                const rs = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent('https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=林口+OR+龜山+A7&hl=zh-TW&gl=TW&ceid=TW:zh-Hant')}`);
+                const data = await rs.json();
+                if(data && data.items) {
+                    document.getElementById('dynamic-news-container').innerHTML = data.items.slice(0,3).map(i => `<a href="${i.link}" target="_blank" class="flex items-center bg-white/70 p-2.5 rounded-xl shadow-sm hover:bg-white text-sm"><span class="bg-gray-100 text-gray-500 px-2 py-0.5 rounded-md text-[10px] mr-2">新聞</span><h4 class="font-bold text-gray-700 line-clamp-1 flex-1">${i.title.split(' - ')[0]}</h4></a>`).join('');
+                }
+            } catch(e) { document.getElementById('dynamic-news-container').innerHTML = `<div class="text-gray-400 text-sm font-bold">暫無新聞</div>`; }
+        }
+
+        async function doSearch() {
+            const q = document.getElementById('home-search-input').value.trim().toLowerCase();
+            if(!q) return;
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('search-view').classList.remove('hidden');
+            document.getElementById('search-query-display').innerHTML = `搜尋 <span class="text-themePink">${q}</span> 中...`;
+            
+            await Promise.all([loadSharedFoodData(), loadSharedShoppingData(), loadSharedCommunityData()]);
+            const res = [...globalFoodData, ...globalShoppingData, ...globalCommunityData].filter(i => (i.name && i.name.toLowerCase().includes(q)) || (i.category && i.category.toLowerCase().includes(q)));
+            
+            const rc = document.getElementById('search-results-container');
+            if(res.length > 0) {
+                rc.innerHTML = res.map(i => `<div class="bg-white p-4 rounded-xl shadow-sm border"><h4 class="font-black text-themePink">${i.name} <span class="text-xs text-gray-400">(${i.category})</span></h4><p class="text-sm text-gray-500">${i.address || ''}</p></div>`).join('');
+            } else {
+                rc.innerHTML = `<div class="text-center py-12 text-gray-400">找不到相關結果</div>`;
+            }
+        }
+
+        function animateSingleCounter(counter, target) {
+            let current = 0; const steps = 60; const inc = target / steps;
+            const timer = setInterval(() => { current += inc; if(current >= target) { clearInterval(timer); counter.innerText = target; } else { counter.innerText = Math.floor(current); } }, 20);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Promise.all([loadSharedFoodData(), loadSharedShoppingData(), loadSharedMedicalData(), loadSharedCommunityData()]).then(() => {
+                animateSingleCounter(document.getElementById('counter-food'), globalFoodData.length);
+                animateSingleCounter(document.getElementById('counter-shopping'), globalShoppingData.length);
+                animateSingleCounter(document.getElementById('counter-medical'), globalMedicalData.length);
+                animateSingleCounter(document.getElementById('counter-explore'), globalCommunityData.length);
+                animateSingleCounter(document.getElementById('counter-total'), globalFoodData.length + globalShoppingData.length + globalMedicalData.length + globalCommunityData.length);
+            });
+            updateMRTStatus(); setInterval(updateMRTStatus, 1000);
+            fetchLocalNews();
+        });
+    </script>
+</body>
+</html>
