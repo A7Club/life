@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物與生活 🛍️｜A7 柒樂部</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', '"Noto Sans TC"', 'sans-serif'] }, colors: { themePink: '#FF9EBB', themeBlue: '#80CFFF', themeYellow: '#FFD166', themeGreen: '#06D6A0', themePurple: '#C197FF', bgPastel: '#FDFBF7' }, boxShadow: { 'cute': '0 10px 25px -5px rgba(0, 0, 0, 0.08)' } } } }
+    </script>
+    <style>
+        body { background-color: #FDFBF7; background-image: radial-gradient(#FFD166 1.5px, transparent 1.5px); background-size: 40px 40px; }
+        ::-webkit-scrollbar { width: 10px; height: 10px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #FFD166; border-radius: 10px; border: 2px solid #FDFBF7; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .floating { animation: float 3s ease-in-out infinite; } @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        .heart-beat-active { animation: heartBeat 0.6s ease-in-out; } @keyframes heartBeat { 0% { transform: scale(1); } 14% { transform: scale(1.35); } 28% { transform: scale(1); } 42% { transform: scale(1.35); } 70% { transform: scale(1); } }
+        .flying-heart { position: fixed; pointer-events: none; animation: flyUpFade 0.8s forwards; color: #FF4785; font-size: 1.5rem; z-index: 9999; } @keyframes flyUpFade { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-60px) scale(1.5); opacity: 0; } }
+    </style>
+</head>
+<body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
+
+    <nav class="sticky top-4 z-40 mx-4 sm:mx-8 lg:mx-auto max-w-6xl">
+        <div class="bg-white/90 backdrop-blur-md rounded-full shadow-cute px-6 py-3 flex justify-between items-center border-2 border-white">
+            <a href="index.html" class="flex items-center cursor-pointer gap-2">
+                <div class="w-10 h-10 bg-themeYellow rounded-full flex items-center justify-center text-white text-xl shadow-inner"><i class="fa-solid fa-tent"></i></div>
+                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部　</span></span>
+            </a>
+            <div class="hidden md:flex space-x-2">
+                <a href="food.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all">🍿 找美食</a>
+                <a href="shop.html" class="nav-btn px-4 py-2 rounded-full font-black bg-themeYellow text-white shadow-md transform scale-105 transition-all">🛍️ 買東西</a>
+                <a href="medical.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeGreen hover:text-white transition-all">🩺 救護站</a>
+                <a href="explore.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all">🎠 探索柒</a>
+            </div>
+            <div class="md:hidden">
+                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden'); document.getElementById('mobile-menu').classList.toggle('flex');" class="text-themePink text-2xl focus:outline-none w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
+            <a href="food.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm block">🍿 美食販賣部</a>
+            <a href="shop.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm block">🛍️ 購物與生活</a>
+            <a href="medical.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm block">🩺 樂園救護站</a>
+            <a href="explore.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm block">🎠 探索在地A7</a>
+        </div>
+    </nav>
+
+    <main id="app-root" class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 relative">
+        <div class="flex items-center mb-8">
+            <div class="w-12 h-12 bg-themeYellow text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-bag-shopping"></i></div>
+            <h2 class="text-2xl font-black text-themeYellow">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
+        </div>
+
+        <div id="shopping-tags-container" class="flex flex-wrap lg:flex-nowrap lg:overflow-x-auto hide-scrollbar gap-2 md:gap-3 w-full mb-4"></div>
+        <div class="bg-yellow-50/80 text-yellow-600 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl mb-6 flex items-center justify-center shadow-sm border border-yellow-100 text-center w-full"><i class="fa-solid fa-comment-dots mr-2 text-yellow-500"></i>店家資訊皆由社群網友熱心分享。</div>
+
+        <div id="shopping-list-container" class="flex flex-col gap-6 w-full">
+            <div class="text-center text-themeYellow py-12"><i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i><p class="font-bold">載入中...</p></div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t-4 border-dashed border-yellow-200 py-8 text-center mt-auto rounded-t-[3rem]">
+        <p class="text-gray-400 text-sm font-bold">© 2026 A7 柒樂部</p>
+    </footer>
+
+    <script>
+        function parseCSV(t){let p='',r=[''],ret=[r],i=0,j=0,s=!0,l;for(l of t){if('"'===l){if(s&&l===p)r[i]+=l;s=!s;}else if(','===l&&s)l=r[++i]='';else if('\n'===l&&s){if('\r'===p)r[i]=r[i].slice(0,-1);r=ret[++j]=[l=''];i=0;}else r[i]+=l;p=l;}return ret.filter(a=>a.join('').trim()!=='');}
+        
+        const currentUserId = localStorage.getItem('a7club_uid') || (localStorage.setItem('a7club_uid', 'user_' + Date.now()), localStorage.getItem('a7club_uid'));
+        let globalLikesData = {}, globalShoppingData = null;
+
+        function loadSharedLikesData() {
+            return fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1295636704&single=true&output=csv').then(r=>r.text()).then(t=>{
+                let m={}, r=parseCSV(t); if(r.length>1){ const ui=r[0].findIndex(k=>k.includes('ID')), si=r[0].findIndex(k=>k.includes('店')); r.slice(1).forEach(v=>{ if(v[si]&&v[ui]){if(!m[v[si]])m[v[si]]={users:[]};if(!m[v[si]].users.includes(v[ui]))m[v[si]].users.push(v[ui]);} }); }
+                const lc = JSON.parse(localStorage.getItem('a7club_likes_cache')||'{}'); for(let s in lc){if(!m[s])m[s]={users:[]};lc[s].users.forEach(u=>{if(!m[s].users.includes(u))m[s].users.push(u);});}
+                globalLikesData=m; return m;
+            }).catch(()=>{globalLikesData=JSON.parse(localStorage.getItem('a7club_likes_cache')||'{}'); return globalLikesData;});
+        }
+
+        window.toggleLike = function(e, name) {
+            e.stopPropagation(); if(!globalLikesData[name]) globalLikesData[name]={users:[]};
+            let sl=globalLikesData[name], ui=sl.users.indexOf(currentUserId), isL=ui!==-1, btn=e.currentTarget, icon=btn.querySelector('i'), cnt=btn.querySelector('span'), c=parseInt(cnt.innerText)||0;
+            if(isL){ sl.users.splice(ui,1); icon.className='fa-regular fa-heart text-pink-400'; btn.className=btn.className.replace('bg-pink-50 border-pink-300','text-pink-400'); cnt.innerText=Math.max(0,c-1); }
+            else { sl.users.push(currentUserId); icon.className='fa-solid fa-heart text-[#FF4785] heart-beat-active'; btn.className=btn.className.replace('text-pink-400','bg-pink-50 border-pink-300'); cnt.innerText=c+1; const fh=document.createElement('i'); fh.className='fa-solid fa-heart flying-heart'; fh.style.left=(e.clientX-10)+'px'; fh.style.top=(e.clientY-10)+'px'; document.body.appendChild(fh); setTimeout(()=>fh.remove(),800); }
+            localStorage.setItem('a7club_likes_cache', JSON.stringify(globalLikesData));
+        }
+
+        function loadSharedShoppingData() {
+            return fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1279676556&single=true&output=csv').then(r=>r.text()).then(t=>{
+                let r=parseCSV(t); globalShoppingData=r.slice(1).map(v=>({name:v[1],category:v[6],address:(v[2]||'').replace(/^\d{3,6}\s*/,''),img:v[8]&&v[8].startsWith('http')?v[8]:'',likesCount:parseInt(v[14])||0,status:v[11]})).filter(i=>i.name&&i.status&&i.status.toUpperCase().includes('OK'));
+                return globalShoppingData;
+            });
+        }
+
+        window.renderShoppingData = function(data, cat) {
+            const container = document.getElementById('shopping-list-container');
+            const tagsHtml = ['全部',...new Set(globalShoppingData.map(i=>i.category))].map(c=>{
+                let icon='🛍️'; if(c.includes('生鮮')||c.includes('超市'))icon='🛒'; if(c.includes('居家')||c.includes('五金'))icon='🏠'; if(c.includes('服務')||c.includes('美容'))icon='✂️'; if(c==='全部')icon='🎡';
+                return `<button onclick="renderShoppingData(globalShoppingData, '${c}')" class="py-2.5 px-5 rounded-full font-black text-sm border border-yellow-100 ${c===cat?'bg-themeYellow text-white scale-105':'bg-white text-gray-600 hover:bg-yellow-50'}">${icon} ${c}</button>`;
+            }).join('');
+            document.getElementById('shopping-tags-container').innerHTML = tagsHtml;
+
+            const fd = cat==='全部'?data:data.filter(i=>i.category===cat);
+            if(fd.length===0) { container.innerHTML='<div class="text-center text-gray-400 py-8">無資料</div>'; return; }
+
+            const gc={}; fd.forEach(i=>{if(!gc[i.category])gc[i.category]=[]; gc[i.category].push(i);});
+            const stPool=[{bd:'border-yellow-50',txt:'text-themeYellow',ic:'fa-cart-shopping'},{bd:'border-blue-50',txt:'text-themeBlue',ic:'fa-couch'},{bd:'border-purple-50',txt:'text-themePurple',ic:'fa-scissors'},{bd:'border-green-50',txt:'text-themeGreen',ic:'fa-basket-shopping'}];
+            
+            let html='', sIdx=0;
+            for(let [cName, items] of Object.entries(gc)) {
+                items.sort((a,b)=>b.likesCount-a.likesCount);
+                let st; if(cName.includes('生鮮'))st=stPool[0]; else if(cName.includes('居家'))st=stPool[1]; else if(cName.includes('服務'))st=stPool[2]; else{st=stPool[3+(sIdx%2)]; sIdx++;}
+                
+                const isPhoto = cName.includes('購物中心')||cName.includes('觀光景點');
+                const isMRT = cName.includes('機捷');
+                
+                let itHtml = items.map(i=>{
+                    const nav = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(i.address||i.name)}`;
+                    const isL = (globalLikesData[i.name]||{users:[]}).users.includes(currentUserId);
+                    const lBtn = isMRT?'':`<button onclick="toggleLike(event,'${i.name}')" class="px-2 py-1 rounded-xl text-xs font-black border-2 border-pink-100 flex items-center gap-1 ${isL?'bg-pink-50 text-[#FF4785] border-pink-300':'bg-white text-pink-400'}"><i class="fa-solid fa-heart"></i> <span class="text-gray-600">${i.likesCount}</span></button>`;
+                    
+                    if(isPhoto) {
+                        return `<div onclick="window.open('${nav}','_blank')" class="bg-gray-50 rounded-[1.5rem] p-2 hover:-translate-y-1 cursor-pointer flex flex-col h-full"><div class="w-full h-24 rounded-xl overflow-hidden bg-white mb-2 relative">${i.img?`<img src="${i.img}" class="w-full h-full object-cover">`:'<i class="fa-solid fa-image text-gray-200"></i>'}<div class="absolute bottom-1 right-1 z-10" onclick="event.stopPropagation()">${lBtn}</div></div><h4 class="font-black text-gray-800 text-sm px-1 line-clamp-1">${i.name}</h4></div>`;
+                    }
+                    return `<li class="flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white group"><div class="flex flex-col"><span class="font-bold text-gray-800 line-clamp-1">${i.name}</span>${i.address?`<span class="text-xs text-gray-500 line-clamp-1">${i.address}</span>`:''}</div><div class="flex gap-2">${lBtn}<a href="${nav}" target="_blank" class="bg-blue-100 text-blue-600 px-3 py-1.5 rounded-lg text-xs font-black"><i class="fa-solid fa-location-arrow"></i></a></div></li>`;
+                }).join('');
+
+                const gridClass = isPhoto?"grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3":"grid grid-cols-1 sm:grid-cols-2 gap-3";
+                html += `<div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${st.bd} relative"><div class="absolute -top-5 -right-5 text-6xl opacity-20"><i class="fa-solid ${st.ic}"></i></div><h3 class="text-xl font-black ${st.txt} mb-4 relative z-10">${cName}</h3><ul class="${gridClass} relative z-10">${itHtml}</ul></div>`;
+            }
+            container.innerHTML = `<div class="columns-1 gap-6 space-y-6">${html}</div>`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Promise.all([loadSharedShoppingData(), loadSharedLikesData()]).then(([data])=>renderShoppingData(data, '全部'));
+        });
+    </script>
+</body>
+</html>
