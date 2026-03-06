@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美食販賣部 🍿｜A7 柒樂部</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 🗺️ Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { fontFamily: { sans: ['Nunito', '"Noto Sans TC"', 'sans-serif'] }, colors: { themePink: '#FF9EBB', themeBlue: '#80CFFF', themeYellow: '#FFD166', themeGreen: '#06D6A0', themePurple: '#C197FF', bgPastel: '#FDFBF7' }, boxShadow: { 'cute': '0 10px 25px -5px rgba(0, 0, 0, 0.08)' } }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FDFBF7; background-image: radial-gradient(#FF9EBB 1.5px, transparent 1.5px); background-size: 40px 40px; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .leaflet-popup-content-wrapper { border-radius: 1.5rem !important; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1) !important; padding: 4px !important; }
+        .leaflet-popup-content { margin: 10px !important; font-family: 'Nunito', '"Noto Sans TC"', sans-serif; }
+        .leaflet-popup-close-button { top: 4px !important; right: 4px !important; color: white !important; background-color: #FF9EBB !important; border-radius: 50% !important; width: 24px !important; height: 24px !important; line-height: 24px !important; font-weight: 900 !important; }
+        .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large { background-color: rgba(255, 158, 187, 0.5) !important; }
+        .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div { background-color: rgba(255, 158, 187, 0.9) !important; color: white !important; font-weight: 900 !important; }
+        .floating-marker { animation: floatMarker 2.5s ease-in-out infinite; } @keyframes floatMarker { 0% { transform: translateY(0px); } 50% { transform: translateY(-4px); } 100% { transform: translateY(0px); } }
+        .bounce-marker { animation: bounceMarker 0.5s cubic-bezier(0.28, 0.84, 0.42, 1) infinite; } @keyframes bounceMarker { 0% { transform: translateY(0px) scale(1, 1); } 45% { transform: translateY(-12px) scale(0.95, 1.05); } 100% { transform: translateY(0px) scale(1, 1); } }
+        .heart-beat-active { animation: heartBeat 0.6s ease-in-out; } @keyframes heartBeat { 0% { transform: scale(1); } 14% { transform: scale(1.35); } 28% { transform: scale(1); } 42% { transform: scale(1.35); } 70% { transform: scale(1); } }
+        .flying-heart { position: fixed; pointer-events: none; animation: flyUpFade 0.8s forwards; color: #FF4785; font-size: 1.5rem; z-index: 9999; } @keyframes flyUpFade { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-60px) scale(1.5); opacity: 0; } }
+    </style>
+</head>
+<body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
+
+    <nav class="sticky top-4 z-40 mx-4 sm:mx-8 lg:mx-auto max-w-6xl">
+        <div class="bg-white/90 backdrop-blur-md rounded-full shadow-cute px-6 py-3 flex justify-between items-center border-2 border-white">
+            <a href="index.html" class="flex items-center cursor-pointer gap-2">
+                <div class="w-10 h-10 bg-themeYellow rounded-full flex items-center justify-center text-white text-xl shadow-inner"><i class="fa-solid fa-tent"></i></div>
+                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部　</span></span>
+            </a>
+            <div class="hidden md:flex space-x-2">
+                <a href="food.html" class="nav-btn px-4 py-2 rounded-full font-black bg-themePink text-white shadow-md transform scale-105 transition-all">🍿 找美食</a>
+                <a href="shop.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all">🛍️ 買東西</a>
+                <a href="medical.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeGreen hover:text-white transition-all">🩺 救護站</a>
+                <a href="explore.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all">🎠 探索柒</a>
+            </div>
+            <div class="md:hidden">
+                <button onclick="toggleMobileMenu()" class="text-themePink text-2xl focus:outline-none w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
+            <a href="food.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm block">🍿 美食販賣部</a>
+            <a href="shop.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm block">🛍️ 購物與生活</a>
+            <a href="medical.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm block">🩺 樂園救護站</a>
+            <a href="explore.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm block">🎠 探索在地A7</a>
+        </div>
+    </nav>
+
+    <main id="app-root" class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 relative">
+        <div class="flex flex-col mb-6 shrink-0 px-2 gap-4 w-full">
+            <div class="flex items-center shrink-0">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
+                <h2 class="text-2xl md:text-2xl font-black text-themePink shrink-0 whitespace-nowrap">美食販賣部 <span class="text-base md:text-lg text-gray-400 font-bold ml-2">吃飽才有力氣玩</span></h2>
+            </div>
+            <div id="food-tags-desktop" class="hidden lg:flex flex-wrap justify-start gap-2 md:gap-3 w-full"></div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 relative items-start">
+            <!-- 地圖區塊 -->
+            <div class="w-full h-[45vh] lg:h-[calc(100vh-160px)] lg:w-1/2 xl:w-5/12 sticky top-[80px] lg:top-[100px] z-20 shrink-0 shadow-lg rounded-[2rem] order-1 lg:order-2">
+                <div class="w-full h-full bg-pink-50 rounded-[2rem] border-4 border-white overflow-hidden relative flex items-center justify-center">
+                    <div id="food-leaflet-map" class="w-full h-full relative z-10"></div>
+                    <button onclick="locateUserOnFoodMap()" class="absolute top-[20px] right-[20px] z-[400] bg-white w-10 h-10 rounded-xl shadow-md flex items-center justify-center text-gray-600 hover:text-themeBlue hover:bg-blue-50 transition-colors border-2 border-gray-100"><i id="location-btn-icon" class="fa-solid fa-crosshairs text-lg"></i></button>
+                    <div id="food-map-overlay" class="absolute inset-0 bg-white/80 backdrop-blur-sm hidden flex-col items-center justify-center z-30" style="border-radius: 1.5rem;"><i class="fa-solid fa-spinner fa-spin text-4xl text-pink-300 mb-3"></i><span id="food-map-overlay-text" class="text-sm font-bold text-gray-600">定位中...</span></div>
+                </div>
+            </div>
+
+            <!-- 列表區塊 -->
+            <div class="w-full flex-1 lg:w-1/2 xl:w-7/12 flex flex-col bg-white/60 rounded-[2rem] p-3 md:p-4 shadow-inner border border-pink-50 order-2 lg:order-1">
+                <div id="food-tags-mobile" class="flex lg:hidden flex-wrap overflow-x-auto hide-scrollbar justify-start gap-2 w-full mb-4"></div>
+                <div class="bg-pink-50/80 text-pink-500 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl mb-3 flex items-center justify-center shadow-sm border border-pink-100 text-center"><i class="fa-solid fa-comment-dots mr-2 text-pink-400"></i>店家資訊皆由社群網友熱心分享。</div>
+                <p class="text-left text-sm text-themePink font-black mb-4"><i class="fa-solid fa-arrow-down-short-wide mr-1"></i> 點選下方店家，地圖會自動放大定位喔！</p>
+                <div id="food-list-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 pb-12"><div class="col-span-full text-center text-pink-300 py-8"><i class="fa-solid fa-spinner fa-spin text-3xl"></i><p class="text-sm mt-2 font-bold">搜尋樂園美食中...</p></div></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t-4 border-dashed border-pink-200 py-8 text-center mt-auto rounded-t-[3rem]">
+        <p class="text-gray-400 text-sm font-bold">© 2026 A7 柒樂部</p>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); document.getElementById('mobile-menu').classList.toggle('flex'); }
+        function parseCSV(text) { let p='', row=[''], ret=[row], i=0, r=0, s=!0, l; for(l of text) { if('"'===l) { if(s&&l===p) row[i]+=l; s=!s; } else if(','===l&&s) l=row[++i]=''; else if('\n'===l&&s) { if('\r'===p) row[i]=row[i].slice(0,-1); row=ret[++r]=[l='']; i=0; } else row[i]+=l; p=l; } return ret.filter(r=>r.join('').trim()!==''); }
+        function formatAddress(address) { return address ? address.replace(/^\d{3,6}\s*/, '') : ''; }
+        function formatStoreName(name) { return name.replace(/([a-zA-Z\s]+)/g, '<span class="text-[0.8em]">$1</span>'); }
+
+        // Likes System
+        function getUserId() { let uid = localStorage.getItem('a7club_uid'); if (!uid) { uid = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now(); localStorage.setItem('a7club_uid', uid); } return uid; }
+        const currentUserId = getUserId();
+        let globalLikesData = {};
+
+        function loadSharedLikesData() {
+            return fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1295636704&single=true&output=csv')
+            .then(res => res.text()).then(txt => {
+                const rows = parseCSV(txt); let lm = {};
+                if(rows.length > 1) {
+                    const h = rows[0], ui = h.findIndex(k=>k.includes('ID')), si = h.findIndex(k=>k.includes('店'));
+                    rows.slice(1).forEach(r => { const sn = r[si], u = r[ui]; if(!sn||!u)return; if(!lm[sn]) lm[sn]={users:[]}; if(!lm[sn].users.includes(u)) lm[sn].users.push(u); });
+                }
+                const lc = JSON.parse(localStorage.getItem('a7club_likes_cache')||'{}');
+                for(let s in lc) { if(!lm[s]) lm[s]={users:[]}; lc[s].users.forEach(u=>{ if(!lm[s].users.includes(u)) lm[s].users.push(u); }); }
+                globalLikesData = lm; return lm;
+            }).catch(() => { globalLikesData = JSON.parse(localStorage.getItem('a7club_likes_cache')||'{}'); return globalLikesData; });
+        }
+
+        function toggleLike(e, storeName) {
+            e.stopPropagation(); if(!globalLikesData[storeName]) globalLikesData[storeName]={users:[]};
+            const sl = globalLikesData[storeName], ui = sl.users.indexOf(currentUserId), isL = ui!==-1, btn = e.currentTarget, icon = btn.querySelector('i'), cnt = btn.querySelector('span');
+            let c = parseInt(cnt.innerText)||0;
+            if(isL) { sl.users.splice(ui,1); icon.className='fa-regular fa-heart text-pink-400 transition-transform'; btn.className=btn.className.replace('bg-pink-50 border-pink-300','text-pink-400'); cnt.innerText=Math.max(0,c-1); }
+            else { sl.users.push(currentUserId); icon.className='fa-solid fa-heart text-[#FF4785] heart-beat-active transition-transform'; btn.className=btn.className.replace('text-pink-400','bg-pink-50 border-pink-300'); cnt.innerText=c+1;
+                const fh = document.createElement('i'); fh.className='fa-solid fa-heart flying-heart'; fh.style.left=(e.clientX-10)+'px'; fh.style.top=(e.clientY-10)+'px'; document.body.appendChild(fh); setTimeout(()=>fh.remove(),800);
+            }
+            localStorage.setItem('a7club_likes_cache', JSON.stringify(globalLikesData));
+        }
+
+        // Food Data logic
+        const F_STYLE = [ { kw: ['早'], ic: 'fa-egg', bg: 'bg-yellow-400', tx: 'text-yellow-600', em: '🍳' }, { kw: ['預設'], ic: 'fa-utensils', bg: 'bg-themePink', tx: 'text-pink-500', em: '🍽️' } ];
+        function getFStyle(c) { return F_STYLE.find(s=>s.kw.some(k=>c&&c.includes(k))) || F_STYLE[1]; }
+
+        let globalFoodData = null, foodMapInstance = null, foodClusterGroup = null, foodMarkersMap = {}, activeFoodMarkerName = null;
+
+        function initFoodMap() {
+            foodMapInstance = L.map('food-leaflet-map', {zoomControl: false}).setView([25.0425, 121.3870], 15);
+            L.control.zoom({position: 'bottomright'}).addTo(foodMapInstance);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {maxZoom: 20}).addTo(foodMapInstance);
+            foodClusterGroup = L.markerClusterGroup(); foodMapInstance.addLayer(foodClusterGroup);
+        }
+
+        function loadSharedFoodData() {
+            return fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1150395419&single=true&output=csv')
+            .then(res=>res.text()).then(txt => {
+                const rows = parseCSV(txt), h = rows[0];
+                const ni=0, ci=1, ai=3, ii=8, lti=9, lni=10, si=11, li=14;
+                globalFoodData = rows.slice(1).map(r => ({ name: r[ni], category: r[ci]||'未分類', address: formatAddress(r[ai]), img: r[ii]&&r[ii].startsWith('http')?r[ii]:'', lat: parseFloat(r[lti]), lng: parseFloat(r[lni]), status: r[si], likesCount: parseInt(r[li])||0 })).filter(i=>i.name&&i.status&&i.status.toUpperCase().includes('OK'));
+                return globalFoodData;
+            });
+        }
+
+        function getCategoryIcon(cat, state='normal', bounce=false) {
+            const s = getFStyle(cat), bg = state==='clicked'?'bg-red-500':s.bg, tx = state==='clicked'?'text-red-500':s.tx, anim = bounce?'bounce-marker':'floating-marker';
+            return L.divIcon({ className: 'bg-transparent', html: `<div class="relative w-[48px] h-[64px] pt-1"><div class="${anim} flex flex-col items-center"><div class="w-[36px] h-[36px] ${bg} flex items-center justify-center mt-[2px]" style="border-radius:50% 50% 50% 0;transform:rotate(-45deg);"><div class="w-[22px] h-[22px] bg-white rounded-full flex items-center justify-center" style="transform:rotate(45deg);"><i class="fa-solid ${s.ic} ${tx} text-[11px]"></i></div></div></div><div class="absolute bottom-[9px] w-5 h-1.5 bg-black/25 rounded-[50%] blur-[1.5px] scale-x-[1.5] z-0"></div></div>`, iconSize:[48,64], iconAnchor:[24,60], popupAnchor:[0,-45] });
+        }
+
+        window.renderFoodData = function(data, cat) {
+            const c = document.getElementById('food-list-container');
+            const cats = ['全部', ...new Set(data.map(i=>i.category))];
+            const tags = cats.map(ct => `<button onclick="renderFoodData(globalFoodData, '${ct}')" class="py-2 px-4 rounded-full font-black text-sm border border-pink-100 ${ct===cat?'bg-themePink text-white scale-105':'bg-white text-gray-600 hover:bg-pink-50'}">${ct}</button>`).join('');
+            document.getElementById('food-tags-desktop').innerHTML = tags; document.getElementById('food-tags-mobile').innerHTML = tags;
+            
+            let fData = cat==='全部'?data:data.filter(i=>i.category===cat);
+            fData.sort((a,b)=>(b.likesCount||0)-(a.likesCount||0));
+            
+            foodClusterGroup.clearLayers(); foodMarkersMap={};
+            fData.forEach(i => {
+                if(i.lat&&i.lng) {
+                    const m = L.marker([i.lat,i.lng], {icon: getCategoryIcon(i.category)}).bindPopup(`<div class="text-center w-44"><h4 class="font-black text-themePink mb-1">${i.name}</h4><a href="https://www.google.com/maps/dir/?api=1&destination=${i.lat},${i.lng}" target="_blank" class="bg-blue-100 text-blue-600 rounded block py-1 mt-2 text-xs font-bold">導航去</a></div>`);
+                    m.on('click', () => { if(activeFoodMarkerName&&foodMarkersMap[activeFoodMarkerName]) foodMarkersMap[activeFoodMarkerName].setIcon(getCategoryIcon(foodMarkersMap[activeFoodMarkerName].cat)); activeFoodMarkerName=i.name; m.setIcon(getCategoryIcon(i.category, 'clicked', true)); m.cat=i.category; });
+                    foodClusterGroup.addLayer(m); foodMarkersMap[i.name]=m; m.cat=i.category;
+                }
+            });
+            if(foodClusterGroup.getLayers().length>0) { foodMapInstance.fitBounds(foodClusterGroup.getBounds(), {padding:[40,40]}); }
+
+            c.innerHTML = fData.map(i => {
+                const s = getFStyle(i.category), isL = (globalLikesData[i.name]||{users:[]}).users.includes(currentUserId);
+                let img = i.img?`<img src="${i.img}" class="w-full h-full object-cover">`:`<i class="fa-solid ${s.ic} text-4xl ${s.tx}"></i>`;
+                return `<div onclick="updateFoodMap('${i.name}')" class="bg-white p-4 rounded-3xl shadow-cute flex items-center gap-4 cursor-pointer relative group border border-pink-50"><div class="absolute top-3 right-4 ${s.bg} text-white text-[10px] px-2.5 py-0.5 rounded-full">${i.category}</div><div class="w-20 h-20 bg-pink-50 rounded-xl flex items-center justify-center overflow-hidden shrink-0">${img}</div><div class="flex-1 pr-16"><h4 class="font-black text-lg text-gray-800 line-clamp-1">${i.name}</h4><p class="text-sm text-gray-500 line-clamp-1 mt-1"><i class="fa-solid fa-location-dot text-pink-400"></i> ${i.address}</p></div><button onclick="toggleLike(event, '${i.name}')" class="absolute bottom-3 right-4 px-3 py-1.5 rounded-full text-sm font-black border-2 border-pink-100 flex items-center gap-1 ${isL?'bg-pink-50 text-pink-500':'bg-white text-gray-400'}"><i class="fa-solid fa-heart ${isL?'text-[#FF4785]':''}"></i> <span class="text-gray-600">${i.likesCount}</span></button></div>`;
+            }).join('');
+        };
+
+        window.updateFoodMap = function(name) {
+            if(foodMarkersMap[name]) {
+                const m = foodMarkersMap[name];
+                if(activeFoodMarkerName&&foodMarkersMap[activeFoodMarkerName]) foodMarkersMap[activeFoodMarkerName].setIcon(getCategoryIcon(foodMarkersMap[activeFoodMarkerName].cat));
+                activeFoodMarkerName = name;
+                foodMapInstance.flyTo(m.getLatLng(), 18, {animate:true, duration:1.5});
+                foodMapInstance.once('moveend', () => { foodClusterGroup.zoomToShowLayer(m, () => { m.openPopup(); m.setIcon(getCategoryIcon(m.cat, 'clicked', true)); }); });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initFoodMap();
+            Promise.all([loadSharedFoodData(), loadSharedLikesData()]).then(([data]) => renderFoodData(data, '全部'));
+        });
+    </script>
+</body>
+</html>
