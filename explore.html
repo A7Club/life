@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探索在地A7 🎠｜A7 柒樂部</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Nunito', '"Noto Sans TC"', 'sans-serif'] }, colors: { themePink: '#FF9EBB', themeBlue: '#80CFFF', themeYellow: '#FFD166', themeGreen: '#06D6A0', themePurple: '#C197FF' }, boxShadow: { 'cute': '0 10px 25px -5px rgba(0, 0, 0, 0.08)' } } } }
+    </script>
+    <style>
+        body { background-color: #FDFBF7; background-image: radial-gradient(#C197FF 1.5px, transparent 1.5px); background-size: 40px 40px; }
+        ::-webkit-scrollbar { width: 10px; height: 10px; } ::-webkit-scrollbar-thumb { background: #C197FF; border-radius: 10px; border: 2px solid #FDFBF7; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; } .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .floating { animation: float 3s ease-in-out infinite; } @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+    </style>
+</head>
+<body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
+
+    <nav class="sticky top-4 z-40 mx-4 sm:mx-8 lg:mx-auto max-w-6xl">
+        <div class="bg-white/90 backdrop-blur-md rounded-full shadow-cute px-6 py-3 flex justify-between items-center border-2 border-white">
+            <a href="index.html" class="flex items-center cursor-pointer gap-2">
+                <div class="w-10 h-10 bg-themeYellow rounded-full flex items-center justify-center text-white text-xl shadow-inner"><i class="fa-solid fa-tent"></i></div>
+                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部　</span></span>
+            </a>
+            <div class="hidden md:flex space-x-2">
+                <a href="food.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all">🍿 找美食</a>
+                <a href="shop.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all">🛍️ 買東西</a>
+                <a href="medical.html" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeGreen hover:text-white transition-all">🩺 救護站</a>
+                <a href="explore.html" class="nav-btn px-4 py-2 rounded-full font-black bg-themePurple text-white shadow-md transform scale-105 transition-all">🎠 探索柒</a>
+            </div>
+            <div class="md:hidden">
+                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden'); document.getElementById('mobile-menu').classList.toggle('flex');" class="text-themePink text-2xl focus:outline-none w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
+            <a href="food.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm block">🍿 美食販賣部</a>
+            <a href="shop.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm block">🛍️ 購物與生活</a>
+            <a href="medical.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm block">🩺 樂園救護站</a>
+            <a href="explore.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm block">🎠 探索在地A7</a>
+        </div>
+    </nav>
+
+    <main id="app-root" class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 relative">
+        <div class="flex items-center mb-8">
+            <div class="w-12 h-12 bg-themePurple text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-ticket"></i></div>
+            <h2 class="text-2xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">了解在地生活</span></h2>
+        </div>
+
+        <!-- 社群推薦 -->
+        <div class="mb-12">
+            <h2 class="text-xl font-black text-themePurple flex items-center mb-6"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門社群推薦</h2>
+            <div id="community-list-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch"><div class="lg:col-span-3 text-center text-themePurple py-12"><i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i><p>載入中...</p></div></div>
+        </div>
+
+        <!-- 常見問題 -->
+        <div class="mb-12 bg-white rounded-[2.5rem] shadow-cute p-8 border-4 border-pink-50 relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 text-pink-100 text-8xl floating"><i class="fa-solid fa-circle-question"></i></div>
+            <h2 class="text-2xl font-black text-themeBlue mb-6 relative z-10 flex items-center"><i class="fa-solid fa-clipboard-question mr-3"></i>新居民常見問題集</h2>
+            <div class="space-y-4 relative z-10">
+                <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100"><summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg"><span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 剛交屋，要到哪裡辦理戶籍遷入？</span><span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">A7 重劃區隸屬於「桃園市龜山區」，辦理戶籍遷入需前往龜山區戶政事務所。建議可利用內政部戶政司的「線上申辦」服務。</p></details>
+                <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100"><summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg"><span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 垃圾車的時間和路線怎麼查？</span><span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">強烈建議下載 「桃園垃圾車」APP。APP 內會即時顯示垃圾車定位與各里清運時間表。</p></details>
+                <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100"><summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg"><span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 小孩的就學學區怎麼劃分？</span><span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">主要學區為樂善國小，以及文青國中小。具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準。</p></details>
+            </div>
+        </div>
+
+        <!-- 建案分佈 -->
+        <div id="buildings-section" class="mb-8 scroll-mt-[100px]">
+            <h2 class="text-2xl font-black text-themeGreen flex items-center mb-6"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeGreen"></i>A7 建案分佈</h2>
+            <div class="mb-8 flex flex-col md:flex-row gap-4 md:gap-6 items-start">
+                <div class="w-full md:w-1/2 lg:w-5/12 relative shrink-0 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border-4 border-white shadow-cute bg-white"><img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-auto object-contain block"><div class="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm border border-gray-100 whitespace-nowrap">A7 區域建案概覽圖</div></div>
+                <div class="w-full md:w-1/2 lg:w-7/12 flex flex-col"><div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col"><h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0"><i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整</h3><div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-1.5 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start pt-2"></div></div></div>
+            </div>
+            <div id="buildings-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"><div class="col-span-full text-center text-themeYellow py-12 bg-white rounded-[2rem] border-4 border-green-50 shadow-cute"><p class="font-bold">載入中...</p></div></div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t-4 border-dashed border-purple-200 py-8 text-center mt-auto rounded-t-[3rem]">
+        <p class="text-gray-400 text-sm font-bold">© 2026 A7 柒樂部</p>
+    </footer>
+
+    <script>
+        function parseCSV(t){let p='',r=[''],ret=[r],i=0,j=0,s=!0,l;for(l of t){if('"'===l){if(s&&l===p)r[i]+=l;s=!s;}else if(','===l&&s)l=r[++i]='';else if('\n'===l&&s){if('\r'===p)r[i]=r[i].slice(0,-1);r=ret[++j]=[l=''];i=0;}else r[i]+=l;p=l;}return ret.filter(a=>a.join('').trim()!=='');}
+
+        function loadData() {
+            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=369381822&single=true&output=csv').then(r=>r.text()).then(t=>{
+                const data=parseCSV(t).slice(1).map(r=>{ const m=r[4]&&r[4].match(/https?:\/\/[^\s]+/); return {name:r[0],category:r[1]||'其他推薦',link:r[2],img:m?m[0]:''}}).filter(i=>i.name);
+                renderCommunity(data);
+            });
+            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=985024788&single=true&output=csv').then(r=>r.text()).then(t=>{
+                const data=parseCSV(t).slice(1).map(r=>({name:r[0],village:r[1]||'未分類區域',img:r[3]})).filter(i=>i.name);
+                renderBuildings(data);
+            });
+            if(window.location.hash==='#buildings-section') setTimeout(()=>document.getElementById('buildings-section').scrollIntoView({behavior:'smooth'}), 300);
+        }
+
+        function renderCommunity(data) {
+            const container = document.getElementById('community-list-container');
+            const gc = {'在地社群':[], '地方互助':[]}; data.forEach(i=>{if(!gc[i.category])gc[i.category]=[]; gc[i.category].push(i);});
+            if(!gc['在地社群'].length) delete gc['在地社群']; if(!gc['地方互助'].length) delete gc['地方互助'];
+            
+            let html='';
+            for(const [cName, items] of Object.entries(gc)) {
+                const isLoc = cName==='在地社群', gridClass = isLoc?'flex flex-wrap justify-center items-stretch gap-3 md:gap-4':(cName==='地方互助'?'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-1 gap-3':'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3'), span = isLoc?'lg:col-span-2':(cName==='地方互助'?'lg:col-span-1':'lg:col-span-3');
+                const iHtml = items.map(i=>{
+                    let sT='Web', sBg='bg-gray-500 text-white', sI='fa-solid fa-globe', aBg='random', sStr=(i.name+' '+i.link).toUpperCase();
+                    if(sStr.includes('LINE')) {sT='LINE'; sBg='bg-[#00B900] text-white'; sI='fa-brands fa-line'; aBg='00B900';} else if(sStr.includes('THREADS')) {sT='Threads'; sBg='bg-black text-white'; sI='fa-brands fa-threads'; aBg='000000';} else if(sStr.includes('FB')) {sT='Facebook'; sBg='bg-[#1877F2] text-white'; sI='fa-brands fa-facebook'; aBg='1877F2';}
+                    let aUrl = i.img || `https://ui-avatars.com/api/?name=${encodeURIComponent(sT==='Threads'?i.name.substring(0,2):i.name)}&background=${aBg}&color=fff&size=150`;
+                    
+                    if(isLoc) return `<a href="${i.link}" target="_blank" class="flex-1 min-w-[140px] max-w-[240px] bg-white rounded-[2rem] p-4 shadow-cute border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-2 transition-all flex flex-col items-center text-center"><div class="w-20 h-20 rounded-full mb-3 overflow-hidden border-2 border-gray-100"><img src="${aUrl}" class="w-full h-full object-cover"></div><h4 class="font-black text-gray-800 mb-4 line-clamp-2 flex-1">${i.name}</h4><div class="${sBg} w-full py-2 rounded-xl text-xs font-black"><i class="${sI}"></i> 點擊進入</div></a>`;
+                    return `<a href="${i.link}" target="_blank" class="bg-white rounded-2xl p-3 shadow-sm border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-1 flex items-center justify-between"><div class="pr-2"><h4 class="font-black text-sm line-clamp-2 mb-1">${i.name}</h4><div class="${sBg} text-[10px] px-2 py-1 rounded-lg inline-block"><i class="${sI}"></i> ${sT}</div></div><div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-gray-50 border"><img src="${aUrl}" class="w-full h-full object-cover"></div></a>`;
+                }).join('');
+                html += `<div class="bg-white rounded-[2.5rem] p-6 shadow-cute border-4 ${isLoc?'border-red-50':'border-blue-50'} flex flex-col ${span}"><h3 class="text-lg font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block">${cName}</h3><div class="${gridClass} flex-1">${iHtml}</div></div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function renderBuildings(data) {
+            const gc={}; data.forEach(i=>{if(!gc[i.village])gc[i.village]=[]; gc[i.village].push(i);});
+            const colors=['gray','teal','orange','yellow','green','pink','blue','purple']; let cIdx=0;
+            const getStyle=n=>{let c=colors[cIdx++%colors.length]; if(n.includes('文青'))c='orange'; if(n.includes('樂善'))c='yellow'; if(n.includes('長樂'))c='green'; if(n.includes('文桃'))c='pink'; if(n.includes('文藝')||n.includes('長庚'))c='blue'; if(n.includes('文樂'))c='purple'; return `border-${c}-200 text-${c}-500 bg-${c}-50 hover:bg-${c}-50`;}
+            
+            let html='', tagsHtml='';
+            for(let [vName, items] of Object.entries(gc)) {
+                const s=getStyle(vName), id=`v-${vName.replace(/\s+/g,'')}`;
+                tagsHtml += `<button onclick="document.getElementById('${id}').scrollIntoView({behavior:'smooth', block:'start'})" class="py-1.5 px-3 bg-white border-2 ${s} font-black rounded-full text-sm shadow-sm hover:-translate-y-1">${vName}</button>`;
+                const iHtml=items.map(i=>`<div class="${s.split('hover')[0]} p-2 rounded-2xl border border-white shadow-sm flex items-center gap-3 w-auto min-w-[120px]"><div class="w-12 h-12 rounded-xl overflow-hidden bg-white border flex items-center justify-center">${i.img&&i.img.startsWith('http')?`<img src="${i.img}" class="w-full h-full object-cover">`:'<i class="fa-solid fa-building text-gray-200"></i>'}</div><span class="font-bold text-gray-700 text-sm">${i.name}</span></div>`).join('');
+                html += `<div id="${id}" class="bg-white rounded-[2.5rem] shadow-cute p-6 border-4 ${s.split(' ')[0]} scroll-mt-[100px] mb-6"><h3 class="text-xl font-black ${s.split(' ')[1]} mb-4 border-b-2 pb-3">${vName} (${items.length})</h3><div class="flex flex-wrap gap-3">${iHtml}</div></div>`;
+            }
+            document.getElementById('buildings-list-container').innerHTML = html;
+            document.getElementById('village-tags-container').innerHTML = tagsHtml;
+        }
+
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
