@@ -60,6 +60,12 @@
         ::-webkit-scrollbar-thumb { background: #FF9EBB; border-radius: 10px; border: 2px solid #FDFBF7; }
         ::-webkit-scrollbar-thumb:hover { background: #ff7eb3; }
 
+        /* 在地新商家專屬橘色捲動條 */
+        .scrollbar-orange::-webkit-scrollbar { width: 10px; height: 10px; }
+        .scrollbar-orange::-webkit-scrollbar-track { background: transparent; }
+        .scrollbar-orange::-webkit-scrollbar-thumb { background: #fb923c; border-radius: 10px; border: 2px solid #FDFBF7; }
+        .scrollbar-orange::-webkit-scrollbar-thumb:hover { background: #f97316; }
+
         /* 隱藏橫向滾動條(強制一列時使用) */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -445,8 +451,8 @@
                     向右滑動查看更多 <i class="fa-solid fa-arrow-right-long ml-0.5"></i>
                 </div>
                 
-                <!-- 卡片區塊：移除 lg:grid 相關類別，全尺寸保持 flex 橫向排列 -->
-                <div class="flex gap-3 md:gap-4 overflow-x-auto pt-1 pb-4 relative z-10 snap-x snap-mandatory">
+                <!-- 卡片區塊：移除 lg:grid 相關類別，全尺寸保持 flex 橫向排列，並加入 scrollbar-orange 自訂樣式 -->
+                <div class="flex gap-3 md:gap-4 overflow-x-auto pt-1 pb-4 relative z-10 snap-x snap-mandatory scrollbar-orange">
                     <!-- 模擬推廣卡片 1 -->
                     <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
                          class="w-[260px] lg:w-[280px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
@@ -522,8 +528,8 @@
             <div style="display: none;" class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-purple-50 relative">
                 <div class="absolute -top-4 -left-4 text-purple-200 text-5xl floating z-0"><i class="fa-solid fa-camera-retro"></i></div>
                 <h2 class="text-2xl font-black text-themePurple mb-2 relative z-10"> 想去哪裡玩？ <span class="text-sm text-gray-400 font-bold ml-2">為您計算距離中...</span></h2>
-                <!-- 新增 pt-3 pb-4 預留上下方空間避免懸停被遮蔽 -->
-                <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pt-3 pb-4 relative z-10 snap-x snap-mandatory" id="attractions-list-container">
+                <!-- 新增 pt-3 pb-4 預留上下方空間避免懸停被遮蔽，並移除 hide-scrollbar 顯示橫向捲動條 -->
+                <div class="flex gap-3 md:gap-4 overflow-x-auto pt-3 pb-4 relative z-10 snap-x snap-mandatory" id="attractions-list-container">
                     <div class="text-center text-purple-300 py-4 w-full"><i class="fa-solid fa-spinner fa-spin text-2xl"></i><span class="text-sm ml-2 font-bold">載入在地景點中...</span></div>
                 </div>
             </div>
@@ -555,7 +561,7 @@
                                 <p class="text-xs sm:text-sm text-gray-500 mt-1">桃園大眾捷運股份有限公司宣布A22站發車班次21日起早晚各加一班，未來最早清晨5時33分就有車能坐到台北，最晚凌晨0時23分有車能抵達機場。</p>
                             </div>
                         </div>
-                        <div class="flex items-start bg-pink-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
+                        <div style="display: none;" class="flex items-start bg-pink-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
                             <span class="bg-themePink text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">交通</span>
                             <div>
                                 <h4 class="font-bold text-gray-800 text-sm sm:text-base">大桃園停水公告</h4>
@@ -959,6 +965,11 @@
         let foodMarkersMap = {}; 
         let activeFoodMarkerName = null; // 新增：用於記錄目前被選取的店家名稱
 
+        // 購物與生活的全域地圖變數
+        let shoppingMaps = {};
+        let shoppingClusterGroups = {};
+        let shoppingMarkersMap = {};
+
         // 初始化與路由監聽 (讓 GA 可追蹤網址 Hash 停留時間)
         document.addEventListener('DOMContentLoaded', () => {
             handleRoute();
@@ -1208,7 +1219,12 @@
                     (item.name && item.name.toLowerCase().includes(q)) || 
                     (item.category && item.category.toLowerCase().includes(q)) ||
                     (item.address && item.address.toLowerCase().includes(q))
-                ).sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
+                ).sort((a, b) => {
+                    if ((b.likesCount || 0) !== (a.likesCount || 0)) {
+                        return (b.likesCount || 0) - (a.likesCount || 0);
+                    }
+                    return (b.timestamp || 0) - (a.timestamp || 0);
+                });
 
                 const matchedShopping = shoppingData.filter(item => 
                     (item.name && item.name.toLowerCase().includes(q)) || 
@@ -1243,13 +1259,17 @@
                                 ${matchedFood.map(item => {
                                     let imgContent = item.img ? `<img src="${item.img}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-utensils text-2xl text-pink-300"></i>`;
                                     let navTarget = encodeURIComponent(item.address || item.name);
+                                    
+                                    const isNew = item.timestamp && (Date.now() - item.timestamp < 7 * 24 * 60 * 60 * 1000);
+                                    const newBadge = isNew ? '<span class="ml-1.5 bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-md shadow-sm relative -top-0.5 font-black animate-pulse whitespace-nowrap">NEW</span>' : '';
+                                    
                                     return `
                                         <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-pink-50 p-3 rounded-2xl shadow-sm border border-white flex items-center gap-3 hover:-translate-y-1 hover:shadow-md transition-all group">
                                             <div class="w-14 h-14 bg-white rounded-xl overflow-hidden shrink-0 flex items-center justify-center">${imgContent}</div>
                                             <div class="flex-1 overflow-hidden pr-2">
                                                 <div class="flex items-center gap-2 mb-0.5">
                                                     <span class="text-[10px] bg-white text-themePink px-1.5 py-0.5 rounded-md font-black shadow-sm shrink-0">${item.category}</span>
-                                                    <h4 class="font-black text-gray-800 line-clamp-1 group-hover:text-themePink">${item.name}</h4>
+                                                    <h4 class="font-black text-gray-800 line-clamp-1 group-hover:text-themePink">${item.name}${newBadge}</h4>
                                                 </div>
                                                 <p class="text-xs text-gray-500 font-bold line-clamp-1"><i class="fa-solid fa-location-dot mr-1 text-pink-400"></i>${item.address || 'A7 在地美食'}</p>
                                             </div>
@@ -1689,8 +1709,8 @@
                 }
 
                 if (data && data.status === 'ok' && data.items && data.items.length > 0) {
-                    // 只取前五則新聞，改用單行精簡排版以縮短版面
-                    const newsHtml = data.items.slice(0, 3).map(item => {
+                    // 依據螢幕大小動態顯示新聞數，最少3則，大螢幕最多6則以配合左側高度
+                    const newsHtml = data.items.slice(0, 6).map((item, index) => {
                         // 整理時間格式
                         const pubDate = new Date(item.pubDate);
                         const dateStr = `${pubDate.getFullYear()}-${String(pubDate.getMonth() + 1).padStart(2, '0')}-${String(pubDate.getDate()).padStart(2, '0')}`;
@@ -1698,8 +1718,13 @@
                         // 移除標題中多餘的媒體名稱 (如 " - Yahoo奇摩新聞")
                         const cleanTitle = item.title.split(' - ')[0];
 
+                        // 判斷顯示邏輯：前3則全顯示，第4-5則在 lg 以上顯示，第6則在 xl 以上顯示
+                        let visibilityClass = 'flex';
+                        if (index >= 3 && index < 5) visibilityClass = 'hidden lg:flex';
+                        if (index >= 5) visibilityClass = 'hidden xl:flex';
+
                         return `
-                            <a href="${item.link}" target="_blank" class="flex items-center bg-white/70 hover:bg-white p-2.5 rounded-xl shadow-sm border border-blue-50 hover:border-themeBlue transition-all group gap-2">
+                            <a href="${item.link}" target="_blank" class="${visibilityClass} items-center bg-white/70 hover:bg-white p-2.5 rounded-xl shadow-sm border border-blue-50 hover:border-themeBlue transition-all group gap-2">
                                 <span class="bg-gray-100 text-gray-500 font-black px-2 py-0.5 rounded-md text-[10px] shrink-0 group-hover:bg-themeBlue group-hover:text-white transition-colors">新聞</span>
                                 <h4 class="font-bold text-gray-700 line-clamp-1 group-hover:text-themeBlue transition-colors text-xs sm:text-sm flex-1">${cleanTitle}</h4>
                                 <span class="text-[10px] text-gray-400 font-bold shrink-0 hidden sm:block">${dateStr.slice(5)}</span>
@@ -1711,7 +1736,7 @@
                         <h3 class="text-sm font-black text-gray-500 mb-2.5 flex items-center bg-gray-100/80 w-fit px-3 py-1 rounded-full shrink-0">
                             <i class="fa-solid fa-rss mr-1.5 text-themeBlue"></i>自動追蹤：在地媒體報報
                         </h3>
-                        <div class="flex flex-col gap-2 flex-1 overflow-y-auto hide-scrollbar max-h-[250px] pr-1">${newsHtml}</div>
+                        <div class="flex flex-col gap-2 flex-1 overflow-hidden pr-1">${newsHtml}</div>
                     `;
                 } else {
                     container.innerHTML = `<div class="text-center text-gray-400 text-sm font-bold py-2 bg-gray-50 rounded-xl">目前暫無最新的在地新聞喔！</div>`;
@@ -1935,69 +1960,86 @@
             localStorage.setItem('a7club_likes_cache', JSON.stringify(globalLikesData));
 
             // ==== 串接 Google Apps Script 寫入 ====
-            const GAS_URL = 'https://script.google.com/macros/s/AKfycbzyH7yhuVfi-Ajb0u9hwob8plKXqvm2Bbas4H-TFiDFQ2_aKmZQI6vhfHJyvLO7xhB1WA/exec';
-            const now = new Date();
-            const timeString = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
-            
-            if (GAS_URL) {
-                fetch(GAS_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 
-                        'Content-Type': 'text/plain;charset=utf-8' 
-                    },
-                    body: JSON.stringify({
-                        storeName: storeName,
-                        userId: currentUserId,
-                        action: isLiked ? 'unlike' : 'like',
-                        timestamp: timeString 
-                    })
-                }).catch(e => console.log('傳送愛心資料失敗', e));
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbzyH7yhuVfi-Ajb0u9hwob8plKXqvm2Bbas4H-TFiDFQ2_aKmZQI6vhfHJyvLO7xhB1WA/exec';
+        const now = new Date();
+        const timeString = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+        
+        if (GAS_URL) {
+            fetch(GAS_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 
+                    'Content-Type': 'text/plain;charset=utf-8' 
+                },
+                body: JSON.stringify({
+                    storeName: storeName,
+                    userId: currentUserId,
+                    action: isLiked ? 'unlike' : 'like',
+                    timestamp: timeString 
+                })
+            }).catch(e => console.log('傳送愛心資料失敗', e));
+        }
+    }
+
+    // ==========================================
+    // 🎨 全域地標與分類樣式設定 (包含美食、購物、醫療)
+    // ==========================================
+
+    // 透過這個設定，只要分類名稱包含這些關鍵字，就會自動配對顏色、圖示與 Emoji
+    const CATEGORY_STYLES = [
+        // --- 美食販賣部 ---
+        { keywords: ['早', '早餐', '早午餐'], iconClass: 'fa-egg', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '🍳' },
+        { keywords: ['素', '素食', '蔬食', '健康'], iconClass: 'fa-leaf', bgColor: 'bg-green-400', textColor: 'text-green-600', emoji: '🥗' },
+        { keywords: ['飲', '飲料', '手搖', '茶'], iconClass: 'fa-glass-water', bgColor: 'bg-teal-400', textColor: 'text-teal-600', emoji: '🧋' },
+        { keywords: ['甜點', '冰', '蛋糕', '麵包', '甜甜圈'], iconClass: 'fa-bread-slice', bgColor: 'bg-pink-400', textColor: 'text-pink-600', emoji: '🍩' },
+        { keywords: ['咖啡'], iconClass: 'fa-mug-hot', bgColor: 'bg-themeBlue', textColor: 'text-blue-500', emoji: '☕' },
+        { keywords: ['西餐', '美式', '漢堡', '義式', '披薩'], iconClass: 'fa-burger', bgColor: 'bg-orange-500', textColor: 'text-orange-700', emoji: '🍔' },
+        { keywords: ['麵', '麵食', '拉麵'], iconClass: 'fa-bowl-food', bgColor: 'bg-amber-500', textColor: 'text-amber-700', emoji: '🍜' },
+        { keywords: ['飯', '正餐', '主食', '便當', '水餃'], iconClass: 'fa-bowl-rice', bgColor: 'bg-orange-400', textColor: 'text-orange-600', emoji: '🍱' },
+        { keywords: ['小吃', '宵夜', '炸', '烤', '滷味'], iconClass: 'fa-drumstick-bite', bgColor: 'bg-amber-400', textColor: 'text-amber-600', emoji: '🍗' },
+        { keywords: ['鍋', '火鍋', '鐵板'], iconClass: 'fa-fire-burner', bgColor: 'bg-red-400', textColor: 'text-red-500', emoji: '🍲' },
+        { keywords: ['異國', '日式', '韓式', '泰式'], iconClass: 'fa-earth-americas', bgColor: 'bg-indigo-400', textColor: 'text-indigo-600', emoji: '🍛' },
+        
+        // --- 購物與生活 ---
+        { keywords: ['生鮮', '超市', '採買', '食品', '市場'], iconClass: 'fa-cart-shopping', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '🛒' },
+        { keywords: ['居家', '寵物', '五金', '電器'], iconClass: 'fa-couch', bgColor: 'bg-blue-400', textColor: 'text-blue-600', emoji: '🏠' },
+        { keywords: ['服務', '洗', '寄', '修', '美容'], iconClass: 'fa-scissors', bgColor: 'bg-purple-400', textColor: 'text-purple-600', emoji: '✂️' },
+        { keywords: ['觀光', '景點', '購物中心', '百貨', '商場'], iconClass: 'fa-bag-shopping', bgColor: 'bg-pink-400', textColor: 'text-pink-600', emoji: '🛍️' },
+        { keywords: ['捷運', '機捷', '交通'], iconClass: 'fa-train-subway', bgColor: 'bg-themeBlue', textColor: 'text-blue-600', emoji: '🚇' },
+
+        // --- 樂園救護站 (醫療) ---
+        { keywords: ['牙'], iconClass: 'fa-tooth', bgColor: 'bg-blue-400', textColor: 'text-blue-600', emoji: '🦷' },
+        { keywords: ['小兒', '婦產'], iconClass: 'fa-baby', bgColor: 'bg-pink-400', textColor: 'text-pink-600', emoji: '👶' },
+        { keywords: ['眼'], iconClass: 'fa-eye', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '👁️' },
+        { keywords: ['骨', '復健'], iconClass: 'fa-bone', bgColor: 'bg-purple-400', textColor: 'text-purple-600', emoji: '🦴' },
+        { keywords: ['藥'], iconClass: 'fa-pills', bgColor: 'bg-orange-400', textColor: 'text-orange-600', emoji: '💊' },
+        { keywords: ['診所', '醫療', '醫院'], iconClass: 'fa-stethoscope', bgColor: 'bg-green-400', textColor: 'text-green-600', emoji: '🩺' },
+        
+        // 預設分類 (當都比對不到時的預設值)
+        { keywords: ['預設'], iconClass: 'fa-location-dot', bgColor: 'bg-themePink', textColor: 'text-pink-500', emoji: '📍' }
+    ];
+
+    // 輔助函數：透過分類名稱，找出最適合的樣式設定
+    function getCategoryStyle(categoryName) {
+        if (!categoryName) return CATEGORY_STYLES[CATEGORY_STYLES.length - 1]; // 回傳預設
+        
+        for (let style of CATEGORY_STYLES) {
+            if (style.keywords.some(kw => categoryName.includes(kw))) {
+                return style;
             }
         }
+        return CATEGORY_STYLES[CATEGORY_STYLES.length - 1]; // 找不到配對，回傳預設
+    }
 
-        // ==========================================
-        // 🍿 美食販賣部 (Food) 相關函數
-        // ==========================================
-
-        // --- 美食分類的關鍵字比對池 (Keyword Mapping Pool) ---
-        // 透過這個設定，未來只要分類名稱包含這些關鍵字，就會自動配對顏色、圖示與 Emoji
-        const FOOD_CATEGORY_STYLES = [
-            { keywords: ['早', '早餐', '早午餐'], iconClass: 'fa-egg', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '🍳' },
-            { keywords: ['素', '素食', '蔬食', '健康'], iconClass: 'fa-leaf', bgColor: 'bg-green-400', textColor: 'text-green-600', emoji: '🥗' },
-            { keywords: ['飲', '飲料', '手搖', '茶'], iconClass: 'fa-glass-water', bgColor: 'bg-teal-400', textColor: 'text-teal-600', emoji: '🧋' },
-            { keywords: ['甜點', '冰', '蛋糕', '麵包', '甜甜圈'], iconClass: 'fa-bread-slice', bgColor: 'bg-pink-400', textColor: 'text-pink-600', emoji: '🍩' },
-            { keywords: ['咖啡'], iconClass: 'fa-mug-hot', bgColor: 'bg-themeBlue', textColor: 'text-blue-500', emoji: '☕' },
-            { keywords: ['西餐', '美式', '漢堡', '義式', '披薩'], iconClass: 'fa-burger', bgColor: 'bg-orange-500', textColor: 'text-orange-700', emoji: '🍔' },
-            { keywords: ['麵', '麵食', '拉麵'], iconClass: 'fa-bowl-food', bgColor: 'bg-amber-500', textColor: 'text-amber-700', emoji: '🍜' },
-            { keywords: ['飯', '正餐', '主食', '便當', '水餃'], iconClass: 'fa-bowl-rice', bgColor: 'bg-orange-400', textColor: 'text-orange-600', emoji: '🍱' },
-            { keywords: ['小吃', '宵夜', '炸', '烤', '滷味'], iconClass: 'fa-drumstick-bite', bgColor: 'bg-amber-400', textColor: 'text-amber-600', emoji: '🍗' },
-            { keywords: ['鍋', '火鍋', '鐵板'], iconClass: 'fa-fire-burner', bgColor: 'bg-red-400', textColor: 'text-red-500', emoji: '🍲' },
-            { keywords: ['異國', '日式', '韓式', '泰式'], iconClass: 'fa-earth-americas', bgColor: 'bg-indigo-400', textColor: 'text-indigo-600', emoji: '🍛' },
-            // 預設分類 (當都比對不到時的預設值)
-            { keywords: ['預設'], iconClass: 'fa-utensils', bgColor: 'bg-themePink', textColor: 'text-pink-500', emoji: '🍽️' }
-        ];
-
-        // 輔助函數：透過分類名稱，找出最適合的樣式設定
-        function getFoodStyleByCategory(categoryName) {
-            if (!categoryName) return FOOD_CATEGORY_STYLES[FOOD_CATEGORY_STYLES.length - 1]; // 回傳預設
-            
-            for (let style of FOOD_CATEGORY_STYLES) {
-                if (style.keywords.some(kw => categoryName.includes(kw))) {
-                    return style;
-                }
-            }
-            return FOOD_CATEGORY_STYLES[FOOD_CATEGORY_STYLES.length - 1]; // 找不到配對，回傳預設
-        }
-
-        function loadSharedFoodData() {
-            return new Promise((resolve, reject) => {
+    function loadSharedFoodData() {
+        return new Promise((resolve, reject) => {
                 if (globalFoodData) return resolve(globalFoodData);
                 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1150395419&single=true&output=csv';
                 fetch(csvUrl).then(res => res.text()).then(csvText => {
                     const rows = parseCSV(csvText);
                     if (rows.length < 2) return resolve([]);
                     const headers = rows[0];
+                    const timeIdx = Math.max(0, headers.findIndex(k => k.includes('時間') || k.toLowerCase().includes('timestamp'))); // 找尋時間戳記欄位
                     const nameIdx = Math.max(0, headers.findIndex(k => k.includes('店') || k.includes('名')));
                     const catIdx = Math.max(0, headers.findIndex(k => k.includes('分類') || k.includes('類別')));
                     const addressIdx = Math.max(0, headers.findIndex(k => k.includes('地址') || k.includes('位置') || k.includes('地點') || k.includes('網址')));
@@ -2009,6 +2051,13 @@
                     let parsedData = rows.slice(1).map(row => {
                         let rawImg = imgIdx !== -1 && row[imgIdx] ? row[imgIdx].trim() : '';
                         let finalImg = rawImg.startsWith('http') ? rawImg : '';
+                        
+                        // 處理時間戳記 (轉換為可計算的微秒時間)
+                        let rawTime = timeIdx !== -1 && row[timeIdx] ? row[timeIdx].trim() : '';
+                        // 若遇到表單輸出的中文字「上午/下午」，替換以利於解析
+                        let cleanTime = rawTime.replace('上午', 'AM').replace('下午', 'PM');
+                        let parsedTime = new Date(cleanTime).getTime();
+
                         return {
                             name: row[nameIdx] || '未命名',
                             category: row[catIdx] || '未分類',
@@ -2017,7 +2066,8 @@
                             lat: latIdx !== -1 && row[latIdx] ? parseFloat(row[latIdx]) : null,
                             lng: lngIdx !== -1 && row[lngIdx] ? parseFloat(row[lngIdx]) : null,
                             status: statusIdx !== -1 ? row[statusIdx] : 'OK',
-                            likesCount: parseInt(row[14]) || 0 // 讀取 O 欄作為絕對愛心數量
+                            likesCount: parseInt(row[14]) || 0, // 讀取 O 欄作為絕對愛心數量
+                            timestamp: isNaN(parsedTime) ? 0 : parsedTime // 儲存時間以供排序與 NEW 標籤判斷
                         };
                     }).filter(item => item.name !== '未命名' && item.name.trim() !== '');
 
@@ -2081,16 +2131,16 @@
         }
 
         // 動態產生有白色大圓底與 ICON 的水滴圖釘
-        function getCategoryIcon(category, state = 'normal', isBouncing = false) {
-            
-            // 透過比對池取得對應的樣式
-            const style = getFoodStyleByCategory(category);
-            
-            let iconClass = style.iconClass;
-            let bgColorClass = style.bgColor;
-            let textColorClass = style.textColor;
+    function getCategoryIcon(category, state = 'normal', isBouncing = false) {
+        
+        // 透過比對池取得對應的樣式
+        const style = getCategoryStyle(category);
+        
+        let iconClass = style.iconClass;
+        let bgColorClass = style.bgColor;
+        let textColorClass = style.textColor;
 
-            let animationClass = isBouncing ? 'bounce-marker' : 'floating-marker'; // 根據狀態切換跳動或平滑漂浮
+        let animationClass = isBouncing ? 'bounce-marker' : 'floating-marker'; // 根據狀態切換跳動或平滑漂浮
 
             // 選取狀態：改為紅色並保持，不再隨時間消失，彈跳動畫則由 isBouncing 獨立控制
             if (state === 'clicked') {
@@ -2158,20 +2208,20 @@
             if (!container) return;
 
             // 渲染上方 TAG 分類按鈕
-            const categories = ['全部', ...new Set(data.map(item => item.category).filter(c => c))];
+        const categories = ['全部', ...new Set(data.map(item => item.category).filter(c => c))];
+        
+        const tagsHtml = categories.map(cat => {
+            const isActive = cat === activeCategory;
             
-            const tagsHtml = categories.map(cat => {
-                const isActive = cat === activeCategory;
-                
-                // 統一標籤的適應性佈局，取消個別差異
-                const activeClass = isActive 
-                    ? 'bg-themePink text-white shadow-md scale-[1.02] md:scale-105 z-10' 
-                    : 'bg-white text-gray-600 hover:bg-pink-50 shadow-sm border-2 border-transparent hover:-translate-y-1';
-                
-                // 透過比對池取得對應的 Emoji，如果沒有就預設
-                let icon = cat === '全部' ? '🎡' : getFoodStyleByCategory(cat).emoji;
-                
-                // 手機版根據內容自適應寬度 (flex-auto)，大螢幕維持一列 (lg:flex-none)，文字縮小一級，改為全圓角藥丸形狀
+            // 統一標籤的適應性佈局，取消個別差異
+            const activeClass = isActive 
+                ? 'bg-themePink text-white shadow-md scale-[1.02] md:scale-105 z-10' 
+                : 'bg-white text-gray-600 hover:bg-pink-50 shadow-sm border-2 border-transparent hover:-translate-y-1';
+            
+            // 透過比對池取得對應的 Emoji，如果沒有就預設
+            let icon = cat === '全部' ? '🎡' : getCategoryStyle(cat).emoji;
+            
+            // 手機版根據內容自適應寬度 (flex-auto)，大螢幕維持一列 (lg:flex-none)，文字縮小一級，改為全圓角藥丸形狀
                 return `<button onclick="renderFoodData(globalFoodData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-none w-auto py-2 md:py-2.5 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-pink-100 whitespace-nowrap ${activeClass}">
                             <span class="hidden md:inline-block shrink-0">${icon}</span>
                             <span>${cat}</span>
@@ -2185,8 +2235,13 @@
             // 過濾資料
             const filteredData = activeCategory === '全部' ? data : data.filter(item => item.category === activeCategory);
             
-            // 依照愛心數量由高至低排序 (改用 O 欄的 item.likesCount 作為基準)
-            filteredData.sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
+            // 依照愛心數量由高至低排序，若愛心相同則依時間由新到舊排序
+            filteredData.sort((a, b) => {
+                if ((b.likesCount || 0) !== (a.likesCount || 0)) {
+                    return (b.likesCount || 0) - (a.likesCount || 0);
+                }
+                return (b.timestamp || 0) - (a.timestamp || 0);
+            });
             
             if (filteredData.length === 0) {
                 container.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold py-8">這個分類還沒有審核通過的店家喔！</div>';
@@ -2251,16 +2306,20 @@
             }
 
             // 渲染下方列表 (點擊觸發 updateFoodMap)
-            container.innerHTML = filteredData.map(item => {
-                // 如果沒有照片，顯示 ICON，透過比對池取得對應的圖示與顏色
-                let imgContent = '';
-                const style = getFoodStyleByCategory(item.category);
-                
-                // 取得該店家的愛心資料
+        container.innerHTML = filteredData.map(item => {
+            // 如果沒有照片，顯示 ICON，透過比對池取得對應的圖示與顏色
+            let imgContent = '';
+            const style = getCategoryStyle(item.category);
+            
+            // 取得該店家的愛心資料
                 const storeLikes = globalLikesData[item.name] || { users: [] };
                 const isLiked = storeLikes.users.includes(currentUserId);
                 // 直接使用表單 O 欄數字
                 const likeCount = item.likesCount || 0;
+                
+                // 判斷是否為 7 天內新增的店家，以加入 NEW 標籤
+                const isNew = item.timestamp && (Date.now() - item.timestamp < 7 * 24 * 60 * 60 * 1000);
+                const newBadge = isNew ? '<span class="ml-1.5 bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-md shadow-sm relative -top-0.5 font-black animate-pulse whitespace-nowrap">NEW</span>' : '';
                 
                 if (item.img && item.img.startsWith('http')) {
                     imgContent = `<img src="${item.img}" onerror="this.outerHTML='<i class=\\'fa-solid ${style.iconClass} text-4xl ${style.textColor}\\'></i>'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">`;
@@ -2282,7 +2341,7 @@
                     </div>
                     <div class="flex-1 overflow-hidden flex flex-col justify-center h-full pt-4 relative">
                         <div>
-                            <h4 class="font-black text-lg leading-[1.1] text-gray-800 line-clamp-2 group-hover:text-themePink transition-colors pr-10">${formatStoreName(item.name)}</h4>
+                            <h4 class="font-black text-lg leading-[1.1] text-gray-800 line-clamp-2 group-hover:text-themePink transition-colors pr-10">${formatStoreName(item.name)}${newBadge}</h4>
                             <p class="text-sm text-gray-500 font-bold mt-1.5 flex items-start pr-16 sm:pr-20"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="line-clamp-2">${item.address}</span></p>
                         </div>
                     </div>
@@ -2401,6 +2460,121 @@
         // ==========================================
         // 🛍️ 購物、生活與景點共用資料模組 (Shopping)
         // ==========================================
+        
+        // 用來顯示該分類地圖的共用函式
+        async function showShoppingMap(safeCatId, catName, storeName, preLat, preLng, address) {
+            const mapContainer = document.getElementById('map-' + safeCatId);
+            if (!mapContainer) return;
+            
+            // 如果目前是隱藏的，展開它並初始化地圖
+            if (mapContainer.classList.contains('hidden')) {
+                mapContainer.classList.remove('hidden');
+                // 加入展開的動畫提示
+                mapContainer.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => {
+                    mapContainer.classList.remove('opacity-0', 'translate-y-4');
+                    mapContainer.classList.add('opacity-100', 'translate-y-0');
+                }, 10);
+            }
+
+            if (!shoppingMaps[safeCatId]) {
+                // 初始化 Leaflet 地圖
+                shoppingMaps[safeCatId] = L.map('map-' + safeCatId, { zoomControl: false }).setView([25.0425, 121.3870], 14);
+                L.control.zoom({ position: 'bottomright' }).addTo(shoppingMaps[safeCatId]);
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; OpenStreetMap', maxZoom: 20
+                }).addTo(shoppingMaps[safeCatId]);
+                
+                shoppingClusterGroups[safeCatId] = L.markerClusterGroup({
+                    chunkedLoading: true, spiderfyOnMaxZoom: true, showCoverageOnHover: false, maxClusterRadius: 40
+                });
+                shoppingMaps[safeCatId].addLayer(shoppingClusterGroups[safeCatId]);
+                shoppingMarkersMap[safeCatId] = {};
+
+                const catStores = globalShoppingData.filter(s => s.category === catName);
+                for (let store of catStores) {
+                    if (store.lat && store.lng) {
+                        const marker = L.marker([store.lat, store.lng], { icon: getCategoryIcon(store.category, 'normal') });
+                        marker.category = store.category;
+                        marker.bindTooltip(store.name, { direction: 'top', offset: [0, -50], className: 'custom-tooltip' });
+                        
+                        let popupContent = `
+                            <div class="text-center p-1 pt-5 w-44">
+                                <h4 class="font-black text-themeYellow text-sm leading-[1.1] mb-1">${formatStoreName(store.name)}</h4>
+                                <p class="text-xs text-gray-500 font-bold leading-snug"><i class="fa-solid fa-location-dot mr-1"></i>${store.address}</p>
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lng}" target="_blank" class="mt-2.5 block w-full bg-blue-100 text-blue-600 font-black py-1.5 rounded-lg text-xs hover:bg-blue-500 hover:text-white transition-colors shadow-sm">導航去</a>
+                            </div>
+                        `;
+                        marker.bindPopup(popupContent);
+                        
+                        // Marker click behavior inside shopping map
+                        marker.on('click', () => {
+                            marker.setIcon(getCategoryIcon(store.category, 'clicked', true));
+                            if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
+                            marker.bounceTimeout = setTimeout(() => {
+                                marker.setIcon(getCategoryIcon(store.category, 'normal', false));
+                            }, 5000);
+                        });
+
+                        shoppingClusterGroups[safeCatId].addLayer(marker);
+                        shoppingMarkersMap[safeCatId][store.name] = marker;
+                    }
+                }
+            }
+            
+            const map = shoppingMaps[safeCatId];
+            // 確保地圖尺寸正確 (因為一開始是隱藏的)
+            map.invalidateSize();
+
+            let targetLat = preLat;
+            let targetLng = preLng;
+            
+            // Fallback for missing lat/lng (Geocoding)
+            if ((!targetLat || !targetLng) && address) {
+                try {
+                    let searchAddress = address.includes('市') ? address : '桃園市龜山區 ' + address;
+                    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchAddress)}&limit=1`);
+                    const data = await res.json();
+                    if (data && data.length > 0) {
+                        targetLat = parseFloat(data[0].lat);
+                        targetLng = parseFloat(data[0].lon);
+                    }
+                } catch(e) { console.error(e); }
+            }
+
+            // 確保地圖顯示該分類的「所有店家」，而不是只縮放到單一店家
+            if (shoppingClusterGroups[safeCatId].getLayers().length > 0) {
+                // 自動縮放以包含分類內的所有地標
+                map.fitBounds(shoppingClusterGroups[safeCatId].getBounds(), { padding: [40, 40], maxZoom: 16, animate: true, duration: 1.5 });
+            } else if (targetLat && targetLng) {
+                // 如果群組沒有地標 (例如只靠動態解析)，手動定位
+                map.setView([targetLat, targetLng], 15);
+            }
+
+            // 找出點擊的特定店家並展開 Popup 與變色，讓使用者知道自己點了哪一家
+            const marker = shoppingMarkersMap[safeCatId][storeName];
+            if (marker) {
+                map.once('moveend', () => {
+                    marker.openPopup();
+                    marker.setIcon(getCategoryIcon(catName, 'clicked', true));
+                    if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
+                    marker.bounceTimeout = setTimeout(() => marker.setIcon(getCategoryIcon(catName, 'normal', false)), 5000);
+                });
+            } else if (targetLat && targetLng) {
+                setTimeout(() => {
+                    L.popup({ className: 'custom-popup-temporary' })
+                        .setLatLng([targetLat, targetLng])
+                        .setContent(`<div class="font-black text-themeYellow p-2 pt-6 text-center text-lg leading-[1.1]"><i class="fa-solid fa-location-dot mr-1"></i> ${formatStoreName(storeName)}</div>`)
+                        .openOn(map);
+                }, 1500);
+            }
+            
+            // 讓畫面平滑捲動到地圖區塊
+            setTimeout(() => {
+                mapContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 150);
+        }
+
         function loadSharedShoppingData() {
             return new Promise((resolve, reject) => {
                 if (globalShoppingData) {
@@ -2429,6 +2603,8 @@
                         let addressIdx = headers.findIndex(k => k.includes('地址') || k.includes('位置') || k.includes('地點'));
                         let statusIdx = headers.findIndex(k => k.includes('審核') || k.includes('狀態') || k.includes('OK'));
                         let imgIdx = headers.findIndex(k => k.includes('照片') || k.includes('圖片') || k.includes('圖')); // 抓取照片
+                        let latIdx = headers.findIndex(k => k.includes('緯度') || k.toLowerCase().includes('lat'));
+                        let lngIdx = headers.findIndex(k => k.includes('經度') || k.toLowerCase().includes('lng'));
 
                         let parsedData = rows.slice(1).map(row => {
                             let rawImg = imgIdx !== -1 && row[imgIdx] ? row[imgIdx].trim() : '';
@@ -2440,6 +2616,8 @@
                                 address: addressIdx !== -1 && row[addressIdx] ? formatAddress(row[addressIdx].trim()) : '',
                                 status: statusIdx !== -1 ? row[statusIdx] : 'OK',
                                 img: finalImg,
+                                lat: latIdx !== -1 && row[latIdx] ? parseFloat(row[latIdx]) : null,
+                                lng: lngIdx !== -1 && row[lngIdx] ? parseFloat(row[lngIdx]) : null,
                                 likesCount: parseInt(row[14]) || 0 // 讀取 O 欄作為絕對愛心數量
                             };
                         }).filter(item => item.name !== '未命名' && item.name.trim() !== '');
@@ -2462,6 +2640,14 @@
         function fetchShoppingData() {
             const container = document.getElementById('shopping-list-container');
             if (!container) return;
+
+            // 清除之前的地圖實例
+            for (let key in shoppingMaps) {
+                if (shoppingMaps[key]) shoppingMaps[key].remove();
+            }
+            shoppingMaps = {};
+            shoppingClusterGroups = {};
+            shoppingMarkersMap = {};
 
             // 等待購物生活資料與愛心資料同時載入
             Promise.all([loadSharedShoppingData(), loadSharedLikesData()]).then(([data, likes]) => {
@@ -2572,6 +2758,9 @@
                     styleIndex++;
                 }
 
+                // 產生一個安全的 ID 用於綁定動態地圖
+                const safeCatId = btoa(encodeURIComponent(catName)).replace(/[^a-zA-Z0-9]/g, '');
+
                 const isMRT = catName.includes('捷運') || catName.includes('機捷');
                 const isPhotoCategory = catName.includes('購物中心') || catName.includes('觀光景點') || catName.includes('百貨') || catName.includes('商場');
 
@@ -2596,9 +2785,10 @@
                             </button>
                         `;
 
-                        // 移除外層卡片的 relative 與 pb-8，將 likeBtnHtml 移入圖片區塊
+                        // 卡片本體改為觸發打開分類專屬地圖，並在圖片左上角提供獨立的導航小按鈕
                         return `
-                            <div onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${navTarget}', '_blank')" class="bg-gray-50 rounded-[1.5rem] p-2 sm:p-3 shadow-sm border-2 border-transparent hover:border-${style.border.split('-')[1]}-200 hover:bg-white hover:-translate-y-1 transition-all cursor-pointer group flex flex-col h-full">
+                            <div onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="bg-gray-50 rounded-[1.5rem] p-2 sm:p-3 shadow-sm border-2 border-transparent hover:border-${style.border.split('-')[1]}-200 hover:bg-white hover:-translate-y-1 transition-all cursor-pointer group flex flex-col h-full relative">
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" onclick="event.stopPropagation()" class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm w-7 h-7 rounded-lg shadow-sm hover:bg-blue-500 hover:text-white transition-colors z-20 text-gray-400 flex items-center justify-center border border-gray-100" title="開啟導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
                                 <div class="w-full h-24 sm:h-32 rounded-[1rem] mb-2 overflow-hidden bg-white relative flex items-center justify-center shrink-0 border border-gray-100 shadow-inner">
                                     ${imgContent}
                                     ${likeBtnHtml}
@@ -2623,6 +2813,7 @@
                             <div class="${listClass}">
                                 ${itemsHtml}
                             </div>
+                            <div id="map-${safeCatId}" class="hidden w-full h-[250px] sm:h-[300px] mt-4 rounded-[1.5rem] border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 transition-all"></div>
                         </div>
                     `);
 
@@ -2642,18 +2833,19 @@
                             </button>
                         `;
                         
+                        // 列表改為點擊展開分類地圖
                         return `
-                            <li class="flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group">
+                            <li onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group cursor-pointer border border-transparent hover:border-gray-100">
                                 <div class="flex items-start flex-1 overflow-hidden pr-2">
                                     <i class="fa-solid fa-check text-green-400 mr-2 mt-1 shrink-0 group-hover:scale-125 transition-transform"></i> 
                                     <div class="flex flex-col overflow-hidden">
-                                        <span class="font-bold text-gray-800 line-clamp-1">${item.name}</span>
+                                        <span class="font-bold text-gray-800 line-clamp-1 group-hover:text-themeYellow transition-colors">${item.name}</span>
                                         ${item.address ? `<span class="text-xs text-gray-500 mt-0.5 line-clamp-2"><i class="fa-solid fa-location-dot mr-1 text-gray-300"></i>${item.address}</span>` : ''}
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2 shrink-0 z-10">
                                     ${likeBtnHtml}
-                                    <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" title="導航至 ${item.name}" class="bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white px-3 py-1.5 rounded-lg text-xs font-black transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
+                                    <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" onclick="event.stopPropagation()" title="導航至 ${item.name}" class="bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white px-3 py-1.5 rounded-lg text-xs font-black transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
                                         <i class="fa-solid fa-location-arrow"></i> 導航
                                     </a>
                                 </div>
@@ -2671,6 +2863,7 @@
                                 <ul class="${listClass}">
                                     ${itemsHtml}
                                 </ul>
+                                <div id="map-${safeCatId}" class="hidden w-full h-[250px] sm:h-[300px] mt-4 rounded-[1.5rem] border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 transition-all"></div>
                             </div>
                         `;
                     } else {
@@ -2684,6 +2877,7 @@
                                     <ul class="${listClass}">
                                         ${itemsHtml}
                                     </ul>
+                                    <div id="map-${safeCatId}" class="hidden w-full h-[250px] sm:h-[300px] mt-4 rounded-[1.5rem] border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 transition-all"></div>
                                 </div>
                             </div>
                         `);
