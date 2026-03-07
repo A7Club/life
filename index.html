@@ -10,7 +10,6 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
     
     <!-- 📊 Google Analytics (GA4) 追蹤代碼放置區 -->
-    <!-- 
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
 <script>
@@ -20,7 +19,6 @@
 
   gtag('config', 'G-YJ9RJC2DRS');
 </script>
-    
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -77,8 +75,8 @@
         /* 在地新商家專屬橘色捲動條 */
         .scrollbar-orange::-webkit-scrollbar { width: 10px; height: 10px; }
         .scrollbar-orange::-webkit-scrollbar-track { background: transparent; }
-        .scrollbar-orange::-webkit-scrollbar-thumb { background: #f97316; border-radius: 10px; border: 2px solid #FDFBF7; }
-        .scrollbar-orange::-webkit-scrollbar-thumb:hover { background: #FECF7A; }
+        .scrollbar-orange::-webkit-scrollbar-thumb { background: #FECF7A; border-radius: 10px; border: 2px solid #FDFBF7; }
+        .scrollbar-orange::-webkit-scrollbar-thumb:hover { background: #FFD166; }
 
         /* 隱藏橫向滾動條(強制一列時使用) */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -185,7 +183,7 @@
             <!-- Logo -->
             <div class="flex items-center cursor-pointer gap-2" onclick="loadPage('home')">
                 <div class="w-10 h-10 bg-themeYellow rounded-full flex items-center justify-center text-white text-xl shadow-inner">
-                    <i class="fa-solid fa-tent"></i>
+                    <i class="fa-solid fa-mountain-city"></i>
                 </div>
                 <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部　</span></span>
             </div>
@@ -302,7 +300,7 @@
                 <div class="absolute inset-0 bg-black/30"></div>
                 <div class="absolute inset-0 bg-gradient-to-br from-themeBlue/40 to-themePink/40"></div>
                 
-                <div class="absolute -right-10 -top-10 text-white/40 text-9xl z-0"><i class="fa-solid fa-tent"></i></div>
+                <div class="absolute -right-10 -top-10 text-white/40 text-9xl z-0"><i class="fa-solid fa-mountain-city"></i></div>
                 <div class="absolute -left-5 -bottom-5 text-white/40 text-8xl z-0"><i class="fa-solid fa-ice-cream"></i></div>
                 
                 <h1 class="text-4xl md:text-5xl font-black text-white mb-4 relative z-10 drop-shadow-lg">探索 A7 在地生活 ✨</h1>
@@ -2057,7 +2055,7 @@
         
         // --- 購物與生活 ---
         { keywords: ['生鮮', '超市', '採買', '食品', '市場'], iconClass: 'fa-cart-shopping', bgColor: 'bg-yellow-400', textColor: 'text-yellow-400', emoji: '🛒' },
-        { keywords: ['居家', '寵物', '五金', '電器'], iconClass: 'fa-couch', bgColor: 'bg-blue-300', textColor: 'text-blue-400', emoji: '🏠' },
+        { keywords: ['居家', '寵物', '五金', '電器'], iconClass: 'fa-house-chimney', bgColor: 'bg-blue-300', textColor: 'text-blue-400', emoji: '🏠' },
         { keywords: ['服務', '洗', '寄', '修', '美容'], iconClass: 'fa-hand-holding-heart', bgColor: 'bg-purple-00', textColor: 'text-blue-300', emoji: '🤝' },
         { keywords: ['觀光', '景點', '公園'], iconClass: 'fa-tree-city', bgColor: 'bg-green-500', textColor: 'text-green-300', emoji: '🌲' },
         { keywords: ['購物中心', '百貨', '商場'], iconClass: 'fa-bag-shopping', bgColor: 'bg-pink-400', textColor: 'text-pink-400', emoji: '🛍️' },
@@ -2527,22 +2525,29 @@
         
         // 用來顯示該分類地圖的共用函式
         async function showShoppingMap(safeCatId, catName, storeName, preLat, preLng, address) {
-            const mapContainer = document.getElementById('map-' + safeCatId);
-            if (!mapContainer) return;
+            // 1. 關閉所有「其他分類」的地圖
+            document.querySelectorAll('[id^="map-wrapper-"]').forEach(wrapper => {
+                if (wrapper.id !== 'map-wrapper-' + safeCatId) {
+                    wrapper.classList.add('hidden');
+                    wrapper.classList.remove('opacity-100', 'translate-y-0', 'lg:translate-x-0');
+                    wrapper.classList.add('opacity-0', 'translate-y-4', 'lg:translate-x-4');
+                }
+            });
+
+            const mapWrapper = document.getElementById('map-wrapper-' + safeCatId);
+            if (!mapWrapper) return;
             
-            // 如果目前是隱藏的，展開它並初始化地圖
-            if (mapContainer.classList.contains('hidden')) {
-                mapContainer.classList.remove('hidden');
-                // 加入展開的動畫提示
-                mapContainer.classList.add('opacity-0', 'translate-y-4');
-                setTimeout(() => {
-                    mapContainer.classList.remove('opacity-0', 'translate-y-4');
-                    mapContainer.classList.add('opacity-100', 'translate-y-0');
-                }, 10);
+            // 2. 如果目標地圖目前是隱藏的，展開它並加入動畫
+            if (mapWrapper.classList.contains('hidden')) {
+                mapWrapper.classList.remove('hidden');
+                // 觸發瀏覽器重繪 (Reflow) 以確保過渡動畫生效
+                void mapWrapper.offsetWidth;
+                mapWrapper.classList.remove('opacity-0', 'translate-y-4', 'lg:translate-x-4');
+                mapWrapper.classList.add('opacity-100', 'translate-y-0', 'lg:translate-x-0');
             }
 
             if (!shoppingMaps[safeCatId]) {
-                // 初始化 Leaflet 地圖
+                // 初始化 Leaflet 地圖 (綁定在內層的 map-xxx)
                 shoppingMaps[safeCatId] = L.map('map-' + safeCatId, { zoomControl: false }).setView([25.0425, 121.3870], 14);
                 L.control.zoom({ position: 'bottomright' }).addTo(shoppingMaps[safeCatId]);
                 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -2587,55 +2592,38 @@
             }
             
             const map = shoppingMaps[safeCatId];
-            // 確保地圖尺寸正確 (因為一開始是隱藏的)
-            map.invalidateSize();
-
-            let targetLat = preLat;
-            let targetLng = preLng;
             
-            // Fallback for missing lat/lng (Geocoding)
-            if ((!targetLat || !targetLng) && address) {
-                try {
-                    let searchAddress = address.includes('市') ? address : '桃園市龜山區 ' + address;
-                    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchAddress)}&limit=1`);
-                    const data = await res.json();
-                    if (data && data.length > 0) {
-                        targetLat = parseFloat(data[0].lat);
-                        targetLng = parseFloat(data[0].lon);
-                    }
-                } catch(e) { console.error(e); }
-            }
-
-            // 確保地圖顯示該分類的「所有店家」，而不是只縮放到單一店家
-            if (shoppingClusterGroups[safeCatId].getLayers().length > 0) {
-                // 自動縮放以包含分類內的所有地標
-                map.fitBounds(shoppingClusterGroups[safeCatId].getBounds(), { padding: [40, 40], maxZoom: 16, animate: true, duration: 1.5 });
-            } else if (targetLat && targetLng) {
-                // 如果群組沒有地標 (例如只靠動態解析)，手動定位
-                map.setView([targetLat, targetLng], 15);
-            }
-
-            // 找出點擊的特定店家並展開 Popup 與變色，讓使用者知道自己點了哪一家
-            const marker = shoppingMarkersMap[safeCatId][storeName];
-            if (marker) {
-                map.once('moveend', () => {
-                    marker.openPopup();
-                    marker.setIcon(getCategoryIcon(catName, storeName, 'clicked', true));
-                    if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
-                    marker.bounceTimeout = setTimeout(() => marker.setIcon(getCategoryIcon(catName, storeName, 'normal', false)), 5000);
-                });
-            } else if (targetLat && targetLng) {
-                setTimeout(() => {
-                    L.popup({ className: 'custom-popup-temporary' })
-                        .setLatLng([targetLat, targetLng])
-                        .setContent(`<div class="font-black text-themeYellow p-2 pt-6 text-center text-lg leading-[1.1]"><i class="fa-solid fa-location-dot mr-1"></i> ${formatStoreName(storeName)}</div>`)
-                        .openOn(map);
-                }, 1500);
-            }
-            
-            // 讓畫面平滑捲動到地圖區塊
+            // 3. 因為側邊欄展開會改變寬度，必須延遲重整地圖尺寸
             setTimeout(() => {
-                mapContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                map.invalidateSize();
+                
+                let targetLat = preLat;
+                let targetLng = preLng;
+                
+                // 確保地圖顯示該分類的「所有店家」
+                if (shoppingClusterGroups[safeCatId].getLayers().length > 0) {
+                    map.fitBounds(shoppingClusterGroups[safeCatId].getBounds(), { padding: [40, 40], maxZoom: 16, animate: true, duration: 1.5 });
+                } else if (targetLat && targetLng) {
+                    map.setView([targetLat, targetLng], 15);
+                }
+
+                // 找出點擊的特定店家並展開 Popup 與變色
+                const marker = shoppingMarkersMap[safeCatId][storeName];
+                if (marker) {
+                    map.once('moveend', () => {
+                        marker.openPopup();
+                        marker.setIcon(getCategoryIcon(catName, storeName, 'clicked', true));
+                        if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
+                        marker.bounceTimeout = setTimeout(() => marker.setIcon(getCategoryIcon(catName, storeName, 'normal', false)), 5000);
+                    });
+                }
+            }, 300); // 配合 Tailwind 的 duration-300 動畫時間
+
+            // 4. 手機版才需要往下捲動 (電腦版在右側不需要捲動)
+            setTimeout(() => {
+                if (window.innerWidth < 1024) {
+                    mapWrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
             }, 150);
         }
 
@@ -2806,10 +2794,7 @@
                 { border: 'border-orange-50', textBig: 'text-orange-100', textTitle: 'text-orange-500', icon: 'fa-gift', emoji: '🎁' } // default fallback
             ];
 
-            let mrtBlock = '';
-            let photoBlocks = [];
-            let textBlocks = [];
-            let styleIndex = 0;
+            let finalOutput = '';
 
             for (const [catName, items] of sortedCategories) {
                 // 依照愛心數量由高至低排序 (以 O 欄數字為主)
@@ -2834,28 +2819,32 @@
                 const isPhotoCategory = catName.includes('購物中心') || catName.includes('觀光景點') || catName.includes('百貨') || catName.includes('商場');
 
                 let itemsHtml = '';
+                let listClass = '';
+                let containerTag = 'ul';
 
                 if (isPhotoCategory && !isMRT) {
-                    // 若為購物中心等圖片卡片，改用吸睛的「照片圖卡」排版
+                    // 若為購物中心等圖片卡片
+                    containerTag = 'div';
+                    // 使用 auto-fit 自動適應右側地圖展開後的縮小空間
+                    listClass = "grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-3 relative z-10 flex-1 content-start";
+                    
                     itemsHtml = items.map(item => {
-                        const itemStyle = getCategoryStyle(catName, item.name); // 取出個別項目專屬樣式
+                        const itemStyle = getCategoryStyle(catName, item.name);
                         const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
                         const imgContent = item.img 
                             ? `<img src="${item.img}" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">` 
-                            : `<i class="fa-solid ${itemStyle.iconClass} text-3xl sm:text-4xl text-gray-300"></i>`; // 沒有照片時的備用圖示使用個別 icon
+                            : `<i class="fa-solid ${itemStyle.iconClass} text-3xl sm:text-4xl text-gray-300"></i>`;
                             
                         const storeLikes = globalLikesData[item.name] || { users: [] };
                         const isLiked = storeLikes.users.includes(currentUserId);
                         const likeCount = item.likesCount || 0;
                         
-                        // 愛心改到圖片右下角的絕對定位，並加上 z-index 確保能被點擊
                         const likeBtnHtml = `
                             <button onclick="toggleLike(event, '${item.name.replace(/'/g, "\\'")}')" class="absolute bottom-1.5 right-1.5 hover:scale-110 active:scale-95 transition-all flex items-center gap-1 shrink-0 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-xl text-xs font-black shadow-sm z-20 border-2 border-pink-100 ${isLiked ? 'bg-pink-50 border-pink-300' : 'text-pink-400'}">
                                 <i class="${isLiked ? 'fa-solid text-[#FF4785]' : 'fa-regular text-pink-400'} fa-heart transition-transform"></i> <span class="text-gray-600">${likeCount}</span>
                             </button>
                         `;
 
-                        // 卡片本體改為觸發打開分類專屬地圖，並在圖片左上角提供獨立的導航小按鈕
                         return `
                             <div onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="bg-gray-50 rounded-[1.5rem] p-2 sm:p-3 shadow-sm border-2 border-transparent hover:border-${style.border.split('-')[1]}-200 hover:bg-white hover:-translate-y-1 transition-all cursor-pointer group flex flex-col h-full relative">
                                 <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" onclick="event.stopPropagation()" class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm w-7 h-7 rounded-lg shadow-sm hover:bg-blue-500 hover:text-white transition-colors z-20 text-gray-400 flex items-center justify-center border border-gray-100" title="開啟導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
@@ -2873,38 +2862,26 @@
                         `;
                     }).join('');
 
-                    // 獨立照片類別排版：滿版設定，不再受 Masonry 壓縮影響，大螢幕 (xl) 可排成 5 列並排一排
-                    let listClass = "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 relative z-10 flex-1 content-start";
-                    
-                    photoBlocks.push(`
-                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col w-full">
-                            <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
-                            <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
-                            <div class="${listClass}">
-                                ${itemsHtml}
-                            </div>
-                            <div id="map-${safeCatId}" class="hidden w-full h-[250px] sm:h-[300px] mt-4 rounded-[1.5rem] border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 transition-all"></div>
-                        </div>
-                    `);
-
                 } else {
-                    // 一般分類 (含機捷)，維持原本的高效率列表排版
+                    // 一般文字分類 (包含機捷)
+                    containerTag = 'ul';
+                    // 同樣使用 auto-fit 完美適應地圖展開前/展開後的寬度
+                    listClass = "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
+                    
                     itemsHtml = items.map(item => {
-                        const itemStyle = getCategoryStyle(catName, item.name); // 取出個別項目專屬樣式
+                        const itemStyle = getCategoryStyle(catName, item.name);
                         const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
                         
                         const storeLikes = globalLikesData[item.name] || { users: [] };
                         const isLiked = storeLikes.users.includes(currentUserId);
                         const likeCount = item.likesCount || 0;
                         
-                        // 判斷是否為機場捷運，是的話隱藏愛心
                         const likeBtnHtml = isMRT ? '' : `
                             <button onclick="toggleLike(event, '${item.name.replace(/'/g, "\\'")}')" class="bg-white hover:bg-pink-50 hover:scale-105 active:scale-95 transition-all px-3 py-1.5 rounded-xl text-xs font-black shadow-sm flex items-center gap-1.5 border-2 border-pink-100 ${isLiked ? 'bg-pink-50 border-pink-300' : 'text-pink-400'}">
                                 <i class="${isLiked ? 'fa-solid text-[#FF4785]' : 'fa-regular text-pink-400'} fa-heart transition-transform"></i> <span class="text-gray-600">${likeCount}</span>
                             </button>
                         `;
                         
-                        // 列表改為點擊展開分類地圖，並將左側預設打勾替換為專屬 Item Icon
                         return `
                             <li onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group cursor-pointer border border-transparent hover:border-gray-100">
                                 <div class="flex items-start flex-1 overflow-hidden pr-2">
@@ -2925,51 +2902,77 @@
                             </li>
                         `;
                     }).join('');
+                }
 
-                    if (isMRT) {
-                        // 機捷專屬排版：強制滿版並且獨立存放在 mrtBlock 中
-                        let listClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
-                        mrtBlock = `
-                            <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col w-full">
-                                <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid fa-train-subway"></i></div>
-                                <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">🚇 ${catName}</h3>
-                                <ul class="${listClass}">
-                                    ${itemsHtml}
-                                </ul>
-                                <div id="map-${safeCatId}" class="hidden w-full h-[250px] sm:h-[300px] mt-4 rounded-[1.5rem] border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 transition-all"></div>
-                            </div>
-                        `;
-                    } else {
-                        // 一般文字分類：放入 Masonry 結構，維持緊湊排版避免留白
-                        let listClass = "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
-                        textBlocks.push(`
-                            <div class="break-inside-avoid mb-6 w-full inline-block">
-                                <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 ${style.border} relative flex flex-col h-full">
-                                    <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating"><i class="fa-solid ${style.icon}"></i></div>
-                                    <h3 class="text-xl font-black ${style.textTitle} mb-4 relative z-10 shrink-0">${style.emoji} ${catName}</h3>
-                                    <ul class="${listClass}">
-                                        ${itemsHtml}
-                                    </ul>
-                                    <div id="map-${safeCatId}" class="hidden w-full h-[250px] sm:h-[300px] mt-4 rounded-[1.5rem] border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 transition-all"></div>
+                // 核心佈局大改造：取消外部的 Masonry (columns)，所有分類強制滿版排列 (w-full)
+                // 利用內部 flex-col lg:flex-row 實現在大螢幕側邊欄展示地圖、小螢幕下方展示地圖的效果！
+                
+                // 針對「機場捷運」採用折疊式 (Details/Summary) 排版
+                if (isMRT) {
+                    finalOutput += `
+                        <details class="group bg-white rounded-[2rem] p-0 shadow-cute border-4 ${style.border} relative flex flex-col w-full break-inside-avoid overflow-hidden transition-all duration-300">
+                            <!-- 折疊標題區塊 -->
+                            <summary class="p-6 md:p-8 cursor-pointer list-none [&::-webkit-details-marker]:hidden flex items-center justify-between outline-none relative z-10 hover:bg-purple-50/50 transition-colors">
+                                <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
+                                <h3 class="text-xl md:text-2xl font-black ${style.textTitle} flex items-center relative z-10 shrink-0">
+                                    <span class="mr-2">${style.emoji}</span> ${catName} <span class="text-sm font-bold text-gray-400 ml-2">(${items.length})</span>
+                                </h3>
+                                <div class="${style.textTitle} bg-white w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center group-open:rotate-180 transition-transform relative z-10 shrink-0 shadow-sm border-2 ${style.border}">
+                                    <i class="fa-solid fa-chevron-down text-sm md:text-base"></i>
+                                </div>
+                            </summary>
+                            
+                            <!-- 展開後的內容區塊 -->
+                            <div class="px-6 md:px-8 pb-6 md:pb-8 pt-0 border-t-2 border-gray-100 cursor-default">
+                                <!-- 彈性排版核心 -->
+                                <div class="flex flex-col lg:flex-row gap-6 relative z-10 items-stretch w-full mt-6">
+                                    
+                                    <!-- 左側 / 上方：清單卡片 -->
+                                    <div class="flex-1 w-full transition-all duration-300">
+                                        <${containerTag} class="${listClass}">
+                                            ${itemsHtml}
+                                        </${containerTag}>
+                                    </div>
+                                    
+                                    <!-- 右側 / 下方：地圖容器 (預設隱藏) -->
+                                    <div id="map-wrapper-${safeCatId}" class="hidden w-full lg:w-5/12 xl:w-1/2 shrink-0 transition-all duration-300 opacity-0 translate-y-4 lg:translate-y-0 lg:translate-x-4 flex flex-col">
+                                        <div class="bg-gray-50 text-gray-500 text-xs font-bold text-center py-2 rounded-t-[1.5rem] border-t-2 border-l-2 border-r-2 border-gray-100 hidden lg:block"><i class="fa-solid fa-map-location-dot mr-1"></i> 地圖導覽</div>
+                                        <div id="map-${safeCatId}" class="w-full h-[300px] lg:h-full min-h-[300px] rounded-[1.5rem] lg:rounded-t-none lg:rounded-b-[1.5rem] border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 flex-1"></div>
+                                    </div>
+                                    
                                 </div>
                             </div>
-                        `);
-                    }
-                }
-            }
-
-            // 合併渲染：機捷絕對置頂第一、然後穿插照片滿版與文字瀑布流
-            let finalOutput = '';
-            if (mrtBlock) finalOutput += mrtBlock;
-
-            while (textBlocks.length > 0 || photoBlocks.length > 0) {
-                if (photoBlocks.length > 0) {
-                    finalOutput += photoBlocks.shift();
-                }
-                if (textBlocks.length > 0) {
-                    // 每次取 5 個文字分類組成一個瀑布流區塊，確保有足夠的卡片能堆疊 (例如讓居家用品能排在服務據點下方)
-                    let chunk = textBlocks.splice(0, 5);
-                    finalOutput += `<div class="columns-1 md:columns-2 xl:columns-3 gap-6 w-full mb-6">${chunk.join('')}</div>`;
+                        </details>
+                    `;
+                } else {
+                    // 一般分類維持展開顯示
+                    finalOutput += `
+                        <div class="bg-white rounded-[2rem] p-6 md:p-8 shadow-cute border-4 ${style.border} relative flex flex-col w-full break-inside-avoid overflow-hidden">
+                            <div class="absolute -top-5 -right-5 text-6xl ${style.textBig} floating pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
+                            <h3 class="text-xl md:text-2xl font-black ${style.textTitle} mb-5 border-b-2 border-gray-100 pb-3 relative z-10 shrink-0 flex items-center">
+                                <span class="mr-2">${style.emoji}</span> ${catName} <span class="text-sm font-bold text-gray-400 ml-2">(${items.length})</span>
+                            </h3>
+                            
+                            <!-- 彈性排版核心：手機版垂直排列，電腦版(lg)水平排列 -->
+                            <div class="flex flex-col lg:flex-row gap-6 relative z-10 items-stretch w-full">
+                                
+                                <!-- 左側 / 上方：清單卡片 -->
+                                <div class="flex-1 w-full transition-all duration-300">
+                                    <${containerTag} class="${listClass}">
+                                        ${itemsHtml}
+                                    </${containerTag}>
+                                </div>
+                                
+                                <!-- 右側 / 下方：地圖容器 (預設隱藏) -->
+                                <!-- lg:w-5/12 會在電腦版時將地圖放到右側，並佔約 41% 寬度 -->
+                                <div id="map-wrapper-${safeCatId}" class="hidden w-full lg:w-5/12 xl:w-1/2 shrink-0 transition-all duration-300 opacity-0 translate-y-4 lg:translate-y-0 lg:translate-x-4 flex flex-col">
+                                    <div class="bg-gray-50 text-gray-500 text-xs font-bold text-center py-2 rounded-t-[1.5rem] border-t-2 border-l-2 border-r-2 border-gray-100 hidden lg:block"><i class="fa-solid fa-map-location-dot mr-1"></i> 地圖導覽</div>
+                                    <div id="map-${safeCatId}" class="w-full h-[300px] lg:h-full min-h-[300px] rounded-[1.5rem] lg:rounded-t-none lg:rounded-b-[1.5rem] border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 flex-1"></div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    `;
                 }
             }
 
