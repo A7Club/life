@@ -3164,15 +3164,16 @@
                     `;
                 }).join('');
 
-                // 瀑布流大卡片結構
+                // 滿版大卡片結構
                 html += `
-                    <div class="break-inside-avoid mb-6 w-full inline-block">
+                    <div class="w-full">
                         <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${style.border} relative h-full flex flex-col">
                             <div class="absolute -top-4 -right-4 text-6xl ${style.textBig} floating pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
                             <h3 class="text-2xl font-black ${style.textTitle} mb-5 border-b-2 border-gray-100 pb-3 relative z-10 shrink-0">
                                 ${catName}
                             </h3>
-                            <ul class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start">
+                            <!-- 電腦螢幕一排顯示兩個店家卡片 (md:grid-cols-2) -->
+                            <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start">
                                 ${itemsHtml}
                             </ul>
                         </div>
@@ -3488,7 +3489,6 @@
                 if (name.includes('文樂')) return { border: 'border-purple-200', textTitle: 'text-themePurple', icon: 'fa-city', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-themePurple', hoverBg: 'hover:bg-purple-50' };
                 if (name.includes('長庚')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-city', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
                 
-                // 找不到對應里別時，使用備用色彩輪替
                 const style = fallbackPool[fallbackStyleIndex % fallbackPool.length];
                 fallbackStyleIndex++;
                 return style;
