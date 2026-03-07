@@ -3455,19 +3455,19 @@
             // == 依照地圖照片顏色綁定各里別的專屬色彩 ==
             // 嚴格配置專屬的 Tailwind 色系，以精準對應上方地圖照片的區塊顏色。
             const fallbackPool = [
-                { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-50', iconColor: 'text-gray-200', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' },
-                { border: 'border-teal-200', textTitle: 'text-teal-600', icon: 'fa-building', bg: 'bg-teal-50', iconColor: 'text-teal-200', activeIcon: 'text-teal-500', hoverBg: 'hover:bg-teal-50' }
+                { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-city', bg: 'bg-gray-50', iconColor: 'text-gray-200', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' },
+                { border: 'border-teal-200', textTitle: 'text-teal-600', icon: 'fa-city', bg: 'bg-teal-50', iconColor: 'text-teal-200', activeIcon: 'text-teal-500', hoverBg: 'hover:bg-teal-50' }
             ];
             let fallbackStyleIndex = 0;
 
             function getStyleForVillage(name) {
-                if (name.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
-                if (name.includes('樂善')) return { border: 'border-yellow-200', textTitle: 'text-themeYellow', icon: 'fa-building', bg: 'bg-yellow-50', iconColor: 'text-yellow-200', activeIcon: 'text-themeYellow', hoverBg: 'hover:bg-yellow-50' };
-                if (name.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-themeGreen', icon: 'fa-building', bg: 'bg-green-50', iconColor: 'text-green-200', activeIcon: 'text-themeGreen', hoverBg: 'hover:bg-green-50' };
-                if (name.includes('文桃')) return { border: 'border-pink-200', textTitle: 'text-themePink', icon: 'fa-building', bg: 'bg-pink-50', iconColor: 'text-pink-200', activeIcon: 'text-themePink', hoverBg: 'hover:bg-pink-50' };
-                if (name.includes('文藝')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
-                if (name.includes('文樂')) return { border: 'border-purple-200', textTitle: 'text-themePurple', icon: 'fa-building', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-themePurple', hoverBg: 'hover:bg-purple-50' };
-                if (name.includes('長庚')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-building', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
+                if (name.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-city', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
+                if (name.includes('樂善')) return { border: 'border-yellow-200', textTitle: 'text-themeYellow', icon: 'fa-city', bg: 'bg-yellow-50', iconColor: 'text-yellow-200', activeIcon: 'text-themeYellow', hoverBg: 'hover:bg-yellow-50' };
+                if (name.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-themeGreen', icon: 'fa-city', bg: 'bg-green-50', iconColor: 'text-green-200', activeIcon: 'text-themeGreen', hoverBg: 'hover:bg-green-50' };
+                if (name.includes('文桃')) return { border: 'border-pink-200', textTitle: 'text-themePink', icon: 'fa-city', bg: 'bg-pink-50', iconColor: 'text-pink-200', activeIcon: 'text-themePink', hoverBg: 'hover:bg-pink-50' };
+                if (name.includes('文藝')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-city', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
+                if (name.includes('文樂')) return { border: 'border-purple-200', textTitle: 'text-themePurple', icon: 'fa-city', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-themePurple', hoverBg: 'hover:bg-purple-50' };
+                if (name.includes('長庚')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-city', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
                 
                 // 找不到對應里別時，使用備用色彩輪替
                 const style = fallbackPool[fallbackStyleIndex % fallbackPool.length];
