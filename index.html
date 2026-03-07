@@ -3154,7 +3154,8 @@
                             <h3 class="text-2xl font-black ${style.textTitle} mb-5 border-b-2 border-gray-100 pb-3 relative z-10 shrink-0">
                                 ${catName}
                             </h3>
-                            <ul class="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start">
+                            <!-- 移除自動多排網格，改為 flex-col 確保電腦螢幕也呈現一排（單一直列） -->
+                            <ul class="flex flex-col gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start">
                                 ${itemsHtml}
                             </ul>
                         </div>
