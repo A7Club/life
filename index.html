@@ -10,7 +10,7 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
     
     <!-- 📊 Google Analytics (GA4) 追蹤代碼放置區 -->
-    <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -19,6 +19,7 @@
 
   gtag('config', 'G-YJ9RJC2DRS');
 </script>
+
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -3089,8 +3090,8 @@
             const container = document.getElementById('medical-list-container');
             if (!container) return;
 
-            // 確保外層容器改為瀑布流排版
-            container.className = "columns-1 md:columns-2 xl:columns-3 gap-6 w-full";
+            // 確保外層容器改為單一直列佈局 (滿版排版)
+            container.className = "flex flex-col gap-6 w-full";
 
             // 依照醫療分類(I欄) 群組化資料
             const groupedCategories = {};
@@ -3145,9 +3146,9 @@
                     `;
                 }).join('');
 
-                // 瀑布流大卡片結構
+                // 滿版大卡片結構
                 html += `
-                    <div class="break-inside-avoid mb-6 w-full inline-block">
+                    <div class="w-full">
                         <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${style.border} relative h-full flex flex-col">
                             <div class="absolute -top-4 -right-4 text-6xl ${style.textBig} floating pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
                             <h3 class="text-2xl font-black ${style.textTitle} mb-5 border-b-2 border-gray-100 pb-3 relative z-10 shrink-0">
