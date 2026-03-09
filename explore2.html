@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/A7Club/life/refs/heads/main/faviconico.ico" type="image/x-icon">
+    <title>A7 柒樂部🎡｜探索在地A7</title>
+    <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
+    <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
+    <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts (可愛圓潤字體) -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', '"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        themePink: '#FF9EBB',
+                        themeBlue: '#80CFFF',
+                        themeYellow: '#FFD166',
+                        themeGreen: '#06D6A0',
+                        themePurple: '#C197FF',
+                        bgPastel: '#FDFBF7'
+                    },
+                    boxShadow: {
+                        'cute': '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
+                        'sticker': '0 0 0 4px white, 0 8px 20px rgba(0,0,0,0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            background-color: #FDFBF7; 
+            /* 可愛的圓點背景 */
+            background-image: radial-gradient(#FF9EBB 1.5px, transparent 1.5px);
+            background-size: 40px 40px;
+        }
+        /* 自訂可愛滾動條 (加入 height 以支援橫向滾動條) */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #FF9EBB; border-radius: 10px; border: 2px solid #FDFBF7; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff7eb3; }
+
+        /* 隱藏橫向滾動條(強制一列時使用) */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 頁面切換動畫 */
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* 標籤氣球動畫 */
+        .floating { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* 總覽模式 (Overview Mode) 樣式切換 */
+        .is-overview .hide-in-overview { display: none !important; }
+        .show-in-overview { display: none !important; }
+        .is-overview .show-in-overview { display: flex !important; }
+        .is-overview .overview-mt-0 { margin-top: 0 !important; }
+    </style>
+</head>
+<body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
+
+    <!-- 🎪 導航列 (雲朵造型) -->
+    <nav class="sticky top-4 z-40 mx-4 sm:mx-8 lg:mx-auto max-w-6xl">
+        <div class="bg-white/90 backdrop-blur-md rounded-full shadow-cute px-6 py-3 flex justify-between items-center border-2 border-white">
+            <!-- Logo -->
+            <a href="index.html#home" class="flex items-center cursor-pointer gap-2">
+                <div class="w-10 h-10 bg-themeYellow rounded-full flex items-center justify-center text-white text-xl shadow-inner">
+                    <i class="fa-solid fa-mountain-city"></i>
+                </div>
+                <span class="font-black text-2xl tracking-wide text-themePink">A7<span class="text-themePurple">柒</span><span class="text-themeBlue">樂部　</span></span>
+            </a>
+
+            <!-- 電腦版選單 -->
+            <div class="hidden md:flex space-x-2">
+                <a href="index.html#food" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all">🍿 找美食</a>
+                <a href="index.html#shopping" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all">🛍️ 買東西</a>
+                <a href="index.html#medical" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeGreen hover:text-white transition-all">🩺 救護站</a>
+                <a href="#" class="nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 bg-themePurple text-white shadow-md">🎠 探索柒</a>
+            </div>
+
+            <!-- 手機版選單按鈕 -->
+            <div class="md:hidden">
+                <button onclick="toggleMobileMenu()" class="text-themePink text-2xl focus:outline-none w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 手機版展開選單 -->
+        <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
+            <a href="index.html#food" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</a>
+            <a href="index.html#shopping" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</a>
+            <a href="index.html#medical" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</a>
+            <a href="#" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-white bg-themePurple shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</a>
+        </div>
+    </nav>
+
+    <!-- 🎈 動態內容容器 -->
+    <!-- 預設載入時套用 is-overview class -->
+    <main id="app-root" class="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 relative is-overview">
+        
+        <div class="fade-in">
+            <!-- 頁面標題 -->
+            <div class="flex items-center mb-6">
+                <div class="w-12 h-12 bg-themePurple text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-ticket"></i></div>
+                <h2 class="text-2xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">了解在地生活</span></h2>
+            </div>
+
+            <!-- 新增：分頁選單列 -->
+            <div class="flex flex-wrap gap-2 sm:gap-3 mb-8 pb-4 border-b-2 border-gray-100">
+                <button data-tab="overview" data-active="bg-themeYellow text-yellow-700 border-yellow-300 shadow-md scale-105" data-inactive="bg-white text-gray-500 border-gray-100 hover:bg-yellow-50 hover:border-yellow-200" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl font-black text-sm md:text-base border-2 transition-all flex items-center">
+                    <i class="fa-solid fa-eye mr-2"></i>在地總覽
+                </button>
+                <button data-tab="engineering" data-active="bg-emerald-50 text-emerald-700 border-emerald-300 shadow-md scale-105" data-inactive="bg-white text-gray-500 border-gray-100 hover:bg-emerald-50 hover:border-emerald-200" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl font-black text-sm md:text-base border-2 transition-all flex items-center">
+                    <i class="fa-solid fa-person-digging mr-2"></i>市政工程
+                </button>
+                <button data-tab="community" data-active="bg-purple-50 text-themePurple border-purple-300 shadow-md scale-105" data-inactive="bg-white text-gray-500 border-gray-100 hover:bg-purple-50 hover:border-purple-200" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl font-black text-sm md:text-base border-2 transition-all flex items-center">
+                    <i class="fa-solid fa-users mr-2"></i>在地社群
+                </button>
+                <button data-tab="faq" data-active="bg-pink-50 text-themePink border-pink-300 shadow-md scale-105" data-inactive="bg-white text-gray-500 border-gray-100 hover:bg-pink-50 hover:border-pink-200" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl font-black text-sm md:text-base border-2 transition-all flex items-center">
+                    <i class="fa-solid fa-clipboard-question mr-2"></i>常見問題
+                </button>
+                <button data-tab="buildings" data-active="bg-blue-50 text-themeBlue border-blue-300 shadow-md scale-105" data-inactive="bg-white text-gray-500 border-gray-100 hover:bg-blue-50 hover:border-blue-200" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl font-black text-sm md:text-base border-2 transition-all flex items-center">
+                    <i class="fa-solid fa-map-location-dot mr-2"></i>建案分佈
+                </button>
+            </div>
+
+            <!-- ======================= -->
+            <!-- 0. 地方工程公告欄 (變一~變四) -->
+            <!-- ======================= -->
+            <div id="section-engineering" class="tab-content mb-12">
+                <div class="flex items-center mb-6 hide-in-overview">
+                    <h2 class="text-xl font-black text-emerald-700 flex items-center"><i class="fa-solid fa-person-digging mr-3 text-3xl"></i>市政工程公告欄</h2>
+                </div>
+                
+                <!-- 綠色公告欄本體 (總覽模式下隱藏) -->
+                <div class="relative bg-gray-300 rounded-lg p-3 md:p-4 border-2 border-gray-400 shadow-[0_15px_35px_rgba(0,0,0,0.15)] mb-12 z-10 mx-2 sm:mx-0 hide-in-overview">
+                    <div class="absolute top-2 left-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 rotate-45"></div></div>
+                    <div class="absolute top-2 right-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 -rotate-12"></div></div>
+                    <div class="absolute bottom-2 left-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 rotate-12"></div></div>
+                    <div class="absolute bottom-2 right-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 rotate-90"></div></div>
+                    
+                    <div class="bg-[#0f5132] rounded p-4 md:p-6 border-4 border-white relative overflow-hidden flex flex-col items-center">
+                        <div class="text-center mb-6 border-b-2 border-white pb-4 w-full relative z-10">
+                            <h3 class="text-xl md:text-2xl font-black text-white tracking-widest flex items-center justify-center flex-wrap gap-2">
+                                桃園市政府重大工程施工告示牌
+                            </h3>
+                            <p class="text-emerald-100 font-bold mt-2 text-xs md:text-sm tracking-widest">（A7站區）都計變更工程追蹤</p>
+                        </div>
+                        <div id="engineering-board-content" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 relative z-10 w-full text-white">
+                            <div class="col-span-full text-center py-6">
+                                <i class="fa-solid fa-spinner fa-spin text-3xl mb-3"></i>
+                                <p>正在連線公共工程委員會...</p>
+                            </div>
+                        </div>
+                        <div class="mt-5 w-full text-right text-xs text-emerald-200/60 font-bold">
+                            <i class="fa-solid fa-rotate mr-1"></i>資料來源：行政院公共工程委員會 (自動同步)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 橫向期程表 (Timeline 2025 - 2030) -->
+                <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-10 border-4 border-emerald-50 relative overflow-hidden mt-8 overview-mt-0">
+                    <div class="absolute -right-6 -bottom-6 text-emerald-50 text-8xl floating pointer-events-none z-0"><i class="fa-solid fa-timeline"></i></div>
+                    
+                    <h3 class="text-xl font-black text-emerald-700 mb-10 flex items-center relative z-10 justify-center md:justify-start">
+                        <i class="fa-regular fa-calendar-check mr-3"></i>工程期程總覽表 (2025 - 2030)
+                    </h3>
+                    
+                    <div class="relative z-10 w-full overflow-x-auto pb-4 hide-scrollbar">
+                        <div class="absolute top-[24px] left-[5%] right-[5%] h-[4px] bg-emerald-100 z-0 min-w-[1200px]"></div>
+
+                        <div class="flex flex-row justify-between gap-4 relative w-full min-w-[1200px]">
+                            <!-- 2025 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-400 shadow group-hover:scale-110 group-hover:border-emerald-600 transition-all flex items-center justify-center font-black text-emerald-700">
+                                        '25
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">多項建設完工啟用</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-gray-400 mb-2 pb-2 border-b border-gray-200 text-xs leading-relaxed"><i class="fa-solid fa-circle-info mr-1"></i> 備註：變四(滯洪池)於2023啟動；變三(捷運連通)已於2024完工。</span>
+                                        <span class="block text-themeYellow mb-1 mt-2"><i class="fa-solid fa-hourglass-half mr-1"></i> 下半年</span>
+                                        A7站停車場、牛角坡聯外道路拓寬與滯洪池公園預計完工開放。
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- 2026 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-emerald-500 text-white rounded-full border-4 border-emerald-300 shadow group-hover:scale-110 group-hover:bg-emerald-600 transition-all flex items-center justify-center font-black">
+                                        '26
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">運動中心與文青國中</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-themeGreen mb-1"><i class="fa-solid fa-medal mr-1"></i> 預計完工</span>
+                                        龜山運動中心落成啟用；文青國中小第二期校舍完工，完善在地就學機能。
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- 2027 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-500 shadow group-hover:scale-110 group-hover:border-emerald-700 transition-all flex items-center justify-center font-black text-emerald-800">
+                                        '27
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">空橋計畫核心串聯</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-themeBlue mb-1"><i class="fa-solid fa-bridge mr-1"></i> 逐步啟用</span>
+                                        A7站區立體空橋計畫（中心商業區段）預計陸續完工，實現人車分道。
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- 2028 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-600 shadow group-hover:scale-110 group-hover:border-emerald-800 transition-all flex items-center justify-center font-black text-emerald-900">
+                                        '28
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">變二工程與郵政園區</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-themePurple mb-1"><i class="fa-solid fa-envelopes-bulk mr-1"></i> 預計完工</span>
+                                        變二工程完工，中華郵政物流園區全面營運，帶動周邊商業發展。
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- 2029 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-200 shadow group-hover:scale-110 group-hover:border-emerald-400 transition-all flex items-center justify-center font-black text-emerald-500">
+                                        '29
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">空橋網路全面延伸</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-themePink mb-1"><i class="fa-solid fa-network-wired mr-1"></i> 建設延伸</span>
+                                        配合周邊新建案落成，空橋系統逐步延伸至外圍住宅區，串接各大生活節點。
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- 2030 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-emerald-700 text-white rounded-full border-4 border-emerald-100 shadow group-hover:scale-110 group-hover:bg-emerald-800 transition-all flex items-center justify-center font-black">
+                                        '30
+                                    </div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">A7 樂活新市鎮</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-orange-400 mb-1"><i class="fa-solid fa-city mr-1"></i> 願景實現</span>
+                                        各項重大都計變更與公共建設進入收尾與成熟期，打造完善宜居的科技綠能城市。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 總覽模式引導按鈕 -->
+                <div class="show-in-overview flex justify-center mt-6">
+                    <button onclick="window.switchTab('engineering', true)" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-700 font-black py-2.5 px-6 rounded-full transition-all shadow-sm">
+                        👉 點擊查看詳細市政工程告示牌
+                    </button>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- 1. 熱門社群推薦 -->
+            <!-- ======================= -->
+            <div id="section-community" class="tab-content mb-12">
+                <div class="flex items-center mb-6">
+                    <h2 class="text-xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門社群推薦</h2>
+                </div>
+                
+                <!-- 總覽模式：社群精華卡片 -->
+                <div class="show-in-overview flex-col items-center bg-purple-50 rounded-[2.5rem] p-8 md:p-10 border-4 border-purple-100 shadow-inner">
+                    <div class="text-5xl mb-4 text-themePurple floating"><i class="fa-solid fa-comments"></i></div>
+                    <p class="text-gray-600 font-bold mb-6 text-center max-w-lg text-lg">探索包含在地 Facebook 社團、LINE 社群與各項地方互助群組，讓您快速融入 A7 樂活圈！</p>
+                    <button onclick="window.switchTab('community', true)" class="bg-themePurple hover:bg-purple-500 text-white font-black py-3 px-8 rounded-full transition-all shadow-md hover:-translate-y-1 text-lg">
+                        👉 點擊展開全部熱門社群
+                    </button>
+                </div>
+
+                <!-- 詳細列表 (總覽模式下隱藏) -->
+                <div id="community-list-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch hide-in-overview">
+                    <div class="lg:col-span-3 text-center text-themePurple py-12 bg-white rounded-[2rem] border-4 border-purple-50 shadow-cute">
+                        <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
+                        <p class="font-bold">正在連線樂園社群中心...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- 2. 新居民常見問題集 -->
+            <!-- ======================= -->
+            <div id="section-faq" class="tab-content mb-12 bg-white rounded-[2.5rem] shadow-cute p-8 border-4 border-pink-50 relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 text-pink-100 text-8xl floating"><i class="fa-solid fa-circle-question"></i></div>
+                <h2 class="text-2xl font-black text-themePink mb-6 relative z-10 flex items-center"><i class="fa-solid fa-clipboard-question mr-3"></i>新居民常見問題集</h2>
+                
+                <div class="space-y-4 relative z-10">
+                    <!-- 只在總覽顯示第一題，隱藏其餘 -->
+                    <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100">
+                        <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg">
+                            <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 剛交屋，要到哪裡辦理戶籍遷入？</span>
+                            <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">
+                            A7 重劃區隸屬於「桃園市龜山區」，辦理戶籍遷入需前往<strong class="text-themePink">龜山區戶政事務所</strong>。由於距離較遠，建議可利用內政部戶政司的「線上申辦」服務，或先備齊身分證、戶口名簿與房屋權狀等資料再前往。
+                        </p>
+                    </details>
+                    
+                    <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hide-in-overview">
+                        <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg">
+                            <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 垃圾車的時間和路線怎麼查？</span>
+                            <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">
+                            若您的社區還沒有建置完整的垃圾集中區，需自行倒垃圾，強烈建議下載 <strong class="text-themePink">「桃園垃圾車」APP</strong>。APP 內會即時顯示垃圾車定位與各里清運時間表。文青里與樂善里通常於晚間 18:30~20:30 間進行清運。
+                        </p>
+                    </details>
+
+                    <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hide-in-overview">
+                        <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg">
+                            <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 小孩的就學學區怎麼劃分？</span>
+                            <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">
+                            A7 區域主要學區為<strong class="text-themePink">樂善國小</strong>，以及即將完工招生的<strong class="text-themePink">文青國中小</strong>。
+                            <br><br>• 文青里、文藝里全部為文青國中小、大埔國小自由學區。        
+                            <br>• 樂善里（1、2、3）為樂善、文青國中小自由學區。
+                            <br>• 長樂里（1-9）為樂善、文青國中小自由學區。
+                            <br>• 長樂里（10-21）為樂善、長庚國小自由學區。
+                            <br>• 文樂里全部為樂善、文青國中小自由學區。 <br><br>
+                            具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所或學校教務處確認。
+                        </p>
+                    </details>
+                </div>
+                
+                <!-- 總覽模式引導按鈕 -->
+                <div class="show-in-overview flex justify-center mt-6 relative z-10">
+                    <button onclick="window.switchTab('faq', true)" class="bg-pink-100 hover:bg-themePink hover:text-white text-themePink border-2 border-pink-200 font-black py-2.5 px-6 rounded-full transition-all shadow-sm">
+                        👉 閱讀更多新居民常見問題
+                    </button>
+                </div>
+            </div>
+
+            <!-- ======================= -->
+            <!-- 4. A7地圖及各里建案 -->
+            <!-- ======================= -->
+            <div id="section-buildings" class="tab-content mb-8 scroll-mt-[100px]">
+                <div class="flex items-center mb-6">
+                    <h2 class="text-2xl font-black text-themeBlue flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeBlue"></i>A7 建案分佈</h2>
+                </div>
+
+                <!-- A7 各里分配圖與快速跳轉標籤 (此區塊總覽與詳細都顯示) -->
+                <div class="mb-8 flex flex-col md:flex-row gap-4 md:gap-6 items-start">
+                    <div class="w-full md:w-1/2 lg:w-5/12 relative shrink-0 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border-4 border-white shadow-cute bg-white">
+                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-auto object-contain block" alt="A7建案地圖">
+                        <div class="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-gray-100 whitespace-nowrap">
+                            A7 區域建案概覽圖
+                        </div>
+                    </div>
+                    
+                    <div class="w-full md:w-1/2 lg:w-7/12 flex flex-col">
+                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
+                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0">
+                                <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
+                            </h3>
+                            <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-1.5 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start pt-2">
+                                <!-- 動態載入各里小標籤 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 建案清單 (總覽模式下隱藏) -->
+                <div id="buildings-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 hide-in-overview">
+                    <div class="col-span-full text-center text-themeYellow py-12 bg-white rounded-[2rem] border-4 border-green-50 shadow-cute">
+                        <i class="fa-solid fa-spinner fa-spin text-4xl mb-5"></i>
+                        <p class="font-bold">正在整理建案地圖...</p>
+                    </div>
+                </div>
+
+                <!-- 總覽模式引導按鈕 -->
+                <div class="show-in-overview flex justify-center mt-2">
+                    <button onclick="window.switchTab('buildings', true)" class="bg-blue-100 hover:bg-themeBlue hover:text-white text-themeBlue border-2 border-blue-200 font-black py-2.5 px-6 rounded-full transition-all shadow-sm">
+                        👉 點擊查看各行政里詳細建案清單
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="bg-white border-t-4 border-dashed border-pink-200 py-8 text-center mt-auto rounded-t-[3rem]">
+        <h2 class="text-xl font-black text-themePink mb-2">🎈林口、龜山美食機能生活地圖指南 </h2>
+        <p class="text-gray-400 text-sm font-bold">讓每天的生活都像在遊樂園一樣精彩！© 2026</p>
+    </footer>
+
+    <!-- JavaScript 邏輯 -->
+    <script>
+        // 手機版選單開關
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        // ==========================================
+        // 🔄 分頁切換邏輯 (全域總覽模式)
+        // ==========================================
+        window.switchTab = function(tabId, doScroll = false) {
+            const root = document.getElementById('app-root');
+            const tabs = document.querySelectorAll('.tab-btn');
+
+            if (tabId === 'overview') {
+                // 進入總覽模式：顯示所有區塊，並加上 is-overview class
+                root.classList.add('is-overview');
+                document.querySelectorAll('.tab-content').forEach(el => {
+                    el.classList.remove('hidden');
+                    el.classList.remove('fade-in');
+                    void el.offsetWidth; // 觸發重繪
+                    el.classList.add('fade-in');
+                });
+            } else {
+                // 進入單一分類：移除總覽模式，只顯示目標區塊
+                root.classList.remove('is-overview');
+                document.querySelectorAll('.tab-content').forEach(el => {
+                    el.classList.add('hidden');
+                    el.classList.remove('fade-in');
+                });
+
+                const targetId = 'section-' + tabId;
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) {
+                    targetEl.classList.remove('hidden');
+                    void targetEl.offsetWidth; 
+                    targetEl.classList.add('fade-in');
+                }
+            }
+
+            // 更新按鈕外觀樣式
+            tabs.forEach(btn => {
+                const activeClasses = btn.getAttribute('data-active').trim().split(/\s+/);
+                const inactiveClasses = btn.getAttribute('data-inactive').trim().split(/\s+/);
+                
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.classList.remove(...inactiveClasses);
+                    btn.classList.add(...activeClasses);
+                } else {
+                    btn.classList.remove(...activeClasses);
+                    btn.classList.add(...inactiveClasses);
+                }
+            });
+
+            // 如果是由「查看詳細」按鈕觸發，則平滑捲動到標籤列下方
+            if (doScroll) {
+                const rootEl = document.getElementById('app-root');
+                const offset = rootEl.getBoundingClientRect().top + window.scrollY - 80; // 扣除導覽列高度
+                window.scrollTo({ top: offset, behavior: 'smooth' });
+            }
+
+            try {
+                history.replaceState(null, null, '#' + tabId);
+            } catch(e) {}
+        };
+
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    window.switchTab(btn.getAttribute('data-tab'));
+                });
+            });
+
+            // 檢查初始 Hash，預設為 overview
+            let initialTab = 'overview';
+            try {
+                const hash = window.location.hash.replace('#', '');
+                const validTabs = ['overview', 'engineering', 'community', 'faq', 'buildings'];
+                if (validTabs.includes(hash)) {
+                    initialTab = hash;
+                }
+            } catch(e) {}
+
+            window.switchTab(initialTab);
+        }
+
+        // CSV 解析器
+        function parseCSV(text) {
+            let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
+            for (l of text) {
+                if ('"' === l) {
+                    if (s && l === p) row[i] += l;
+                    s = !s;
+                } else if (',' === l && s) l = row[++i] = '';
+                else if ('\n' === l && s) {
+                    if ('\r' === p) row[i] = row[i].slice(0, -1);
+                    row = ret[++r] = [l = '']; i = 0;
+                } else row[i] += l;
+                p = l;
+            }
+            return ret.filter(r => r.join('').trim() !== '');
+        }
+
+        let globalCommunityData = null; 
+        let globalBuildingData = null; 
+
+        // ==========================================
+        // 🚧 市政工程公告欄
+        // ==========================================
+        async function fetchEngineeringData() {
+            const container = document.getElementById('engineering-board-content');
+            if (!container) return;
+
+            try {
+                const response = await fetch('https://pcic.pcc.gov.tw/pwc-web/api/projects/A7-mock'); 
+                if (!response.ok) throw new Error('CORS');
+                const data = await response.json();
+                renderEngineeringBoard(data);
+            } catch (error) {
+                const fallbackData = [
+                    { name: '變一工程 (聯外道路)', start: '2022年11月', end: '2025年12月', status: '施工中。目前進行路基開挖與排水溝建置作業。' },
+                    { name: '變二工程 (郵政園區)', start: '2026年01月', end: '2028年06月', status: '規劃中。進行細部設計審查與發包前置作業。' },
+                    { name: '變三工程 (捷運連通)', start: '2022年05月', end: '2024年10月', status: '已完工。目前進入驗收階段與設施點交。' },
+                    { name: '變四工程 (滯洪池)', start: '2023年03月', end: '2025年08月', status: '施工中。進行植栽工程與生態步道鋪設。' },
+                    { name: '龜山國民運動中心', start: '2024年07月', end: '2026年12月', status: '施工中。目前進行主體鋼構與結構體工程。' },
+                    { name: 'A7捷運站停車場工程', start: '2024年03月', end: '2025年10月', status: '施工中。進行停車場鋪面、照明設備及景觀綠化。' },
+                    { name: '文青國中小新建工程', start: '2022年05月', end: '2026年08月', status: '施工中。第一期已完工，目前進行第二期國中校舍與活動中心工程。' },
+                    { name: 'A7立體空橋串聯計畫', start: '2024年12月', end: '2027年12月', status: '施工中。中心商業區段空橋與捷運站連通工程施作中。' }
+                ];
+                setTimeout(() => renderEngineeringBoard(fallbackData), 600);
+            }
+        }
+
+        function renderEngineeringBoard(data) {
+            const container = document.getElementById('engineering-board-content');
+            if (!container) return;
+            container.innerHTML = data.map(item => `
+                <table class="w-full border-collapse border-2 border-white text-sm md:text-base bg-[#0f5132] shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:border-yellow-300 group">
+                    <tbody>
+                        <tr><th class="border border-white bg-[#0a3622] p-2 md:p-3 w-[80px] md:w-[100px] text-left font-black text-emerald-100 whitespace-nowrap">工程名稱</th><td class="border border-white p-2 md:p-3 font-black text-yellow-300 text-lg group-hover:text-yellow-200 transition-colors">${item.name}</td></tr>
+                        <tr><th class="border border-white bg-[#0a3622] p-2 md:p-3 text-left font-black text-emerald-100 whitespace-nowrap">開始時間</th><td class="border border-white p-2 md:p-3 text-white">${item.start}</td></tr>
+                        <tr><th class="border border-white bg-[#0a3622] p-2 md:p-3 text-left font-black text-emerald-100 whitespace-nowrap">預計完成</th><td class="border border-white p-2 md:p-3 text-white">${item.end}</td></tr>
+                        <tr><th class="border border-white bg-[#0a3622] p-2 md:p-3 text-left font-black text-emerald-100 whitespace-nowrap align-top">目前節點</th><td class="border border-white p-2 md:p-3 text-emerald-50 leading-relaxed">${item.status}</td></tr>
+                    </tbody>
+                </table>
+            `).join('');
+        }
+
+        // ==========================================
+        // 🎠 社群推薦模組
+        // ==========================================
+        function loadSharedCommunityData() {
+            return new Promise((resolve, reject) => {
+                if (globalCommunityData) return resolve(globalCommunityData);
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=369381822&single=true&output=csv';
+                fetch(csvUrl).then(res => res.text()).then(csvText => {
+                    const rows = parseCSV(csvText);
+                    if (rows.length < 2) return resolve([]);
+                    const headers = rows[0];
+                    let nameIdx = headers.findIndex(k => k.includes('名稱') || k.includes('社群')); if (nameIdx === -1) nameIdx = 0;
+                    let catIdx = headers.findIndex(k => k.includes('屬性') || k.includes('分類')); if (catIdx === -1) catIdx = 1;
+                    let linkIdx = headers.findIndex(k => k.includes('連結') || k.includes('網址') || k.includes('URL')); if (linkIdx === -1) linkIdx = 2;
+                    let imgIdx = 4;
+
+                    globalCommunityData = rows.slice(1).map(row => {
+                        let finalImg = '';
+                        if (row.length > imgIdx && row[imgIdx]) {
+                            const urlMatch = row[imgIdx].trim().match(/https?:\/\/[^\s]+/);
+                            if (urlMatch) finalImg = urlMatch[0];
+                        }
+                        return {
+                            name: row[nameIdx] ? row[nameIdx].trim() : '',
+                            category: row[catIdx] ? row[catIdx].trim() : '其他推薦',
+                            link: row[linkIdx] ? row[linkIdx].trim() : '#',
+                            img: finalImg
+                        };
+                    }).filter(item => item.name !== '' && item.link !== '#');
+                    resolve(globalCommunityData);
+                }).catch(reject);
+            });
+        }
+
+        function fetchCommunityData() {
+            const container = document.getElementById('community-list-container');
+            if (!container) return;
+            loadSharedCommunityData().then(renderCommunityData).catch(err => {
+                container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8 bg-white rounded-3xl">社群資料載入失敗，請稍後再試。</div>';
+            });
+        }
+
+        function renderCommunityData(data) {
+            const container = document.getElementById('community-list-container');
+            if (!container) return;
+
+            const groupedCategories = { '在地社群': [], '地方互助': [] };
+            data.forEach(item => {
+                const cat = item.category || '其他推薦';
+                if (!groupedCategories[cat]) groupedCategories[cat] = [];
+                groupedCategories[cat].push(item);
+            });
+            if (groupedCategories['在地社群'].length === 0) delete groupedCategories['在地社群'];
+            if (groupedCategories['地方互助'] && groupedCategories['地方互助'].length === 0) delete groupedCategories['地方互助'];
+
+            let html = '';
+            for (const [catName, items] of Object.entries(groupedCategories)) {
+                const isLocalCommunity = catName === '在地社群';
+                const isMutualHelp = catName === '地方互助';
+                let gridClass = isLocalCommunity ? 'flex flex-wrap justify-center items-stretch gap-3 md:gap-4' : (isMutualHelp ? 'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-1 gap-3' : 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3');
+                let wrapperSpan = isLocalCommunity ? 'lg:col-span-2' : (isMutualHelp ? 'lg:col-span-1' : 'lg:col-span-3'); 
+
+                const itemsHtml = items.map(item => {
+                    let snsType = 'Web', snsBadgeClass = 'bg-gray-500 text-white', snsIcon = 'fa-solid fa-globe', avatarBg = 'random', btnClasses = 'bg-gray-500 hover:bg-gray-600 text-white';
+                    const searchStr = (item.name + ' ' + item.link).toUpperCase();
+                    if (searchStr.includes('LINE') || searchStr.includes('賴')) { snsType = 'LINE'; snsBadgeClass = 'bg-[#00B900] text-white'; snsIcon = 'fa-brands fa-line'; avatarBg = '00B900'; btnClasses = 'bg-[#00B900] hover:bg-[#009900] text-white'; }
+                    else if (searchStr.includes('THREADS')) { snsType = 'Threads'; snsBadgeClass = 'bg-black text-white'; snsIcon = 'fa-brands fa-threads'; avatarBg = '000000'; btnClasses = 'bg-black hover:bg-gray-800 text-white'; }
+                    else if (searchStr.includes('FB') || searchStr.includes('FACEBOOK') || searchStr.includes('臉書')) { snsType = 'Facebook'; snsBadgeClass = 'bg-[#1877F2] text-white'; snsIcon = 'fa-brands fa-facebook'; avatarBg = '1877F2'; btnClasses = 'bg-[#1877F2] hover:bg-[#166FE5] text-white'; }
+                    else { btnClasses = 'bg-themePink hover:bg-pink-400 text-white'; }
+
+                    const showQR = snsType === 'LINE' && !isLocalCommunity;
+                    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
+                    let avatarUrl = item.img || `https://ui-avatars.com/api/?name=${encodeURIComponent(snsType === 'Threads' ? item.name.substring(0, 2) : item.name)}&background=${avatarBg}&color=fff&size=150&bold=true`;
+
+                    let displayId = "點擊進入";
+                    if (item.link.includes('@')) { const match = item.link.match(/@([a-zA-Z0-9_.]+)/); if (match && match[1]) displayId = match[1]; }
+                    else if (snsType === 'LINE') displayId = "加入 LINE 社群";
+                    else if (snsType === 'Facebook') displayId = "前往粉絲專頁";
+
+                    if (isLocalCommunity) {
+                        return `
+                            <a href="${item.link}" target="_blank" class="flex-1 min-w-[140px] sm:min-w-[160px] max-w-[240px] shrink-0 flex flex-col bg-white rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-5 shadow-cute border-2 border-gray-100 hover:border-pink-200 hover:shadow-xl transition-all group hover:-translate-y-2 text-center justify-between items-center relative overflow-hidden">
+                                <div class="absolute -right-3 -bottom-3 text-6xl opacity-[0.03] text-gray-500 pointer-events-none"><i class="${snsIcon}"></i></div>
+                                <div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full shadow-sm border-2 border-gray-100 group-hover:border-themePink group-hover:scale-105 transition-all mx-auto mb-3 shrink-0 bg-gray-50 overflow-hidden"><img src="${avatarUrl}" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=random&color=fff'"></div>
+                                <h4 class="font-black text-gray-800 text-sm sm:text-base md:text-lg mb-4 line-clamp-2 leading-snug group-hover:text-themePink transition-colors flex-1 w-full">${item.name}</h4>
+                                <div class="w-full ${btnClasses} py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-sm flex items-center justify-center gap-1.5 transition-colors mt-auto z-10 relative"><i class="${snsIcon}"></i> <span class="truncate">${displayId}</span></div>
+                            </a>`;
+                    }
+                    return `
+                        <a href="${item.link}" target="_blank" class="${(!isLocalCommunity && item.name.length > 9) ? 'col-span-2 sm:col-span-1 lg:col-span-1' : 'col-span-1'} bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-1 transition-all flex items-center justify-between group h-full">
+                            <div class="flex flex-col items-start pr-2 flex-1 min-w-0">
+                                <h4 class="font-black text-gray-800 text-sm md:text-base mb-2 line-clamp-2 group-hover:text-themePink transition-colors w-full">${item.name}</h4>
+                                <div class="${snsBadgeClass} text-[10px] md:text-xs font-black px-2 py-1 rounded-lg shadow-sm flex items-center shrink-0"><i class="${snsIcon} mr-1"></i> ${snsType}</div>
+                            </div>
+                            ${showQR ? `<div class="w-12 h-12 md:w-16 md:h-16 shrink-0 bg-white rounded-xl p-1 border border-dashed border-gray-200 group-hover:border-themePink transition-colors relative flex items-center justify-center"><img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100"></div>` : `<div class="w-10 h-10 md:w-14 md:h-14 shrink-0 rounded-full border-2 border-gray-100 group-hover:border-themePink transition-colors relative flex items-center justify-center overflow-hidden shadow-sm bg-gray-50 p-0.5"><img src="${avatarUrl}" class="w-full h-full object-cover rounded-full"></div>`}
+                        </a>`;
+                }).join('');
+
+                const catIcon = catName === '在地社群' ? 'fa-thumbtack text-red-400' : 'fa-hashtag text-themePink';
+                const catBorder = catName === '在地社群' ? 'border-red-50' : 'border-blue-50';
+                const catBgIcon = catName === '在地社群' ? 'text-red-100' : 'text-blue-100';
+
+                html += `
+                    <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${catBorder} relative h-full flex flex-col ${wrapperSpan}">
+                        <div class="absolute -top-4 -right-4 ${catBgIcon} text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
+                        <h3 class="text-lg font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0"><i class="fa-solid ${catIcon} mr-2"></i>${catName}</h3>
+                        <div class="${gridClass} relative z-10 flex-1 content-start items-stretch">${itemsHtml}</div>
+                    </div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        // ==========================================
+        // 🎠 建案分佈模組
+        // ==========================================
+        function loadSharedBuildingData() {
+            return new Promise((resolve, reject) => {
+                if (globalBuildingData) return resolve(globalBuildingData);
+                const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=985024788&single=true&output=csv';
+                fetch(csvUrl).then(res => res.text()).then(csvText => {
+                    const rows = parseCSV(csvText);
+                    if (rows.length < 2) return resolve([]);
+                    const headers = rows[0];
+                    let nameIdx = headers.findIndex(k => k.includes('建案') || k.includes('名稱')); if (nameIdx === -1) nameIdx = 0; 
+                    let villageIdx = headers.findIndex(k => k.includes('里')); if (villageIdx === -1) villageIdx = 1;
+                    let imgIdx = headers.findIndex(k => k.includes('照片') || k.includes('圖片')); if (imgIdx === -1) imgIdx = 3; 
+
+                    globalBuildingData = rows.slice(1).map(row => ({
+                        name: row[nameIdx] ? row[nameIdx].trim() : '',
+                        village: row[villageIdx] ? row[villageIdx].trim() : '未分類區域',
+                        img: row[imgIdx] ? row[imgIdx].trim() : ''
+                    })).filter(item => item.name !== '');
+                    resolve(globalBuildingData);
+                }).catch(reject);
+            });
+        }
+
+        function fetchBuildingData() {
+            const container = document.getElementById('buildings-list-container');
+            if (!container) return;
+            loadSharedBuildingData().then(renderBuildingData).catch(err => {
+                container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8 bg-white rounded-3xl">建案資料載入失敗，請稍後再試。</div>';
+            });
+        }
+
+        function renderBuildingData(data) {
+            const container = document.getElementById('buildings-list-container');
+            const tagsContainer = document.getElementById('village-tags-container'); 
+            if (!container) return;
+
+            const groupedVillages = {};
+            data.forEach(item => {
+                if (!groupedVillages[item.village]) groupedVillages[item.village] = [];
+                groupedVillages[item.village].push(item);
+            });
+
+            const fallbackPool = [
+                { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-50', iconColor: 'text-gray-200', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' },
+                { border: 'border-teal-200', textTitle: 'text-teal-600', icon: 'fa-building', bg: 'bg-teal-50', iconColor: 'text-teal-200', activeIcon: 'text-teal-500', hoverBg: 'hover:bg-teal-50' }
+            ];
+            let fallbackStyleIndex = 0;
+
+            function getStyleForVillage(name) {
+                if (name.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
+                if (name.includes('樂善')) return { border: 'border-yellow-200', textTitle: 'text-themeYellow', icon: 'fa-city', bg: 'bg-yellow-50', iconColor: 'text-yellow-200', activeIcon: 'text-themeYellow', hoverBg: 'hover:bg-yellow-50' };
+                if (name.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-themeGreen', icon: 'fa-city', bg: 'bg-green-50', iconColor: 'text-green-200', activeIcon: 'text-themeGreen', hoverBg: 'hover:bg-green-50' };
+                if (name.includes('文桃')) return { border: 'border-pink-200', textTitle: 'text-themePink', icon: 'fa-city', bg: 'bg-pink-50', iconColor: 'text-pink-200', activeIcon: 'text-themePink', hoverBg: 'hover:bg-pink-50' };
+                if (name.includes('文藝')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-city', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
+                if (name.includes('文樂')) return { border: 'border-purple-200', textTitle: 'text-themePurple', icon: 'fa-city', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-themePurple', hoverBg: 'hover:bg-purple-50' };
+                if (name.includes('長庚')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-city', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
+                return fallbackPool[fallbackStyleIndex++ % fallbackPool.length];
+            }
+
+            let html = '';
+            let tagsHtml = ''; 
+
+            for (const [villageName, items] of Object.entries(groupedVillages)) {
+                const style = getStyleForVillage(villageName);
+                const safeId = `village-${villageName.replace(/\s+/g, '')}`;
+
+                tagsHtml += `
+                    <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
+                            class="py-1.5 px-3 sm:px-4 md:px-5 sm:py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-xs sm:text-base md:text-lg flex items-center justify-center sm:justify-start gap-1 sm:gap-2 md:gap-3 hover:-translate-y-1 w-auto text-center sm:text-left group">
+                        <div class="flex w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform"><i class="fa-solid ${style.icon} text-[9px] sm:text-xs md:text-sm"></i></div>
+                        <span class="tracking-wide whitespace-nowrap">${villageName}</span>
+                    </button>`;
+
+                const itemsHtml = items.map(item => {
+                    let imgContent = (item.img && item.img.startsWith('http')) ? `<img src="${item.img}" class="w-full h-full object-cover">` : `<i class="fa-solid ${style.icon} text-xl ${style.textTitle}"></i>`;
+                    return `
+                    <div class="bg-white border border-gray-100 rounded-xl p-1.5 pr-3 shadow-sm flex items-center gap-2 cursor-default shrink-0 w-max">
+                        <div class="w-8 h-8 rounded-lg overflow-hidden shrink-0 flex items-center justify-center ${style.bg}">${imgContent}</div>
+                        <span class="font-bold text-gray-700 text-sm whitespace-nowrap overflow-hidden text-ellipsis">${item.name}</span>
+                    </div>`;
+                }).join('');
+
+                html += `
+                    <div id="${safeId}" class="bg-white rounded-[2.5rem] shadow-cute p-6 border-4 ${style.border} hover:shadow-lg transition-shadow relative overflow-hidden scroll-mt-[100px]">
+                        <div class="absolute -right-4 -bottom-4 text-6xl ${style.iconColor} opacity-50 pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
+                        <div class="flex items-center justify-between mb-4 border-b-2 border-gray-100 pb-3 relative z-10"><h3 class="text-xl font-black ${style.textTitle}">${villageName} <span class="text-sm font-bold text-gray-400 ml-1">(${items.length})</span></h3><i class="fa-solid ${style.icon} text-2xl ${style.activeIcon}"></i></div>
+                        <div class="flex flex-wrap gap-3 relative z-10">${itemsHtml}</div>
+                    </div>`;
+            }
+            container.innerHTML = html;
+            if (tagsContainer) tagsContainer.innerHTML = tagsHtml;
+        }
+
+        // 載入初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initTabs(); 
+            fetchEngineeringData();
+            fetchCommunityData();
+            fetchBuildingData();
+        });
+
+    </script>
+</body>
+</html>
