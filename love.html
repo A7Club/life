@@ -362,25 +362,25 @@
 
                     <div class="flex flex-row lg:flex-col gap-3 md:gap-4 h-full">
                         <!-- 北上 (往台北) -->
-                        <div class="flex-1 bg-green-50 rounded-2xl p-4 shadow-sm border border-green-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                        <div class="flex-1 bg-purple-50 rounded-2xl p-4 shadow-sm border border-purple-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
                             <div>
-                                <div class="text-[10px] sm:text-xs text-green-400 font-bold mb-0.5">往台北</div>
-                                <div class="text-sm sm:text-lg font-black text-themeGreen">北上</div>
+                                <div class="text-[10px] sm:text-xs text-purple-400 font-bold mb-0.5">往台北</div>
+                                <div class="text-sm sm:text-lg font-black text-themePurple">北上</div>
                             </div>
                             <div class="flex items-baseline gap-1">
-                                <span id="mrt-time-north" class="text-3xl sm:text-4xl font-black text-themeGreen font-mono w-10 text-center">--</span>
+                                <span id="mrt-time-north" class="text-3xl sm:text-4xl font-black text-themePurple font-mono w-10 text-center">--</span>
                                 <span id="mrt-unit-north" class="text-xs sm:text-sm font-bold text-gray-500">分</span>
                             </div>
                         </div>
-                        <!-- 南下 (往中壢) -->
-                        <div class="flex-1 bg-blue-50 rounded-2xl p-4 shadow-sm border border-blue-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                        <!-- 南下 (往機場/中壢) -->
+                        <div class="flex-1 bg-purple-600 rounded-2xl p-4 shadow-sm border border-purple-700 flex items-center justify-between hover:-translate-y-1 transition-transform">
                             <div>
-                                <div class="text-[10px] sm:text-xs text-blue-400 font-bold mb-0.5">往機場/中壢</div>
-                                <div class="text-sm sm:text-lg font-black text-themeBlue">南下</div>
+                                <div class="text-[10px] sm:text-xs text-purple-200 font-bold mb-0.5">往機場/中壢</div>
+                                <div class="text-sm sm:text-lg font-black text-white">南下</div>
                             </div>
                             <div class="flex items-baseline gap-1">
-                                <span id="mrt-time-south" class="text-3xl sm:text-4xl font-black text-themeBlue font-mono w-10 text-center">--</span>
-                                <span id="mrt-unit-south" class="text-xs sm:text-sm font-bold text-gray-500">分</span>
+                                <span id="mrt-time-south" class="text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center">--</span>
+                                <span id="mrt-unit-south" class="text-xs sm:text-sm font-bold text-purple-100">分</span>
                             </div>
                         </div>
                     </div>
@@ -1367,7 +1367,7 @@
                         pos = Math.max(0, Math.min(100, pos));
                         
                         nbTrainsHTML += `<div class="absolute top-[0px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
-                            <div class="bg-white text-themeGreen rounded-full shadow-md border-2 border-green-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
+                            <div class="bg-white text-themePurple rounded-full shadow-md border-2 border-purple-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
                                 <i class="fa-solid fa-caret-left text-[10px]"></i>
                                 <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
                             </div>
@@ -1390,7 +1390,7 @@
                         pos = Math.max(0, Math.min(100, pos));
                         
                         sbTrainsHTML += `<div class="absolute top-[26px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
-                            <div class="bg-white text-themeBlue rounded-full shadow-md border-2 border-blue-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
+                            <div class="bg-purple-600 text-white rounded-full shadow-md border-2 border-white flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
                                 <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
                                 <i class="fa-solid fa-caret-right text-[10px]"></i>
                             </div>
@@ -1409,7 +1409,7 @@
                     if(unitEl) unitEl.style.display = 'none';
                 } else {
                     el.innerText = Math.ceil(diff);
-                    el.className = el.id.includes('north') ? 'text-3xl sm:text-4xl font-black text-themeGreen font-mono w-10 text-center' : 'text-3xl sm:text-4xl font-black text-themeBlue font-mono w-10 text-center';
+                    el.className = el.id.includes('north') ? 'text-3xl sm:text-4xl font-black text-themePurple font-mono w-10 text-center' : 'text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center';
                     if(unitEl) unitEl.style.display = 'inline';
                 }
             };
