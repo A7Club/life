@@ -52,6 +52,12 @@
         ::-webkit-scrollbar-thumb { background: #FF9EBB; border-radius: 10px; border: 2px solid #FDFBF7; }
         ::-webkit-scrollbar-thumb:hover { background: #ff7eb3; }
 
+        /* 綠色時間軸專用滾動條 */
+        .emerald-scrollbar::-webkit-scrollbar { height: 10px; }
+        .emerald-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .emerald-scrollbar::-webkit-scrollbar-thumb { background: #047857; border-radius: 10px; border: 2px solid #FDFBF7; }
+        .emerald-scrollbar::-webkit-scrollbar-thumb:hover { background: #064e3b; }
+
         /* 隱藏橫向滾動條 - 針對需要隱藏的區域 */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -127,61 +133,96 @@
             <!-- 分頁選單列 -->
             <div id="tab-container" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 mb-8 pb-6 border-b-4 border-dashed border-pink-100">
                 <!-- 總覽 -->
-                <button data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-yellow-100 text-yellow-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-yellow-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-house"></i></div>
-                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">首頁總覽</h3>
+                <button data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-2.5 sm:p-3 xl:p-4 rounded-[1.5rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-2 sm:gap-3">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-yellow-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-house"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center">
+                        <h3 class="font-black text-[16px] sm:text-[18px] lg:text-[16px] xl:text-[22px] text-gray-800 leading-none truncate w-full">首頁總覽</h3>
+                        <p class="text-gray-400 text-[10px] sm:text-[11px] xl:text-sm font-bold truncate w-full mt-1 sm:mt-1.5">快速瀏覽情報</p>
                     </div>
-                    <p class="text-gray-400 text-[10px] sm:text-xs xl:text-sm font-bold pl-1 mt-1 sm:mt-0 truncate w-full">快速瀏覽重點情報</p>
                 </button>
 
                 <!-- 市政工程 -->
-                <button data-tab="engineering" data-active="bg-emerald-50 border-emerald-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-emerald-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-emerald-100 text-emerald-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-emerald-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-person-digging"></i></div>
-                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">市政工程</h3>
+                <button data-tab="engineering" data-active="bg-emerald-50 border-emerald-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-emerald-200" class="tab-btn p-2.5 sm:p-3 xl:p-4 rounded-[1.5rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-2 sm:gap-3">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-emerald-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-person-digging"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center">
+                        <h3 class="font-black text-[16px] sm:text-[18px] lg:text-[16px] xl:text-[22px] text-gray-800 leading-none truncate w-full">市政工程</h3>
+                        <p class="text-gray-400 text-[10px] sm:text-[11px] xl:text-sm font-bold truncate w-full mt-1 sm:mt-1.5">追蹤 <span id="badge-eng" class="text-emerald-600 font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 項建設</p>
                     </div>
-                    <p class="text-gray-400 text-[10px] sm:text-xs xl:text-sm font-bold pl-1 mt-1 sm:mt-0 truncate w-full">追蹤 <span id="badge-eng" class="text-emerald-600 font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 項重大建設</p>
                 </button>
 
                 <!-- 在地社群 -->
-                <button data-tab="community" data-active="bg-purple-50 border-purple-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-purple-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-purple-100 text-themePurple rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-purple-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-users"></i></div>
-                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">在地社群</h3>
+                <button data-tab="community" data-active="bg-purple-50 border-purple-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-purple-200" class="tab-btn p-2.5 sm:p-3 xl:p-4 rounded-[1.5rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-2 sm:gap-3">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-purple-100 text-themePurple rounded-xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-purple-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-users"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center">
+                        <h3 class="font-black text-[16px] sm:text-[18px] lg:text-[16px] xl:text-[22px] text-gray-800 leading-none truncate w-full">在地社群</h3>
+                        <p class="text-gray-400 text-[10px] sm:text-[11px] xl:text-sm font-bold truncate w-full mt-1 sm:mt-1.5">已收錄 <span id="badge-com" class="text-themePurple font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 群組</p>
                     </div>
-                    <p class="text-gray-400 text-[10px] sm:text-xs xl:text-sm font-bold pl-1 mt-1 sm:mt-0 truncate w-full">已收錄 <span id="badge-com" class="text-themePurple font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 個群組</p>
                 </button>
 
                 <!-- 行政區劃 -->
-                <button data-tab="buildings" data-active="bg-blue-50 border-blue-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-blue-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-blue-100 text-themeBlue rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-blue-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-map-location-dot"></i></div>
-                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">行政區劃</h3>
+                <button data-tab="buildings" data-active="bg-blue-50 border-blue-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-blue-200" class="tab-btn p-2.5 sm:p-3 xl:p-4 rounded-[1.5rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-2 sm:gap-3">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-blue-100 text-themeBlue rounded-xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-blue-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-map-location-dot"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center">
+                        <h3 class="font-black text-[16px] sm:text-[18px] lg:text-[16px] xl:text-[22px] text-gray-800 leading-none truncate w-full">行政區劃</h3>
+                        <p class="text-gray-400 text-[10px] sm:text-[11px] xl:text-sm font-bold truncate w-full mt-1 sm:mt-1.5">建案戶籍學區</p>
                     </div>
-                    <p class="text-gray-400 text-[10px] sm:text-xs xl:text-sm font-bold pl-1 mt-1 sm:mt-0 truncate w-full">建案分佈、戶籍與學區</p>
                 </button>
 
                 <!-- 交通指南 -->
-                <button data-tab="transit" data-active="bg-rose-50 border-rose-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-rose-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-rose-100 text-rose-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-rose-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-train-subway"></i></div>
-                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">交通指南</h3>
+                <button data-tab="transit" data-active="bg-rose-50 border-rose-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-rose-200" class="tab-btn p-2.5 sm:p-3 xl:p-4 rounded-[1.5rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-2 sm:gap-3">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-rose-100 text-rose-500 rounded-xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-rose-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-train-subway"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center">
+                        <h3 class="font-black text-[16px] sm:text-[18px] lg:text-[16px] xl:text-[22px] text-gray-800 leading-none truncate w-full">交通指南</h3>
+                        <p class="text-gray-400 text-[10px] sm:text-[11px] xl:text-sm font-bold truncate w-full mt-1 sm:mt-1.5">公車與捷運</p>
                     </div>
-                    <p class="text-gray-400 text-[10px] sm:text-xs xl:text-sm font-bold pl-1 mt-1 sm:mt-0 truncate w-full">公車與捷運路線動態</p>
                 </button>
 
                 <!-- 在地新聞 -->
-                <button data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-cyan-100 text-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-regular fa-newspaper"></i></div>
-                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">在地新聞</h3>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mt-auto w-full overflow-hidden h-[20px] sm:h-[22px] xl:h-[24px] pl-1">
-                        <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">機捷</span>
-                        <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">A7</span>
+                <button data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-2.5 sm:p-3 xl:p-4 rounded-[1.5rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-2 sm:gap-3">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-cyan-100 text-cyan-500 rounded-xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-regular fa-newspaper"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center">
+                        <h3 class="font-black text-[16px] sm:text-[18px] lg:text-[16px] xl:text-[22px] text-gray-800 leading-none truncate w-full">在地新聞</h3>
+                        <div id="dynamic-news-tags" class="flex flex-row flex-nowrap overflow-hidden gap-1 mt-1 sm:mt-1.5 w-full">
+                            <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">機捷</span>
+                            <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">A7</span>
+                            <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">龜山</span>
+                        </div>
                     </div>
                 </button>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 模組：市政工程公告欄 (僅工程分頁顯示，且排在時間軸前) -->
+            <!-- ============================================== -->
+            <div id="mod-eng-board" class="content-module mb-12 hidden" data-shows-on="engineering">
+                <div class="flex items-center mb-6">
+                    <h2 class="text-xl md:text-2xl font-black text-emerald-700 flex items-center"><i class="fa-solid fa-person-digging mr-3 text-3xl"></i>市政工程公告欄</h2>
+                </div>
+                <!-- 綠色公告欄本體 -->
+                <div class="relative bg-gray-300 rounded-lg p-3 md:p-4 border-2 border-gray-400 shadow-[0_15px_35px_rgba(0,0,0,0.15)] z-10 mx-2 sm:mx-0">
+                    <div class="absolute top-2 left-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 rotate-45"></div></div>
+                    <div class="absolute top-2 right-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 -rotate-12"></div></div>
+                    <div class="absolute bottom-2 left-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 rotate-12"></div></div>
+                    <div class="absolute bottom-2 right-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 rotate-90"></div></div>
+                    
+                    <div class="bg-[#0f5132] rounded p-4 md:p-6 border-4 border-white relative overflow-hidden flex flex-col items-center">
+                        <div class="text-center mb-6 border-b-2 border-white pb-4 w-full relative z-10">
+                            <h3 class="text-xl md:text-2xl font-black text-white tracking-widest flex items-center justify-center flex-wrap gap-2">
+                                桃園市政府重大工程施工告示牌
+                            </h3>
+                            <p class="text-emerald-100 font-bold mt-2 text-xs md:text-sm tracking-widest">（A7站區）都計變更工程追蹤</p>
+                        </div>
+                        <div id="engineering-board-content" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative z-10 w-full text-white">
+                            <div class="col-span-full text-center py-6">
+                                <i class="fa-solid fa-spinner fa-spin text-3xl mb-3"></i>
+                                <p>正在連線公共工程委員會...</p>
+                            </div>
+                        </div>
+                        <div class="mt-5 w-full text-right text-xs text-emerald-200/60 font-bold">
+                            <i class="fa-solid fa-rotate mr-1"></i>資料來源：<a href="https://www.pcc.gov.tw/">行政院公共工程委員會</a>、<a href="https://opc.tycg.gov.tw/">桃園市政府新建工程處</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- ============================================== -->
@@ -196,12 +237,12 @@
                             <i class="fa-regular fa-calendar-check mr-3"></i>工程期程總覽表 (2025 - 2030)
                         </h3>
                         <button onclick="window.switchTab('engineering', true)" class="text-xs sm:text-sm font-bold text-emerald-600 hover:text-emerald-800 bg-emerald-50 border-2 border-emerald-100 hover:border-emerald-200 px-4 py-2 rounded-xl flex items-center transition-colors shadow-sm w-max mx-auto sm:mx-0">
-                            看完整工程公告 <i class="fa-solid fa-arrow-right ml-1.5"></i>
+                            更多工程資訊</i>
                         </button>
                     </div>
                     
                     <!-- 移除 hide-scrollbar 讓捲軸正常顯示，並加大 padding 避免縮放時被裁切 -->
-                    <div class="relative z-10 w-full overflow-x-auto pb-8 pt-4 px-2 -mx-2">
+                    <div class="relative z-10 w-full overflow-x-auto pb-8 pt-4 px-2 -mx-2 emerald-scrollbar">
                         <div class="absolute top-[40px] left-[5%] right-[5%] h-[4px] bg-emerald-100 z-0 min-w-[1200px]"></div>
                         <div class="flex flex-row justify-between gap-4 relative w-full min-w-[1200px]">
                             <!-- 2025 -->
@@ -289,26 +330,31 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：首頁即時動態看板 (僅總覽分頁顯示) -->
+            <!-- 模組：首頁即時動態看板 (僅總覽分頁顯示 - 統合成一個交通大卡片) -->
             <!-- ============================================== -->
-            <div id="mod-transit-overview" class="content-module mb-10 hidden" data-shows-on="overview">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-xl md:text-2xl font-black text-rose-500 flex items-center"><i class="fa-solid fa-satellite-dish mr-3 animate-pulse text-rose-400"></i>即時通勤動態</h2>
-                    <button onclick="window.switchTab('transit', true)" class="text-xs sm:text-sm font-bold text-rose-500 hover:text-rose-700 bg-rose-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">完整動態 <i class="fa-solid fa-arrow-right ml-1"></i></button>
-                </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-                    <!-- 左側：桃園機捷捷運 (無動畫滿版設計) -->
-                    <div class="bg-white rounded-[2rem] shadow-cute border-4 border-purple-50 p-4 sm:p-5 lg:p-6 flex flex-col relative overflow-hidden group hover:border-purple-200 transition-colors">
-                        <div class="absolute -right-4 -bottom-4 text-purple-50 text-8xl pointer-events-none z-0"><i class="fa-solid fa-train-subway"></i></div>
-                        <h3 class="text-lg font-black text-gray-800 flex items-center border-b-2 border-purple-50 pb-3 mb-4 relative z-10 shrink-0">
-                            <div class="w-8 h-8 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-train-subway text-sm"></i></div>
-                            桃園機場捷運 <span class="text-purple-600 text-sm ml-2">A7 站</span>
-                        </h3>
-                        <div class="flex-1 flex flex-col justify-center relative z-10">
-                            <div class="flex flex-row gap-3 md:gap-4 h-full">
+            <div id="mod-transit-overview" class="content-module mb-12 hidden" data-shows-on="overview">
+                <!-- 整合型外層卡片 -->
+                <div class="bg-white rounded-[2.5rem] shadow-cute border-4 border-rose-50 p-5 sm:p-6 lg:p-8 flex flex-col relative overflow-hidden group hover:border-rose-100 transition-colors">
+                    <div class="absolute -right-4 -top-4 text-rose-50 text-8xl pointer-events-none z-0"><i class="fa-solid fa-satellite-dish"></i></div>
+                    
+                    <div class="flex items-center justify-between border-b-2 border-rose-100 pb-4 mb-5 relative z-10 shrink-0">
+                        <h2 class="text-xl md:text-2xl font-black text-rose-500 flex items-center"><i class="fa-solid fa-satellite-dish mr-3 animate-pulse text-rose-400"></i>即時通勤動態</h2>
+                        <button onclick="window.switchTab('transit', true)" class="text-xs sm:text-sm font-bold text-rose-500 hover:text-rose-700 bg-rose-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">通勤總攻略</button>
+                    </div>
+                    
+                    <!-- 內部子面板 (捷運與公車) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 relative z-10">
+                        
+                        <!-- 左側：桃園機捷捷運 -->
+                        <div class="bg-purple-50/40 rounded-[1.5rem] border border-purple-100 p-4 sm:p-5 flex flex-col">
+                            <h3 class="text-lg font-black text-gray-800 flex items-center border-b border-purple-100 pb-3 mb-4 shrink-0">
+                                <div class="w-8 h-8 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-train-subway text-sm"></i></div>
+                                桃園機場捷運 <span class="text-purple-600 text-sm ml-2">A7 站</span>
+                            </h3>
+                            <!-- 手機版上下排列，平版以上左右排列 -->
+                            <div class="flex flex-col sm:flex-row gap-3 md:gap-4 h-full">
                                 <!-- 北上 -->
-                                <div class="flex-1 bg-purple-50 rounded-2xl p-4 md:p-5 shadow-sm border border-purple-100 flex items-center justify-between">
+                                <div class="flex-1 bg-white rounded-2xl p-4 shadow-sm border border-purple-100 flex items-center justify-between">
                                     <div>
                                         <div class="text-[10px] sm:text-xs text-purple-400 font-bold mb-0.5">往台北</div>
                                         <div class="text-sm sm:text-xl font-black text-purple-600">北上</div>
@@ -319,7 +365,7 @@
                                     </div>
                                 </div>
                                 <!-- 南下 -->
-                                <div class="flex-1 bg-purple-700 rounded-2xl p-4 md:p-5 shadow-md border-2 border-white flex items-center justify-between">
+                                <div class="flex-1 bg-purple-600 rounded-2xl p-4 shadow-sm border border-purple-700 flex items-center justify-between">
                                     <div>
                                         <div class="text-[10px] sm:text-xs text-purple-200 font-bold mb-0.5">往機場</div>
                                         <div class="text-sm sm:text-xl font-black text-white">南下</div>
@@ -331,18 +377,18 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- 右側：各方向最快公車 -->
-                    <div class="bg-white rounded-[2rem] shadow-cute border-4 border-emerald-50 p-4 sm:p-5 lg:p-6 flex flex-col relative overflow-hidden group hover:border-emerald-200 transition-colors">
-                        <div class="absolute -right-4 -bottom-4 text-emerald-50 text-8xl pointer-events-none z-0"><i class="fa-solid fa-bus"></i></div>
-                        <h3 class="text-lg font-black text-gray-800 flex items-center border-b-2 border-emerald-50 pb-3 mb-4 relative z-10 shrink-0">
-                            <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-stopwatch text-sm"></i></div>
-                            各方向最快到站公車
-                        </h3>
-                        <div id="bus-overview-fastest-container" class="flex flex-col gap-2.5 relative z-10 flex-1 justify-center">
-                            <div class="text-center py-4 text-emerald-400 font-bold"><i class="fa-solid fa-spinner fa-spin mr-2"></i>載入即時資料...</div>
+                        <!-- 右側：各方向最快公車 -->
+                        <div class="bg-emerald-50/40 rounded-[1.5rem] border border-emerald-100 p-4 sm:p-5 flex flex-col">
+                            <h3 class="text-lg font-black text-gray-800 flex items-center border-b border-emerald-100 pb-3 mb-4 shrink-0">
+                                <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-stopwatch text-sm"></i></div>
+                                各方向最快到站公車
+                            </h3>
+                            <div id="bus-overview-fastest-container" class="flex flex-col gap-2.5 flex-1 justify-center">
+                                <div class="text-center py-4 text-emerald-400 font-bold"><i class="fa-solid fa-spinner fa-spin mr-2"></i>載入即時資料...</div>
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -353,7 +399,7 @@
             <div id="mod-community-overview" class="content-module mb-12 hidden" data-shows-on="overview">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-xl md:text-2xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門在地社群推薦</h2>
-                    <button onclick="window.switchTab('community', true)" class="text-sm font-bold text-themePurple hover:text-purple-700 bg-purple-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">看所有社群 <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                    <button onclick="window.switchTab('community', true)" class="text-sm font-bold text-themePurple hover:text-purple-700 bg-purple-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">更多社群</i></button>
                 </div>
                 <!-- 雙欄排版 -->
                 <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 items-stretch">
@@ -380,7 +426,7 @@
             <div id="mod-news-overview" class="content-module mb-12 hidden" data-shows-on="overview">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-xl md:text-2xl font-black text-cyan-600 flex items-center"><i class="fa-regular fa-newspaper mr-3 text-3xl"></i>A7 焦點新聞</h2>
-                    <button onclick="window.switchTab('news', true)" class="text-sm font-bold text-cyan-500 hover:text-cyan-700 bg-cyan-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">看更多 <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                    <button onclick="window.switchTab('news', true)" class="text-sm font-bold text-cyan-500 hover:text-cyan-700 bg-cyan-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">更多新聞</i></button>
                 </div>
                 <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-8 border-4 border-cyan-50 relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 text-cyan-50 text-8xl floating pointer-events-none z-0"><i class="fa-regular fa-newspaper"></i></div>
@@ -433,11 +479,12 @@
                             <div class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 group-open:rotate-180 transition-transform duration-300 shrink-0 border border-gray-100"><i class="fa-solid fa-chevron-down"></i></div>
                         </summary>
                         <div class="px-5 pb-5 pt-2 border-t-2 border-purple-50/80">
-                            <!-- 機捷動態看板 (無動畫簡潔版) -->
-                            <div class="flex flex-col gap-3 relative z-10 w-full mt-3">
+                            <!-- 機捷動態看板 (含動畫版) -->
+                            <div class="flex flex-col gap-4 relative z-10 w-full mt-3">
+                                <!-- 手機版上下排列，平版以上左右排列 -->
                                 <div class="flex flex-col sm:flex-row gap-3 md:gap-4 w-full">
                                     <!-- 北上 (往台北) - 淺色卡片 -->
-                                    <div class="flex-1 bg-purple-50 rounded-2xl p-5 shadow-sm border border-purple-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                                    <div class="flex-1 bg-purple-50 rounded-2xl p-4 md:p-5 shadow-sm border border-purple-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
                                         <div>
                                             <div class="text-[10px] sm:text-xs text-purple-400 font-bold mb-0.5">往台北</div>
                                             <div class="text-sm sm:text-xl font-black text-purple-600">北上</div>
@@ -448,7 +495,7 @@
                                         </div>
                                     </div>
                                     <!-- 南下 (往機場/中壢) - 深紫色反白卡片 -->
-                                    <div class="flex-1 bg-purple-700 rounded-2xl p-5 shadow-md border-2 border-white flex items-center justify-between hover:-translate-y-1 transition-transform">
+                                    <div class="flex-1 bg-purple-700 rounded-2xl p-4 md:p-5 shadow-md border-2 border-white flex items-center justify-between hover:-translate-y-1 transition-transform">
                                         <div>
                                             <div class="text-[10px] sm:text-xs text-purple-200 font-bold mb-0.5">往機場/中壢</div>
                                             <div class="text-sm sm:text-xl font-black text-white">南下</div>
@@ -459,6 +506,82 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- 軌道與列車動畫圖 (僅於 transit 頁面顯示) -->
+                                <div class="w-full relative z-10 bg-gray-50 rounded-[1.5rem] p-4 sm:p-6 border-2 border-gray-100 shadow-inner flex flex-col justify-center mt-2">
+                                    <div class="flex justify-between items-center mb-6">
+                                        <span class="text-xs sm:text-sm text-gray-500 font-black"><i class="fa-solid fa-location-crosshairs mr-1.5"></i>列車即時位置</span>
+                                        <span class="text-[10px] sm:text-xs text-gray-400 bg-white px-2.5 py-1 rounded-md border border-gray-200 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>系統推算中</span>
+                                    </div>
+                                    
+                                    <!-- 動態列車與軌道區域 -->
+                                    <div class="relative w-full px-3 sm:px-6 mt-2 mb-4 h-[40px]">
+                                        <!-- 軌道底線 -->
+                                        <div class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[16px] sm:top-[20px] h-1.5 sm:h-2 bg-purple-100 rounded-full z-0"></div>
+                                        <!-- 動態列車注入點 -->
+                                        <div id="mrt-track-container-transit" class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[0px] z-20 pointer-events-none w-full h-full"></div>
+                                    </div>
+                                        
+                                    <!-- 站點配置獨立出來，緊鄰站名 -->
+                                    <div class="flex justify-between relative z-10 w-full px-3 sm:px-6">
+                                        <div class="flex flex-col items-center w-8 sm:w-12">
+                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
+                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A4</span>
+                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">副都心</span>
+                                        </div>
+                                        <div class="flex flex-col items-center w-8 sm:w-12">
+                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
+                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A5</span>
+                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">泰山</span>
+                                        </div>
+                                        <div class="flex flex-col items-center w-8 sm:w-12">
+                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
+                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A6</span>
+                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">貴和</span>
+                                        </div>
+                                        <!-- A7 (放大醒目) -->
+                                        <div class="flex flex-col items-center w-8 sm:w-12">
+                                            <div class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-purple-500 border-[3px] border-white shadow-md z-10 mb-1"></div>
+                                            <span class="text-[11px] sm:text-sm font-black text-purple-600">A7</span>
+                                            <span class="text-[11px] sm:text-[15px] font-black text-gray-700 whitespace-nowrap">體大</span>
+                                        </div>
+                                        <div class="flex flex-col items-center w-8 sm:w-12">
+                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
+                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A8</span>
+                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">長庚</span>
+                                        </div>
+                                        <div class="flex flex-col items-center w-8 sm:w-12">
+                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
+                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A9</span>
+                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">林口</span>
+                                        </div>
+                                        <div class="flex flex-col items-center w-8 sm:w-12">
+                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
+                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A10</span>
+                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">山鼻</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </details>
+                    
+                    <!-- 新增：熱門公車動態 - 台北市區/內湖方向 -->
+                    <details class="bg-white rounded-[2rem] shadow-sm border-[3px] border-blue-50 hover:border-blue-200 transition-colors group mb-4 overflow-hidden">
+                        <summary class="p-5 md:p-6 flex items-center justify-between cursor-pointer list-none outline-none select-none active:bg-blue-50/50 transition-colors">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-blue-100 text-blue-500 rounded-2xl flex items-center justify-center text-2xl mr-4 shrink-0 shadow-inner"><i class="fa-solid fa-building-user"></i></div>
+                                <div>
+                                    <h3 class="text-lg md:text-xl font-black text-gray-800">往 台北市區 / 內湖</h3>
+                                    <p class="text-xs text-gray-400 font-bold mt-0.5">946、967 通勤快速公車</p>
+                                </div>
+                            </div>
+                            <div class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 group-open:rotate-180 transition-transform duration-300 shrink-0 border border-gray-100"><i class="fa-solid fa-chevron-down"></i></div>
+                        </summary>
+                        <div class="px-5 pb-5 pt-2 border-t-2 border-gray-50/80">
+                            <div id="bus-taipei-container" class="flex flex-col gap-3 mt-3">
+                                <!-- 動態載入公車資訊 -->
                             </div>
                         </div>
                     </details>
@@ -560,40 +683,6 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：市政工程公告欄 (僅工程分頁顯示) -->
-            <!-- ============================================== -->
-            <div id="mod-eng-board" class="content-module mb-12 hidden" data-shows-on="engineering">
-                <div class="flex items-center mb-6">
-                    <h2 class="text-xl font-black text-emerald-700 flex items-center"><i class="fa-solid fa-person-digging mr-3 text-3xl"></i>市政工程公告欄</h2>
-                </div>
-                <!-- 綠色公告欄本體 -->
-                <div class="relative bg-gray-300 rounded-lg p-3 md:p-4 border-2 border-gray-400 shadow-[0_15px_35px_rgba(0,0,0,0.15)] z-10 mx-2 sm:mx-0">
-                    <div class="absolute top-2 left-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 rotate-45"></div></div>
-                    <div class="absolute top-2 right-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 -rotate-12"></div></div>
-                    <div class="absolute bottom-2 left-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 rotate-12"></div></div>
-                    <div class="absolute bottom-2 right-2 w-4 h-4 bg-gray-400 rounded-full shadow-inner border border-gray-500 z-20 flex items-center justify-center"><div class="w-8/12 h-[1px] bg-gray-600 rotate-90"></div></div>
-                    
-                    <div class="bg-[#0f5132] rounded p-4 md:p-6 border-4 border-white relative overflow-hidden flex flex-col items-center">
-                        <div class="text-center mb-6 border-b-2 border-white pb-4 w-full relative z-10">
-                            <h3 class="text-xl md:text-2xl font-black text-white tracking-widest flex items-center justify-center flex-wrap gap-2">
-                                桃園市政府重大工程施工告示牌
-                            </h3>
-                            <p class="text-emerald-100 font-bold mt-2 text-xs md:text-sm tracking-widest">（A7站區）都計變更工程追蹤</p>
-                        </div>
-                        <div id="engineering-board-content" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative z-10 w-full text-white">
-                            <div class="col-span-full text-center py-6">
-                                <i class="fa-solid fa-spinner fa-spin text-3xl mb-3"></i>
-                                <p>正在連線公共工程委員會...</p>
-                            </div>
-                        </div>
-                        <div class="mt-5 w-full text-right text-xs text-emerald-200/60 font-bold">
-                            <i class="fa-solid fa-rotate mr-1"></i>資料來源：<a href="https://www.pcc.gov.tw/">行政院公共工程委員會</a>、<a href="https://opc.tycg.gov.tw/">桃園市政府新建工程處</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================== -->
             <!-- 模組：在地建設紀錄 (已完工) -->
             <!-- ============================================== -->
             <div id="mod-eng-completed" class="content-module mb-12 hidden" data-shows-on="engineering">
@@ -652,19 +741,20 @@
                 <div class="flex items-center mb-6">
                     <h2 class="text-2xl font-black text-themeBlue flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeBlue"></i>A7行政里分區地圖</h2>
                 </div>
-                <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
-                    <div class="w-full md:w-1/2 lg:w-5/12 relative shrink-0 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border-4 border-white shadow-cute bg-white group">
-                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-auto object-contain block group-hover:scale-105 transition-transform duration-500" alt="A7建案地圖">
-                        <div class="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-gray-100 whitespace-nowrap">
+                <!-- 調整為 items-stretch 讓左右等高，左側 flex-1，右側限制寬度不至於太寬 -->
+                <div class="flex flex-row gap-2.5 sm:gap-4 md:gap-6 items-stretch min-h-[250px] sm:min-h-[300px]">
+                    <div class="flex-1 relative shrink-0 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border-4 border-white shadow-cute bg-white group flex items-center justify-center">
+                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-full object-cover lg:object-contain block group-hover:scale-105 transition-transform duration-500 absolute inset-0" alt="A7建案地圖">
+                        <div class="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-gray-100 whitespace-nowrap z-10">
                             A7 區域建案概覽圖
                         </div>
                     </div>
-                    <div class="w-full md:w-1/2 lg:w-7/12 flex flex-col h-full">
-                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
-                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0">
-                                <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 點擊下方各里查看所屬建案
+                    <div class="w-[90px] sm:w-[130px] md:w-[150px] lg:w-7/12 flex flex-col shrink-0">
+                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-2 sm:p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
+                            <h3 class="text-[12px] sm:text-base md:text-xl font-black text-gray-700 mb-2 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0 leading-tight">
+                                <i class="fa-solid fa-list-ul mr-1.5 text-themePink hidden lg:block"></i> <span class="hidden lg:inline">點擊下方各里查看</span><span class="lg:hidden">各里</span>建案
                             </h3>
-                            <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-1.5 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start pt-2">
+                            <div id="village-tags-container" class="flex flex-col lg:flex-row lg:flex-wrap justify-start gap-1.5 sm:gap-2.5 md:gap-3 overflow-y-auto hide-scrollbar flex-1 content-start pt-1 sm:pt-2">
                                 <!-- 動態載入各里小標籤 -->
                             </div>
                         </div>
@@ -709,10 +799,9 @@
                                 • 樂善里（1、2、3）為樂善、文青國中小自由學區。<br>
                                 • 長樂里（1-9）為樂善、文青國中小自由學區。<br>
                                 • 長樂里（10-21）為樂善、長庚國小自由學區。<br>
-                                • 文樂里全部為樂善、文青國中小自由學區。<br><br>
-                                具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所或學校教務處確認。
+                                • 文樂里全部為樂善、文青國中小自由學區。<br>
                                 <br><br>
-                                <button onclick="window.switchTab('buildings', true)" class="inline-flex items-center text-xs font-black text-themeBlue bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 rounded-lg transition-colors shadow-sm">
+                                <button onclick="window.switchTab('buildings'); setTimeout(() => { const el = document.getElementById('mod-schooling-registry'); if(el) { const offset = 100; const targetY = el.getBoundingClientRect().top + window.scrollY - offset; window.scrollTo({top: targetY, behavior: 'smooth'}); } }, 100);" class="inline-flex items-center text-xs font-black text-themePurple bg-purple-50 hover:bg-blue-100 border border-purple-200 px-3 py-1.5 rounded-lg transition-colors shadow-sm">
                                     <i class="fa-solid fa-school mr-1.5"></i> 了解更多就學與設籍指南
                                 </button>
                             </p>
@@ -1061,6 +1150,37 @@
             return !(lowerUrl.includes('1x1') || lowerUrl.includes('pixel') || lowerUrl.includes('tracker') || lowerUrl.includes('scorecardresearch'));
         }
 
+        // 動態更新在地新聞的 Hashtag
+        function updateDynamicHashtags(newsItems) {
+            const container = document.getElementById('dynamic-news-tags');
+            if (!container) return;
+
+            const keywordsPool = ['機捷', 'A7', '龜山', '林口', '重劃區', '房價', '建案', '交通', '捷運', '交屋', '長庚', '體大', '工程', '道路', '塞車', '新莊', '迴龍'];
+            const counts = {};
+            keywordsPool.forEach(kw => counts[kw] = 0);
+
+            // 統計關鍵字出現次數
+            newsItems.forEach(item => {
+                const textToSearch = (item.cleanTitle || '') + ' ' + (item.description || '');
+                keywordsPool.forEach(kw => {
+                    if (textToSearch.includes(kw)) counts[kw]++;
+                });
+            });
+
+            // 排序並過濾掉出現次數為 0 的標籤
+            let sortedTags = Object.keys(counts).sort((a, b) => counts[b] - counts[a]).filter(tag => counts[tag] > 0);
+
+            // 補齊預設值避免空白
+            if (sortedTags.length === 0) sortedTags = ['機捷', 'A7', '龜山'];
+            else if (sortedTags.length < 3) {
+                const defaults = ['機捷', 'A7', '龜山'];
+                defaults.forEach(d => { if(!sortedTags.includes(d)) sortedTags.push(d); });
+            }
+
+            const top3 = sortedTags.slice(0, 3);
+            container.innerHTML = top3.map(tag => `<span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">${tag}</span>`).join('');
+        }
+
         async function fetchLocalNews() {
             const overviewContainer = document.getElementById('news-overview-container');
             const fullContainer = document.getElementById('news-full-container');
@@ -1097,6 +1217,7 @@
                 
                 const newsItems = uniqueItems.slice(0, 15);
                 
+                updateDynamicHashtags(newsItems); // 更新熱門標籤
                 renderNewsOverview(newsItems.slice(0, 3)); 
                 renderNewsFull(newsItems, officialNews); 
             } catch (error) {
@@ -1120,6 +1241,7 @@
                 
                 const fallbackNews = fallbackNewsRaw.map(parseNewsItem);
                 
+                updateDynamicHashtags(fallbackNews); // 更新熱門標籤
                 renderNewsOverview(fallbackNews.slice(0, 3));
                 renderNewsFull(fallbackNews, officialNews);
             }
@@ -1507,9 +1629,9 @@
 
             // 產生區塊版面，且強制卡片群置中 (justify-center)
             const localBlockHtml = `
-                <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 border-red-50 relative h-full flex flex-col">
-                    <div class="absolute -top-4 -right-4 text-red-100 text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
-                    <h3 class="text-lg font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0"><i class="fa-solid fa-thumbtack text-red-400 mr-2"></i>在地社群</h3>
+                <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 border-purple-100 relative h-full flex flex-col">
+                    <div class="absolute -top-4 -right-4 text-purple-200 text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
+                    <h3 class="text-lg font-black text-themeBlue mb-6 border-b-4 border-purple-100 pb-3 inline-block relative z-10 shrink-0"><i class="fa-solid fa-thumbtack text-purple-400 mr-2"></i>在地社群</h3>
                     <div class="flex flex-wrap justify-center items-stretch gap-3 md:gap-4 relative z-10 flex-1 content-start">${localCardsHtml}</div>
                 </div>
             `;
@@ -1606,13 +1728,14 @@
                 const style = getStyleForVillage(villageName);
                 const safeId = `village-${villageName.replace(/\s+/g, '')}`;
 
+                // 加上 w-full 讓手機版撐滿寬度一排一個，並隱藏 icon，保留純淨的左對齊或置中文字
                 tagsHtml += `
                     <button onclick="window.switchTab('buildings'); setTimeout(() => { const el = document.getElementById('mod-buildings-list'); if(el){ window.scrollTo({top: el.offsetTop - 100, behavior: 'smooth'}); setTimeout(()=>document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'}), 300); } }, 50);"
-                            class="py-1.5 px-3 sm:px-4 md:px-5 sm:py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-xs sm:text-base md:text-lg flex items-center justify-center sm:justify-start gap-1 sm:gap-2 md:gap-3 hover:-translate-y-1 w-auto text-center sm:text-left group">
-                        <div class="flex w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid ${style.icon} text-[9px] sm:text-xs md:text-sm"></i>
+                            class="py-1.5 px-1.5 sm:px-3 md:px-4 sm:py-2 md:py-2.5 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-lg md:rounded-xl ${style.hoverBg} transition-all shadow-sm text-[11px] sm:text-sm md:text-base flex items-center justify-center sm:justify-start gap-0 sm:gap-2 hover:-translate-y-1 w-full lg:w-auto text-center sm:text-left group">
+                        <div class="hidden sm:flex w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid ${style.icon} text-[8px] sm:text-[10px]"></i>
                         </div>
-                        <span class="tracking-wide whitespace-nowrap">${villageName}</span>
+                        <span class="tracking-wide whitespace-nowrap truncate w-full text-center sm:text-left">${villageName}</span>
                     </button>
                 `;
 
@@ -1690,7 +1813,7 @@
         // 🚌 交通轉乘：TDX API 串接與 UI 渲染
         // ==========================================
         
-        // --- 機捷動態模擬更新函數 (無動畫簡潔版) ---
+        // --- 機捷動態模擬更新函數 (分離動畫邏輯) ---
         window.updateMRTStatus = function() {
             const nbEls = document.querySelectorAll('.mrt-time-north');
             const sbEls = document.querySelectorAll('.mrt-time-south');
@@ -1707,21 +1830,48 @@
             const baseSbArrivals = [10, 25, 40, 55]; 
 
             let minNbDiff = 999;
+            let nbTrainsHTML = '';
             baseNbArrivals.forEach(arr => {
                 [-60, 0, 60].forEach(offset => {
                     let diff = (arr + offset) - currentTotalMinutes;
                     if (diff > 0 && diff < minNbDiff) minNbDiff = diff;
+                    
+                    // 動畫計算
+                    if (diff >= -9 && diff <= 9) {
+                        let pos = 50 + (diff * (50/9));
+                        pos = Math.max(0, Math.min(100, pos));
+                        nbTrainsHTML += `<div class="absolute top-[0px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
+                            <div class="bg-white text-purple-600 rounded-full shadow-md border-2 border-purple-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
+                                <i class="fa-solid fa-caret-left text-[10px]"></i>
+                                <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
+                            </div>
+                        </div>`;
+                    }
                 });
             });
 
             let minSbDiff = 999;
+            let sbTrainsHTML = '';
             baseSbArrivals.forEach(arr => {
                 [-60, 0, 60].forEach(offset => {
                     let diff = (arr + offset) - currentTotalMinutes;
                     if (diff > 0 && diff < minSbDiff) minSbDiff = diff;
+                    
+                    // 動畫計算 (南下列車高度稍微錯開)
+                    if (diff >= -9 && diff <= 9) {
+                        let pos = 50 - (diff * (50/9));
+                        pos = Math.max(0, Math.min(100, pos));
+                        sbTrainsHTML += `<div class="absolute top-[16px] sm:top-[26px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
+                            <div class="bg-purple-700 text-white rounded-full shadow-md border-2 border-white flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
+                                <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
+                                <i class="fa-solid fa-caret-right text-[10px]"></i>
+                            </div>
+                        </div>`;
+                    }
                 });
             });
 
+            // 更新所有機捷卡片的文字 (包含總覽與交通頁面)
             const updateText = (els, diff, unitClass, isNorth) => {
                 els.forEach(el => {
                     const unitEl = el.parentElement.querySelector('.' + unitClass);
@@ -1743,16 +1893,25 @@
 
             updateText(nbEls, minNbDiff, 'mrt-unit-north', true);
             updateText(sbEls, minSbDiff, 'mrt-unit-south', false);
+            
+            // 僅更新交通指南頁面中的動畫軌道 (若存在)
+            const trackContainerTransit = document.getElementById('mrt-track-container-transit');
+            if (trackContainerTransit) {
+                trackContainerTransit.innerHTML = nbTrainsHTML + sbTrainsHTML;
+            }
         };
 
-        // 一般列表公車 UI 卡片 (加入公車站名)
+        // 一般列表公車 UI 卡片 (加入公車站名、放大號碼與時間)
         function createTransitCard(route, destination, timeStatus, type, stopName = '捷運體育大學站') {
             let statusClass = "bg-gray-100 text-gray-500 border-gray-200"; 
             let timeText = timeStatus;
+            let timeTextClass = "text-xl sm:text-2xl font-mono flex items-baseline justify-center gap-0.5";
             
             if (timeStatus === '即將進站' || timeStatus === '進站中' || timeStatus === '0分' || timeStatus === '1分') {
+                // 強烈紅底白字閃爍提示
                 statusClass = "bg-red-500 text-white border-red-600 shadow-md animate-pulse";
                 timeText = "即將進站";
+                timeTextClass = "text-sm sm:text-lg font-black tracking-widest";
             } else if (timeStatus.includes('分')) {
                 const minutes = parseInt(timeStatus);
                 if (minutes <= 5) {
@@ -1760,15 +1919,19 @@
                 } else {
                     statusClass = "bg-emerald-50 text-emerald-600 border-emerald-200"; 
                 }
+                // 時間拆分大數字與小單位
+                timeText = `<span class="text-2xl sm:text-3xl font-black">${minutes}</span><span class="text-xs sm:text-sm font-bold">分</span>`;
             } else if (timeStatus === '末班已過' || timeStatus === '今日未營運') {
                 statusClass = "bg-gray-200 text-gray-400 border-gray-300";
+                timeTextClass = "text-xs sm:text-sm font-bold";
             }
 
             return `
                 <div class="flex items-center justify-between p-3 sm:p-4 bg-gray-50 hover:bg-white rounded-xl border-2 border-gray-100 hover:border-gray-200 transition-colors w-full">
                     <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 flex-1 min-w-0 pr-2">
                         <div class="flex items-center gap-2 shrink-0">
-                            <span class="font-black text-gray-800 text-base sm:text-lg shrink-0">${route}</span>
+                            <!-- 放大路線號碼 -->
+                            <span class="font-black text-gray-800 text-xl sm:text-2xl shrink-0">${route}</span>
                             ${type ? `<span class="bg-gray-200 text-gray-600 text-[10px] px-1.5 py-0.5 rounded font-bold shrink-0">${type}</span>` : ''}
                         </div>
                         <div class="flex flex-col">
@@ -1778,7 +1941,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center justify-center min-w-[70px] sm:min-w-[100px] py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg border-2 ${statusClass} font-black text-xs sm:text-base shrink-0 text-center">
+                    <div class="flex items-center justify-center min-w-[75px] sm:min-w-[100px] py-1 sm:py-2 px-2 sm:px-3 rounded-lg border-2 ${statusClass} shrink-0 text-center ${timeTextClass}">
                         ${timeText}
                     </div>
                 </div>
@@ -1788,26 +1951,35 @@
         // 專為首頁總覽設計的「最快到站」重點卡片 (顏色標籤 -> 號碼 -> 站名 -> 時間)
         function createOverviewBusCard(direction, route, timeStatus, badgeColorClass, stopName = '捷運體育大學站') {
             let timeText = timeStatus;
+            let statusClass = "bg-gray-100 text-gray-600 border-gray-200"; 
+            let timeTextClass = "text-xl sm:text-2xl font-mono flex items-baseline justify-center gap-0.5";
             
             if (timeStatus === '即將進站' || timeStatus === '進站中' || timeStatus === '0分' || timeStatus === '1分') {
                 timeText = "即將進站";
+                // 觸發強烈紅底白字閃爍特效
+                statusClass = "bg-red-500 text-white border-red-600 shadow-md animate-pulse";
+                timeTextClass = "text-sm sm:text-base font-black tracking-widest";
+            } else if (timeStatus.includes('分')) {
+                const minutes = parseInt(timeStatus);
+                // 時間拆分大數字與小單位
+                timeText = `<span class="text-2xl sm:text-3xl font-black">${minutes}</span><span class="text-xs sm:text-sm font-bold">分</span>`;
+            } else {
+                timeTextClass = "text-xs sm:text-sm font-bold";
             }
-            
-            // 時間顯示統一採用灰色系，避免與前面的顏色標籤重複
-            let statusClass = "bg-gray-100 text-gray-600 border-gray-200"; 
 
             return `
                 <div class="flex items-center justify-between p-3 bg-gray-50 hover:bg-white rounded-xl border-2 border-gray-100 hover:border-gray-200 transition-colors w-full gap-2 sm:gap-3">
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 flex-1 min-w-0">
                         <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                             <span class="${badgeColorClass} text-white text-[11px] sm:text-xs font-black px-2 py-1 rounded-lg shrink-0 text-center shadow-sm min-w-[75px] sm:min-w-[85px]">往 ${direction}</span>
-                            <span class="font-black text-gray-800 text-base sm:text-lg shrink-0">${route}</span>
+                            <!-- 放大路線號碼 -->
+                            <span class="font-black text-gray-800 text-xl sm:text-2xl shrink-0">${route}</span>
                         </div>
                         <div class="text-[10px] sm:text-xs text-gray-400 font-bold truncate flex items-center mt-0.5 sm:mt-0">
                             <i class="fa-solid fa-location-dot mr-1"></i>${stopName}
                         </div>
                     </div>
-                    <div class="flex items-center justify-center min-w-[70px] sm:min-w-[85px] py-1.5 px-2 rounded-lg border-2 ${statusClass} font-black text-xs sm:text-sm shrink-0 text-center">
+                    <div class="flex items-center justify-center min-w-[75px] sm:min-w-[90px] py-1 px-2 rounded-lg border-2 ${statusClass} shrink-0 text-center ${timeTextClass}">
                         ${timeText}
                     </div>
                 </div>
@@ -1834,28 +2006,33 @@
                     // 首頁總覽快速動態
                     const overviewBusHtml = `
                         ${createOverviewBusCard('長庚醫院', '202', generateMrtTime(), 'bg-emerald-500')}
-                        ${createOverviewBusCard('迴龍 / 新莊', '橘21', generateMrtTime(), 'bg-orange-500')}
+                        ${createOverviewBusCard('台北市府', '967', generateMrtTime(), 'bg-blue-500')}
                         ${createOverviewBusCard('長庚社區', 'L317', generateMrtTime(), 'bg-themePink')}
                     `;
                     const obc = document.getElementById('bus-overview-fastest-container');
                     if (obc) obc.innerHTML = overviewBusHtml;
 
-                    // 交通指南詳細動態
+                    // 新增：交通指南詳細動態 - 台北市區/內湖方向
+                    const taipeiHtml = `
+                        ${createTransitCard('946', '內湖科學園區', generateMrtTime(), '新北市區')}
+                        ${createTransitCard('967', '台北市政府', `${Math.floor(Math.random() * 20) + 5}分`, '新北市區')}
+                    `;
+                    const tbc = document.getElementById('bus-taipei-container');
+                    if (tbc) tbc.innerHTML = taipeiHtml;
+
+                    // 交通指南詳細動態 - 長庚醫院
                     const hospitalHtml = `
                         ${createTransitCard('202', '林口長庚醫院', generateMrtTime(), '桃園市區')}
                         ${createTransitCard('603', '長庚大學', `${Math.floor(Math.random() * 20) + 5}分`, '桃園市區')}
                         ${createTransitCard('606', '林口長庚醫院', generateMrtTime(), '桃園市區')}
                         ${createTransitCard('607', '長庚醫院', `${Math.floor(Math.random() * 15) + 5}分`, '桃園市區')}
-                        ${createTransitCard('橘21', '迴龍 / 新莊', generateMrtTime(), '新北市區')}
                     `;
                     const hbc = document.getElementById('bus-hospital-container');
                     if (hbc) hbc.innerHTML = hospitalHtml;
 
+                    // 移除 橘21, 898, BR棕線先導 (因使用者要求隱藏)，剩下 607 新莊/迴龍 方向
                     const xinzhuangHtml = `
-                        ${createTransitCard('橘21', '中港 / 新莊', generateMrtTime(), '新北市區')}
                         ${createTransitCard('607', '迴龍', generateMrtTime(), '桃園市區')}
-                        ${createTransitCard('898', '迴龍站', `${Math.floor(Math.random() * 25) + 3}分`, '新北市區')}
-                        ${createTransitCard('BR 棕線先導', '捷運迴龍站', `${Math.floor(Math.random() * 15) + 2}分`, '桃園捷運先導')}
                     `;
                     const xbc = document.getElementById('bus-xinzhuang-container');
                     if (xbc) xbc.innerHTML = xinzhuangHtml;
