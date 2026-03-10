@@ -52,7 +52,7 @@
         ::-webkit-scrollbar-thumb { background: #FF9EBB; border-radius: 10px; border: 2px solid #FDFBF7; }
         ::-webkit-scrollbar-thumb:hover { background: #ff7eb3; }
 
-        /* 隱藏橫向滾動條 */
+        /* 隱藏橫向滾動條 - 針對需要隱藏的區域 */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -124,72 +124,281 @@
                 <h2 class="text-2xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">了解在地生活</span></h2>
             </div>
 
-            <!-- 分頁選單列 (大型區塊卡片設計 + 超明顯Hover特效) -->
-            <div id="tab-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-10 pb-8 border-b-4 border-dashed border-pink-100">
+            <!-- 分頁選單列 -->
+            <div id="tab-container" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 mb-8 pb-6 border-b-4 border-dashed border-pink-100">
                 <!-- 總覽 -->
-                <button data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-3 sm:gap-4 mb-1.5 sm:mb-3">
-                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-yellow-100 text-yellow-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-2xl group-hover:bg-yellow-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-house"></i></div>
-                        <h3 class="font-black text-base sm:text-xl text-gray-800 leading-tight">首頁總覽</h3>
+                <button data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
+                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-yellow-100 text-yellow-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-yellow-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-house"></i></div>
+                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">首頁總覽</h3>
                     </div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-bold pl-1 mt-1 sm:mt-0">快速瀏覽 A7 重點情報</p>
+                    <p class="text-gray-400 text-[10px] sm:text-xs xl:text-sm font-bold pl-1 mt-1 sm:mt-0 truncate w-full">快速瀏覽重點情報</p>
                 </button>
 
                 <!-- 市政工程 -->
-                <button data-tab="engineering" data-active="bg-emerald-50 border-emerald-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-emerald-200" class="tab-btn p-3 sm:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-3 sm:gap-4 mb-1.5 sm:mb-3">
-                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-emerald-100 text-emerald-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-2xl group-hover:bg-emerald-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-person-digging"></i></div>
-                        <h3 class="font-black text-base sm:text-xl text-gray-800 leading-tight">市政工程</h3>
+                <button data-tab="engineering" data-active="bg-emerald-50 border-emerald-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-emerald-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
+                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-emerald-100 text-emerald-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-emerald-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-person-digging"></i></div>
+                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">市政工程</h3>
                     </div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-bold pl-1 mt-1 sm:mt-0">追蹤 <span id="badge-eng" class="text-emerald-600 text-sm sm:text-lg font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 項重大建設</p>
+                    <p class="text-gray-400 text-[10px] sm:text-xs xl:text-sm font-bold pl-1 mt-1 sm:mt-0 truncate w-full">追蹤 <span id="badge-eng" class="text-emerald-600 font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 項重大建設</p>
                 </button>
 
                 <!-- 在地社群 -->
-                <button data-tab="community" data-active="bg-purple-50 border-purple-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-purple-200" class="tab-btn p-3 sm:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-3 sm:gap-4 mb-1.5 sm:mb-3">
-                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-purple-100 text-themePurple rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-2xl group-hover:bg-purple-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-users"></i></div>
-                        <h3 class="font-black text-base sm:text-xl text-gray-800 leading-tight">在地社群</h3>
+                <button data-tab="community" data-active="bg-purple-50 border-purple-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-purple-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
+                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-purple-100 text-themePurple rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-purple-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-users"></i></div>
+                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">在地社群</h3>
                     </div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-bold pl-1 mt-1 sm:mt-0">已收錄 <span id="badge-com" class="text-themePurple text-sm sm:text-lg font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 個地方群組</p>
+                    <p class="text-gray-400 text-[10px] sm:text-xs xl:text-sm font-bold pl-1 mt-1 sm:mt-0 truncate w-full">已收錄 <span id="badge-com" class="text-themePurple font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 個群組</p>
                 </button>
 
                 <!-- 行政區劃 -->
-                <button data-tab="buildings" data-active="bg-blue-50 border-blue-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-blue-200" class="tab-btn p-3 sm:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-3 sm:gap-4 mb-1.5 sm:mb-3">
-                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-blue-100 text-themeBlue rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-2xl group-hover:bg-blue-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-map-location-dot"></i></div>
-                        <h3 class="font-black text-base sm:text-xl text-gray-800 leading-tight">行政區劃</h3>
+                <button data-tab="buildings" data-active="bg-blue-50 border-blue-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-blue-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
+                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-blue-100 text-themeBlue rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-blue-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">行政區劃</h3>
                     </div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-bold pl-1 mt-1 sm:mt-0">行政里建案分佈、戶籍與學區</p>
+                    <p class="text-gray-400 text-[10px] sm:text-xs xl:text-sm font-bold pl-1 mt-1 sm:mt-0 truncate w-full">建案分佈、戶籍與學區</p>
                 </button>
 
                 <!-- 交通指南 -->
-                <button data-tab="transit" data-active="bg-rose-50 border-rose-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-rose-200" class="tab-btn p-3 sm:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-3 sm:gap-4 mb-1.5 sm:mb-3">
-                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-rose-100 text-rose-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-2xl group-hover:bg-rose-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-train-subway"></i></div>
-                        <h3 class="font-black text-base sm:text-xl text-gray-800 leading-tight">交通指南</h3>
+                <button data-tab="transit" data-active="bg-rose-50 border-rose-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-rose-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
+                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-rose-100 text-rose-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-rose-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-train-subway"></i></div>
+                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">交通指南</h3>
                     </div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-bold pl-1 mt-1 sm:mt-0">北桃通勤公車與捷運路線指南</p>
+                    <p class="text-gray-400 text-[10px] sm:text-xs xl:text-sm font-bold pl-1 mt-1 sm:mt-0 truncate w-full">公車與捷運路線動態</p>
                 </button>
 
                 <!-- 在地新聞 -->
-                <button data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-3 sm:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
-                    <div class="flex items-center gap-3 sm:gap-4 mb-1.5 sm:mb-2 lg:mb-3">
-                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-cyan-100 text-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-2xl group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-regular fa-newspaper"></i></div>
-                        <h3 class="font-black text-base sm:text-xl text-gray-800 leading-tight">在地新聞</h3>
+                <button data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-col justify-between text-left group cursor-pointer focus:outline-none">
+                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-4 mb-1 sm:mb-2 xl:mb-3">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 xl:w-14 xl:h-14 bg-cyan-100 text-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl xl:text-2xl group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-regular fa-newspaper"></i></div>
+                        <h3 class="font-black text-sm sm:text-[15px] xl:text-xl text-gray-800 leading-tight">在地新聞</h3>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 mt-auto w-full overflow-hidden h-[24px] sm:h-[26px] pl-1">
-                        <span class="bg-gray-100 text-gray-500 text-[10px] sm:text-xs px-2 py-1 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">機捷</span>
-                        <span class="bg-gray-100 text-gray-500 text-[10px] sm:text-xs px-2 py-1 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">A7重劃區</span>
-                        <span class="bg-gray-100 text-gray-500 text-[10px] sm:text-xs px-2 py-1 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">龜山</span>
+                    <div class="flex flex-wrap gap-1 mt-auto w-full overflow-hidden h-[20px] sm:h-[22px] xl:h-[24px] pl-1">
+                        <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">機捷</span>
+                        <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">A7</span>
                     </div>
                 </button>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 模組：工程期程總覽表 (總覽第一順位、工程分頁皆顯示) -->
+            <!-- ============================================== -->
+            <div id="mod-eng-timeline" class="content-module mb-12 hidden" data-shows-on="overview,engineering">
+                <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-10 border-4 border-emerald-50 relative overflow-hidden">
+                    <div class="absolute -right-6 -bottom-6 text-emerald-50 text-8xl floating pointer-events-none z-0"><i class="fa-solid fa-timeline"></i></div>
+                    
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-10 relative z-10 gap-4">
+                        <h3 class="text-xl md:text-2xl font-black text-emerald-700 flex items-center justify-center sm:justify-start shrink-0">
+                            <i class="fa-regular fa-calendar-check mr-3"></i>工程期程總覽表 (2025 - 2030)
+                        </h3>
+                        <button onclick="window.switchTab('engineering', true)" class="text-xs sm:text-sm font-bold text-emerald-600 hover:text-emerald-800 bg-emerald-50 border-2 border-emerald-100 hover:border-emerald-200 px-4 py-2 rounded-xl flex items-center transition-colors shadow-sm w-max mx-auto sm:mx-0">
+                            看完整工程公告 <i class="fa-solid fa-arrow-right ml-1.5"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- 移除 hide-scrollbar 讓捲軸正常顯示，並加大 padding 避免縮放時被裁切 -->
+                    <div class="relative z-10 w-full overflow-x-auto pb-8 pt-4 px-2 -mx-2">
+                        <div class="absolute top-[40px] left-[5%] right-[5%] h-[4px] bg-emerald-100 z-0 min-w-[1200px]"></div>
+                        <div class="flex flex-row justify-between gap-4 relative w-full min-w-[1200px]">
+                            <!-- 2025 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-400 shadow group-hover:scale-110 group-hover:border-emerald-600 transition-all flex items-center justify-center font-black text-emerald-700">'25</div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">多項建設完工啟用</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-gray-400 mb-2 pb-2 border-b border-gray-200 text-xs leading-relaxed"><i class="fa-solid fa-circle-info mr-1"></i> 備註：變四(滯洪池)於2023啟動；變三(捷運連通)已於2024完工。</span>
+                                        <span class="block text-themeYellow mb-1 mt-2"><i class="fa-solid fa-hourglass-half mr-1"></i> 下半年</span>
+                                        A7站停車場、牛角坡聯外道路拓寬與滯洪池公園預計完工開放。
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- 2026 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-emerald-500 text-white rounded-full border-4 border-emerald-300 shadow group-hover:scale-110 group-hover:bg-emerald-600 transition-all flex items-center justify-center font-black">'26</div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">運動中心與文青國中</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-themeGreen mb-1"><i class="fa-solid fa-medal mr-1"></i> 預計完工</span>
+                                        龜山運動中心落成啟用；文青國中小第二期校舍完工，完善在地就學機能。
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- 2027 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-500 shadow group-hover:scale-110 group-hover:border-emerald-700 transition-all flex items-center justify-center font-black text-emerald-800">'27</div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">空橋計畫核心串聯</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-themeBlue mb-1"><i class="fa-solid fa-bridge mr-1"></i> 逐步啟用</span>
+                                        A7站區立體空橋計畫（中心商業區段）預計陸續完工，實現人車分道。
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- 2028 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-600 shadow group-hover:scale-110 group-hover:border-emerald-800 transition-all flex items-center justify-center font-black text-emerald-900">'28</div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">變二工程與郵政園區</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-themePurple mb-1"><i class="fa-solid fa-envelopes-bulk mr-1"></i> 預計完工</span>
+                                        變二工程完工，中華郵政物流園區全面營運，帶動周邊商業發展。
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- 2029 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-200 shadow group-hover:scale-110 group-hover:border-emerald-400 transition-all flex items-center justify-center font-black text-emerald-500">'29</div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">空橋網路全面延伸</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-themePink mb-1"><i class="fa-solid fa-network-wired mr-1"></i> 建設延伸</span>
+                                        配合周邊新建案落成，空橋系統逐步延伸至外圍住宅區，串接各大生活節點。
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- 2030 -->
+                            <div class="flex-1 relative group text-center">
+                                <div class="flex justify-center relative z-10 mb-4">
+                                    <div class="w-12 h-12 bg-emerald-700 text-white rounded-full border-4 border-emerald-100 shadow group-hover:scale-110 group-hover:bg-emerald-800 transition-all flex items-center justify-center font-black">'30</div>
+                                </div>
+                                <div class="px-2">
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">A7 樂活新市鎮</h4>
+                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-orange-400 mb-1"><i class="fa-solid fa-city mr-1"></i> 願景實現</span>
+                                        各項重大都計變更與公共建設進入收尾與成熟期，打造完善宜居的科技綠能城市。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 模組：首頁即時動態看板 (僅總覽分頁顯示) -->
+            <!-- ============================================== -->
+            <div id="mod-transit-overview" class="content-module mb-10 hidden" data-shows-on="overview">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl md:text-2xl font-black text-rose-500 flex items-center"><i class="fa-solid fa-satellite-dish mr-3 animate-pulse text-rose-400"></i>即時通勤動態</h2>
+                    <button onclick="window.switchTab('transit', true)" class="text-xs sm:text-sm font-bold text-rose-500 hover:text-rose-700 bg-rose-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">完整動態 <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                    <!-- 左側：桃園機捷捷運 (無動畫滿版設計) -->
+                    <div class="bg-white rounded-[2rem] shadow-cute border-4 border-purple-50 p-4 sm:p-5 lg:p-6 flex flex-col relative overflow-hidden group hover:border-purple-200 transition-colors">
+                        <div class="absolute -right-4 -bottom-4 text-purple-50 text-8xl pointer-events-none z-0"><i class="fa-solid fa-train-subway"></i></div>
+                        <h3 class="text-lg font-black text-gray-800 flex items-center border-b-2 border-purple-50 pb-3 mb-4 relative z-10 shrink-0">
+                            <div class="w-8 h-8 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-train-subway text-sm"></i></div>
+                            桃園機場捷運 <span class="text-purple-600 text-sm ml-2">A7 站</span>
+                        </h3>
+                        <div class="flex-1 flex flex-col justify-center relative z-10">
+                            <div class="flex flex-row gap-3 md:gap-4 h-full">
+                                <!-- 北上 -->
+                                <div class="flex-1 bg-purple-50 rounded-2xl p-4 md:p-5 shadow-sm border border-purple-100 flex items-center justify-between">
+                                    <div>
+                                        <div class="text-[10px] sm:text-xs text-purple-400 font-bold mb-0.5">往台北</div>
+                                        <div class="text-sm sm:text-xl font-black text-purple-600">北上</div>
+                                    </div>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="mrt-time-north text-3xl sm:text-4xl font-black text-purple-600 font-mono w-10 text-center">--</span>
+                                        <span class="mrt-unit-north text-xs sm:text-sm font-bold text-gray-500">分</span>
+                                    </div>
+                                </div>
+                                <!-- 南下 -->
+                                <div class="flex-1 bg-purple-700 rounded-2xl p-4 md:p-5 shadow-md border-2 border-white flex items-center justify-between">
+                                    <div>
+                                        <div class="text-[10px] sm:text-xs text-purple-200 font-bold mb-0.5">往機場</div>
+                                        <div class="text-sm sm:text-xl font-black text-white">南下</div>
+                                    </div>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="mrt-time-south text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center">--</span>
+                                        <span class="mrt-unit-south text-xs sm:text-sm font-bold text-purple-200">分</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右側：各方向最快公車 -->
+                    <div class="bg-white rounded-[2rem] shadow-cute border-4 border-emerald-50 p-4 sm:p-5 lg:p-6 flex flex-col relative overflow-hidden group hover:border-emerald-200 transition-colors">
+                        <div class="absolute -right-4 -bottom-4 text-emerald-50 text-8xl pointer-events-none z-0"><i class="fa-solid fa-bus"></i></div>
+                        <h3 class="text-lg font-black text-gray-800 flex items-center border-b-2 border-emerald-50 pb-3 mb-4 relative z-10 shrink-0">
+                            <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-stopwatch text-sm"></i></div>
+                            各方向最快到站公車
+                        </h3>
+                        <div id="bus-overview-fastest-container" class="flex flex-col gap-2.5 relative z-10 flex-1 justify-center">
+                            <div class="text-center py-4 text-emerald-400 font-bold"><i class="fa-solid fa-spinner fa-spin mr-2"></i>載入即時資料...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 模組：在地社群 (總覽分頁 - 左 2/3 在地社群, 右 1/3 精選其他推薦) -->
+            <!-- ============================================== -->
+            <div id="mod-community-overview" class="content-module mb-12 hidden" data-shows-on="overview">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl md:text-2xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門在地社群推薦</h2>
+                    <button onclick="window.switchTab('community', true)" class="text-sm font-bold text-themePurple hover:text-purple-700 bg-purple-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">看所有社群 <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                </div>
+                <!-- 雙欄排版 -->
+                <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 items-stretch">
+                    <!-- 左側 2/3：在地社群 -->
+                    <div class="w-full lg:w-2/3 flex flex-col" id="community-overview-left">
+                        <div class="text-center text-themePurple py-12 bg-white rounded-[2rem] border-4 border-purple-50 shadow-cute h-full flex flex-col items-center justify-center">
+                            <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
+                            <p class="font-bold">正在連線樂園社群中心...</p>
+                        </div>
+                    </div>
+                    <!-- 右側 1/3：其他推薦小卡 (手機版隱藏) -->
+                    <div class="hidden lg:flex w-full lg:w-1/3 flex-col" id="community-overview-right">
+                        <div class="text-center text-themeBlue py-12 bg-white rounded-[2rem] border-4 border-blue-50 shadow-cute h-full flex flex-col items-center justify-center">
+                            <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
+                            <p class="font-bold">載入其他推薦...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- 模組：A7在地新聞 (總覽精簡版 - 最多顯示3則) -->
+            <!-- ============================================== -->
+            <div id="mod-news-overview" class="content-module mb-12 hidden" data-shows-on="overview">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl md:text-2xl font-black text-cyan-600 flex items-center"><i class="fa-regular fa-newspaper mr-3 text-3xl"></i>A7 焦點新聞</h2>
+                    <button onclick="window.switchTab('news', true)" class="text-sm font-bold text-cyan-500 hover:text-cyan-700 bg-cyan-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">看更多 <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                </div>
+                <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-8 border-4 border-cyan-50 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 text-cyan-50 text-8xl floating pointer-events-none z-0"><i class="fa-regular fa-newspaper"></i></div>
+                    
+                    <div id="news-overview-container" class="relative z-10 space-y-3">
+                        <div class="text-center text-cyan-400 py-8">
+                            <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
+                            <p class="font-bold">正在搜集最新情報...</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 w-full text-right text-xs text-gray-400 font-bold relative z-10"><i class="fa-solid fa-rotate mr-1"></i>資料來源：Google News</div>
+                </div>
             </div>
 
             <!-- ============================================== -->
             <!-- 模組：機捷 A7 站轉乘指南 (僅交通轉乘分頁顯示) -->
             <!-- ============================================== -->
             <div id="mod-transit-guide" class="content-module mb-12 hidden" data-shows-on="transit">
-                
                 <!-- H1: 前言段落 -->
                 <div class="bg-gradient-to-br from-rose-50 to-pink-100 rounded-[2.5rem] shadow-cute p-8 border-4 border-white relative overflow-hidden mb-8 group">
                     <div class="absolute -right-6 -bottom-6 text-rose-200 text-9xl floating pointer-events-none z-0 opacity-40 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map-location-dot"></i></div>
@@ -205,7 +414,7 @@
                 <!-- 🔄 即時交通動態儀表板 (Accordion) -->
                 <div class="mb-10 relative z-10">
                     <div class="flex items-center justify-between mb-4 px-2">
-                        <h2 class="text-xl font-black text-gray-800 flex items-center"><i class="fa-solid fa-satellite-dish mr-2 text-rose-500 animate-pulse"></i> 即時動態看板</h2>
+                        <h2 class="text-xl md:text-2xl font-black text-gray-800 flex items-center"><i class="fa-solid fa-satellite-dish mr-2 text-rose-500 animate-pulse"></i> 完整即時動態</h2>
                         <button onclick="fetchTDXTransitData()" class="text-xs font-bold text-gray-500 hover:text-rose-500 bg-white border-2 border-gray-100 hover:border-rose-200 px-3 py-1.5 rounded-xl shadow-sm transition-all active:scale-95 flex items-center gap-1.5">
                             <i class="fa-solid fa-rotate-right" id="transit-refresh-icon"></i> 重新整理
                         </button>
@@ -224,89 +433,29 @@
                             <div class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 group-open:rotate-180 transition-transform duration-300 shrink-0 border border-gray-100"><i class="fa-solid fa-chevron-down"></i></div>
                         </summary>
                         <div class="px-5 pb-5 pt-2 border-t-2 border-purple-50/80">
-                            <!-- 引入首頁相同的機捷動態看板 (紫色系版本) -->
-                            <div id="mrt-live-container" class="flex flex-col lg:flex-row gap-6 md:gap-8 items-center relative overflow-hidden mt-3">
-                                
-                                <!-- 左側：倒數資訊 (統一採用捷運紫色系) -->
-                                <div class="w-full lg:w-[35%] flex flex-col gap-3 relative z-10 shrink-0">
-                                    <div class="flex flex-row lg:flex-col gap-3 md:gap-4 h-full">
-                                        <!-- 北上 (往台北) - 淺色卡片 -->
-                                        <div class="flex-1 bg-purple-50 rounded-2xl p-4 shadow-sm border border-purple-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
-                                            <div>
-                                                <div class="text-[10px] sm:text-xs text-purple-400 font-bold mb-0.5">往台北</div>
-                                                <div class="text-sm sm:text-lg font-black text-purple-600">北上</div>
-                                            </div>
-                                            <div class="flex items-baseline gap-1">
-                                                <span id="mrt-time-north" class="text-3xl sm:text-4xl font-black text-purple-600 font-mono w-10 text-center">--</span>
-                                                <span id="mrt-unit-north" class="text-xs sm:text-sm font-bold text-gray-500">分</span>
-                                            </div>
+                            <!-- 機捷動態看板 (無動畫簡潔版) -->
+                            <div class="flex flex-col gap-3 relative z-10 w-full mt-3">
+                                <div class="flex flex-col sm:flex-row gap-3 md:gap-4 w-full">
+                                    <!-- 北上 (往台北) - 淺色卡片 -->
+                                    <div class="flex-1 bg-purple-50 rounded-2xl p-5 shadow-sm border border-purple-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                                        <div>
+                                            <div class="text-[10px] sm:text-xs text-purple-400 font-bold mb-0.5">往台北</div>
+                                            <div class="text-sm sm:text-xl font-black text-purple-600">北上</div>
                                         </div>
-                                        <!-- 南下 (往機場/中壢) - 深紫色反白卡片 -->
-                                        <div class="flex-1 bg-purple-700 rounded-2xl p-4 shadow-md border-2 border-white flex items-center justify-between hover:-translate-y-1 transition-transform">
-                                            <div>
-                                                <div class="text-[10px] sm:text-xs text-purple-200 font-bold mb-0.5">往機場/中壢</div>
-                                                <div class="text-sm sm:text-lg font-black text-white">南下</div>
-                                            </div>
-                                            <div class="flex items-baseline gap-1">
-                                                <span id="mrt-time-south" class="text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center">--</span>
-                                                <span id="mrt-unit-south" class="text-xs sm:text-sm font-bold text-purple-200">分</span>
-                                            </div>
+                                        <div class="flex items-baseline gap-1">
+                                            <span class="mrt-time-north text-3xl sm:text-4xl font-black text-purple-600 font-mono w-10 text-center">--</span>
+                                            <span class="mrt-unit-north text-xs sm:text-sm font-bold text-gray-500">分</span>
                                         </div>
                                     </div>
-                                </div>
-
-                                <!-- 右側：軌道與列車動畫圖 (前後3站: A4~A10) -->
-                                <div class="w-full lg:w-[65%] relative z-10 bg-gray-50 rounded-[1.5rem] p-4 sm:p-6 border-2 border-gray-100 shadow-inner flex flex-col justify-center">
-                                    <div class="flex justify-between items-center mb-6">
-                                        <span class="text-xs sm:text-sm text-gray-500 font-black"><i class="fa-solid fa-location-crosshairs mr-1.5"></i>列車即時位置</span>
-                                        <span class="text-[10px] sm:text-xs text-gray-400 bg-white px-2.5 py-1 rounded-md border border-gray-200 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>系統推算中</span>
-                                    </div>
-                                    
-                                    <!-- 動態列車與軌道區域 -->
-                                    <div class="relative w-full px-3 sm:px-6 mt-2 mb-4 h-[40px]">
-                                        <!-- 軌道底線 -->
-                                        <div class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[16px] h-1.5 sm:h-2 bg-purple-100 rounded-full z-0"></div>
-                                        <!-- 動態列車注入點 -->
-                                        <div id="mrt-track-container" class="absolute left-[20px] sm:left-[35px] right-[20px] sm:right-[35px] top-[0px] z-20 pointer-events-none w-full h-full"></div>
-                                    </div>
-                                        
-                                    <!-- 站點配置獨立出來，緊鄰站名 -->
-                                    <div class="flex justify-between relative z-10 w-full px-3 sm:px-6">
-                                        <div class="flex flex-col items-center w-8 sm:w-12">
-                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
-                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A4</span>
-                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">副都心</span>
+                                    <!-- 南下 (往機場/中壢) - 深紫色反白卡片 -->
+                                    <div class="flex-1 bg-purple-700 rounded-2xl p-5 shadow-md border-2 border-white flex items-center justify-between hover:-translate-y-1 transition-transform">
+                                        <div>
+                                            <div class="text-[10px] sm:text-xs text-purple-200 font-bold mb-0.5">往機場/中壢</div>
+                                            <div class="text-sm sm:text-xl font-black text-white">南下</div>
                                         </div>
-                                        <div class="flex flex-col items-center w-8 sm:w-12">
-                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
-                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A5</span>
-                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">泰山</span>
-                                        </div>
-                                        <div class="flex flex-col items-center w-8 sm:w-12">
-                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
-                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A6</span>
-                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">貴和</span>
-                                        </div>
-                                        <!-- A7 (放大醒目) -->
-                                        <div class="flex flex-col items-center w-8 sm:w-12">
-                                            <div class="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-purple-500 border-[3px] border-white shadow-md z-10 mb-1"></div>
-                                            <span class="text-[11px] sm:text-sm font-black text-purple-600">A7</span>
-                                            <span class="text-[11px] sm:text-[15px] font-black text-gray-700 whitespace-nowrap">體大</span>
-                                        </div>
-                                        <div class="flex flex-col items-center w-8 sm:w-12">
-                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
-                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A8</span>
-                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">長庚</span>
-                                        </div>
-                                        <div class="flex flex-col items-center w-8 sm:w-12">
-                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
-                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A9</span>
-                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">林口</span>
-                                        </div>
-                                        <div class="flex flex-col items-center w-8 sm:w-12">
-                                            <div class="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-white border-[3px] border-purple-200 z-10 mb-1"></div>
-                                            <span class="text-[9px] sm:text-xs font-bold text-gray-400">A10</span>
-                                            <span class="text-[10px] sm:text-sm font-bold text-gray-500 whitespace-nowrap">山鼻</span>
+                                        <div class="flex items-baseline gap-1">
+                                            <span class="mrt-time-south text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center">--</span>
+                                            <span class="mrt-unit-south text-xs sm:text-sm font-bold text-purple-200">分</span>
                                         </div>
                                     </div>
                                 </div>
@@ -445,104 +594,6 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：工程期程總覽表 (總覽、工程分頁皆顯示) -->
-            <!-- ============================================== -->
-            <div id="mod-eng-timeline" class="content-module mb-12 hidden" data-shows-on="overview,engineering">
-                <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-10 border-4 border-emerald-50 relative overflow-hidden">
-                    <div class="absolute -right-6 -bottom-6 text-emerald-50 text-8xl floating pointer-events-none z-0"><i class="fa-solid fa-timeline"></i></div>
-                    
-                    <h3 class="text-xl font-black text-emerald-700 mb-10 flex items-center relative z-10 justify-center md:justify-start">
-                        <i class="fa-regular fa-calendar-check mr-3"></i>工程期程總覽表 (2025 - 2030)
-                    </h3>
-                    
-                    <div class="relative z-10 w-full overflow-x-auto pb-4 hide-scrollbar">
-                        <div class="absolute top-[24px] left-[5%] right-[5%] h-[4px] bg-emerald-100 z-0 min-w-[1200px]"></div>
-                        <div class="flex flex-row justify-between gap-4 relative w-full min-w-[1200px]">
-                            <!-- 2025 -->
-                            <div class="flex-1 relative group text-center">
-                                <div class="flex justify-center relative z-10 mb-4">
-                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-400 shadow group-hover:scale-110 group-hover:border-emerald-600 transition-all flex items-center justify-center font-black text-emerald-700">'25</div>
-                                </div>
-                                <div class="px-2">
-                                    <h4 class="font-black text-gray-800 text-lg mb-2">多項建設完工啟用</h4>
-                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
-                                        <span class="block text-gray-400 mb-2 pb-2 border-b border-gray-200 text-xs leading-relaxed"><i class="fa-solid fa-circle-info mr-1"></i> 備註：變四(滯洪池)於2023啟動；變三(捷運連通)已於2024完工。</span>
-                                        <span class="block text-themeYellow mb-1 mt-2"><i class="fa-solid fa-hourglass-half mr-1"></i> 下半年</span>
-                                        A7站停車場、牛角坡聯外道路拓寬與滯洪池公園預計完工開放。
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- 2026 -->
-                            <div class="flex-1 relative group text-center">
-                                <div class="flex justify-center relative z-10 mb-4">
-                                    <div class="w-12 h-12 bg-emerald-500 text-white rounded-full border-4 border-emerald-300 shadow group-hover:scale-110 group-hover:bg-emerald-600 transition-all flex items-center justify-center font-black">'26</div>
-                                </div>
-                                <div class="px-2">
-                                    <h4 class="font-black text-gray-800 text-lg mb-2">運動中心與文青國中</h4>
-                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
-                                        <span class="block text-themeGreen mb-1"><i class="fa-solid fa-medal mr-1"></i> 預計完工</span>
-                                        龜山運動中心落成啟用；文青國中小第二期校舍完工，完善在地就學機能。
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- 2027 -->
-                            <div class="flex-1 relative group text-center">
-                                <div class="flex justify-center relative z-10 mb-4">
-                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-500 shadow group-hover:scale-110 group-hover:border-emerald-700 transition-all flex items-center justify-center font-black text-emerald-800">'27</div>
-                                </div>
-                                <div class="px-2">
-                                    <h4 class="font-black text-gray-800 text-lg mb-2">空橋計畫核心串聯</h4>
-                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
-                                        <span class="block text-themeBlue mb-1"><i class="fa-solid fa-bridge mr-1"></i> 逐步啟用</span>
-                                        A7站區立體空橋計畫（中心商業區段）預計陸續完工，實現人車分道。
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- 2028 -->
-                            <div class="flex-1 relative group text-center">
-                                <div class="flex justify-center relative z-10 mb-4">
-                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-600 shadow group-hover:scale-110 group-hover:border-emerald-800 transition-all flex items-center justify-center font-black text-emerald-900">'28</div>
-                                </div>
-                                <div class="px-2">
-                                    <h4 class="font-black text-gray-800 text-lg mb-2">變二工程與郵政園區</h4>
-                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
-                                        <span class="block text-themePurple mb-1"><i class="fa-solid fa-envelopes-bulk mr-1"></i> 預計完工</span>
-                                        變二工程完工，中華郵政物流園區全面營運，帶動周邊商業發展。
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- 2029 -->
-                            <div class="flex-1 relative group text-center">
-                                <div class="flex justify-center relative z-10 mb-4">
-                                    <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-200 shadow group-hover:scale-110 group-hover:border-emerald-400 transition-all flex items-center justify-center font-black text-emerald-500">'29</div>
-                                </div>
-                                <div class="px-2">
-                                    <h4 class="font-black text-gray-800 text-lg mb-2">空橋網路全面延伸</h4>
-                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
-                                        <span class="block text-themePink mb-1"><i class="fa-solid fa-network-wired mr-1"></i> 建設延伸</span>
-                                        配合周邊新建案落成，空橋系統逐步延伸至外圍住宅區，串接各大生活節點。
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- 2030 -->
-                            <div class="flex-1 relative group text-center">
-                                <div class="flex justify-center relative z-10 mb-4">
-                                    <div class="w-12 h-12 bg-emerald-700 text-white rounded-full border-4 border-emerald-100 shadow group-hover:scale-110 group-hover:bg-emerald-800 transition-all flex items-center justify-center font-black">'30</div>
-                                </div>
-                                <div class="px-2">
-                                    <h4 class="font-black text-gray-800 text-lg mb-2">A7 樂活新市鎮</h4>
-                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
-                                        <span class="block text-orange-400 mb-1"><i class="fa-solid fa-city mr-1"></i> 願景實現</span>
-                                        各項重大都計變更與公共建設進入收尾與成熟期，打造完善宜居的科技綠能城市。
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================== -->
             <!-- 模組：在地建設紀錄 (已完工) -->
             <!-- ============================================== -->
             <div id="mod-eng-completed" class="content-module mb-12 hidden" data-shows-on="engineering">
@@ -558,38 +609,22 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：在地社群 (總覽、社群分頁皆顯示) -->
+            <!-- 模組：在地社群 (社群分頁 - 左 2/3 在地社群, 右 1/3 地方互助) -->
             <!-- ============================================== -->
-            <div id="mod-community-local" class="content-module mb-12 hidden" data-shows-on="overview,community">
+            <div id="mod-community-full" class="content-module mb-12 hidden" data-shows-on="community">
                 <div class="flex items-center mb-6">
-                    <h2 class="text-xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門在地社群推薦</h2>
+                    <h2 class="text-2xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>在地社群與互助交流</h2>
                 </div>
-                <div id="community-local-container">
-                    <div class="text-center text-themePurple py-12 bg-white rounded-[2rem] border-4 border-purple-50 shadow-cute">
-                        <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
-                        <p class="font-bold">正在連線樂園社群中心...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================== -->
-            <!-- 模組：A7在地新聞 (總覽精簡版 - 最多顯示3則) -->
-            <!-- ============================================== -->
-            <div id="mod-news-overview" class="content-module mb-12 hidden" data-shows-on="overview">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl font-black text-cyan-600 flex items-center"><i class="fa-regular fa-newspaper mr-3 text-3xl"></i>A7 焦點新聞</h2>
-                    <button onclick="window.switchTab('news')" class="text-sm font-bold text-cyan-500 hover:text-cyan-700 bg-cyan-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">看更多 <i class="fa-solid fa-arrow-right ml-1"></i></button>
-                </div>
-                <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-8 border-4 border-cyan-50 relative overflow-hidden">
-                    <div class="absolute -right-4 -top-4 text-cyan-50 text-8xl floating pointer-events-none z-0"><i class="fa-regular fa-newspaper"></i></div>
-                    
-                    <div id="news-overview-container" class="relative z-10 space-y-3">
-                        <div class="text-center text-cyan-400 py-8">
+                <div class="flex flex-col lg:flex-row gap-6 items-stretch">
+                    <!-- 左側 2/3：在地社群 -->
+                    <div class="w-full lg:w-2/3 flex flex-col" id="community-local-container-tab">
+                        <div class="text-center text-themePurple py-12 bg-white rounded-[2rem] border-4 border-purple-50 shadow-cute">
                             <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
-                            <p class="font-bold">正在搜集最新情報...</p>
+                            <p class="font-bold">載入社群中...</p>
                         </div>
                     </div>
-                    <div class="mt-4 w-full text-right text-xs text-gray-400 font-bold relative z-10"><i class="fa-solid fa-rotate mr-1"></i>資料來源：Google News</div>
+                    <!-- 右側 1/3：地方互助 -->
+                    <div class="w-full lg:w-1/3 flex flex-col" id="community-mutual-container"></div>
                 </div>
             </div>
 
@@ -608,13 +643,6 @@
                     </div>
                 </div>
                 <div class="mt-4 w-full text-right text-xs text-gray-400 font-bold"><i class="fa-solid fa-rotate mr-1"></i>資料來源：Google News</div>
-            </div>
-
-            <!-- ============================================== -->
-            <!-- 模組：地方互助 (僅社群分頁顯示) -->
-            <!-- ============================================== -->
-            <div id="mod-community-mutual" class="content-module mb-12 hidden" data-shows-on="community">
-                <div id="community-mutual-container"></div>
             </div>
 
             <!-- ============================================== -->
@@ -683,6 +711,10 @@
                                 • 長樂里（10-21）為樂善、長庚國小自由學區。<br>
                                 • 文樂里全部為樂善、文青國中小自由學區。<br><br>
                                 具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所或學校教務處確認。
+                                <br><br>
+                                <button onclick="window.switchTab('buildings', true)" class="inline-flex items-center text-xs font-black text-themeBlue bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 rounded-lg transition-colors shadow-sm">
+                                    <i class="fa-solid fa-school mr-1.5"></i> 了解更多就學與設籍指南
+                                </button>
                             </p>
                         </details>
                     </div>
@@ -690,9 +722,9 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：就學與設籍 (原獨立分頁，現合併至行政區劃) -->
+            <!-- 模組：就學與設籍 (不再顯示於 overview，僅顯示於 buildings) -->
             <!-- ============================================== -->
-            <div id="mod-schooling-registry" class="content-module mb-12 hidden" data-shows-on="overview,buildings">
+            <div id="mod-schooling-registry" class="content-module mb-12 hidden" data-shows-on="buildings">
                 <div class="flex items-center mb-8">
                     <h3 class="text-xl md:text-2xl font-black text-orange-500 flex items-center">
                         <div class="w-12 h-12 bg-orange-100 text-orange-500 rounded-2xl flex items-center justify-center mr-4 shadow-sm transform -rotate-3"><i class="fa-solid fa-school"></i></div>
@@ -913,7 +945,7 @@
             });
 
             // 控制機捷軌道動畫的啟動與關閉
-            if (tabId === 'transit') {
+            if (tabId === 'transit' || tabId === 'overview') {
                 if (window.updateMRTStatus) window.updateMRTStatus();
                 if (!window.globalMrtInterval) {
                     window.globalMrtInterval = setInterval(window.updateMRTStatus, 1000);
@@ -963,7 +995,6 @@
             let initialTab = 'overview';
             try {
                 const hash = window.location.hash.replace('#', '');
-                // ★ 更新 validTabs 陣列，加入 'transit' 讓路由支援直接連線
                 const validTabs = ['overview', 'engineering', 'community', 'faq', 'buildings', 'news', 'transit'];
                 if (validTabs.includes(hash)) {
                     initialTab = hash;
@@ -996,19 +1027,16 @@
         // 📰 A7 在地新聞 (RSS 自動抓取)
         // ==========================================
         
-        // 輔助函式：解析新聞標題中的媒體來源，並格式化時間
         function parseNewsItem(item) {
             let publisher = item.author || "在地新聞";
             let cleanTitle = item.title;
             
-            // Google News 的標題通常以 " - 媒體名稱" 結尾，這裡進行拆解
             const dashIndex = cleanTitle.lastIndexOf(' - ');
             if (dashIndex !== -1) {
                 publisher = cleanTitle.substring(dashIndex + 3).trim();
                 cleanTitle = cleanTitle.substring(0, dashIndex).trim();
             }
 
-            // 格式化時間 (MM/DD HH:mm)
             const dateObj = new Date(item.pubDate);
             let formattedDate = '近期';
             if (!isNaN(dateObj)) {
@@ -1027,7 +1055,6 @@
             };
         }
 
-        // 輔助函式：判斷是否為有效新聞圖片 (過濾追蹤像素)
         function isValidNewsImage(url) {
             if (!url || !url.startsWith('http')) return false;
             const lowerUrl = url.toLowerCase();
@@ -1039,7 +1066,6 @@
             const fullContainer = document.getElementById('news-full-container');
             if (!overviewContainer || !fullContainer) return;
 
-            // 準備市府新建工程處公告資料 (模擬官方最新消息快取)
             const officialNewsRaw = [
                 { title: '桃園捷運A7站開發案(變一)文學路延伸工程-施工進度與交維宣導', link: 'https://opc.tycg.gov.tw/News_Content.aspx?n=9371&s=1589599', pubDate: '2026-03-05 10:00:00', description: '' },
                 { title: '桃園市龜山國民運動中心新建工程-本月工程進度報告', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', pubDate: '2026-02-20 14:30:00', description: '' },
@@ -1057,10 +1083,8 @@
                 const data = await response.json();
                 if (data.status !== 'ok' || !data.items || data.items.length === 0) throw new Error('無新聞資料');
                 
-                // 1. 統一解析媒體與時間
                 const rawItems = data.items.map(parseNewsItem);
                 
-                // 2. 嚴格去重機制：避免 RSS 來源包含重複標題或網址的新聞
                 const uniqueItems = [];
                 const seen = new Set();
                 for (const item of rawItems) {
@@ -1071,15 +1095,13 @@
                     }
                 }
                 
-                // 3. 取得最多 15 筆 (1焦點 + 4圖片 + 10文字)
                 const newsItems = uniqueItems.slice(0, 15);
                 
-                renderNewsOverview(newsItems.slice(0, 3)); // 總覽頁只渲染前 3 筆
-                renderNewsFull(newsItems, officialNews); // 新聞頁渲染完整 15 筆排版，並傳入官方公告
+                renderNewsOverview(newsItems.slice(0, 3)); 
+                renderNewsFull(newsItems, officialNews); 
             } catch (error) {
                 console.info('※ 觸發安全機制：自動切換為在地真實新聞緩存資料。');
                 
-                // 換成近期透過 Google 搜尋到的真實新聞資料，移除原本的虛構迴圈
                 const fallbackNewsRaw = [
                     { title: '雙北移入上萬人 機捷A7站塞爆龜山新道路工程拚年底完工 - 聯合新聞網', link: 'https://udn.com/news/story/7324/9366012', pubDate: '2026-03-08 00:00:00', description: '<img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&q=80">' },
                     { title: '機捷A7站區外道路新闢工程動土 張市長：管冪工法確保地基穩固、守護古蹟 - 桃園市政府', link: 'https://news.tycg.gov.tw/News_Content.aspx?n=5016&sms=7885&s=1588802', pubDate: '2025-10-16 10:00:00', description: '<img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80">' },
@@ -1093,9 +1115,7 @@
                     { title: '沒在怕賣壓 A7重劃區新案一個接一個 - 591房屋交易', link: 'https://news.591.com.tw/news/6173/amp', pubDate: '2025-03-15 09:00:00', description: '' },
                     { title: '機捷A7重劃區發展迅速 1.5萬戶民生汙水處理情況吃緊 - 好房網', link: 'https://news.housefun.com.tw/news/A7重劃區/', pubDate: '2024-12-03 14:49:00', description: '' },
                     { title: '桃園龜山A7大林口生活圈最新現況，即將公開建案！ - 買房網', link: 'https://www.mydachi.com.tw/', pubDate: '2025-10-01 10:00:00', description: '' },
-                    { title: '脫北族、首購族新戰場！基北北桃「人口收割區」出爐 - 樂屋網', link: 'https://extra.rakuya.com.tw/', pubDate: '2026-01-14 12:00:00', description: '' },
-                    { title: '中華郵政物流園區 (郵件/資訊/營運中心) 預計陸續啟用 - 專題報導', link: '#', pubDate: '2025-12-01 08:00:00', description: '' },
-                    { title: '桃園市龜山國民運動中心新建工程 主體結構持續推進 - 專題報導', link: '#', pubDate: '2025-11-20 09:00:00', description: '' }
+                    { title: '脫北族、首購族新戰場！基北北桃「人口收割區」出爐 - 樂屋網', link: 'https://extra.rakuya.com.tw/', pubDate: '2026-01-14 12:00:00', description: '' }
                 ];
                 
                 const fallbackNews = fallbackNewsRaw.map(parseNewsItem);
@@ -1105,7 +1125,6 @@
             }
         }
 
-        // 解析 RSS 內的圖片網址（升級版：支援 LTN, MSN 等複雜格式）
         function extractImage(item) {
             if (item.thumbnail && isValidNewsImage(item.thumbnail)) return item.thumbnail;
             if (item.enclosure && item.enclosure.link && isValidNewsImage(item.enclosure.link)) return item.enclosure.link;
@@ -1142,7 +1161,6 @@
             return null;
         }
 
-        // 渲染：首頁總覽精簡版 (純文字條列，最多 3 筆)
         function renderNewsOverview(newsItems) {
             const container = document.getElementById('news-overview-container');
             if (!container) return;
@@ -1172,7 +1190,6 @@
             container.innerHTML = html;
         }
 
-        // 渲染：新聞分頁完整版
         function renderNewsFull(newsItems, officialNews = []) {
             const container = document.getElementById('news-full-container');
             if (!container || newsItems.length === 0) return;
@@ -1339,7 +1356,6 @@
             const activeContainer = document.getElementById('engineering-board-content');
             const completedContainer = document.getElementById('engineering-completed-content');
             
-            // ★ 更新導覽列卡片上的數據標籤
             const badgeEng = document.getElementById('badge-eng');
             if (badgeEng) badgeEng.textContent = data.length;
 
@@ -1348,7 +1364,6 @@
             const activeProjects = data.filter(item => !item.status.startsWith('已完工'));
             const completedProjects = data.filter(item => item.status.startsWith('已完工'));
 
-            // ★ 修改點：為 active 每個表格加上粗白外框與圓角，並合併時間欄位
             activeContainer.innerHTML = activeProjects.map(item => `
                 <div class="border-[3px] border-white rounded-[1rem] overflow-hidden shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg hover:border-yellow-300 group">
                     <table class="w-full border-collapse text-sm md:text-base bg-[#0f5132]">
@@ -1416,95 +1431,109 @@
 
         function fetchCommunityData() {
             loadSharedCommunityData().then(data => renderCommunityData(data)).catch(err => {
-                const lc = document.getElementById('community-local-container');
-                if(lc) lc.innerHTML = '<div class="text-center text-red-500 font-bold py-8 bg-white rounded-3xl">社群資料載入失敗。</div>';
+                const html = '<div class="text-center text-red-500 font-bold py-8 bg-white rounded-3xl">社群資料載入失敗。</div>';
+                if(document.getElementById('community-overview-left')) document.getElementById('community-overview-left').innerHTML = html;
+                if(document.getElementById('community-local-container-tab')) document.getElementById('community-local-container-tab').innerHTML = html;
             });
         }
 
         function renderCommunityData(data) {
-            const localContainer = document.getElementById('community-local-container');
-            const mutualContainer = document.getElementById('community-mutual-container');
+            const overviewLeft = document.getElementById('community-overview-left');
+            const overviewRight = document.getElementById('community-overview-right');
+            const tabLocal = document.getElementById('community-local-container-tab');
+            const tabMutual = document.getElementById('community-mutual-container');
             
-            // ★ 更新導覽列卡片上的數據標籤
             const badgeCom = document.getElementById('badge-com');
             if (badgeCom) badgeCom.textContent = data.length;
 
-            if (!localContainer || !mutualContainer) return;
+            const localItems = data.filter(i => i.category === '在地社群');
+            const mutualItems = data.filter(i => i.category !== '在地社群');
 
-            const groupedCategories = { '在地社群': [], '地方互助': [] };
-            data.forEach(item => {
-                const cat = item.category || '其他推薦';
-                if (!groupedCategories[cat]) groupedCategories[cat] = [];
-                groupedCategories[cat].push(item);
-            });
-
-            let localHtml = '';
-            let mutualHtml = '';
-
-            for (const [catName, items] of Object.entries(groupedCategories)) {
-                if (items.length === 0) continue;
-                const isLocalCommunity = catName === '在地社群';
+            // 產生 左側「在地社群」的直式卡片
+            const generateLocalCard = (item) => {
+                let snsType = 'Web'; let snsIcon = 'fa-solid fa-globe';
+                let avatarBg = 'random'; let btnClasses = 'bg-gray-500 hover:bg-gray-600 text-white';
                 
-                let gridClass = isLocalCommunity 
-                    ? 'flex flex-wrap justify-center items-stretch gap-3 md:gap-4' 
-                    : 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3';
+                const searchStr = (item.name + ' ' + item.link).toUpperCase();
+                if (searchStr.includes('LINE') || searchStr.includes('賴')) { snsType = 'LINE'; snsIcon = 'fa-brands fa-line'; avatarBg = '00B900'; btnClasses = 'bg-[#00B900] hover:bg-[#009900] text-white'; }
+                else if (searchStr.includes('THREADS')) { snsType = 'Threads'; snsIcon = 'fa-brands fa-threads'; avatarBg = '000000'; btnClasses = 'bg-black hover:bg-gray-800 text-white'; }
+                else if (searchStr.includes('FB') || searchStr.includes('FACEBOOK') || searchStr.includes('臉書')) { snsType = 'Facebook'; snsIcon = 'fa-brands fa-facebook'; avatarBg = '1877F2'; btnClasses = 'bg-[#1877F2] hover:bg-[#166FE5] text-white'; }
+                else { btnClasses = 'bg-themePink hover:bg-pink-400 text-white'; }
 
-                const itemsHtml = items.map(item => {
-                    let snsType = 'Web'; let snsBadgeClass = 'bg-gray-500 text-white'; let snsIcon = 'fa-solid fa-globe';
-                    let avatarBg = 'random'; let btnClasses = 'bg-gray-500 hover:bg-gray-600 text-white';
-                    
-                    const searchStr = (item.name + ' ' + item.link).toUpperCase();
-                    if (searchStr.includes('LINE') || searchStr.includes('賴')) { snsType = 'LINE'; snsBadgeClass = 'bg-[#00B900] text-white'; snsIcon = 'fa-brands fa-line'; avatarBg = '00B900'; btnClasses = 'bg-[#00B900] hover:bg-[#009900] text-white'; }
-                    else if (searchStr.includes('THREADS')) { snsType = 'Threads'; snsBadgeClass = 'bg-black text-white'; snsIcon = 'fa-brands fa-threads'; avatarBg = '000000'; btnClasses = 'bg-black hover:bg-gray-800 text-white'; }
-                    else if (searchStr.includes('FB') || searchStr.includes('FACEBOOK') || searchStr.includes('臉書')) { snsType = 'Facebook'; snsBadgeClass = 'bg-[#1877F2] text-white'; snsIcon = 'fa-brands fa-facebook'; avatarBg = '1877F2'; btnClasses = 'bg-[#1877F2] hover:bg-[#166FE5] text-white'; }
-                    else { btnClasses = 'bg-themePink hover:bg-pink-400 text-white'; }
+                let avatarUrl = item.img || `https://ui-avatars.com/api/?name=${encodeURIComponent(snsType === 'Threads' ? item.name.substring(0,2) : item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150${snsType === 'Threads' ? '&bold=true&length=2' : ''}&font-size=0.35`;
 
-                    const showQR = snsType === 'LINE' && !isLocalCommunity;
-                    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
-                    let avatarUrl = item.img || `https://ui-avatars.com/api/?name=${encodeURIComponent(snsType === 'Threads' ? item.name.substring(0,2) : item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150${snsType === 'Threads' ? '&bold=true&length=2' : ''}&font-size=0.35`;
+                let displayId = "點擊進入";
+                if (item.link.includes('@')) { const match = item.link.match(/@([a-zA-Z0-9_.]+)/); if (match && match[1]) displayId = match[1]; }
+                else if (snsType === 'LINE') displayId = "加入 LINE 社群";
+                else if (snsType === 'Facebook') displayId = "前往粉絲專頁";
 
-                    let displayId = "點擊進入";
-                    if (item.link.includes('@')) { const match = item.link.match(/@([a-zA-Z0-9_.]+)/); if (match && match[1]) displayId = match[1]; }
-                    else if (snsType === 'LINE') displayId = "加入 LINE 社群";
-                    else if (snsType === 'Facebook') displayId = "前往粉絲專頁";
-                    
-                    if (isLocalCommunity) {
-                        return `<a href="${item.link}" target="_blank" class="flex-1 min-w-[140px] sm:min-w-[160px] max-w-[240px] shrink-0 flex flex-col bg-white rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-5 shadow-cute border-2 border-gray-100 hover:border-pink-200 hover:shadow-xl transition-all group hover:-translate-y-2 text-center justify-between items-center relative overflow-hidden">
-                                <div class="absolute -right-3 -bottom-3 text-6xl opacity-[0.03] text-gray-500 pointer-events-none"><i class="${snsIcon}"></i></div>
-                                <div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full shadow-sm border-2 border-gray-100 group-hover:border-themePink group-hover:scale-105 transition-all mx-auto mb-3 shrink-0 bg-gray-50 overflow-hidden"><img src="${avatarUrl}" class="w-full h-full object-cover" alt="頭像" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg}&color=fff'"></div>
-                                <h4 class="font-black text-gray-800 text-sm sm:text-base md:text-lg mb-4 line-clamp-2 leading-snug group-hover:text-themePink transition-colors flex-1 w-full">${item.name}</h4>
-                                <div class="w-full ${btnClasses} py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-sm flex items-center justify-center gap-1.5 transition-colors mt-auto z-10 relative"><i class="${snsIcon}"></i> <span class="truncate">${displayId}</span></div>
-                            </a>`;
-                    }
+                return `<a href="${item.link}" target="_blank" class="flex-1 min-w-[140px] sm:min-w-[160px] max-w-[240px] shrink-0 flex flex-col bg-white rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-5 shadow-cute border-2 border-gray-100 hover:border-pink-200 hover:shadow-xl transition-all group hover:-translate-y-2 text-center justify-between items-center relative overflow-hidden">
+                        <div class="absolute -right-3 -bottom-3 text-6xl opacity-[0.03] text-gray-500 pointer-events-none"><i class="${snsIcon}"></i></div>
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full shadow-sm border-2 border-gray-100 group-hover:border-themePink group-hover:scale-105 transition-all mx-auto mb-3 shrink-0 bg-gray-50 overflow-hidden"><img src="${avatarUrl}" class="w-full h-full object-cover" alt="頭像" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg}&color=fff'"></div>
+                        <h4 class="font-black text-gray-800 text-sm sm:text-base md:text-lg mb-4 line-clamp-2 leading-snug group-hover:text-themePink transition-colors flex-1 w-full">${item.name}</h4>
+                        <div class="w-full ${btnClasses} py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-sm flex items-center justify-center gap-1.5 transition-colors mt-auto z-10 relative"><i class="${snsIcon}"></i> <span class="truncate">${displayId}</span></div>
+                    </a>`;
+            };
 
-                    return `<a href="${item.link}" target="_blank" class="${item.name.length > 9 ? 'col-span-2 sm:col-span-1' : 'col-span-1'} bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-1 transition-all flex items-center justify-between group h-full">
-                            <div class="flex flex-col items-start pr-2 flex-1 min-w-0">
-                                <h4 class="font-black text-gray-800 text-sm md:text-base mb-2 line-clamp-2 group-hover:text-themePink transition-colors w-full">${item.name}</h4>
-                                <div class="${snsBadgeClass} text-[10px] md:text-xs font-black px-2 py-1 rounded-lg shadow-sm flex items-center shrink-0"><i class="${snsIcon} mr-1"></i> ${snsType}</div>
-                            </div>
-                            ${showQR ? `<div class="w-12 h-12 md:w-16 md:h-16 shrink-0 bg-white rounded-xl p-1 border border-dashed border-gray-200 group-hover:border-themePink transition-colors relative flex items-center justify-center"><img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100" alt="QR Code"></div>` 
-                                     : `<div class="w-10 h-10 md:w-14 md:h-14 shrink-0 rounded-full border-2 border-gray-100 group-hover:border-themePink transition-colors relative flex items-center justify-center overflow-hidden shadow-sm bg-gray-50 p-0.5"><img src="${avatarUrl}" class="w-full h-full object-cover rounded-full" alt="社群頭像"></div>`}
-                        </a>`;
-                }).join('');
+            // 產生 右側「地方互助」的橫式卡片
+            const generateMutualCard = (item, isColSpan = false) => {
+                let snsType = 'Web'; let snsBadgeClass = 'bg-gray-500 text-white'; let snsIcon = 'fa-solid fa-globe';
+                let avatarBg = 'random'; 
+                
+                const searchStr = (item.name + ' ' + item.link).toUpperCase();
+                if (searchStr.includes('LINE') || searchStr.includes('賴')) { snsType = 'LINE'; snsBadgeClass = 'bg-[#00B900] text-white'; snsIcon = 'fa-brands fa-line'; avatarBg = '00B900'; }
+                else if (searchStr.includes('THREADS')) { snsType = 'Threads'; snsBadgeClass = 'bg-black text-white'; snsIcon = 'fa-brands fa-threads'; avatarBg = '000000'; }
+                else if (searchStr.includes('FB') || searchStr.includes('FACEBOOK') || searchStr.includes('臉書')) { snsType = 'Facebook'; snsBadgeClass = 'bg-[#1877F2] text-white'; snsIcon = 'fa-brands fa-facebook'; avatarBg = '1877F2'; }
 
-                const catIcon = catName === '在地社群' ? 'fa-thumbtack text-red-400' : 'fa-hashtag text-themePink';
-                const catBorder = catName === '在地社群' ? 'border-red-50' : 'border-blue-50';
-                const catBgIcon = catName === '在地社群' ? 'text-red-100' : 'text-blue-100';
+                const showQR = snsType === 'LINE';
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
+                let avatarUrl = item.img || `https://ui-avatars.com/api/?name=${encodeURIComponent(snsType === 'Threads' ? item.name.substring(0,2) : item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150${snsType === 'Threads' ? '&bold=true&length=2' : ''}&font-size=0.35`;
 
-                const blockHtml = `
-                    <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${catBorder} relative h-full flex flex-col">
-                        <div class="absolute -top-4 -right-4 ${catBgIcon} text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
-                        <h3 class="text-lg font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0"><i class="fa-solid ${catIcon} mr-2"></i>${catName}</h3>
-                        <div class="${gridClass} relative z-10 flex-1 content-start items-stretch">${itemsHtml}</div>
-                    </div>
-                `;
+                let gridClass = isColSpan && item.name.length > 9 ? 'col-span-1 sm:col-span-2 lg:col-span-1 xl:col-span-2' : 'col-span-1';
 
-                if (catName === '在地社群') localHtml += blockHtml;
-                else mutualHtml += blockHtml;
-            }
+                return `<a href="${item.link}" target="_blank" class="${gridClass} bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-1 transition-all flex items-center justify-between group h-full">
+                        <div class="flex flex-col items-start pr-2 flex-1 min-w-0">
+                            <h4 class="font-black text-gray-800 text-sm md:text-base mb-2 line-clamp-2 group-hover:text-themePink transition-colors w-full">${item.name}</h4>
+                            <div class="${snsBadgeClass} text-[10px] md:text-xs font-black px-2 py-1 rounded-lg shadow-sm flex items-center shrink-0"><i class="${snsIcon} mr-1"></i> ${snsType}</div>
+                        </div>
+                        ${showQR ? `<div class="w-12 h-12 md:w-16 md:h-16 shrink-0 bg-white rounded-xl p-1 border border-dashed border-gray-200 group-hover:border-themePink transition-colors relative flex items-center justify-center"><img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100" alt="QR Code"></div>` 
+                                 : `<div class="w-10 h-10 md:w-14 md:h-14 shrink-0 rounded-full border-2 border-gray-100 group-hover:border-themePink transition-colors relative flex items-center justify-center overflow-hidden shadow-sm bg-gray-50 p-0.5"><img src="${avatarUrl}" class="w-full h-full object-cover rounded-full" alt="社群頭像"></div>`}
+                    </a>`;
+            };
 
-            localContainer.innerHTML = localHtml;
-            mutualContainer.innerHTML = mutualHtml;
+            const localCardsHtml = localItems.map(generateLocalCard).join('');
+            const mutualCardsAll = mutualItems.map(item => generateMutualCard(item, true)).join('');
+            const mutualCardsTop3 = mutualItems.slice(0, 3).map(item => generateMutualCard(item, false)).join('');
+
+            // 產生區塊版面，且強制卡片群置中 (justify-center)
+            const localBlockHtml = `
+                <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 border-red-50 relative h-full flex flex-col">
+                    <div class="absolute -top-4 -right-4 text-red-100 text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
+                    <h3 class="text-lg font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0"><i class="fa-solid fa-thumbtack text-red-400 mr-2"></i>在地社群</h3>
+                    <div class="flex flex-wrap justify-center items-stretch gap-3 md:gap-4 relative z-10 flex-1 content-start">${localCardsHtml}</div>
+                </div>
+            `;
+
+            const mutualBlockHtmlAll = `
+                <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 border-blue-50 relative h-full flex flex-col">
+                    <div class="absolute -top-4 -right-4 text-blue-100 text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
+                    <h3 class="text-lg font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0"><i class="fa-solid fa-hashtag text-themePink mr-2"></i>地方互助</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3 relative z-10 flex-1 content-start">${mutualCardsAll}</div>
+                </div>
+            `;
+
+            const mutualBlockHtmlTop3 = `
+                <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 border-blue-50 relative h-full flex flex-col">
+                    <div class="absolute -top-4 -right-4 text-blue-100 text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
+                    <h3 class="text-lg font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0"><i class="fa-solid fa-hashtag text-themePink mr-2"></i>其他推薦</h3>
+                    <div class="flex flex-col gap-3 relative z-10 flex-1 content-start">${mutualCardsTop3}</div>
+                </div>
+            `;
+
+            if (overviewLeft) overviewLeft.innerHTML = localBlockHtml;
+            if (overviewRight) overviewRight.innerHTML = mutualBlockHtmlTop3;
+            if (tabLocal) tabLocal.innerHTML = localBlockHtml;
+            if (tabMutual) tabMutual.innerHTML = mutualBlockHtmlAll;
         }
 
         // ==========================================
@@ -1549,7 +1578,6 @@
                 groupedVillages[item.village].push(item);
             });
 
-            // ★ 更新導覽列卡片上的數據標籤
             const badgeBld = document.getElementById('badge-bld');
             if (badgeBld) badgeBld.textContent = Object.keys(groupedVillages).length;
 
@@ -1578,7 +1606,6 @@
                 const style = getStyleForVillage(villageName);
                 const safeId = `village-${villageName.replace(/\s+/g, '')}`;
 
-                // 更新標籤按鈕：點擊時先切換至 'buildings' 分頁，再延遲捲動至目標元素
                 tagsHtml += `
                     <button onclick="window.switchTab('buildings'); setTimeout(() => { const el = document.getElementById('mod-buildings-list'); if(el){ window.scrollTo({top: el.offsetTop - 100, behavior: 'smooth'}); setTimeout(()=>document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'}), 300); } }, 50);"
                             class="py-1.5 px-3 sm:px-4 md:px-5 sm:py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-xs sm:text-base md:text-lg flex items-center justify-center sm:justify-start gap-1 sm:gap-2 md:gap-3 hover:-translate-y-1 w-auto text-center sm:text-left group">
@@ -1656,30 +1683,18 @@
             fetchCommunityData();
             fetchBuildingData();
             fetchLocalNews(); 
-            
-            // 載入時若在交通頁面，則初始化資料
-            if (window.location.hash === '#transit') {
-                fetchTDXTransitData();
-            }
-            
-            // 監聽按鈕點擊切換到 transit 頁面時也觸發載入
-            document.querySelectorAll('button[data-tab="transit"]').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    fetchTDXTransitData();
-                });
-            });
+            fetchTDXTransitData(); // 無論在哪個分頁都先預載入，支援總覽頁面
         });
 
         // ==========================================
         // 🚌 交通轉乘：TDX API 串接與 UI 渲染
         // ==========================================
         
-        // --- 機捷動態模擬更新函數 (紫系專屬版) ---
+        // --- 機捷動態模擬更新函數 (無動畫簡潔版) ---
         window.updateMRTStatus = function() {
-            const container = document.getElementById('mrt-track-container');
-            const nbEl = document.getElementById('mrt-time-north');
-            const sbEl = document.getElementById('mrt-time-south');
-            if (!container || !nbEl || !sbEl) return;
+            const nbEls = document.querySelectorAll('.mrt-time-north');
+            const sbEls = document.querySelectorAll('.mrt-time-south');
+            if (nbEls.length === 0) return;
 
             const now = new Date();
             const minutes = now.getMinutes();
@@ -1691,81 +1706,48 @@
             // 假設南下列車 (往機場) 在每個小時的 10, 25, 40, 55 分抵達 A7
             const baseSbArrivals = [10, 25, 40, 55]; 
 
-            let nbTrainsHTML = '';
             let minNbDiff = 999;
-            
-            // 處理北上列車
             baseNbArrivals.forEach(arr => {
                 [-60, 0, 60].forEach(offset => {
                     let diff = (arr + offset) - currentTotalMinutes;
                     if (diff > 0 && diff < minNbDiff) minNbDiff = diff;
-                    
-                    if (diff >= -9 && diff <= 9) {
-                        let pos = 50 + (diff * (50/9));
-                        pos = Math.max(0, Math.min(100, pos));
-                        
-                        nbTrainsHTML += `<div class="absolute top-[0px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
-                            <div class="bg-white text-purple-600 rounded-full shadow-md border-2 border-purple-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
-                                <i class="fa-solid fa-caret-left text-[10px]"></i>
-                                <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
-                            </div>
-                        </div>`;
-                    }
                 });
             });
 
-            let sbTrainsHTML = '';
             let minSbDiff = 999;
-            
-            // 處理南下列車 (對應深紫色反白)
             baseSbArrivals.forEach(arr => {
                 [-60, 0, 60].forEach(offset => {
                     let diff = (arr + offset) - currentTotalMinutes;
                     if (diff > 0 && diff < minSbDiff) minSbDiff = diff;
-                    
-                    if (diff >= -9 && diff <= 9) {
-                        let pos = 50 - (diff * (50/9));
-                        pos = Math.max(0, Math.min(100, pos));
-                        
-                        sbTrainsHTML += `<div class="absolute top-[26px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
-                            <div class="bg-purple-700 text-white rounded-full shadow-md border-2 border-white flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
-                                <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
-                                <i class="fa-solid fa-caret-right text-[10px]"></i>
-                            </div>
-                        </div>`;
-                    }
                 });
             });
 
-            container.innerHTML = nbTrainsHTML + sbTrainsHTML;
-
-            const updateText = (el, diff, unitId) => {
-                const unitEl = document.getElementById(unitId);
-                const isNorth = el.id.includes('north');
-                if (Math.ceil(diff) <= 1 && Math.ceil(diff) >= 0) {
-                    el.innerText = '進站中';
-                    // 南下 (深紫背景) 使用較亮的紅色，北上使用一般紅色
-                    el.className = isNorth 
-                        ? 'text-2xl sm:text-3xl font-black text-red-500 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest'
-                        : 'text-2xl sm:text-3xl font-black text-red-300 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest';
-                    if(unitEl) unitEl.style.display = 'none';
-                } else {
-                    el.innerText = Math.ceil(diff);
-                    // 南下使用白色文字
-                    el.className = isNorth 
-                        ? 'text-3xl sm:text-4xl font-black text-purple-600 font-mono w-10 text-center' 
-                        : 'text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center';
-                    if(unitEl) unitEl.style.display = 'inline';
-                }
+            const updateText = (els, diff, unitClass, isNorth) => {
+                els.forEach(el => {
+                    const unitEl = el.parentElement.querySelector('.' + unitClass);
+                    if (Math.ceil(diff) <= 1 && Math.ceil(diff) >= 0) {
+                        el.innerText = '進站中';
+                        el.className = isNorth 
+                            ? 'mrt-time-north text-xl sm:text-3xl font-black text-red-500 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest'
+                            : 'mrt-time-south text-xl sm:text-3xl font-black text-red-300 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest';
+                        if(unitEl) unitEl.style.display = 'none';
+                    } else {
+                        el.innerText = Math.ceil(diff);
+                        el.className = isNorth 
+                            ? 'mrt-time-north text-2xl sm:text-4xl font-black text-purple-600 font-mono w-8 sm:w-10 text-center' 
+                            : 'mrt-time-south text-2xl sm:text-4xl font-black text-white font-mono w-8 sm:w-10 text-center';
+                        if(unitEl) unitEl.style.display = 'inline';
+                    }
+                });
             };
 
-            updateText(nbEl, minNbDiff, 'mrt-unit-north');
-            updateText(sbEl, minSbDiff, 'mrt-unit-south');
+            updateText(nbEls, minNbDiff, 'mrt-unit-north', true);
+            updateText(sbEls, minSbDiff, 'mrt-unit-south', false);
         };
 
-        // 生成 UI 卡片函式：高對比大按鈕設計
-        function createTransitCard(route, destination, timeStatus, type) {
-            let statusClass = "bg-gray-100 text-gray-500 border-gray-200"; // 預設：未發車/離站
+        // 一般列表公車 UI 卡片 (加入公車站名)
+        function createTransitCard(route, destination, timeStatus, type, stopName = '捷運體育大學站') {
+            let statusClass = "bg-gray-100 text-gray-500 border-gray-200"; 
             let timeText = timeStatus;
             
             if (timeStatus === '即將進站' || timeStatus === '進站中' || timeStatus === '0分' || timeStatus === '1分') {
@@ -1774,9 +1756,9 @@
             } else if (timeStatus.includes('分')) {
                 const minutes = parseInt(timeStatus);
                 if (minutes <= 5) {
-                    statusClass = "bg-orange-500 text-white border-orange-600 shadow-sm"; // 5分鐘內警告色
+                    statusClass = "bg-orange-500 text-white border-orange-600 shadow-sm"; 
                 } else {
-                    statusClass = "bg-emerald-50 text-emerald-600 border-emerald-200"; // 正常等待色
+                    statusClass = "bg-emerald-50 text-emerald-600 border-emerald-200"; 
                 }
             } else if (timeStatus === '末班已過' || timeStatus === '今日未營運') {
                 statusClass = "bg-gray-200 text-gray-400 border-gray-300";
@@ -1784,14 +1766,48 @@
 
             return `
                 <div class="flex items-center justify-between p-3 sm:p-4 bg-gray-50 hover:bg-white rounded-xl border-2 border-gray-100 hover:border-gray-200 transition-colors w-full">
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 flex-1 min-w-0 pr-4">
-                        <div class="flex items-center gap-2">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 flex-1 min-w-0 pr-2">
+                        <div class="flex items-center gap-2 shrink-0">
                             <span class="font-black text-gray-800 text-base sm:text-lg shrink-0">${route}</span>
                             ${type ? `<span class="bg-gray-200 text-gray-600 text-[10px] px-1.5 py-0.5 rounded font-bold shrink-0">${type}</span>` : ''}
                         </div>
-                        <div class="text-sm text-gray-500 font-bold truncate">往 <span class="text-gray-700">${destination}</span></div>
+                        <div class="flex flex-col">
+                            <div class="text-sm text-gray-500 font-bold truncate">往 <span class="text-gray-700">${destination}</span></div>
+                            <div class="text-[10px] sm:text-xs text-gray-400 font-bold truncate flex items-center mt-0.5">
+                                <i class="fa-solid fa-location-dot mr-1"></i>${stopName}
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex items-center justify-center min-w-[80px] sm:min-w-[100px] py-1.5 sm:py-2 px-3 rounded-lg border-2 ${statusClass} font-black text-sm sm:text-base shrink-0 text-center">
+                    <div class="flex items-center justify-center min-w-[70px] sm:min-w-[100px] py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg border-2 ${statusClass} font-black text-xs sm:text-base shrink-0 text-center">
+                        ${timeText}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 專為首頁總覽設計的「最快到站」重點卡片 (顏色標籤 -> 號碼 -> 站名 -> 時間)
+        function createOverviewBusCard(direction, route, timeStatus, badgeColorClass, stopName = '捷運體育大學站') {
+            let timeText = timeStatus;
+            
+            if (timeStatus === '即將進站' || timeStatus === '進站中' || timeStatus === '0分' || timeStatus === '1分') {
+                timeText = "即將進站";
+            }
+            
+            // 時間顯示統一採用灰色系，避免與前面的顏色標籤重複
+            let statusClass = "bg-gray-100 text-gray-600 border-gray-200"; 
+
+            return `
+                <div class="flex items-center justify-between p-3 bg-gray-50 hover:bg-white rounded-xl border-2 border-gray-100 hover:border-gray-200 transition-colors w-full gap-2 sm:gap-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 flex-1 min-w-0">
+                        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                            <span class="${badgeColorClass} text-white text-[11px] sm:text-xs font-black px-2 py-1 rounded-lg shrink-0 text-center shadow-sm min-w-[75px] sm:min-w-[85px]">往 ${direction}</span>
+                            <span class="font-black text-gray-800 text-base sm:text-lg shrink-0">${route}</span>
+                        </div>
+                        <div class="text-[10px] sm:text-xs text-gray-400 font-bold truncate flex items-center mt-0.5 sm:mt-0">
+                            <i class="fa-solid fa-location-dot mr-1"></i>${stopName}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center min-w-[70px] sm:min-w-[85px] py-1.5 px-2 rounded-lg border-2 ${statusClass} font-black text-xs sm:text-sm shrink-0 text-center">
                         ${timeText}
                     </div>
                 </div>
@@ -1802,24 +1818,29 @@
             const refreshIcon = document.getElementById('transit-refresh-icon');
             if (refreshIcon) refreshIcon.classList.add('fa-spin');
             
-            // 更新時間
             const now = new Date();
             const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-            document.getElementById('mrt-update-time').textContent = `最後更新：${timeStr}`;
+            const timeElement = document.getElementById('mrt-update-time');
+            if (timeElement) timeElement.textContent = `最後更新：${timeStr}`;
 
             try {
-                // 假設的 TDX API 呼叫端點 (此處示範，實際執行會進入 catch 區塊)
                 throw new Error('啟用高擬真模擬數據 (無API金鑰)'); 
             } catch (error) {
-                // ====== 智慧降級：高擬真模擬動態數據 ======
                 setTimeout(() => {
-                    // 1. 更新機捷動態 (呼叫新加入的專屬函式)
                     if (window.updateMRTStatus) window.updateMRTStatus();
 
-                    // 2. 產生公車資料使用相同的隨機生成
                     const generateMrtTime = () => Math.random() > 0.8 ? '即將進站' : `${Math.floor(Math.random() * 14) + 2}分`;
 
-                    // 3. 產生長庚/三井方向公車 (新增 606, 607)
+                    // 首頁總覽快速動態
+                    const overviewBusHtml = `
+                        ${createOverviewBusCard('長庚醫院', '202', generateMrtTime(), 'bg-emerald-500')}
+                        ${createOverviewBusCard('迴龍 / 新莊', '橘21', generateMrtTime(), 'bg-orange-500')}
+                        ${createOverviewBusCard('長庚社區', 'L317', generateMrtTime(), 'bg-themePink')}
+                    `;
+                    const obc = document.getElementById('bus-overview-fastest-container');
+                    if (obc) obc.innerHTML = overviewBusHtml;
+
+                    // 交通指南詳細動態
                     const hospitalHtml = `
                         ${createTransitCard('202', '林口長庚醫院', generateMrtTime(), '桃園市區')}
                         ${createTransitCard('603', '長庚大學', `${Math.floor(Math.random() * 20) + 5}分`, '桃園市區')}
@@ -1827,30 +1848,30 @@
                         ${createTransitCard('607', '長庚醫院', `${Math.floor(Math.random() * 15) + 5}分`, '桃園市區')}
                         ${createTransitCard('橘21', '迴龍 / 新莊', generateMrtTime(), '新北市區')}
                     `;
-                    document.getElementById('bus-hospital-container').innerHTML = hospitalHtml;
+                    const hbc = document.getElementById('bus-hospital-container');
+                    if (hbc) hbc.innerHTML = hospitalHtml;
 
-                    // 4. 產生新莊方向公車 (新增 607)
                     const xinzhuangHtml = `
                         ${createTransitCard('橘21', '中港 / 新莊', generateMrtTime(), '新北市區')}
                         ${createTransitCard('607', '迴龍', generateMrtTime(), '桃園市區')}
                         ${createTransitCard('898', '迴龍站', `${Math.floor(Math.random() * 25) + 3}分`, '新北市區')}
                         ${createTransitCard('BR 棕線先導', '捷運迴龍站', `${Math.floor(Math.random() * 15) + 2}分`, '桃園捷運先導')}
                     `;
-                    document.getElementById('bus-xinzhuang-container').innerHTML = xinzhuangHtml;
+                    const xbc = document.getElementById('bus-xinzhuang-container');
+                    if (xbc) xbc.innerHTML = xinzhuangHtml;
 
-                    // 5. 產生區域微循環公車
                     const localHtml = `
                         ${createTransitCard('L317', '長庚社區', generateMrtTime(), '龜山樂活巴士')}
                         ${createTransitCard('L319', '長庚醫院', `${Math.floor(Math.random() * 30) + 10}分`, '龜山樂活巴士')}
                         ${createTransitCard('202', '體育大學', '即將進站', '桃園市區')}
                     `;
-                    document.getElementById('bus-local-container').innerHTML = localHtml;
+                    const lbc = document.getElementById('bus-local-container');
+                    if (lbc) lbc.innerHTML = localHtml;
 
                     if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-                }, 600); // 模擬網路延遲
+                }, 600);
             }
         }
-
     </script>
 </body>
 </html>
