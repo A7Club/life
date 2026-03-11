@@ -812,8 +812,8 @@
                             </div>
                         </details>
 
-                        <!-- Q4: 交通塞車與路況 -->
-                        <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
+                        <!-- Q4: 交通塞車與路況 (使用優雅降級) -->
+                        <details id="traffic-details" class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
                             <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg outline-none">
                                 <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 聽說文化一路和青山路容易塞車，出門前怎麼看路況？</span>
                                 <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
@@ -824,25 +824,16 @@
                                     開車族出門前，可以參考下方的 <span class="text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">Google Maps 區域地圖</span> 掌握「文化一路 / 青山路」周邊動態，提早避開車潮！
                                 </p>
                                 
-                                <!-- Google Maps 區塊 (置中) -->
-                                <div class="bg-white rounded-xl overflow-hidden shadow-sm w-full max-w-lg border-2 border-gray-200 mx-auto group flex flex-col">
-                                    <div class="bg-gray-50 px-3 py-2.5 flex justify-between items-center border-b border-gray-200 shrink-0">
+                                <!-- Google Maps 區塊 (使用 JS API，並設定 1:1 長寬比) -->
+                                <div class="bg-white rounded-xl overflow-hidden shadow-sm w-full max-w-lg border-2 border-gray-200 mx-auto group flex flex-col aspect-square relative">
+                                    <div class="bg-white/90 backdrop-blur-sm px-3 py-2.5 flex justify-between items-center border-b border-gray-200 shrink-0 z-10 shadow-sm">
                                         <div class="flex items-center text-[11px] sm:text-xs font-black text-gray-700">
-                                            <i class="fa-solid fa-map-location-dot text-blue-500 mr-2 text-sm"></i> 文化一路 / 青山路口
+                                            <i class="fa-solid fa-map-location-dot text-blue-500 mr-2 text-sm"></i> 文化一路 / 青山路口即時路況
                                         </div>
-                                        <a href="https://www.google.com/maps/@25.0346,121.3934,15z/data=!5m1!1e1" target="_blank" class="text-[10px] sm:text-xs bg-blue-500 hover:bg-blue-600 text-white font-black px-2.5 py-1.5 rounded-lg transition-colors flex items-center shadow-sm active:scale-95 z-10">
-                                            <i class="fa-solid fa-traffic-light mr-1.5"></i> 開啟完整路況
-                                        </a>
                                     </div>
-                                    <!-- 使用 overflow-hidden 與負邊距裁切技巧隱藏地圖預設 UI，保留路況紅黃綠 -->
-                                    <div class="w-full h-48 sm:h-64 relative bg-gray-100 overflow-hidden pointer-events-auto">
-                                        <iframe 
-                                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d8000.0!2d121.3934!3d25.0346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1szh-TW!2stw!4v1!5m2!1szh-TW!2stw!5m1!1e1" 
-                                            class="absolute w-[calc(100%+40px)] h-[calc(100%+140px)] -top-[75px] -left-[20px] border-0" 
-                                            allowfullscreen="" 
-                                            loading="lazy" 
-                                            referrerpolicy="no-referrer-when-downgrade">
-                                        </iframe>
+                                    <!-- 地圖容器 -->
+                                    <div id="traffic-map-container" class="w-full flex-1 relative bg-gray-100">
+                                        <div id="traffic-map" class="w-full h-full absolute inset-0"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1983,6 +1974,59 @@
         }
 
         // ==========================================
+        // 🗺️ 交通路況地圖 (Google Maps API 優雅降級)
+        // ==========================================
+        // 攔截並處理 Google Maps API 因金鑰限制而失敗的情況
+        window.gm_authFailure = function() {
+            console.warn("Google Maps API 金鑰驗證失敗 (可能因預覽環境的網域未授權)。自動降級為無須金鑰的 iframe 備用模式。");
+            const container = document.getElementById('traffic-map-container');
+            if (container) {
+                container.innerHTML = `
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14461.35245803265!2d121.3934!3d25.0346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1szh-TW!2stw!4v1710150000000!5m2!1szh-TW!2stw" 
+                        class="w-full h-full border-0 absolute inset-0" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                `;
+            }
+        };
+
+        window.initMap = function() {
+            const mapEl = document.getElementById('traffic-map');
+            if (!mapEl) return;
+
+            try {
+                const map = new google.maps.Map(mapEl, {
+                    center: { lat: 25.0346, lng: 121.3934 },
+                    zoom: 15,
+                    disableDefaultUI: true, // 保持畫面簡潔
+                    zoomControl: true, // 保留縮放按鈕
+                });
+
+                // 強制開啟即時路況圖層
+                const trafficLayer = new google.maps.TrafficLayer();
+                trafficLayer.setMap(map);
+
+                // 解決 <details> 折疊面板開啟時地圖可能破圖的問題
+                const detailsEl = document.getElementById('traffic-details');
+                if (detailsEl) {
+                    detailsEl.addEventListener('toggle', function(e) {
+                        if (e.target.open) {
+                            // 當折疊面板展開時，強制地圖重繪並重新置中
+                            google.maps.event.trigger(map, 'resize');
+                            map.setCenter({ lat: 25.0346, lng: 121.3934 });
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error("地圖初始化發生錯誤:", err);
+                window.gm_authFailure(); // 發生其他錯誤時也手動觸發降級
+            }
+        };
+
+        // ==========================================
         // 🚌 交通轉乘：TDX API 串接與 UI 渲染
         // ==========================================
         
@@ -2223,5 +2267,8 @@
             }
         }
     </script>
+    
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC6jJNCtT1kpYg_BdS-s1p2Ml-mwwt0hA&callback=initMap" async defer></script>
 </body>
 </html>
