@@ -154,7 +154,7 @@
                 <button data-tab="community" data-active="bg-purple-50 border-purple-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-purple-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
                     <div class="w-12 h-12 sm:w-14 sm:h-14 bg-purple-100 text-themePurple rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-purple-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-users"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center">
-                        <h3 class="font-black text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-800 leading-none truncate w-full">在地社群</h3>
+                        <h3 class="font-black text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-800導致 leading-none truncate w-full">在地社群</h3>
                         <p class="text-gray-400 text-[10px] sm:text-xs lg:text-sm font-bold truncate w-full mt-1.5 sm:mt-2">已收錄 <span id="badge-com" class="text-themePurple font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 群組</p>
                     </div>
                 </button>
@@ -192,60 +192,62 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：天氣與空氣品質 (首頁總覽專屬) -->
+            <!-- 模組：天氣與空氣品質 (首頁總覽專屬 - 清新水藍綠配色) -->
             <!-- ============================================== -->
             <div id="mod-weather-aqi" class="content-module mb-10 hidden" data-shows-on="overview">
-                <div class="flex flex-col sm:flex-row gap-4 lg:gap-6 items-stretch">
-                    <!-- 左側：空氣品質 (改用 Teal 清新水藍綠色系) -->
-                    <div class="bg-white rounded-[2rem] border-4 border-teal-50 p-5 md:p-6 shadow-cute flex flex-col justify-center relative overflow-hidden group/air hover:border-teal-100 transition-colors flex-1 min-w-0">
-                        <div class="absolute -right-4 -top-4 text-teal-50 text-8xl z-0 pointer-events-none group-hover/air:scale-110 transition-transform"><i class="fa-solid fa-wind"></i></div>
+                <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 items-stretch">
+                    <!-- 左側：空氣品質 (改用 Teal 清新色系) -->
+                    <div class="bg-white rounded-[1.5rem] sm:rounded-[2rem] border-4 border-teal-50 p-3 sm:p-5 md:p-6 shadow-cute flex flex-col justify-center relative overflow-hidden group/air hover:border-teal-100 transition-colors flex-1 min-w-0">
+                        <div class="absolute -right-4 -bottom-4 text-teal-50 text-6xl sm:text-8xl z-0 pointer-events-none group-hover/air:scale-110 transition-transform"><i class="fa-solid fa-wind"></i></div>
                         
                         <div class="relative z-10 w-full flex-1 flex flex-col justify-center">
                             <!-- AQI Title -->
-                            <div class="flex items-center gap-2 mb-3 md:mb-4">
-                                <div class="aqi-icon-container w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-lg md:text-xl shrink-0 transition-colors"><i class="fa-solid fa-leaf"></i></div>
-                                <div class="text-lg md:text-2xl text-gray-700 font-black tracking-wide">林口測站 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1">鄰近A7</span></div>
+                            <div class="flex items-center gap-2 mb-2 sm:mb-4">
+                                <div class="aqi-icon-container w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-sm sm:text-lg md:text-xl shrink-0 transition-colors"><i class="fa-solid fa-leaf"></i></div>
+                                <div class="text-sm sm:text-lg md:text-2xl text-gray-700 font-black tracking-wide truncate">林口測站</div>
                             </div>
                             
                             <!-- AQI Data Row -->
-                            <div class="font-black text-gray-800 flex flex-row items-center gap-3 sm:gap-4 md:gap-6">
+                            <div class="font-black text-gray-800 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 md:gap-6">
                                 <!-- Status & AQI Value -->
                                 <div class="flex items-baseline shrink-0">
-                                    <span class="aqi-status text-4xl lg:text-5xl text-gray-400 transition-colors">連線</span>
-                                    <span class="aqi-value text-xs sm:text-sm md:text-base font-bold text-gray-400 ml-1 sm:ml-2 transition-colors">(AQI: --)</span>
+                                    <span class="aqi-status text-xl sm:text-4xl lg:text-5xl text-gray-400 transition-colors">連線</span>
+                                    <span class="aqi-value text-[8px] sm:text-sm md:text-base font-bold text-gray-400 ml-1 transition-colors">(AQI: --)</span>
                                 </div>
                                 
-                                <span class="text-gray-200 text-3xl font-light shrink-0">|</span>
+                                <span class="text-gray-200 text-3xl font-light shrink-0 hidden sm:inline">|</span>
                                 
                                 <!-- PM 2.5 Value -->
                                 <div class="flex items-baseline shrink-0">
-                                    <span class="text-xs sm:text-sm md:text-base font-bold text-gray-400 mr-1 sm:mr-1.5">PM2.5</span>
-                                    <span class="pm25-value text-4xl lg:text-5xl text-gray-400 transition-colors">--</span>
+                                    <span class="text-[8px] sm:text-sm md:text-base font-bold text-gray-400 mr-1">PM2.5</span>
+                                    <span class="pm25-value text-xl sm:text-4xl lg:text-5xl text-gray-400 transition-colors">--</span>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Update Time (Bottom Right) -->
-                        <div class="mt-auto pt-4 flex justify-end w-full relative z-10">
-                            <div class="air-update-time text-[10px] md:text-xs text-gray-400 font-bold">最後更新: --:--</div>
+                        <div class="mt-auto pt-2 flex justify-end w-full relative z-10">
+                            <div class="air-update-time text-[8px] sm:text-[10px] md:text-xs text-gray-400 font-bold">最後更新: --:--</div>
                         </div>
                     </div>
 
                     <!-- 右側：天氣預報 -->
-                    <div class="bg-gradient-to-br from-blue-400 to-sky-300 rounded-[2rem] p-6 shadow-cute flex items-center relative overflow-hidden text-white flex-1 min-w-0 border-4 border-white/20">
-                        <div class="absolute -right-4 -bottom-4 text-sky-200/40 text-9xl z-0 pointer-events-none hover:scale-110 transition-transform"><i class="fa-solid fa-cloud"></i></div>
+                    <div class="bg-gradient-to-br from-blue-400 to-sky-300 rounded-[1.5rem] sm:rounded-[2rem] p-3 sm:p-6 shadow-cute flex items-center relative overflow-hidden text-white flex-1 min-w-0 border-4 border-white/20">
+                        <div class="absolute -right-4 -bottom-4 text-sky-200/40 text-7xl sm:text-9xl z-0 pointer-events-none hover:scale-110 transition-transform"><i class="fa-solid fa-cloud"></i></div>
                         <div class="flex-1 relative z-10">
-                            <div class="flex items-center justify-between">
+                            <div class="flex flex-col h-full justify-between">
                                 <div class="flex flex-col">
-                                    <div class="text-xs md:text-sm font-bold text-sky-100 mb-1.5 flex items-center bg-black/10 w-max px-2 py-1 rounded-lg backdrop-blur-sm"><i class="fa-solid fa-location-dot mr-1.5"></i>桃園市 龜山區</div>
-                                    <div class="text-4xl lg:text-5xl font-black mb-1 drop-shadow-md weather-temp">--°C</div>
-                                    <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 mt-1">
-                                        <div class="text-base md:text-lg font-bold drop-shadow-sm weather-desc">讀取中...</div>
-                                        <div class="text-xs md:text-sm font-bold text-sky-100 bg-black/20 px-2 py-0.5 rounded-md drop-shadow-sm weather-hl w-max">最高 --° / 最低 --°</div>
+                                    <div class="text-[8px] sm:text-xs md:text-sm font-bold text-sky-100 mb-1 flex items-center bg-black/10 w-max px-2 py-0.5 sm:py-1 rounded-lg backdrop-blur-sm"><i class="fa-solid fa-location-dot mr-1 sm:mr-1.5"></i>龜山</div>
+                                    <div class="text-2xl sm:text-4xl lg:text-5xl font-black mb-1 drop-shadow-md weather-temp">--°C</div>
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1">
+                                        <div class="text-[10px] sm:text-base md:text-lg font-bold drop-shadow-sm weather-desc">讀取中...</div>
                                     </div>
                                 </div>
-                                <div class="text-6xl md:text-7xl drop-shadow-lg weather-icon text-white shrink-0 ml-2">
-                                    <i class="fa-solid fa-cloud-sun"></i>
+                                <div class="flex items-center justify-between mt-2">
+                                    <div class="text-[7px] sm:text-xs md:text-sm font-bold text-sky-100 bg-black/20 px-1.5 py-0.5 rounded-md drop-shadow-sm weather-hl whitespace-nowrap">-- / --</div>
+                                    <div class="text-3xl sm:text-6xl md:text-7xl drop-shadow-lg weather-icon text-white shrink-0">
+                                        <i class="fa-solid fa-cloud-sun"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -313,10 +315,9 @@
                                     <div class="w-12 h-12 bg-white rounded-full border-4 border-emerald-400 shadow group-hover:scale-110 group-hover:border-emerald-600 transition-all flex items-center justify-center font-black text-emerald-700">'25</div>
                                 </div>
                                 <div class="px-2">
-                                    <h4 class="font-black text-gray-800 text-lg mb-2">牛角坡路與滯洪池公園</h4>
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">多項道路工程完工</h4>
                                     <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
-                                        <span class="block text-gray-400 mb-2 pb-2 border-b border-gray-200 text-xs leading-relaxed"><i class="fa-solid fa-circle-info mr-1"></i> 備註：變三(文藝街/連通道)已於2024完工。</span>
-                                        <span class="block text-themeYellow mb-1 mt-2"><i class="fa-solid fa-hourglass-half mr-1"></i> 預計完工</span>
+                                        <span class="block text-themeYellow mb-1"><i class="fa-solid fa-check-circle mr-1 text-themeYellow"></i> 已完成</span>
                                         站外道路(變二)牛角坡路延伸工程完工；(變四)景觀滯洪池工程預計年底收尾，打造生態休憩空間。
                                     </p>
                                 </div>
@@ -327,11 +328,16 @@
                                     <div class="w-12 h-12 bg-emerald-500 text-white rounded-full border-4 border-emerald-300 shadow group-hover:scale-110 group-hover:bg-emerald-600 transition-all flex items-center justify-center font-black">'26</div>
                                 </div>
                                 <div class="px-2">
-                                    <h4 class="font-black text-gray-800 text-lg mb-2">多項重大建設啟用</h4>
-                                    <p class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
-                                        <span class="block text-themeGreen mb-1"><i class="fa-solid fa-medal mr-1"></i> 陸續落成</span>
-                                        站外道路(變一)文學路延伸完工；第七標廣場地下停車場啟用；龜山運動中心與文青國中小二期落成。
-                                    </p>
+                                    <h4 class="font-black text-gray-800 text-lg mb-2">重大建設落成</h4>
+                                    <div class="text-gray-500 text-xs sm:text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                        <span class="block text-emerald-500 mb-2 font-black"><i class="fa-solid fa-person-digging mr-1"></i> 建造中項目：</span>
+                                        <ul class="space-y-1.5 list-none">
+                                            <li class="flex items-center gap-2 truncate">○ 變一文學路延伸 <span class="text-[9px] bg-emerald-100 px-1 rounded">建造中</span></li>
+                                            <li class="flex items-center gap-2 truncate">○ 第七標地下停車場 <span class="text-[9px] bg-emerald-100 px-1 rounded">建造中</span></li>
+                                            <li class="flex items-center gap-2 truncate">○ 龜山國民運動中心 <span class="text-[9px] bg-emerald-100 px-1 rounded">建造中</span></li>
+                                            <li class="flex items-center gap-2 truncate">○ 文青國中小二期 <span class="text-[9px] bg-emerald-100 px-1 rounded">建造中</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <!-- 2027 -->
@@ -427,7 +433,7 @@
                                     </div>
                                 </div>
                                 <!-- 南下 -->
-                                <div class="flex-1 bg-purple-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-sm border border-purple-600 flex items-center justify-between">
+                                <div class="flex-1 bg-purple-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-sm border border-purple-700 flex items-center justify-between">
                                     <div>
                                         <div class="text-[10px] sm:text-xs text-purple-200 font-bold mb-0.5">往機場</div>
                                         <div class="text-sm sm:text-xl font-black text-white">南下</div>
@@ -443,7 +449,7 @@
                             <div class="hidden md:flex w-full relative z-10 bg-white/60 rounded-[1rem] p-4 border border-purple-100 shadow-sm flex-col justify-center mt-3">
                                 <div class="flex justify-between items-center mb-3">
                                     <span class="text-xs text-gray-500 font-black"><i class="fa-solid fa-location-crosshairs mr-1.5"></i>列車即時位置</span>
-                                    <span class="text-[9px] text-gray-400 bg-white px-2 py-0.5 rounded border border-gray-100 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1"></i>推算中</span>
+                                    <span class="text-[9px] text-gray-400 bg-white px-2 py-0.5 rounded border border-gray-100 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>推算中</span>
                                 </div>
                                 
                                 <!-- 動態列車與軌道區域 -->
@@ -599,7 +605,7 @@
                                         </div>
                                     </div>
                                     <!-- 南下 (往機場/中壢) - 深紫色反白卡片 -->
-                                    <div class="flex-1 bg-purple-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 shadow-md border-2 border-white flex items-center justify-between hover:-translate-y-1 transition-transform">
+                                    <div class="flex-1 bg-purple-700 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 shadow-md border-2 border-white flex items-center justify-between hover:-translate-y-1 transition-transform">
                                         <div>
                                             <div class="text-[10px] sm:text-xs text-purple-200 font-bold mb-0.5">往機場/中壢</div>
                                             <div class="text-sm sm:text-xl font-black text-white">南下</div>
@@ -896,7 +902,7 @@
                             </summary>
                             <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed">
                                 若您的社區尚未建置完整的垃圾集中區，需自行倒垃圾，強烈建議下載 <span class="text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-200">「桃園垃圾車」APP</span>！<br>
-                                APP 內會即時顯示垃圾車的 GPS 定位與各里清運時間表。以文青里與樂善里為例，通常會於晚間 <span class="text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-100">18:30 ~ 20:30 間</span> 進行清運。
+                                APP內會即時顯示垃圾車的 GPS 定位與各里清運時間表。以文青里與樂善里為例，通常會於晚間 <span class="text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-100">18:30 ~ 20:30 間</span> 進行清運。
                             </p>
                         </details>
 
@@ -917,7 +923,7 @@
                             </div>
                         </details>
 
-                        <!-- Q4: 交通塞車與路況 -->
+                        <!-- Q4: 交通塞車與路況 (使用 JS API，並設定 1:1 長寬比) -->
                         <details id="traffic-details" class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
                             <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg outline-none">
                                 <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 聽說文化一路和青山路容易塞車，出門前怎麼看路況？</span>
@@ -929,7 +935,7 @@
                                     開車族出門前，可以參考下方的 <span class="text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">Google Maps 區域地圖</span> 掌握「文化一路 / 青山路」周邊動態，提早避開車潮！
                                 </p>
                                 
-                                <!-- Google Maps 區塊 -->
+                                <!-- Google Maps 區塊 (使用 JS API，並設定 1:1 長寬比) -->
                                 <div class="bg-white rounded-xl overflow-hidden shadow-sm w-full max-w-lg border-2 border-gray-200 mx-auto group flex flex-col aspect-square relative">
                                     <div class="bg-white/90 backdrop-blur-sm px-3 py-2.5 flex justify-between items-center border-b border-gray-200 shrink-0 z-10 shadow-sm">
                                         <div class="flex items-center text-[11px] sm:text-xs font-black text-gray-700">
@@ -975,7 +981,7 @@
                                     
                                     <div class="air-update-time text-right w-full text-[9px] sm:text-[10px] text-gray-400 font-bold mt-2 relative z-10">最後更新: --:--</div>
                                 </div>
-                                <div class="w-full text-right mt-2"><a href="https://data.gov.tw/dataset/40448" target="_blank" class="text-[10px] text-gray-400 hover:text-teal-500 font-bold transition-colors"><i class="fa-solid fa-link mr-1"></i>資料來源：環境部開放資料</a></div>
+                                <div class="w-full text-right mt-2"><a href="https://data.gov.tw/dataset/40448" target="_blank" class="text-[10px] text-gray-400 hover:text-emerald-500 font-bold transition-colors"><i class="fa-solid fa-link mr-1"></i>資料來源：環境部開放資料</a></div>
                             </div>
                         </details>
 
@@ -1065,8 +1071,8 @@
 
                             <div class="bg-orange-50/50 rounded-2xl p-4 md:p-5 border border-orange-100 flex flex-col items-start hover:bg-orange-50 transition-colors shadow-sm">
                                 <span class="bg-orange-200 text-orange-700 text-xs font-black px-2.5 py-1 rounded-lg mb-3">STEP 3 / 房屋證明</span>
-                                <strong class="text-gray-800 text-lg mb-1.5">房屋所有權狀 <span class="text-sm text-orange-500">正本</span></strong>
-                                <p class="text-sm text-gray-500 font-bold leading-snug">單獨成立一戶者必備，或提供最近一期房屋稅單。</p>
+                                <strong class="text-orange-600 text-lg mb-1.5">房屋所有權狀 <span class="text-sm text-orange-500">正本</span></strong>
+                                <p class="text-sm text-gray-500 font-bold導致 leading-snug">單獨成立一戶者必備，或提供最近一期房屋稅單。</p>
                             </div>
                         </div>
 
@@ -1689,7 +1695,7 @@
                     { name: '桃園市龜山區A7站區開發案(變三)文藝街及南林路拓寬與連通道工程', start: '2022年03月', end: '2024年08月', status: '已完工。文藝街延伸與南林路拓寬，並建置銜接A7站體與周邊空橋系統之人行連通道。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', img: 'https://ws.tycg.gov.tw/001/Upload/116/RelPic/13501/1008956/%E8%AE%8A%E4%B8%89%E5%AE%8C%E5%B7%A5%E5%9C%96.jpg' },
                     { name: '桃園市龜山區A7站區開發案(變四)景觀滯洪池工程', start: '2023年10月', end: '2025年12月', status: '施工中。配合A7站區排水計畫，打造兼具防洪與生態休憩功能之滯洪公園。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
                     { name: '機場捷運A7站地區區段徵收公共工程第七標廣場地下停車場工程', start: '2023年05月', end: '2026年06月', status: '施工中。提供A7站區周邊與未來空橋串聯之大型轉乘停車空間。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
-                    { name: '機場捷運A7站區開發案立體連通系統(A7站區立體空橋計畫', start: '2024年01月', end: '2028年12月', status: '陸續規劃/施工中。串聯A7中心商業區與周邊住宅之立體人行通道網絡，部分建案已預留。' },
+                    { name: '機場捷運A7站區開發案立體連通系統(A7站區立體空橋計畫)', start: '2024年01月', end: '2028年12月', status: '陸續規劃/施工中。串聯A7中心商業區與周邊住宅之立體人行通道網絡，部分建案已預留。' },
                     { name: '桃園市龜山區文青國民中小學新建工程(第二期)', start: '2024年05月', end: '2026年08月', status: '施工中。接續一期工程，興建國中部校舍與專科教室，完善在地就學機能。', link: 'https://opc.tycg.gov.tw/News_Content.aspx?n=9370&s=990552' },
                     { name: '桃園市龜山國民運動中心新建工程', start: '2023年07月', end: '2026年10月', status: '施工中。包含室內溫水游泳池、體適能中心等，主體結構工程施作中。', link: 'https://opc.tycg.gov.tw/News_Content.aspx?n=9370&s=1345364' }
                 ];
@@ -2069,14 +2075,14 @@
                 
                 const minTemp = Math.round(data.daily.temperature_2m_min[0]);
                 const maxTemp = Math.round(data.daily.temperature_2m_max[0]);
-                const hlText = `最高 ${maxTemp}° / 最低 ${minTemp}°`;
+                const hlText = `${maxTemp}° / ${minTemp}°`;
 
                 let desc = '晴時多雲';
                 let icon = '<i class="fa-solid fa-cloud-sun text-yellow-300"></i>';
 
                 // WMO 天氣代碼對應表
                 if (code === 0) { 
-                    desc = '晴朗無雲'; 
+                    desc = '晴朗'; 
                     icon = isDay ? '<i class="fa-solid fa-sun text-yellow-300"></i>' : '<i class="fa-solid fa-moon text-yellow-100"></i>'; 
                 } else if (code >= 1 && code <= 3) { 
                     desc = code === 1 ? '晴時多雲' : (code === 2 ? '多雲' : '陰天'); 
@@ -2098,7 +2104,7 @@
                 renderWeather(temp, desc, hlText, icon);
             } catch (e) {
                 console.info('天氣 API 無法讀取，自動使用備用呈現。');
-                renderWeather(22, '多雲時晴', '最高 24° / 最低 18°', '<i class="fa-solid fa-cloud-sun text-yellow-300"></i>');
+                renderWeather(22, '多雲時晴', '24° / 18°', '<i class="fa-solid fa-cloud-sun text-yellow-300"></i>');
             }
         }
 
@@ -2294,7 +2300,7 @@
                         let pos = 50 - (diff * (50/9));
                         pos = Math.max(0, Math.min(100, pos));
                         sbTrainsHTML += `<div class="absolute top-[16px] sm:top-[26px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
-                            <div class="bg-purple-600 text-white rounded-full shadow-md border-2 border-white flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
+                            <div class="bg-purple-700 text-white rounded-full shadow-md border-2 border-white flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
                                 <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
                                 <i class="fa-solid fa-caret-right text-[10px]"></i>
                             </div>
