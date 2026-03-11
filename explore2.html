@@ -133,7 +133,7 @@
             <!-- 分頁選單列 (調整為中大螢幕一排 3 個，確保文字完美顯示) -->
             <div id="tab-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-10 pb-8 border-b-4 border-dashed border-pink-100">
                 <!-- 總覽 -->
-                <button data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
+                <button style="display: none;" data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
                     <div class="w-12 h-12 sm:w-14 sm:h-14 bg-yellow-100 text-yellow-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-yellow-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-house"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center">
                         <h3 class="font-black text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-800 leading-none truncate w-full">首頁總覽</h3>
@@ -178,7 +178,7 @@
                 </button>
 
                 <!-- 在地新聞 -->
-                <button data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
+                <button style="display: none;" data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
                     <div class="w-12 h-12 sm:w-14 sm:h-14 bg-cyan-100 text-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-regular fa-newspaper"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center">
                         <h3 class="font-black text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-800 leading-none truncate w-full">在地新聞</h3>
