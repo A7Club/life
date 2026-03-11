@@ -232,12 +232,12 @@
                 <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-10 border-4 border-emerald-50 relative overflow-hidden">
                     <div class="absolute -right-6 -bottom-6 text-emerald-50 text-8xl floating pointer-events-none z-0"><i class="fa-solid fa-timeline"></i></div>
                     
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-10 relative z-10 gap-4">
-                        <h3 class="text-xl md:text-2xl font-black text-emerald-700 flex items-center justify-center sm:justify-start shrink-0">
-                            <i class="fa-regular fa-calendar-check mr-3"></i>工程期程總覽表
+                    <div class="flex flex-row items-center justify-between mb-8 md:mb-10 relative z-10 gap-2">
+                        <h3 class="text-lg sm:text-xl md:text-2xl font-black text-emerald-700 flex items-center shrink-0">
+                            <i class="fa-regular fa-calendar-check mr-2 sm:mr-3"></i>工程期程總覽表
                         </h3>
-                        <button onclick="window.switchTab('engineering', true)" class="text-xs sm:text-sm font-bold text-emerald-600 hover:text-emerald-800 bg-emerald-50 border-2 border-emerald-100 hover:border-emerald-200 px-4 py-2 rounded-xl flex items-center transition-colors shadow-sm w-max mx-auto sm:mx-0">
-                            更多工程資訊</i>
+                        <button onclick="window.switchTab('engineering', true)" class="text-[10px] sm:text-xs font-bold text-emerald-600 hover:text-emerald-800 bg-emerald-50 border border-emerald-100 hover:border-emerald-200 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg flex items-center transition-colors shadow-sm shrink-0 whitespace-nowrap">
+                            更多工程資訊 <i class="fa-solid fa-arrow-right ml-1 sm:ml-1.5 text-[8px] sm:text-[10px]"></i>
                         </button>
                     </div>
                     
@@ -783,17 +783,7 @@
                             </p>
                         </details>
 
-                        <!-- Q2: 垃圾車 -->
-                        <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
-                            <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg outline-none">
-                                <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 社區還沒有垃圾室，垃圾車的時間和路線該怎麼查？</span>
-                                <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
-                            </summary>
-                            <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed">
-                                若您的社區尚未建置完整的垃圾集中區，需自行倒垃圾，強烈建議下載 <span class="text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-200">「桃園垃圾車」APP</span>！<br>
-                                APP 內會即時顯示垃圾車的 GPS 定位與各里清運時間表。以文青里與樂善里為例，通常會於晚間 <span class="text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-100">18:30 ~ 20:30 間</span> 進行清運。
-                            </p>
-                        </details>
+
 
                         <!-- Q3: 買菜與機能 -->
                         <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
@@ -806,7 +796,7 @@
                                     捷運站周邊及文青路已有 <span class="text-red-600 bg-red-50 px-1.5 py-0.5 rounded border border-red-100">全聯福利中心</span>、<span class="text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">家樂福超市</span> 與多家連鎖藥妝店進駐，日常所需都能輕鬆搞定。<br>
                                     若需大型採購，開車前往 A8 站商圈，或抵達 A9 站的 <span class="text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-100">三井 OUTLET</span> 也僅需 10-15 分鐘車程！
                                 </p>
-                                <a href="https://a7club.github.io/life/#shopping" class="inline-flex items-center text-sm font-black text-white bg-themePink hover:bg-pink-400 px-4 py-2 rounded-xl transition-colors shadow-sm">
+                                <a href="https://a7club.github.io/life/#shopping" class="inline-flex items-center text-sm font-black text-yellow-700 bg-themeYellow hover:bg-Yellow-400 px-4 py-2 rounded-xl transition-colors shadow-sm">
                                     <i class="fa-solid fa-cart-shopping mr-2"></i> 前往【購物與生活】看在地推薦清單
                                 </a>
                             </div>
@@ -847,7 +837,7 @@
                             </summary>
                             <div class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed">
                                 <p class="mb-4">
-                                    異味問題是 A7 居民非常關心的議題。桃園市環保局已在周邊佈建了多組 <span class="text-teal-600 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-100">微型感測器 (AirBox)</span> 進行 24 小時監控。<br>
+                                    異味問題是 A7 居民非常關心的議題。桃園市環保局已在周邊佈建了多組 微型感測器 (AirBox) 進行 24 小時監控。<br>
                                     我們在這裡直接串接了政府的開放資料 API，您可以隨時查看最真實的 <span class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">林口測站 AQI 數據</span>，打破資訊焦慮！
                                 </p>
                                 
@@ -887,19 +877,46 @@
                                 <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 小孩準備上學了，這裡的就學學區到底是怎麼劃分的呢？</span>
                                 <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
                             </summary>
-                            <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed">
-                                A7 區域主要學區為 <span class="text-themeBlue bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">樂善國小</span>，以及即將完工招生的熱門學校 <span class="text-themeBlue bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">文青國中小</span>。<br><br>
-                                • 文青里、文藝里全部為文青國中小、大埔國小 <span class="text-cyan-600 bg-cyan-50 px-1 rounded-sm text-xs border border-cyan-100">自由學區</span>。<br>
-                                • 樂善里（1、2、3）為樂善、文青國中小 <span class="text-cyan-600 bg-cyan-50 px-1 rounded-sm text-xs border border-cyan-100">自由學區</span>。<br>
-                                • 長樂里（1-9）為樂善、文青國中小 <span class="text-cyan-600 bg-cyan-50 px-1 rounded-sm text-xs border border-cyan-100">自由學區</span>。<br>
-                                • 長樂里（10-21）為樂善、長庚國小 <span class="text-cyan-600 bg-cyan-50 px-1 rounded-sm text-xs border border-cyan-100">自由學區</span>。<br>
-                                • 文樂里全部為樂善、文青國中小 <span class="text-cyan-600 bg-cyan-50 px-1 rounded-sm text-xs border border-cyan-100">自由學區</span>。<br>
-                                <br>
-                                具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所確認。<br><br>
-                                <button onclick="window.switchTab('buildings'); setTimeout(() => { const el = document.getElementById('mod-schooling-registry'); if(el) { const offset = 100; const targetY = el.getBoundingClientRect().top + window.scrollY - offset; window.scrollTo({top: targetY, behavior: 'smooth'}); } }, 100);" class="inline-flex items-center text-xs font-black text-themePurple bg-purple-50 hover:bg-purple-100 border border-purple-200 px-3 py-2 rounded-xl transition-colors shadow-sm active:scale-95">
-                                    <i class="fa-solid fa-school mr-1.5"></i> 了解更多各里「就學與設籍指南」
+                            <div class="mt-3 text-gray-600 font-bold pt-4 border-t border-pink-200">
+                                <p class="mb-4 text-sm leading-relaxed">
+                                    A7 區域主要學區為 <span class="text-themeBlue bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">樂善國小</span>，以及即將完工招生的熱門學校 <span class="text-themeBlue bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">文青國中小</span>。<br>
+                                    為了讓家長更清楚，以下是各里的學區劃分重點：
+                                </p>
+                                
+                                <div class="space-y-3 mb-5">
+                                    <div class="bg-white p-3 rounded-xl border border-pink-100 shadow-sm flex flex-col sm:flex-row sm:items-center gap-2">
+                                        <div class="font-black text-gray-800 shrink-0 sm:w-28 text-sm"><i class="fa-solid fa-location-dot text-pink-400 mr-1.5"></i>文青/文藝里</div>
+                                        <div class="text-sm text-gray-600 flex-1">全部為 文青國中小、大埔國小 <span class="text-cyan-600 bg-cyan-50 px-1.5 py-0.5 rounded text-[10px] border border-cyan-100 ml-1">自由學區</span></div>
+                                    </div>
+                                    
+                                    <div class="bg-white p-3 rounded-xl border border-pink-100 shadow-sm flex flex-col sm:flex-row sm:items-center gap-2">
+                                        <div class="font-black text-gray-800 shrink-0 sm:w-28 text-sm"><i class="fa-solid fa-location-dot text-pink-400 mr-1.5"></i>樂善/文樂里</div>
+                                        <div class="text-sm text-gray-600 flex-1">全部為 樂善國小、文青國中小 <span class="text-cyan-600 bg-cyan-50 px-1.5 py-0.5 rounded text-[10px] border border-cyan-100 ml-1">自由學區</span></div>
+                                    </div>
+
+                                    <div class="bg-white p-3 rounded-xl border border-pink-100 shadow-sm flex flex-col sm:flex-row gap-2">
+                                        <div class="font-black text-gray-800 shrink-0 sm:w-28 text-sm mt-0.5"><i class="fa-solid fa-location-dot text-pink-400 mr-1.5"></i>長樂里</div>
+                                        <div class="flex-1 space-y-2 text-sm text-gray-600">
+                                            <div class="flex items-center">
+                                                <span class="bg-gray-100 px-2 py-0.5 rounded text-xs font-black mr-2">1-9鄰</span> 
+                                                樂善、文青國中小 <span class="text-cyan-600 bg-cyan-50 px-1.5 py-0.5 rounded text-[10px] border border-cyan-100 ml-1">自由學區</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <span class="bg-gray-100 px-2 py-0.5 rounded text-xs font-black mr-2">10-21鄰</span> 
+                                                樂善、長庚國小 <span class="text-cyan-600 bg-cyan-50 px-1.5 py-0.5 rounded text-[10px] border border-cyan-100 ml-1">自由學區</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-yellow-100/50 p-3 rounded-xl text-xs text-gray-500 mb-4 border border-yellow-200">
+                                    <i class="fa-solid fa-circle-exclamation text-yellow-500 mr-1"></i> 具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所確認。
+                                </div>
+                                
+                                <button onclick="window.switchTab('buildings'); setTimeout(() => { const el = document.getElementById('mod-schooling-registry'); if(el) { const offset = 100; const targetY = el.getBoundingClientRect().top + window.scrollY - offset; window.scrollTo({top: targetY, behavior: 'smooth'}); } }, 100);" class="w-full sm:w-auto inline-flex items-center justify-center text-sm font-black text-themePurple bg-purple-50 hover:bg-purple-100 border border-purple-200 px-4 py-2.5 rounded-xl transition-colors shadow-sm active:scale-95">
+                                    <i class="fa-solid fa-school mr-2"></i> 了解更多各里「就學與設籍指南」
                                 </button>
-                            </p>
+                            </div>
                         </details>
                     </div>
                 </div>
@@ -2185,7 +2202,7 @@
                 <div class="flex items-center justify-between p-3 bg-gray-50 hover:bg-white rounded-xl border-2 border-gray-100 hover:border-gray-200 transition-colors w-full gap-2 sm:gap-3">
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 flex-1 min-w-0">
                         <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                            <span class="${badgeColorClass} text-[11px] sm:text-xs font-black px-2 py-1 rounded-lg shrink-0 text-center shadow-sm min-w-[75px] sm:min-w-[85px]">往 ${direction}</span>
+                            <span class="${badgeColorClass} text-xs sm:text-sm font-black px-2.5 py-1.5 rounded-lg shrink-0 text-center shadow-sm min-w-[85px] sm:min-w-[95px]">往 ${direction}</span>
                             <!-- 放大路線號碼 -->
                             <span class="font-black text-gray-800 text-xl sm:text-2xl shrink-0">${route}</span>
                         </div>
@@ -2264,7 +2281,7 @@
             }
         }
     </script>
-
+    
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC6jJNCtT1kpYg_BdS-s1p2Ml-mwwt0hA&callback=initMap" async defer></script>
 </body>
