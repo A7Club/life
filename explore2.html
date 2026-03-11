@@ -192,6 +192,68 @@
             </div>
 
             <!-- ============================================== -->
+            <!-- 模組：天氣與空氣品質 (首頁總覽專屬) -->
+            <!-- ============================================== -->
+            <div id="mod-weather-aqi" class="content-module mb-10 hidden" data-shows-on="overview">
+                <div class="flex flex-col sm:flex-row gap-4 lg:gap-6 items-stretch">
+                    <!-- 左側：空氣品質 (改用 Teal 清新水藍綠色系) -->
+                    <div class="bg-white rounded-[2rem] border-4 border-teal-50 p-5 md:p-6 shadow-cute flex flex-col justify-center relative overflow-hidden group/air hover:border-teal-100 transition-colors flex-1 min-w-0">
+                        <div class="absolute -right-4 -top-4 text-teal-50 text-8xl z-0 pointer-events-none group-hover/air:scale-110 transition-transform"><i class="fa-solid fa-wind"></i></div>
+                        
+                        <div class="relative z-10 w-full flex-1 flex flex-col justify-center">
+                            <!-- AQI Title -->
+                            <div class="flex items-center gap-2 mb-3 md:mb-4">
+                                <div class="aqi-icon-container w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-lg md:text-xl shrink-0 transition-colors"><i class="fa-solid fa-leaf"></i></div>
+                                <div class="text-lg md:text-2xl text-gray-700 font-black tracking-wide">林口測站 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1">鄰近A7</span></div>
+                            </div>
+                            
+                            <!-- AQI Data Row -->
+                            <div class="font-black text-gray-800 flex flex-row items-center gap-3 sm:gap-4 md:gap-6">
+                                <!-- Status & AQI Value -->
+                                <div class="flex items-baseline shrink-0">
+                                    <span class="aqi-status text-4xl lg:text-5xl text-gray-400 transition-colors">連線</span>
+                                    <span class="aqi-value text-xs sm:text-sm md:text-base font-bold text-gray-400 ml-1 sm:ml-2 transition-colors">(AQI: --)</span>
+                                </div>
+                                
+                                <span class="text-gray-200 text-3xl font-light shrink-0">|</span>
+                                
+                                <!-- PM 2.5 Value -->
+                                <div class="flex items-baseline shrink-0">
+                                    <span class="text-xs sm:text-sm md:text-base font-bold text-gray-400 mr-1 sm:mr-1.5">PM2.5</span>
+                                    <span class="pm25-value text-4xl lg:text-5xl text-gray-400 transition-colors">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Update Time (Bottom Right) -->
+                        <div class="mt-auto pt-4 flex justify-end w-full relative z-10">
+                            <div class="air-update-time text-[10px] md:text-xs text-gray-400 font-bold">最後更新: --:--</div>
+                        </div>
+                    </div>
+
+                    <!-- 右側：天氣預報 -->
+                    <div class="bg-gradient-to-br from-blue-400 to-sky-300 rounded-[2rem] p-6 shadow-cute flex items-center relative overflow-hidden text-white flex-1 min-w-0 border-4 border-white/20">
+                        <div class="absolute -right-4 -bottom-4 text-sky-200/40 text-9xl z-0 pointer-events-none hover:scale-110 transition-transform"><i class="fa-solid fa-cloud"></i></div>
+                        <div class="flex-1 relative z-10">
+                            <div class="flex items-center justify-between">
+                                <div class="flex flex-col">
+                                    <div class="text-xs md:text-sm font-bold text-sky-100 mb-1.5 flex items-center bg-black/10 w-max px-2 py-1 rounded-lg backdrop-blur-sm"><i class="fa-solid fa-location-dot mr-1.5"></i>桃園市 龜山區</div>
+                                    <div class="text-4xl lg:text-5xl font-black mb-1 drop-shadow-md weather-temp">--°C</div>
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 mt-1">
+                                        <div class="text-base md:text-lg font-bold drop-shadow-sm weather-desc">讀取中...</div>
+                                        <div class="text-xs md:text-sm font-bold text-sky-100 bg-black/20 px-2 py-0.5 rounded-md drop-shadow-sm weather-hl w-max">最高 --° / 最低 --°</div>
+                                    </div>
+                                </div>
+                                <div class="text-6xl md:text-7xl drop-shadow-lg weather-icon text-white shrink-0 ml-2">
+                                    <i class="fa-solid fa-cloud-sun"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
             <!-- 模組：市政工程公告欄 (僅工程分頁顯示，且排在時間軸前) -->
             <!-- ============================================== -->
             <div id="mod-eng-board" class="content-module mb-12 hidden" data-shows-on="engineering">
@@ -855,7 +917,7 @@
                             </div>
                         </details>
 
-                        <!-- Q4: 交通塞車與路況 (使用 JS API，並設定 1:1 長寬比) -->
+                        <!-- Q4: 交通塞車與路況 -->
                         <details id="traffic-details" class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
                             <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg outline-none">
                                 <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 聽說文化一路和青山路容易塞車，出門前怎麼看路況？</span>
@@ -867,7 +929,7 @@
                                     開車族出門前，可以參考下方的 <span class="text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">Google Maps 區域地圖</span> 掌握「文化一路 / 青山路」周邊動態，提早避開車潮！
                                 </p>
                                 
-                                <!-- Google Maps 區塊 (使用 JS API，並設定 1:1 長寬比) -->
+                                <!-- Google Maps 區塊 -->
                                 <div class="bg-white rounded-xl overflow-hidden shadow-sm w-full max-w-lg border-2 border-gray-200 mx-auto group flex flex-col aspect-square relative">
                                     <div class="bg-white/90 backdrop-blur-sm px-3 py-2.5 flex justify-between items-center border-b border-gray-200 shrink-0 z-10 shadow-sm">
                                         <div class="flex items-center text-[11px] sm:text-xs font-black text-gray-700">
@@ -891,36 +953,29 @@
                             <div class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed">
                                 <p class="mb-4">
                                     異味問題是 A7 居民非常關心的議題。桃園市環保局已在周邊佈建了多組 微型感測器 (AirBox) 進行 24 小時監控。<br>
-                                    請參考政府公開資訊<span class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">林口測站 AQI 數據</span>，隨時查看真實數據！
+                                    請參考政府公開資訊<span class="text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-100">林口測站 AQI 數據</span>，隨時查看真實數據！
                                 </p>
                                 
-                                <!-- 真實環境部微型感測器儀表板 -->
-                                <div class="bg-white rounded-xl border-2 border-gray-100 p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 relative overflow-hidden group/air hover:border-emerald-200 transition-colors">
-                                    <div class="absolute -right-4 -bottom-4 text-emerald-50 text-7xl z-0 pointer-events-none group-hover/air:scale-110 transition-transform"><i class="fa-solid fa-wind"></i></div>
+                                <!-- 真實環境部微型感測器儀表板 (同步使用 class 更新) -->
+                                <div class="bg-white rounded-xl border-2 border-gray-100 p-4 shadow-sm flex flex-col relative overflow-hidden group/air hover:border-teal-200 transition-colors mt-2">
+                                    <div class="absolute -right-4 -bottom-4 text-teal-50 text-7xl z-0 pointer-events-none group-hover/air:scale-110 transition-transform"><i class="fa-solid fa-wind"></i></div>
                                     
-                                    <div class="flex items-center gap-3 relative z-10 w-full sm:w-auto">
-                                        <div id="aqi-icon-container" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xl sm:text-2xl shrink-0 transition-colors"><i class="fa-solid fa-leaf"></i></div>
-                                        <div>
-                                            <div class="text-[10px] sm:text-xs text-gray-400 font-black mb-0.5">林口測站即時數據 (鄰近A7)</div>
-                                            <div class="font-black text-gray-800 text-base sm:text-lg flex items-center gap-2">
-                                                <span id="aqi-status" class="text-gray-400">連線中...</span>
-                                                <span id="aqi-value" class="text-[10px] sm:text-[11px] bg-gray-50 text-gray-500 px-2 py-0.5 rounded border border-gray-200 shadow-sm transition-colors">AQI: --</span>
+                                    <div class="flex items-start gap-3 relative z-10 w-full flex-1">
+                                        <div class="aqi-icon-container w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xl sm:text-2xl shrink-0 transition-colors mt-0.5"><i class="fa-solid fa-leaf"></i></div>
+                                        <div class="flex flex-col flex-1 min-w-0">
+                                            <div class="text-sm sm:text-base text-gray-700 font-black mb-1 leading-tight">林口測站 (鄰近A7)</div>
+                                            <div class="font-black text-gray-800 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xs sm:text-sm">
+                                                <span class="aqi-status text-gray-400 transition-colors">連線中...</span>
+                                                <span class="aqi-value text-gray-500 font-bold text-[10px] sm:text-xs transition-colors">(AQI: --)</span>
+                                                <span class="text-gray-300 hidden sm:inline">|</span>
+                                                <span class="text-gray-600">PM 2.5: <span class="pm25-value font-black">--</span> <span class="text-[9px] font-sans font-bold text-gray-400">μg/m³</span></span>
                                             </div>
                                         </div>
                                     </div>
                                     
-                                    <div class="flex gap-2 text-center w-full sm:w-auto relative z-10">
-                                        <div class="flex-1 sm:flex-none bg-gray-50 rounded-lg p-2 px-3 sm:px-4 border border-gray-100 shadow-inner">
-                                            <div class="text-[9px] sm:text-[10px] text-gray-400 font-black">PM 2.5</div>
-                                            <div class="font-mono font-black text-gray-700 text-base sm:text-lg flex items-baseline justify-center" id="pm25-value">--<span class="text-[8px] sm:text-[9px] ml-0.5 font-sans font-bold text-gray-400">μg/m³</span></div>
-                                        </div>
-                                        <div class="flex-1 sm:flex-none bg-gray-50 rounded-lg p-2 px-2 sm:px-3 border border-gray-100 shadow-inner flex flex-col justify-center">
-                                            <div class="text-[9px] sm:text-[10px] text-gray-400 font-black">更新時間</div>
-                                            <div class="font-mono font-black text-gray-500 text-xs sm:text-sm mt-0.5" id="air-update-time">--:--</div>
-                                        </div>
-                                    </div>
+                                    <div class="air-update-time text-right w-full text-[9px] sm:text-[10px] text-gray-400 font-bold mt-2 relative z-10">最後更新: --:--</div>
                                 </div>
-                                <div class="w-full text-right mt-2"><a href="https://data.gov.tw/dataset/40448" target="_blank" class="text-[10px] text-gray-400 hover:text-emerald-500 font-bold transition-colors"><i class="fa-solid fa-link mr-1"></i>資料來源：環境部開放資料</a></div>
+                                <div class="w-full text-right mt-2"><a href="https://data.gov.tw/dataset/40448" target="_blank" class="text-[10px] text-gray-400 hover:text-teal-500 font-bold transition-colors"><i class="fa-solid fa-link mr-1"></i>資料來源：環境部開放資料</a></div>
                             </div>
                         </details>
 
@@ -1634,7 +1689,7 @@
                     { name: '桃園市龜山區A7站區開發案(變三)文藝街及南林路拓寬與連通道工程', start: '2022年03月', end: '2024年08月', status: '已完工。文藝街延伸與南林路拓寬，並建置銜接A7站體與周邊空橋系統之人行連通道。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', img: 'https://ws.tycg.gov.tw/001/Upload/116/RelPic/13501/1008956/%E8%AE%8A%E4%B8%89%E5%AE%8C%E5%B7%A5%E5%9C%96.jpg' },
                     { name: '桃園市龜山區A7站區開發案(變四)景觀滯洪池工程', start: '2023年10月', end: '2025年12月', status: '施工中。配合A7站區排水計畫，打造兼具防洪與生態休憩功能之滯洪公園。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
                     { name: '機場捷運A7站地區區段徵收公共工程第七標廣場地下停車場工程', start: '2023年05月', end: '2026年06月', status: '施工中。提供A7站區周邊與未來空橋串聯之大型轉乘停車空間。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
-                    { name: '機場捷運A7站區開發案立體連通系統(A7站區立體空橋計畫)', start: '2024年01月', end: '2028年12月', status: '陸續規劃/施工中。串聯A7中心商業區與周邊住宅之立體人行通道網絡，部分建案已預留。' },
+                    { name: '機場捷運A7站區開發案立體連通系統(A7站區立體空橋計畫', start: '2024年01月', end: '2028年12月', status: '陸續規劃/施工中。串聯A7中心商業區與周邊住宅之立體人行通道網絡，部分建案已預留。' },
                     { name: '桃園市龜山區文青國民中小學新建工程(第二期)', start: '2024年05月', end: '2026年08月', status: '施工中。接續一期工程，興建國中部校舍與專科教室，完善在地就學機能。', link: 'https://opc.tycg.gov.tw/News_Content.aspx?n=9370&s=990552' },
                     { name: '桃園市龜山國民運動中心新建工程', start: '2023年07月', end: '2026年10月', status: '施工中。包含室內溫水游泳池、體適能中心等，主體結構工程施作中。', link: 'https://opc.tycg.gov.tw/News_Content.aspx?n=9370&s=1345364' }
                 ];
@@ -1984,52 +2039,134 @@
             fetchLocalNews(); 
             fetchTDXTransitData(); // 無論在哪個分頁都先預載入，支援總覽頁面
             fetchAirQuality(); // 啟動真實空氣品質資料抓取
+            fetchWeather(); // 啟動即時天氣預報抓取
         });
+
+        // ==========================================
+        // ⛅ 抓取即時天氣資料 (Open-Meteo API)
+        // ==========================================
+        async function fetchWeather() {
+            const tempEls = document.querySelectorAll('.weather-temp');
+            const descEls = document.querySelectorAll('.weather-desc');
+            const hlEls = document.querySelectorAll('.weather-hl');
+            const iconEls = document.querySelectorAll('.weather-icon');
+
+            const renderWeather = (temp, desc, hl, iconHtml) => {
+                tempEls.forEach(el => el.textContent = `${temp}°C`);
+                descEls.forEach(el => el.textContent = desc);
+                hlEls.forEach(el => el.textContent = hl);
+                iconEls.forEach(el => el.innerHTML = iconHtml);
+            };
+
+            try {
+                // 使用免金鑰的 Open-Meteo API，加入 daily 參數獲取早晚最高/最低溫
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=25.040&longitude=121.391&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FTaipei');
+                if (!res.ok) throw new Error('天氣資料連線失敗');
+                const data = await res.json();
+                const temp = Math.round(data.current_weather.temperature);
+                const code = data.current_weather.weathercode;
+                const isDay = data.current_weather.is_day; // 0 或 1
+                
+                const minTemp = Math.round(data.daily.temperature_2m_min[0]);
+                const maxTemp = Math.round(data.daily.temperature_2m_max[0]);
+                const hlText = `最高 ${maxTemp}° / 最低 ${minTemp}°`;
+
+                let desc = '晴時多雲';
+                let icon = '<i class="fa-solid fa-cloud-sun text-yellow-300"></i>';
+
+                // WMO 天氣代碼對應表
+                if (code === 0) { 
+                    desc = '晴朗無雲'; 
+                    icon = isDay ? '<i class="fa-solid fa-sun text-yellow-300"></i>' : '<i class="fa-solid fa-moon text-yellow-100"></i>'; 
+                } else if (code >= 1 && code <= 3) { 
+                    desc = code === 1 ? '晴時多雲' : (code === 2 ? '多雲' : '陰天'); 
+                    icon = isDay ? '<i class="fa-solid fa-cloud-sun text-yellow-300"></i>' : '<i class="fa-solid fa-cloud-moon text-yellow-100"></i>'; 
+                } else if (code >= 45 && code <= 48) { 
+                    desc = '起霧'; 
+                    icon = '<i class="fa-solid fa-smog text-gray-200"></i>'; 
+                } else if (code >= 51 && code <= 67) { 
+                    desc = '陣雨'; 
+                    icon = '<i class="fa-solid fa-cloud-rain text-blue-100"></i>'; 
+                } else if (code >= 71 && code <= 82) { 
+                    desc = '大雨'; 
+                    icon = '<i class="fa-solid fa-cloud-showers-heavy text-blue-200"></i>'; 
+                } else if (code >= 95) { 
+                    desc = '雷雨'; 
+                    icon = '<i class="fa-solid fa-cloud-bolt text-purple-200"></i>'; 
+                }
+
+                renderWeather(temp, desc, hlText, icon);
+            } catch (e) {
+                console.info('天氣 API 無法讀取，自動使用備用呈現。');
+                renderWeather(22, '多雲時晴', '最高 24° / 最低 18°', '<i class="fa-solid fa-cloud-sun text-yellow-300"></i>');
+            }
+        }
 
         // ==========================================
         // 🌬️ 串接真實空氣品質微型感測器 API (環境部)
         // ==========================================
         async function fetchAirQuality() {
-            const timeEl = document.getElementById('air-update-time');
-            const aqiValEl = document.getElementById('aqi-value');
-            const pm25ValEl = document.getElementById('pm25-value');
-            const statusEl = document.getElementById('aqi-status');
-            const iconContainer = document.getElementById('aqi-icon-container');
+            // 選取全部對應 class (支援首頁與FAQ兩處同時更新)
+            const timeEls = document.querySelectorAll('.air-update-time');
+            const aqiValEls = document.querySelectorAll('.aqi-value');
+            const pm25ValEls = document.querySelectorAll('.pm25-value');
+            const statusEls = document.querySelectorAll('.aqi-status');
+            const iconContainers = document.querySelectorAll('.aqi-icon-container');
 
-            if(timeEl) timeEl.textContent = '讀取中...';
+            timeEls.forEach(el => el.textContent = '最後更新: 讀取中...');
+
+            // 使用動態修改 classList 取代覆蓋 className，確保不會覆蓋掉外觀尺寸設計
+            const setTailwindColor = (els, type, level) => {
+                els.forEach(el => {
+                    // 移除舊的顏色 class (透過 regex 匹配 text-xxx-xxx 或 bg-xxx-xxx，加入 teal)
+                    el.className = el.className.replace(/\b(text|bg)-(gray|emerald|teal|yellow|orange|amber|red)-[0-9]{3,4}\b/g, '').trim();
+                    
+                    if (type === 'text-status') {
+                        if(level==='good') el.classList.add('text-blue-400');
+                        if(level==='mod') el.classList.add('text-teal-400');
+                        if(level==='bad') el.classList.add('text-orange-500');
+                        if(level==='none') el.classList.add('text-gray-400');
+                    } else if (type === 'text-val') {
+                        if(level==='good') el.classList.add('text-blue-400');
+                        if(level==='mod') el.classList.add('text-teal-400');
+                        if(level==='bad') el.classList.add('text-orange-600');
+                        if(level==='none') el.classList.add('text-gray-400');
+                    } else if (type === 'bg-icon') {
+                        if(level==='good') el.classList.add('bg-teal-100', 'text-blue-400');
+                        if(level==='mod') el.classList.add('bg-yellow-100', 'text-teal-400');
+                        if(level==='bad') el.classList.add('bg-orange-100', 'text-orange-500');
+                        if(level==='none') el.classList.add('bg-gray-100', 'text-gray-400');
+                    }
+                });
+            };
 
             const renderAirQuality = (aqiRaw, pm25Raw, statusStr, pubDate) => {
                 const aqi = parseInt(aqiRaw) || '--';
                 const pm25 = pm25Raw || '--';
                 const status = statusStr || '未知';
                 
-                // 更新時間 (取 HH:mm)
-                if (!isNaN(pubDate) && timeEl) {
-                    timeEl.textContent = pubDate.toLocaleTimeString('zh-TW', {hour: '2-digit', minute:'2-digit', hour12: false});
-                } else if(timeEl) {
-                    timeEl.textContent = new Date().toLocaleTimeString('zh-TW', {hour: '2-digit', minute:'2-digit', hour12: false});
+                let timeStr = new Date().toLocaleTimeString('zh-TW', {hour: '2-digit', minute:'2-digit', hour12: false});
+                if (!isNaN(pubDate)) {
+                    timeStr = pubDate.toLocaleTimeString('zh-TW', {hour: '2-digit', minute:'2-digit', hour12: false});
                 }
 
-                if(pm25ValEl) pm25ValEl.innerHTML = `${pm25}<span class="text-[8px] sm:text-[9px] ml-0.5 font-sans font-bold text-gray-400">μg/m³</span>`;
-                if(aqiValEl) aqiValEl.textContent = `AQI: ${aqi}`;
-                if(statusEl) statusEl.textContent = status;
+                timeEls.forEach(el => el.textContent = `最後更新: ${timeStr}`);
+                
+                pm25ValEls.forEach(el => el.textContent = pm25);
+                aqiValEls.forEach(el => el.textContent = `(AQI: ${aqi})`);
+                statusEls.forEach(el => el.textContent = status);
 
-                // 根據 AQI 數值動態改變顏色警示
+                let level = 'none';
                 if (aqi !== '--') {
-                    if (aqi <= 50) {
-                        statusEl.className = 'text-emerald-500';
-                        aqiValEl.className = 'text-[10px] sm:text-[11px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded border border-emerald-100 shadow-sm transition-colors';
-                        if(iconContainer) iconContainer.className = 'w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-100 text-emerald-500 flex items-center justify-center text-xl sm:text-2xl shrink-0 transition-colors';
-                    } else if (aqi <= 100) {
-                        statusEl.className = 'text-yellow-600';
-                        aqiValEl.className = 'text-[10px] sm:text-[11px] bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded border border-yellow-200 shadow-sm transition-colors';
-                        if(iconContainer) iconContainer.className = 'w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-xl sm:text-2xl shrink-0 transition-colors';
-                    } else {
-                        statusEl.className = 'text-orange-500';
-                        aqiValEl.className = 'text-[10px] sm:text-[11px] bg-orange-50 text-orange-600 px-2 py-0.5 rounded border border-orange-100 shadow-sm transition-colors';
-                        if(iconContainer) iconContainer.className = 'w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center text-xl sm:text-2xl shrink-0 transition-colors';
-                    }
+                    if (aqi <= 50) level = 'good';
+                    else if (aqi <= 100) level = 'mod';
+                    else level = 'bad';
                 }
+                
+                setTailwindColor(statusEls, 'text-status', level);
+                setTailwindColor(pm25ValEls, 'text-status', level);
+                setTailwindColor(aqiValEls, 'text-val', level);
+                setTailwindColor(iconContainers, 'bg-icon', level);
             };
 
             try {
