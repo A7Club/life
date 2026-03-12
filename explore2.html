@@ -2234,7 +2234,7 @@
     const a7Center = { lat: 25.040, lng: 121.391 };
     
     // 定義需要初始化的地圖 ID 列表
-    const mapIds = ["traffic-map", "traffic-map-faq"];
+    const mapIds = ["traffic-map", "traffic-map-fqa"];
     
     mapIds.forEach(id => {
         const mapEl = document.getElementById(id);
@@ -2252,7 +2252,7 @@
         trafficLayer.setMap(map);
         
         // 針對 FAQ 的 details 展開重新計算（防止破圖）
-        if (id === "traffic-map-faq") {
+        if (id === "traffic-map-fqa") {
             const detailsEl = document.getElementById('traffic-details');
             detailsEl?.addEventListener('toggle', () => {
                 if (detailsEl.open) {
