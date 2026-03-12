@@ -957,9 +957,10 @@
                                     </div>
                                     <!-- 地圖容器 -->
                                     <div id="traffic-map-container" class="w-full flex-1 relative bg-gray-100">
-                                        <div id="traffic-map" class="w-full h-full absolute inset-0"></div>
+                                        <div id="traffic-map-qa" class="w-full h-full absolute inset-0"></div>
                                     </div>
                                 </div>
+
                             </div>
                         </details>
 
@@ -2230,36 +2231,38 @@
         // 🗺️ 交通路況地圖 (Google Maps JS API)
         // ==========================================
         window.initMap = function() {
-            const mapEl = document.getElementById("traffic-map");
-            if (!mapEl) return;
+    const a7Center = { lat: 25.040, lng: 121.391 };
+    
+    // 定義需要初始化的地圖 ID 列表
+    const mapIds = ["traffic-map", "traffic-map-faq"];
+    
+    mapIds.forEach(id => {
+        const mapEl = document.getElementById(id);
+        if (!mapEl) return;
 
-            // 設定中心點為 A7 體育大學站周邊
-            const a7Center = { lat: 25.040, lng: 121.391 };
-            
-            const map = new google.maps.Map(mapEl, {
-                zoom: 14,
-                center: a7Center,
-                mapTypeId: 'roadmap', // 預設地圖類型 (標準街道圖)
-                disableDefaultUI: true, // 移除所有預設 UI (包含左下角縮圖、「在Google地圖中開啟」文字等)
-                zoomControl: true       // 僅保留縮放按鈕，讓使用者能放大縮小
-            });
+        const map = new google.maps.Map(mapEl, {
+            zoom: 14,
+            center: a7Center,
+            mapTypeId: 'roadmap',
+            disableDefaultUI: true,
+            zoomControl: true
+        });
 
-            // 強制開啟即時路況圖層
-            const trafficLayer = new google.maps.TrafficLayer();
-            trafficLayer.setMap(map);
-
-            // 處理 <details> 展開時地圖可能因隱藏狀態而破圖的問題
+        const trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+        
+        // 針對 FAQ 的 details 展開重新計算（防止破圖）
+        if (id === "traffic-map-faq") {
             const detailsEl = document.getElementById('traffic-details');
-            if (detailsEl) {
-                detailsEl.addEventListener('toggle', function(e) {
-                    if (e.target.open) {
-                        // 當折疊面板展開時，強制地圖重繪並重新置中
-                        google.maps.event.trigger(map, 'resize');
-                        map.setCenter(a7Center);
-                    }
-                });
-            }
-        };
+            detailsEl?.addEventListener('toggle', () => {
+                if (detailsEl.open) {
+                    google.maps.event.trigger(map, 'resize');
+                    map.setCenter(a7Center);
+                }
+            });
+        }
+    });
+};
 
         // 全域攔截金鑰驗證失敗 (若預覽環境網域受限則顯示提示，不破壞版面)
         window.gm_authFailure = function() {
