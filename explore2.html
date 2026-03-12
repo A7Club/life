@@ -136,7 +136,7 @@
                 <button style="display: none;" data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
                     <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-yellow-100 text-yellow-600 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-yellow-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-house"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
-                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">首頁總覽</h3>
+                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">生活攻略</h3>
                         <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">快速瀏覽情報</p>
                     </div>
                 </button>
@@ -168,11 +168,11 @@
                     </div>
                 </button>
 
-                <!-- 交通指南 -->
+                <!-- 即時交通 -->
                 <button data-tab="transit" data-active="bg-rose-50 border-rose-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-rose-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
                     <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-rose-100 text-rose-500 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-rose-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-train-subway"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
-                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">交通指南</h3>
+                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">即時交通</h3>
                         <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">公車與捷運</p>
                     </div>
                 </button>
@@ -191,7 +191,7 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：天氣與空氣品質 (首頁總覽專屬 - 清新水藍綠配色) -->
+            <!-- 模組：天氣與空氣品質 (生活攻略專屬 - 清新水藍綠配色) -->
             <!-- ============================================== -->
             <div id="mod-weather-aqi" class="content-module mb-10 hidden" data-shows-on="overview">
                 <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 items-stretch">
@@ -291,7 +291,7 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：工程期程總覽表 (總覽第一順位、工程分頁皆顯示) -->
+            <!-- 模組：市政工程建設總覽 (總覽第一順位、工程分頁皆顯示) -->
             <!-- ============================================== -->
             <div id="mod-eng-timeline" class="content-module mb-12 hidden" data-shows-on="overview,engineering">
                 <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-10 border-4 border-emerald-50 relative overflow-hidden">
@@ -299,7 +299,7 @@
                     
                     <div class="flex flex-row items-center justify-between mb-8 md:mb-10 relative z-10 gap-2">
                         <h3 class="text-lg sm:text-xl md:text-2xl font-black text-emerald-700 flex items-center shrink-0">
-                            <i class="fa-regular fa-calendar-check mr-2 sm:mr-3"></i>工程期程總覽表
+                            <i class="fa-regular fa-calendar-check mr-2 sm:mr-3"></i>市政工程建設總覽
                         </h3>
                         <button onclick="window.switchTab('engineering', true)" class="sm:text-xs font-bold text-emerald-600 hover:text-emerald-800 bg-emerald-50 border border-emerald-100 hover:border-emerald-200 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg flex items-center transition-colors shadow-sm shrink-0 whitespace-nowrap">
                             更多工程資訊
@@ -407,8 +407,8 @@
                     <div class="absolute -right-4 -top-4 text-rose-50 text-8xl pointer-events-none z-0"><i class="fa-solid fa-satellite-dish"></i></div>
                     
                     <div class="flex items-center justify-between border-b-2 border-rose-100 pb-4 mb-5 relative z-10 shrink-0">
-                        <h2 class="text-xl md:text-2xl font-black text-rose-500 flex items-center"><i class="fa-solid fa-satellite-dish mr-3 animate-pulse text-rose-400"></i>即時交通動態</h2>
-                        <button onclick="window.switchTab('transit', true)" class="text-xs sm:text-sm font-bold text-rose-500 hover:text-rose-700 bg-rose-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">通勤總攻略</button>
+                        <h2 class="text-xl md:text-2xl font-black text-rose-500 flex items-center"><i class="fa-solid fa-satellite-dish mr-3 animate-pulse text-rose-400"></i>交通即時動態</h2>
+                        <button onclick="window.switchTab('transit', true)" class="text-xs sm:text-sm font-bold text-rose-500 hover:text-rose-700 bg-rose-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">通勤攻略</button>
                     </div>
                     
                     <!-- 內部子面板 (捷運與公車) -->
@@ -493,7 +493,7 @@
                         <div class="bg-emerald-50/40 rounded-[1.5rem] border border-emerald-100 p-4 sm:p-5 flex flex-col">
                             <h3 class="text-lg font-black text-gray-800 flex items-center border-b border-emerald-100 pb-3 mb-4 shrink-0">
                                 <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-stopwatch text-sm"></i></div>
-                                各方向最快到站公車
+                                即時公車到站資訊
                             </h3>
                             <div id="bus-overview-fastest-container" class="flex flex-col gap-2.5 flex-1 justify-center">
                                 <div class="text-center py-4 text-emerald-400 font-bold"><i class="fa-solid fa-spinner fa-spin mr-2"></i>載入即時資料...</div>
@@ -509,7 +509,7 @@
             <!-- ============================================== -->
             <div id="mod-community-overview" class="content-module mb-12 hidden" data-shows-on="overview">
                 <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl md:text-2xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門社群推薦</h2>
+                    <h2 class="text-xl md:text-2xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>地方社群推薦</h2>
                     <button onclick="window.switchTab('community', true)" class="text-sm font-bold text-themePurple hover:text-purple-600 bg-purple-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">更多社群</i></button>
                 </div>
                 <!-- 雙欄排版 -->
@@ -536,7 +536,7 @@
             <!-- ============================================== -->
             <div id="mod-news-overview" class="content-module mb-12 hidden" data-shows-on="overview">
                 <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl md:text-2xl font-black text-cyan-600 flex items-center"><i class="fa-regular fa-newspaper mr-3 text-3xl"></i>A7 焦點新聞</h2>
+                    <h2 class="text-xl md:text-2xl font-black text-cyan-600 flex items-center"><i class="fa-regular fa-newspaper mr-3 text-3xl"></i>地方焦點新聞</h2>
                     <button onclick="window.switchTab('news', true)" class="text-sm font-bold text-cyan-500 hover:text-cyan-700 bg-cyan-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">更多新聞</i></button>
                 </div>
                 <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-8 border-4 border-cyan-50 relative overflow-hidden">
@@ -873,7 +873,7 @@
             <!-- ============================================== -->
             <div id="mod-buildings-map" class="content-module mb-8 hidden scroll-mt-[100px]" data-shows-on="overview,buildings">
                 <div class="flex items-center mb-6">
-                    <h2 class="text-2xl font-black text-themeBlue flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeBlue"></i>A7行政里分區地圖</h2>
+                    <h2 class="text-xl font-black text-themeBlue flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeBlue"></i>A7 行政里分區地圖</h2>
                 </div>
                 <!-- 調整為 items-stretch 讓左右等高，左側 flex-1，右側限制寬度不至於太寬 -->
                 <div class="flex flex-row gap-2.5 sm:gap-4 md:gap-6 items-stretch min-h-[250px] sm:min-h-[300px]">
@@ -2308,13 +2308,13 @@
             updateText(nbEls, minNbDiff, 'mrt-unit-north', true);
             updateText(sbEls, minSbDiff, 'mrt-unit-south', false);
             
-            // 更新交通指南頁面中的動畫軌道
+            // 更新即時交通頁面中的動畫軌道
             const trackContainerTransit = document.getElementById('mrt-track-container-transit');
             if (trackContainerTransit) {
                 trackContainerTransit.innerHTML = nbTrainsHTML + sbTrainsHTML;
             }
             
-            // 更新首頁總覽中的動畫軌道
+            // 更新生活攻略中的動畫軌道
             const trackContainerOverview = document.getElementById('mrt-track-container-overview');
             if (trackContainerOverview) {
                 trackContainerOverview.innerHTML = nbTrainsHTML + sbTrainsHTML;
@@ -2368,7 +2368,7 @@
             `;
         }
 
-        // 專為首頁總覽設計的「最快到站」重點卡片 (顏色標籤 -> 號碼 -> 站名 -> 時間)
+        // 專為生活攻略設計的「最快到站」重點卡片 (顏色標籤 -> 號碼 -> 站名 -> 時間)
         function createOverviewBusCard(direction, route, timeStatus, badgeColorClass, stopName = '捷運體育大學站') {
             let timeText = timeStatus;
             let statusClass = "bg-gray-100 text-gray-600 border-gray-200"; 
@@ -2423,7 +2423,7 @@
 
                     const generateMrtTime = () => Math.random() > 0.8 ? '即將進站' : `${Math.floor(Math.random() * 14) + 2}分`;
 
-                    // 首頁總覽快速動態
+                    // 生活攻略快速動態
                     const overviewBusHtml = `
                         ${createOverviewBusCard('長庚醫院', '202', generateMrtTime(), 'bg-emerald-500 text-white')}
                         ${createOverviewBusCard('台北市府', '967', generateMrtTime(), 'bg-blue-500 text-white', '體育大學 / 長庚醫院')}
@@ -2432,7 +2432,7 @@
                     const obc = document.getElementById('bus-overview-fastest-container');
                     if (obc) obc.innerHTML = overviewBusHtml;
 
-                    // 新增：交通指南詳細動態 - 台北市區/內湖方向
+                    // 新增：即時交通詳細動態 - 台北市區/內湖方向
                     const taipeiHtml = `
                         ${createTransitCard('946', '內湖科學園區', generateMrtTime(), '新北市區', '林口長庚醫院')}
                         ${createTransitCard('967', '台北市政府', `${Math.floor(Math.random() * 20) + 5}分`, '新北市區', '體育大學 / 長庚醫院')}
@@ -2440,7 +2440,7 @@
                     const tbc = document.getElementById('bus-taipei-container');
                     if (tbc) tbc.innerHTML = taipeiHtml;
 
-                    // 交通指南詳細動態 - 長庚醫院
+                    // 即時交通詳細動態 - 長庚醫院
                     const hospitalHtml = `
                         ${createTransitCard('202', '林口長庚醫院', generateMrtTime(), '桃園市區')}
                         ${createTransitCard('603', '長庚大學', `${Math.floor(Math.random() * 20) + 5}分`, '桃園市區')}
