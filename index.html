@@ -10,16 +10,17 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
     
     <!-- 📊 Google Analytics (GA4) 追蹤代碼放置區 -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-YJ9RJC2DRS');
-</script>
-
+    <!-- 
+      請將您的 GA4 gtag.js 代碼貼在下方。
+      範例：
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX'); // 將 X 替換為您的評估 ID
+      </script>
+    -->
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -2085,7 +2086,7 @@
                     marker.bindTooltip(item.name, { direction: 'top', offset: [0, -50], className: 'custom-tooltip' });
                     
                     let popupContent = `
-                        <div class="text-center p-1 pt-5 w-44">
+                        <div class="text-center p-1 pt-5 w-50">
                             <h4 class="font-black text-themePink text-sm leading-[1.1] mb-1">${formatStoreName(item.name)}</h4>
                             <p class="text-xs text-gray-500 font-bold leading-snug"><i class="fa-solid fa-location-dot mr-1"></i>${item.address}</p>
                             <a href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}" target="_blank" class="mt-2.5 block w-full bg-blue-100 text-blue-600 font-black py-1.5 rounded-lg text-xs hover:bg-blue-500 hover:text-white transition-colors shadow-sm">導航去</a>
@@ -2303,7 +2304,7 @@
                         marker.bindTooltip(store.name, { direction: 'top', offset: [0, -50], className: 'custom-tooltip' });
                         
                         let popupContent = `
-                            <div class="text-center p-1 pt-5 w-44">
+                            <div class="text-center p-1 pt-5 w-50">
                                 <h4 class="font-black text-themeYellow text-sm leading-[1.1] mb-1">${formatStoreName(store.name)}</h4>
                                 <p class="text-xs text-gray-500 font-bold leading-snug"><i class="fa-solid fa-location-dot mr-1"></i>${store.address}</p>
                                 <a href="https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lng}" target="_blank" class="mt-2.5 block w-full bg-blue-100 text-blue-600 font-black py-1.5 rounded-lg text-xs hover:bg-blue-500 hover:text-white transition-colors shadow-sm">導航去</a>
