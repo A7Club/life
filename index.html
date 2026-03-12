@@ -191,11 +191,11 @@
 
             <!-- 電腦版選單 -->
             <div class="hidden md:flex space-x-2">
-                
                 <button onclick="loadPage('food')" id="nav-btn-food" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all">🍿 找美食</button>
                 <button onclick="loadPage('shopping')" id="nav-btn-shopping" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all">🛍️ 買東西</button>
                 <button onclick="loadPage('medical')" id="nav-btn-medical" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeGreen hover:text-white transition-all">🩺 救護站</button>
-                <button onclick="loadPage('explore')" id="nav-btn-explore" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all">🎠 探索柒</button>
+                <!-- 將探索柒改為外部連結 -->
+                <a href="explore.html" id="nav-btn-explore" class="nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all">🎠 探索柒</a>
             </div>
 
             <!-- 手機版選單按鈕 -->
@@ -211,7 +211,8 @@
             <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
             <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</button>
             <button onclick="loadPage('medical'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</button>
-            <button onclick="loadPage('explore'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</button>
+            <!-- 將探索柒改為外部連結 -->
+            <a href="explore.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</a>
         </div>
     </nav>
 
@@ -332,7 +333,8 @@
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-green-100 text-themeGreen rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-briefcase-medical"></i></div>
                         <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">看醫生 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-medical" class="num-counter tracking-widest">...</span>)</span></h3>
                     </div>
-                    <div onclick="loadPage('explore')" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePurple group flex flex-col items-center justify-center">
+                    <!-- 更改為 window.location.href 導向探索頁面 -->
+                    <div onclick="window.location.href='explore.html'" class="bg-white rounded-[1.5rem] md:rounded-3xl p-4 md:p-6 text-center cursor-pointer transform hover:-translate-y-2 hover:-rotate-2 transition-all shadow-cute border-2 border-transparent hover:border-themePurple group flex flex-col items-center justify-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-purple-100 text-themePurple rounded-full flex items-center justify-center text-2xl md:text-3xl mb-2 md:mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map-location-dot"></i></div>
                         <h3 class="font-black text-base md:text-lg text-gray-700 flex items-center justify-center">探索柒 <span class="text-xs md:text-sm text-gray-400 font-bold ml-1.5">(<span id="counter-explore" class="num-counter tracking-widest">...</span>)</span></h3>
                     </div>
@@ -464,7 +466,7 @@
                     向右滑動查看更多 <i class="fa-solid fa-arrow-right-long ml-0.5"></i>
                 </div>
                 
-                <!-- 卡片區塊：移除 lg:grid 相關類別，全尺寸保持 flex 橫向排列，並加入 scrollbar-orange 自訂樣式 -->
+                <!-- 卡片區塊 -->
                 <div class="flex gap-3 md:gap-4 overflow-x-auto pt-1 pb-4 relative z-10 snap-x snap-mandatory scrollbar-orange">
                     <!-- 模擬推廣卡片 1 -->
                     <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
@@ -541,13 +543,12 @@
             <div style="display: none;" class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-purple-50 relative">
                 <div class="absolute -top-4 -left-4 text-purple-200 text-5xl floating z-0"><i class="fa-solid fa-camera-retro"></i></div>
                 <h2 class="text-2xl font-black text-themePurple mb-2 relative z-10"> 想去哪裡玩？ <span class="text-sm text-gray-400 font-bold ml-2">為您計算距離中...</span></h2>
-                <!-- 新增 pt-3 pb-4 預留上下方空間避免懸停被遮蔽，並移除 hide-scrollbar 顯示橫向捲動條 -->
                 <div class="flex gap-3 md:gap-4 overflow-x-auto pt-3 pb-4 relative z-10 snap-x snap-mandatory" id="attractions-list-container">
                     <div class="text-center text-purple-300 py-4 w-full"><i class="fa-solid fa-spinner fa-spin text-2xl"></i><span class="text-sm ml-2 font-bold">載入在地景點中...</span></div>
                 </div>
             </div>
 
-            <!-- 樂園廣播 (最新消息) - 修改為精簡版面，靜態在左，動態新聞在右 -->
+            <!-- 樂園廣播 (最新消息) -->
             <div class="bg-white rounded-[2rem] shadow-cute p-5 md:p-8 border-4 border-blue-50 relative overflow-hidden">
                 <div class="absolute top-4 right-4 text-themeBlue text-4xl floating pointer-events-none"><i class="fa-solid fa-bullhorn"></i></div>
                 <h2 class="text-2xl font-black text-themeBlue mb-5 relative z-10 flex items-center">
@@ -574,13 +575,6 @@
                                 <p class="text-xs sm:text-sm text-gray-500 mt-1">桃園大眾捷運股份有限公司宣布A22站發車班次21日起早晚各加一班，未來最早清晨5時33分就有車能坐到台北，最晚凌晨0時23分有車能抵達機場。</p>
                             </div>
                         </div>
-                        <div style="display: none;" class="flex items-start bg-pink-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
-                            <span class="bg-themePink text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">交通</span>
-                            <div>
-                                <h4 class="font-bold text-gray-800 text-sm sm:text-base">大桃園停水公告</h4>
-                                <p class="text-xs sm:text-sm text-gray-500 mt-1">為強化大桃園供水的韌性，保障民眾用水穩定及避免多次停水早成民眾不便。<br>自115年3月9日8時起，至115年3月9日止，共21小時暫停供水。</p>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- 右側：動態在地新聞區塊 -->
@@ -592,7 +586,7 @@
                 </div>
             </div>
 
-            <!-- 📝 分享在地店家 (新增區塊) -->
+            <!-- 📝 分享在地店家 -->
             <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-pink-50 relative text-center">
                 <div class="absolute -top-6 -right-2 text-pink-200 text-6xl floating z-0"><i class="fa-solid fa-gift"></i></div>
                 <h2 class="text-2xl font-black text-themePink mb-2 relative z-10">🙌 我要分享在地店家資訊</h2>
@@ -678,11 +672,11 @@
             <div class="flex flex-col mb-6 shrink-0 px-2 gap-4 w-full">
                 <!-- 上半部：標題區 -->
                 <div class="flex items-center shrink-0">
-                    <div class="w-10 h-10 md:w-12 md:h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
+                    <div class="w-10 h-10 md:w-12 h-12 bg-themePink text-white rounded-2xl flex items-center justify-center text-xl md:text-2xl mr-4 transform rotate-6 shadow-md"><i class="fa-solid fa-utensils"></i></div>
                     <h2 class="text-2xl md:text-2xl font-black text-themePink shrink-0 whitespace-nowrap">美食販賣部 <span class="text-base md:text-lg text-gray-400 font-bold ml-2">吃飽才有力氣玩</span></h2>
                 </div>
 
-                <!-- 下半部：電腦版 TAG 分類按鈕 (改為 flex-wrap 允許換行，不再和標題擠在一起) -->
+                <!-- 下半部：電腦版 TAG 分類按鈕 -->
                 <div id="food-tags-desktop" class="hidden lg:flex flex-wrap justify-start gap-2 md:gap-3 w-full">
                     <div class="w-full text-center text-pink-300 py-2"><i class="fa-solid fa-spinner fa-spin text-xl"></i><span class="text-xl ml-2 font-bold">載入分類中...</span></div>
                 </div>
@@ -691,7 +685,7 @@
             <!-- 外層採用相對定位與Flex佈局，讓地圖可以 Sticky 固定 -->
             <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 relative items-start">
                 
-                <!-- 地圖區塊：手機版固定上方 45vh，電腦版固定右側，捲動清單時地圖不跑掉 -->
+                <!-- 地圖區塊 -->
                 <div class="w-full h-[45vh] lg:h-[calc(100vh-160px)] lg:w-1/2 xl:w-5/12 sticky top-[80px] lg:top-[100px] z-20 shrink-0 shadow-lg rounded-[2rem] order-1 lg:order-2">
                     <div class="w-full h-full bg-pink-50 rounded-[2rem] border-4 border-white overflow-hidden relative flex items-center justify-center">
                         
@@ -703,7 +697,7 @@
                             <i id="location-btn-icon" class="fa-solid fa-crosshairs text-lg"></i>
                         </button>
 
-                        <!-- 載入中遮罩 (預設隱藏) -->
+                        <!-- 載入中遮罩 -->
                         <div id="food-map-overlay" class="absolute inset-0 bg-white/80 backdrop-blur-sm hidden flex-col items-center justify-center z-30" style="border-radius: 1.5rem;">
                             <i class="fa-solid fa-spinner fa-spin text-4xl text-pink-300 mb-3"></i>
                             <span id="food-map-overlay-text" class="text-sm font-bold text-gray-600">正在地圖上尋找位置...</span>
@@ -711,10 +705,10 @@
                     </div>
                 </div>
 
-                <!-- 列表區塊：隨內容增長自然往下推，網頁捲動時地圖依然置頂 -->
+                <!-- 列表區塊 -->
                 <div class="w-full flex-1 lg:w-1/2 xl:w-7/12 flex flex-col bg-white/60 rounded-[2rem] p-3 md:p-4 shadow-inner border border-pink-50 order-2 lg:order-1">
 
-                    <!-- 手機版 TAG 分類按鈕 (僅手機版顯示，放置於列表正上方) -->
+                    <!-- 手機版 TAG 分類按鈕 -->
                     <div id="food-tags-mobile" class="flex lg:hidden flex-wrap overflow-x-auto hide-scrollbar justify-start gap-2 w-full mb-4">
                         <!-- 動態注入手機版分類按鈕 -->
                     </div>
@@ -726,7 +720,7 @@
 
                     <p class="text-left text-sm text-themePink font-black mb-4"><i class="fa-solid fa-arrow-down-short-wide mr-1"></i> 點選下方店家，地圖會自動放大定位喔！</p>
 
-                    <!-- 2. 動態店家卡片容器 -->
+                    <!-- 動態店家卡片容器 -->
                     <div id="food-list-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 pb-12">
                         <div class="col-span-full text-center text-pink-300 py-8"><i class="fa-solid fa-spinner fa-spin text-3xl"></i><p class="text-sm mt-2 font-bold">搜尋樂園美食中...</p></div>
                     </div>
@@ -744,7 +738,7 @@
                 <h2 class="text-2xl font-black text-themeYellow">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
             </div>
 
-            <!-- 1. 橫向 TAG 分類按鈕 (彈性排版：手機依字數排列、電腦1列) -->
+            <!-- 橫向 TAG 分類按鈕 -->
             <div id="shopping-tags-container" class="flex flex-wrap lg:flex-nowrap lg:overflow-x-auto hide-scrollbar gap-2 md:gap-3 w-full mb-4">
                 <!-- 動態注入分類按鈕 -->
             </div>
@@ -754,7 +748,7 @@
                 <i class="fa-solid fa-comment-dots mr-2 text-yellow-500"></i>店家資訊皆由社群網友熱心分享，提供大家參考交流。
             </div>
 
-            <!-- 2. 動態注入的購物分類清單容器 (移除 columns-1 改用 flex flex-col 搭配內部 Grid) -->
+            <!-- 動態注入的購物分類清單容器 -->
             <div id="shopping-list-container" class="flex flex-col gap-6 w-full">
                 <div class="w-full text-center text-themeYellow py-12">
                     <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
@@ -772,7 +766,7 @@
                 <h2 class="text-2xl font-black text-themeGreen">樂園救護站 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
             </div>
 
-            <!-- 獨立保留緊急聯絡電話區塊 (改為精簡併排的摺疊選單設計) -->
+            <!-- 獨立保留緊急聯絡電話區塊 -->
             <div class="bg-red-400 p-6 md:p-8 rounded-[2.5rem] text-white shadow-cute mb-8 relative overflow-hidden border-4 border-red-200">
                 <div class="absolute -right-6 -bottom-6 text-red-300 text-8xl floating opacity-50 z-0 pointer-events-none"><i class="fa-solid fa-truck-medical"></i></div>
                 <h3 class="text-2xl font-black mb-4 relative z-10 flex items-center"><i class="fa-solid fa-phone-volume mr-3"></i> 救護與緊急電話</h3>
@@ -845,7 +839,7 @@
                 </div>
             </div>
 
-            <!-- 動態醫療分類清單：改用 flex-col 以支援內部 Grid 滿版 -->
+            <!-- 動態醫療分類清單 -->
             <div id="medical-list-container" class="flex flex-col gap-6 w-full">
                 <div class="w-full text-center text-themeGreen py-12 bg-white rounded-[2.5rem] border-4 border-green-50 shadow-cute">
                     <i class="fa-solid fa-spinner fa-spin text-4xl mb-5"></i>
@@ -855,120 +849,17 @@
         </div>
     </template>
 
-    <!-- 🎠 6. 探索去模板 (Explore) -->
-    <template id="tpl-explore">
-        <div class="fade-in">
-            <div class="flex items-center mb-8">
-                <div class="w-12 h-12 bg-themePurple text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform -rotate-3 shadow-md"><i class="fa-solid fa-ticket"></i></div>
-                <h2 class="text-2xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">了解在地生活</span></h2>
-            </div>
-
-
-
-            <!-- 1. 熱門社群推薦 (動態載入區塊) -->
-            <div class="mb-12">
-                <div class="flex items-center mb-6">
-                    <h2 class="text-xl font-black text-themePurple flex items-center"><i class="fa-solid fa-users mr-3 text-3xl"></i>熱門社群推薦</h2>
-                </div>
-                <!-- 應用 lg:grid-cols-3 網格：以支援 2:1 排版 -->
-                <div id="community-list-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-                    <div class="lg:col-span-3 text-center text-themePurple py-12 bg-white rounded-[2rem] border-4 border-purple-50 shadow-cute">
-                        <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
-                        <p class="font-bold">正在連線樂園社群中心...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. 新居民常見問題集 -->
-            <div class="mb-12 bg-white rounded-[2.5rem] shadow-cute p-8 border-4 border-pink-50 relative overflow-hidden">
-                <div class="absolute -right-6 -top-6 text-pink-100 text-8xl floating"><i class="fa-solid fa-circle-question"></i></div>
-                <h2 class="text-2xl font-black text-themeBlue mb-6 relative z-10 flex items-center"><i class="fa-solid fa-clipboard-question mr-3"></i>新居民常見問題集</h2>
-                
-                <div class="space-y-4 relative z-10">
-                    <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100">
-                        <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg">
-                            <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 剛交屋，要到哪裡辦理戶籍遷入？</span>
-                            <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
-                        </summary>
-                        <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">
-                            A7 重劃區隸屬於「桃園市龜山區」，辦理戶籍遷入需前往<strong class="text-themePink">龜山區戶政事務所</strong>。由於距離較遠，建議可利用內政部戶政司的「線上申辦」服務，或先備齊身分證、戶口名簿與房屋權狀等資料再前往。
-                        </p>
-                    </details>
-                    
-                    <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100">
-                        <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg">
-                            <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 垃圾車的時間和路線怎麼查？</span>
-                            <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
-                        </summary>
-                        <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">
-                            若您的社區還沒有建置完整的垃圾集中區，需自行倒垃圾，強烈建議下載 <strong class="text-themePink">「桃園垃圾車」APP</strong>。APP 內會即時顯示垃圾車定位與各里清運時間表。文青里與樂善里通常於晚間 18:30~20:30 間進行清運。
-                        </p>
-                    </details>
-
-                    <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100">
-                        <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg">
-                            <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 小孩的就學學區怎麼劃分？</span>
-                            <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
-                        </summary>
-                        <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200">
-                            A7 區域主要學區為<strong class="text-themePink">樂善國小</strong>，以及即將完工招生的<strong class="text-themePink">文青國中小</strong>。
-                            <br><br>• 文青里、文藝里全部為文青國中小、大埔國小自由學區。        
-                            <br>• 樂善里（1、2、3）為樂善、文青國中小自由學區。
-                            <br>• 長樂里（1-9）為樂善、文青國中小自由學區。
-                            <br>• 長樂里（10-21）為樂善、長庚國小自由學區。
-                            <br>• 文樂里全部為樂善、文青國中小自由學區。 <br><br>
-                            具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所或學校教務處確認。
-                        </p>
-                    </details>
-                </div>
-            </div>
-
-            <!-- 4. A7地圖及各里所擁有的建案列表 -->
-            <div id="buildings-section" class="mb-8 scroll-mt-[100px]">
-                <div class="flex items-center mb-6">
-                    <h2 class="text-2xl font-black text-themeGreen flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeGreen"></i>A7 建案分佈</h2>
-                </div>
-
-                <!-- 新增：A7 各里分配圖與快速跳轉標籤 (手機版圖片在上列表在下，電腦版圖片在左列表在右) -->
-                <div class="mb-8 flex flex-col md:flex-row gap-4 md:gap-6 items-start">
-                    
-                    <!-- 左側/上方地圖 (不改變圖片尺寸自然撐開，並讓外框直接裁剪出完美圓角) -->
-                    <div class="w-full md:w-1/2 lg:w-5/12 relative shrink-0 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border-4 border-white shadow-cute bg-white">
-                        <!-- 關鍵：使用 w-full h-auto 讓圖片依比例呈現不變形，外框會自動融合圖片邊緣 -->
-                        <img src="https://github.com/A7Club/life/blob/main/A7map.jpg?raw=true" class="w-full h-auto object-contain block" alt="A7建案地圖">
-                        
-                        <div class="hidden md:block absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl p-2.5 text-center text-xs font-black text-gray-600 shadow-sm pointer-events-none border border-gray-100 whitespace-nowrap">
-                            A7 區域建案概覽圖
-                        </div>
-                    </div>
-                    
-                    <!-- 右側/下方標籤選單 (寬度自動分配剩下的空間，並加入專屬卡片外框) -->
-                    <div class="w-full md:w-1/2 lg:w-7/12 flex flex-col">
-                        <div class="bg-gray-50 rounded-[1.2rem] md:rounded-[2rem] p-4 md:p-5 h-full border-2 border-gray-100 shadow-inner flex flex-col">
-                            <h3 class="text-base md:text-xl font-black text-gray-700 mb-3 sm:mb-4 flex items-center border-b-2 border-gray-200 pb-2 shrink-0">
-                                <i class="fa-solid fa-list-ul mr-2 text-themePink"></i> 2026年3月1日起進行 行政里 調整
-                            </h3>
-                            <!-- 手機版採用 flex-wrap 純文字雲排版，平板以上維持原按鈕排版，新增 pt-2 預留 Hover 上彈空間 -->
-                            <div id="village-tags-container" class="flex flex-wrap justify-center sm:justify-start gap-1.5 sm:gap-3 md:gap-4 overflow-y-auto hide-scrollbar flex-1 content-start pt-2">
-                                <!-- 這裡會動態載入各里小標籤 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="buildings-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div class="col-span-full text-center text-themeYellow py-12 bg-white rounded-[2rem] border-4 border-green-50 shadow-cute">
-                        <i class="fa-solid fa-spinner fa-spin text-4xl mb-5"></i>
-                        <p class="font-bold">正在整理建案地圖...</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </template>
-
     <!-- JavaScript 路由與注入邏輯 -->
     <script>
+        // 手機版選單開關
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                menu.classList.toggle('flex');
+            }
+        }
+
         // 用於存放全域 setInterval 以便切換頁面時清除
         let globalMrtInterval = null;
         
@@ -976,19 +867,18 @@
         let foodMapInstance = null;
         let foodClusterGroup = null;
         let foodMarkersMap = {}; 
-        let activeFoodMarkerName = null; // 新增：用於記錄目前被選取的店家名稱
+        let activeFoodMarkerName = null; 
 
         // 購物與生活的全域地圖變數
         let shoppingMaps = {};
         let shoppingClusterGroups = {};
         let shoppingMarkersMap = {};
 
-        // 初始化與路由監聽 (讓 GA 可追蹤網址 Hash 停留時間)
+        // 初始化與路由監聽 
         document.addEventListener('DOMContentLoaded', () => {
             handleRoute();
         });
 
-        // 當網址 Hash 發生變化時觸發 (可用於瀏覽器上一頁/下一頁)
         window.addEventListener('hashchange', handleRoute);
 
         // 核心路由控制處理器
@@ -1009,27 +899,19 @@
                 const query = decodeURIComponent(hash.substring(7));
                 renderPage('search');
                 executeSearchLogic(query);
-            } else if (hash === 'buildings') {
-                // 處理建案分佈的特殊書籤：載入探索頁面且不捲動至頂部
-                renderPage('explore', true); 
-                // 延遲等待 DOM 渲染與資料拉取後，平滑捲動到建案區塊
-                setTimeout(() => {
-                    const section = document.getElementById('buildings-section');
-                    if (section) {
-                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }, 150);
+            } else if (hash === 'buildings' || hash === 'explore') {
+                // 原本 explore 頁面的錨點或路由，直接導向新的獨立頁面
+                window.location.href = 'explore.html' + (hash === 'buildings' ? '#buildings' : '');
             } else {
                 renderPage(hash);
             }
         }
 
-        // 修改原本的 loadPage，改為推播網址 Hash，讓瀏覽器產生歷史紀錄
+        // 修改原本的 loadPage，改為推播網址 Hash
         function loadPage(pageId) {
             try {
                 history.pushState(null, '', '#' + pageId);
             } catch (e) {
-                // Canvas 環境安全性限制，略過報錯
             }
             handleRoute(pageId);
         }
@@ -1046,7 +928,6 @@
             document.getElementById('store-modal-hours').innerText = hours;
             
             const imgContainer = document.getElementById('store-modal-img-container');
-            // 清除之前的圖片，並加入新圖片，同時保留漸層遮罩
             imgContainer.innerHTML = `
                 <img src="${imgUrl}" class="absolute inset-0 w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
@@ -1059,24 +940,18 @@
             const ratingContainer = document.getElementById('store-modal-rating-container');
             const addressEl = document.getElementById('store-modal-address');
             
-            // 判判若是 LINE 網址，顯示 QR Code 區塊並隱藏 Google Map 按鈕
             if (mapQuery && mapQuery.startsWith('http') && (mapQuery.includes('line.me') || mapQuery.includes('lin.ee'))) {
                 mapBtn.classList.add('hidden');
                 qrContainer.classList.remove('hidden');
                 qrContainer.classList.add('flex');
                 
-                // 使用公共 API 生成 QR Code
                 qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(mapQuery)}`;
                 lineBtn.href = mapQuery;
                 
-                // 如果是純線上服務，隱藏評分
                 if (ratingContainer) ratingContainer.classList.add('hidden');
-                
-                // 地址欄改為顯示 LINE 帳號提示
                 addressEl.innerHTML = `<span class="text-[#00B900]">官方 LINE 帳號諮詢</span>`;
                 
             } else {
-                // 一般實體店家，顯示 Google Map
                 qrContainer.classList.add('hidden');
                 qrContainer.classList.remove('flex');
                 mapBtn.classList.remove('hidden');
@@ -1084,7 +959,6 @@
                 if (ratingContainer) ratingContainer.classList.remove('hidden');
                 addressEl.innerText = address;
 
-                // 避免 mapQuery 為空造成錯誤，給予預設值
                 let validQuery = mapQuery || name;
                 mapBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(validQuery)}`;
                 mapBtn.innerHTML = `<i class="fa-solid fa-map-location-dot text-xl"></i> 前往 Google Map 查看詳細資訊`;
@@ -1094,11 +968,9 @@
             const modal = document.getElementById('store-modal');
             const content = document.getElementById('store-modal-content');
             
-            // 顯示背景
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             
-            // 觸發放大淡入動畫
             setTimeout(() => {
                 content.classList.remove('scale-95', 'opacity-0');
                 content.classList.add('scale-100', 'opacity-100');
@@ -1110,45 +982,39 @@
             const modal = document.getElementById('store-modal');
             const content = document.getElementById('store-modal-content');
             
-            // 觸發縮小淡出動畫
             content.classList.remove('scale-100', 'opacity-100');
             content.classList.add('scale-95', 'opacity-0');
             
-            // 等待動畫結束後隱藏背景
             setTimeout(() => {
                 modal.classList.remove('flex');
                 modal.classList.add('hidden');
             }, 300);
         }
 
-        // 頁面動態注入核心函數 (原本的 loadPage 改為內部 renderPage)
+        // 頁面動態注入核心函數 
         function renderPage(pageId, skipScrollTop = false) {
             const root = document.getElementById('app-root');
             const template = document.getElementById('tpl-' + pageId);
             
             if (template) {
-                // --- 1. 網頁標題動態更新 (讓 GA 報表能清楚分辨) ---
+                // --- 1. 網頁標題動態更新 ---
                 const pageTitles = {
                     'home': 'A7 柒樂部🎡｜生活地圖指南',
                     'food': 'A7 柒樂部🎡｜美食販賣部',
                     'shopping': 'A7 柒樂部🎡｜購物與生活',
                     'medical': 'A7 柒樂部🎡｜樂園救護站',
-                    'explore': 'A7 柒樂部🎡｜探索在地A7',
                     'search': 'A7 柒樂部🎡｜全站搜尋'
                 };
                 document.title = pageTitles[pageId] || 'A7 柒樂部🎡｜林口、龜山美食生活地圖指南';
 
-                // --- 2. 觸發 GA 虛擬頁面追蹤 (Virtual Pageview) ---
-                // 將內部 ID 對應到您期望的 GA 頁面路徑
+                // --- 2. 觸發 GA 虛擬頁面追蹤 ---
                 const pagePaths = {
                     'home': '/index',
                     'food': '/food',
                     'shopping': '/shop',
-                    'medical': '/medical',
-                    'explore': '/explore'
+                    'medical': '/medical'
                 };
                 
-                // 送出獨立的頁面瀏覽事件給 GA
                 if (typeof gtag === 'function') {
                     gtag('event', 'page_view', {
                         page_title: document.title,
@@ -1157,64 +1023,51 @@
                     });
                 }
 
-                // 3. 完全清空容器 (避免 DOM 重疊與衝突)
+                // 3. 完全清空容器
                 root.innerHTML = '';
                 
                 // 4. 複製 Template 內容並注入
                 root.appendChild(template.content.cloneNode(true));
                 
-                // 3. 更新導航列樣式
+                // 更新導航列樣式
                 updateNavStyles(pageId);
                 
-                // 4. 平滑滾動到頂部 (如果是跳轉到特定錨點則略過)
+                // 平滑滾動到頂部
                 if (!skipScrollTop) {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
 
-                // 如果是首頁，觸發捲動監聽的跳動數字動畫及各種動態載入
+                // 首頁各種動態載入
                 if (pageId === 'home') {
-                    // 微小延遲確保 DOM 已完全渲染
                     setTimeout(() => {
-                        fetchAndUpdateHomeCounts(); // 動態載入並計算首頁店家數字
-                        fetchAttractionsData(); // 新增：抓取動態景點並計算車程
-                        fetchLocalNews(); // 新增：抓取在地動態新聞
+                        fetchAndUpdateHomeCounts(); 
+                        fetchAttractionsData(); 
+                        fetchLocalNews(); 
                         
-                        // 啟動 MRT 動態模擬
                         updateMRTStatus();
                         if (globalMrtInterval) clearInterval(globalMrtInterval);
                         globalMrtInterval = setInterval(updateMRTStatus, 1000);
                     }, 50);
                 } else {
-                    // 若切換到其他頁面，清除 MRT 動畫定時器節省資源
                     if (globalMrtInterval) {
                         clearInterval(globalMrtInterval);
                         globalMrtInterval = null;
                     }
                 }
 
-                // 如果是 Food 頁面，動態抓取試算表資料
                 if (pageId === 'food') {
-                    // 確保 DOM 載入後喚醒 Leaflet
                     setTimeout(() => {
                         initFoodMap();
                         fetchFoodData();
                     }, 50);
                 }
 
-                // 如果是 Shopping 頁面，動態抓取購物生活資料庫
                 if (pageId === 'shopping') {
                     fetchShoppingData();
                 }
 
-                // 如果是 Medical 頁面，動態抓取醫療資料庫
                 if (pageId === 'medical') {
                     fetchMedicalData();
-                }
-
-                // 如果是 Explore 頁面，動態抓取熱門社群推薦資料
-                if (pageId === 'explore') {
-                    fetchCommunityData();
-                    fetchBuildingData(); // 新增：抓取建案資料
                 }
             } else {
                 console.error("找不到對應的模板: ", pageId);
@@ -1234,7 +1087,6 @@
             try {
                 history.pushState(null, '', '#' + route);
             } catch (e) {
-                // Canvas 環境安全性限制，略過報錯
             }
             handleRoute(route);
         }
@@ -1244,7 +1096,6 @@
             const container = document.getElementById('search-results-container');
             if(display) display.innerHTML = `正在為您尋找與 <span class="text-themePink font-black">「${query}」</span> 相關的樂園角落...`;
 
-            // 動態更新搜尋頁面的標題與 GA 搜尋行為追蹤
             document.title = `A7 柒樂部🎡｜搜尋結果: ${query}`;
             if (typeof gtag === 'function') {
                 gtag('event', 'search', { search_term: query });
@@ -1256,7 +1107,7 @@
             }
 
             try {
-                // 等待所有資料庫完整載入 (並行處理加速)
+                // 等待所有資料庫完整載入 (保留載入建案與社群以供搜尋)
                 const [foodData, shoppingData, communityData, buildingData, medicalData, likesData] = await Promise.all([
                     loadSharedFoodData(),
                     loadSharedShoppingData(),
@@ -1268,7 +1119,6 @@
 
                 const q = query.toLowerCase();
 
-                // 執行過濾比對 (並依照愛心數量排序)
                 const matchedFood = foodData.filter(item => 
                     (item.name && item.name.toLowerCase().includes(q)) || 
                     (item.category && item.category.toLowerCase().includes(q)) ||
@@ -1388,10 +1238,8 @@
                                     const showQR = snsType === 'LINE';
                                     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(item.link)}`;
                                     
-                                    // 預設文字頭像 URL (使用品牌色或隨機色)
                                     let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=100&font-size=0.35`;
 
-                                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 顯示社群名稱前兩個字
                                     if (item.img) {
                                         avatarUrl = item.img;
                                     } else if (snsType === 'Threads') {
@@ -1468,7 +1316,6 @@
                     `;
                 }
 
-                // 若都沒有找到
                 if(!html) {
                     html = `
                         <div class="text-center py-16 bg-white rounded-[2.5rem] border-4 border-gray-100 shadow-cute">
@@ -1508,16 +1355,13 @@
             let nbTrainsHTML = '';
             let minNbDiff = 999;
             
-            // 處理北上列車 (由 A10 往 A4 方向移動，A7位於中心)
+            // 處理北上列車 
             baseNbArrivals.forEach(arr => {
                 [-60, 0, 60].forEach(offset => {
                     let diff = (arr + offset) - currentTotalMinutes;
                     if (diff > 0 && diff < minNbDiff) minNbDiff = diff;
                     
-                    // 從 A10 到 A4，總共跨越 6 個站距，每站約3分鐘，跨度約為 -9 到 +9 分鐘
                     if (diff >= -9 && diff <= 9) {
-                        // A7 固定在 50% 位置，每 9 分鐘移動 50%
-                        // 北上列車：從右側 A10 (100%) 往左側 A4 (0%) 開
                         let pos = 50 + (diff * (50/9));
                         pos = Math.max(0, Math.min(100, pos));
                         
@@ -1534,14 +1378,13 @@
             let sbTrainsHTML = '';
             let minSbDiff = 999;
             
-            // 處理南下列車 (由 A4 往 A10 方向移動)
+            // 處理南下列車 
             baseSbArrivals.forEach(arr => {
                 [-60, 0, 60].forEach(offset => {
                     let diff = (arr + offset) - currentTotalMinutes;
                     if (diff > 0 && diff < minSbDiff) minSbDiff = diff;
                     
                     if (diff >= -9 && diff <= 9) {
-                        // 南下列車：從左側 A4 (0%) 往右側 A10 (100%) 開
                         let pos = 50 - (diff * (50/9));
                         pos = Math.max(0, Math.min(100, pos));
                         
@@ -1555,10 +1398,8 @@
                 });
             });
 
-            // 寫入畫面
             container.innerHTML = nbTrainsHTML + sbTrainsHTML;
 
-            // 更新倒數文字
             const updateText = (el, diff, unitId) => {
                 const unitEl = document.getElementById(unitId);
                 if (Math.ceil(diff) <= 1 && Math.ceil(diff) >= 0) {
@@ -1579,7 +1420,6 @@
         // --- 首頁店家數量動態統計與動畫 ---
         async function fetchAndUpdateHomeCounts() {
             try {
-                // 等待所有共用資料庫載入
                 const [foodData, shoppingData, medicalData, communityData] = await Promise.all([
                     loadSharedFoodData(),
                     loadSharedShoppingData(),
@@ -1587,7 +1427,6 @@
                     loadSharedCommunityData()
                 ]);
 
-                // 計算各分類數量與總計
                 const counts = {
                     'counter-food': foodData.length,
                     'counter-shopping': shoppingData.length,
@@ -1596,7 +1435,6 @@
                     'counter-total': foodData.length + shoppingData.length + medicalData.length + communityData.length
                 };
 
-                // 觸發數字跳動動畫
                 for (const [id, target] of Object.entries(counts)) {
                     const counter = document.getElementById(id);
                     if (counter && target > 0) {
@@ -1607,19 +1445,16 @@
                 }
             } catch (error) {
                 console.error("取得統計數字失敗:", error);
-                // 發生錯誤時顯示 0
                 document.querySelectorAll('.num-counter').forEach(el => el.innerText = '0');
             }
         }
 
-        // 單一數字跳動動畫函數 (Ease-Out 特效)
         function animateSingleCounter(counter, target) {
-            const duration = 2000; // 動畫總時間 2 秒
-            const frameRate = 1000 / 60; // 60 FPS
+            const duration = 2000; 
+            const frameRate = 1000 / 60; 
             const totalFrames = Math.round(duration / frameRate);
             let currentFrame = 0;
 
-            // 緩動函數
             const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 
             const updateCounter = () => {
@@ -1631,7 +1466,7 @@
                 if (currentFrame < totalFrames) {
                     requestAnimationFrame(updateCounter);
                 } else {
-                    counter.innerText = target; // 確保最後停在精準目標數字
+                    counter.innerText = target; 
                 }
             };
             
@@ -1641,14 +1476,14 @@
 
         // --- 景點車程計算邏輯 ---
         function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371; // 地球半徑(公里)
+            const R = 6371; 
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLon = (lon2 - lon1) * Math.PI / 180;
             const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
                       Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
                       Math.sin(dLon/2) * Math.sin(dLon/2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c; // 返回直線距離(公里)
+            return R * c; 
         }
 
         async function calculateCarTime() {
@@ -1660,13 +1495,11 @@
                     const userLat = position.coords.latitude;
                     const userLng = position.coords.longitude;
 
-                    // 依序處理每個景點卡片
                     for (let el of timeElements) {
                         let targetLat = parseFloat(el.getAttribute('data-lat'));
                         let targetLng = parseFloat(el.getAttribute('data-lng'));
                         const address = el.getAttribute('data-address');
 
-                        // 如果沒有經緯度，嘗試利用 OSM (Nominatim) 即時將地址轉為座標
                         if ((isNaN(targetLat) || isNaN(targetLng)) && address) {
                             try {
                                 let searchAddress = address;
@@ -1678,18 +1511,15 @@
                                 if (data && data.length > 0) {
                                     targetLat = parseFloat(data[0].lat);
                                     targetLng = parseFloat(data[0].lon);
-                                    // 儲存起來避免重複查詢
                                     el.setAttribute('data-lat', targetLat);
                                     el.setAttribute('data-lng', targetLng);
                                 }
                             } catch (e) {
                                 console.error("座標換算失敗:", address);
                             }
-                            // 為了遵守免費地圖 API 限制，每次查詢間隔 1 秒
                             await new Promise(r => setTimeout(r, 1000));
                         }
 
-                        // 如果成功取得座標，計算距離與車程
                         if (!isNaN(targetLat) && !isNaN(targetLng)) {
                             const dist = calculateDistance(userLat, userLng, targetLat, targetLng);
                             let estimatedMins = Math.round((dist / 30) * 60 + 5);
@@ -1720,34 +1550,27 @@
             if (!container) return;
 
             try {
-                // 鎖定「林口」、「龜山」、「A7」為搜尋關鍵字，並透過 rss2json 將 Google News RSS 轉為 JSON
                 const keyword = encodeURIComponent('林口 OR 龜山 OR A7重劃區 OR A7體育大學 OR 桃園龜山 OR 文青里 OR 文藝里 OR 長樂里 OR 文化里 OR 文桃里 OR 樂善里 OR 文樂里');
                 const rssUrl = encodeURIComponent(`https://news.google.com/rss/search?q=${keyword}&hl=zh-TW&gl=TW&ceid=TW:zh-Hant`);
                 const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
                 
                 let data;
                 try {
-                    // 嘗試直接取得資料
                     const response = await fetch(apiUrl);
                     if (!response.ok) throw new Error('Network response was not ok');
                     data = await response.json();
                 } catch (e) {
-                    console.warn("RSS API directly failed, trying proxy...", e);
                     try {
-                        // 若遇上 NetworkError (CORS 或環境阻擋)，使用備用跨域代理
                         const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
                         const response = await fetch(proxyUrl);
                         if (!response.ok) throw new Error('Proxy response was not ok');
                         const proxyData = await response.json();
-                        // allorigins 回傳的資料包在 contents 屬性中，為字串，需再次解析
                         if (proxyData && proxyData.contents) {
                             data = JSON.parse(proxyData.contents);
                         } else {
                             throw new Error('Invalid proxy data format');
                         }
                     } catch (e2) {
-                        console.warn("Proxy also failed, using fallback data.", e2);
-                        // 雙重失敗時，提供靜態備用資料確保版面不破損
                         const today = new Date();
                         data = {
                             status: 'ok',
@@ -1763,16 +1586,11 @@
                 }
 
                 if (data && data.status === 'ok' && data.items && data.items.length > 0) {
-                    // 依據螢幕大小動態顯示新聞數，最少3則，大螢幕最多6則以配合左側高度
                     const newsHtml = data.items.slice(0, 6).map((item, index) => {
-                        // 整理時間格式
                         const pubDate = new Date(item.pubDate);
                         const dateStr = `${pubDate.getFullYear()}-${String(pubDate.getMonth() + 1).padStart(2, '0')}-${String(pubDate.getDate()).padStart(2, '0')}`;
-                        
-                        // 移除標題中多餘的媒體名稱 (如 " - Yahoo奇摩新聞")
                         const cleanTitle = item.title.split(' - ')[0];
 
-                        // 判斷顯示邏輯：前3則全顯示，第4-5則在 lg 以上顯示，第6則在 xl 以上顯示
                         let visibilityClass = 'flex';
                         if (index >= 3 && index < 5) visibilityClass = 'hidden lg:flex';
                         if (index >= 5) visibilityClass = 'hidden xl:flex';
@@ -1803,13 +1621,11 @@
 
         // 更新導航按鈕的 Active 狀態與重置懸停顏色
         function updateNavStyles(pageId) {
-            // 先取得所有導航按鈕
             const btnFood = document.getElementById('nav-btn-food');
             const btnShopping = document.getElementById('nav-btn-shopping');
             const btnMedical = document.getElementById('nav-btn-medical');
             const btnExplore = document.getElementById('nav-btn-explore');
 
-            // 定義預設的樣式 (包含各自專屬的 hover 顏色)
             const defaultClasses = {
                 'food': 'nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePink hover:text-white transition-all',
                 'shopping': 'nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themeYellow hover:text-white transition-all',
@@ -1817,31 +1633,20 @@
                 'explore': 'nav-btn px-4 py-2 rounded-full font-bold text-gray-500 hover:bg-themePurple hover:text-white transition-all'
             };
 
-            // 全部先重置回預設樣式
             if(btnFood) btnFood.className = defaultClasses['food'];
             if(btnShopping) btnShopping.className = defaultClasses['shopping'];
             if(btnMedical) btnMedical.className = defaultClasses['medical'];
             if(btnExplore) btnExplore.className = defaultClasses['explore'];
             
-            // 為當前所在頁面的按鈕加上被點選後的醒目顏色
             const activeClasses = {
                 'food': 'nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 bg-themePink text-white shadow-md',
                 'shopping': 'nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 bg-themeYellow text-white shadow-md',
-                'medical': 'nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 bg-themeGreen text-white shadow-md',
-                'explore': 'nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 bg-themePurple text-white shadow-md'
+                'medical': 'nav-btn px-4 py-2 rounded-full font-black transition-all transform scale-105 bg-themeGreen text-white shadow-md'
             };
 
             if (pageId === 'food' && btnFood) btnFood.className = activeClasses['food'];
             if (pageId === 'shopping' && btnShopping) btnShopping.className = activeClasses['shopping'];
             if (pageId === 'medical' && btnMedical) btnMedical.className = activeClasses['medical'];
-            if (pageId === 'explore' && btnExplore) btnExplore.className = activeClasses['explore'];
-        }
-
-        // 手機版選單開關
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
         }
 
         // 切換分享表單顯示/隱藏
@@ -1849,7 +1654,6 @@
             const formContainer = document.getElementById('share-form-container');
             if (formContainer) {
                 formContainer.classList.toggle('hidden');
-                // 若打開表單，平滑滾動讓表單置中
                 if (!formContainer.classList.contains('hidden')) {
                     setTimeout(() => {
                         formContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1858,7 +1662,7 @@
             }
         }
 
-        // CSV 解析器 (支援引號內換行與逗號)
+        // CSV 解析器
         function parseCSV(text) {
             let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
             for (l of text) {
@@ -1872,38 +1676,30 @@
                 } else row[i] += l;
                 p = l;
             }
-            // 過濾掉全空的列
             return ret.filter(r => r.join('').trim() !== '');
         }
 
-        // 輔助函數：自動隱藏台灣地址開頭的 3~6 碼郵遞區號
         function formatAddress(address) {
             if (!address) return '';
-            // 正則表達式：比對開頭的 3 到 6 個數字，以及可能緊接在後的空白並將其移除
             return address.replace(/^\d{3,6}\s*/, '');
         }
 
-        // 輔助函數：格式化店家名稱，將英文縮小
         function formatStoreName(name) {
-            // 利用正則表達式，將英文與其周圍的空格包覆在較小字級的 span 中
             return name.replace(/([a-zA-Z\s]+)/g, '<span class="text-[0.8em]">$1</span>');
         }
 
         // --- 全域資料快取 ---
-        let globalFoodData = null; // 快取試算表資料
-        let globalShoppingData = null; // 快取購物與生活資料庫
-        let globalCommunityData = null; // 快取熱門社群資料庫
-        let globalBuildingData = null; // 快取建案資料庫
-        let globalMedicalData = null; // 快取醫療資料庫
-
-        // --- 愛心評分系統 全域變數與初始化 ---
-        let globalLikesData = null; // 快取愛心評分資料庫
+        let globalFoodData = null; 
+        let globalShoppingData = null; 
+        let globalCommunityData = null; 
+        let globalBuildingData = null; 
+        let globalMedicalData = null; 
+        let globalLikesData = null; 
 
         // 自動獲取或產生專屬匿名 User ID
         function getUserId() {
             let uid = localStorage.getItem('a7club_uid');
             if (!uid) {
-                // 產生一組隨機亂數 ID 綁定此瀏覽器
                 uid = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now();
                 localStorage.setItem('a7club_uid', uid);
             }
@@ -1911,12 +1707,11 @@
         }
         const currentUserId = getUserId();
 
-        // 讀取愛心表單資料 (僅用於確認自己有沒有點過讚)
+        // 讀取愛心表單資料
         function loadSharedLikesData() {
             return new Promise((resolve) => {
                 if (globalLikesData) return resolve(globalLikesData);
                 
-                // 你的愛心評分 Google Sheet CSV 網址 (likeClick)
                 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1295636704&single=true&output=csv';
                 
                 fetch(csvUrl).then(res => res.text()).then(csvText => {
@@ -1946,11 +1741,9 @@
                         }
                     }
                     
-                    // 結合 LocalStorage 暫存的按讚資料
                     const localCache = JSON.parse(localStorage.getItem('a7club_likes_cache') || '{}');
                     for (let store in localCache) {
                         if(!likesMap[store]) likesMap[store] = { users: [] };
-                        // 將本地已紀錄的 user 合併進去
                         localCache[store].users.forEach(u => {
                             if(!likesMap[store].users.includes(u)) likesMap[store].users.push(u);
                         });
@@ -1966,9 +1759,9 @@
             });
         }
 
-        // 處理愛心點擊 (樂觀 UI 更新：直接改 DOM 數字)
+        // 處理愛心點擊
         function toggleLike(event, storeName) {
-            event.stopPropagation(); // 避免點擊愛心時觸發外層卡片的彈出視窗或導航
+            event.stopPropagation(); 
             
             if (!globalLikesData[storeName]) {
                 globalLikesData[storeName] = { users: [] };
@@ -1984,36 +1777,29 @@
             let currentCount = parseInt(countSpan.innerText) || 0;
             
             if (isLiked) {
-                // 已按讚 -> 取消讚
                 storeLikes.users.splice(userIndex, 1);
                 icon.classList.remove('fa-solid', 'heart-beat-active', 'text-[#FF4785]');
                 icon.classList.add('fa-regular', 'text-pink-400');
                 btn.classList.remove('bg-pink-50', 'border-pink-300');
                 countSpan.innerText = Math.max(0, currentCount - 1);
             } else {
-                // 未按讚 -> 新增讚
                 storeLikes.users.push(currentUserId);
                 icon.classList.remove('fa-regular', 'text-pink-400');
                 icon.classList.add('fa-solid', 'heart-beat-active', 'text-[#FF4785]');
                 btn.classList.add('bg-pink-50', 'border-pink-300');
                 countSpan.innerText = currentCount + 1;
                 
-                // 動態產生飛出的可愛小愛心
                 const flyingHeart = document.createElement('i');
                 flyingHeart.className = 'fa-solid fa-heart flying-heart';
-                // 取得點擊位置
                 flyingHeart.style.left = (event.clientX - 10) + 'px';
                 flyingHeart.style.top = (event.clientY - 10) + 'px';
                 document.body.appendChild(flyingHeart);
                 
-                // 動畫結束後移除節點
                 setTimeout(() => flyingHeart.remove(), 800);
             }
             
-            // 將更新狀態存入本地快取 (只存 users 陣列，不存 count，count 永遠以表單 O 欄為準)
             localStorage.setItem('a7club_likes_cache', JSON.stringify(globalLikesData));
 
-            // ==== 串接 Google Apps Script 寫入 ====
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbzyH7yhuVfi-Ajb0u9hwob8plKXqvm2Bbas4H-TFiDFQ2_aKmZQI6vhfHJyvLO7xhB1WA/exec';
         const now = new Date();
         const timeString = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
@@ -2035,11 +1821,6 @@
         }
     }
 
-    // ==========================================
-    // 🎨 全域地標與分類樣式設定 (包含美食、購物、醫療)
-    // ==========================================
-
-    // 透過這個設定，只要分類名稱包含這些關鍵字，就會自動配對顏色、圖示與 Emoji
     const CATEGORY_STYLES = [
         // --- 美食販賣部 ---
         { keywords: ['早', '早餐', '早午餐'], iconClass: 'fa-egg', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '🍳' },
@@ -2050,7 +1831,7 @@
         { keywords: ['西餐', '美式', '漢堡', '義式', '披薩'], iconClass: 'fa-burger', bgColor: 'bg-orange-500', textColor: 'text-orange-700', emoji: '🍔' },
         { keywords: ['麵', '麵食', '拉麵'], iconClass: 'fa-bowl-food', bgColor: 'bg-amber-500', textColor: 'text-amber-700', emoji: '🍜' },
         { keywords: ['飯', '正餐', '主食', '便當', '水餃'], iconClass: 'fa-bowl-rice', bgColor: 'bg-orange-400', textColor: 'text-orange-600', emoji: '🍱' },
-        { keywords: ['小吃', '宵夜', '炸', '烤', '滷味'], iconClass: 'fa-hotdog', bgColor: 'bg-amber-400', textColor: 'text-amber-600', emoji: '🌭' },
+        { keywords: ['小吃', '宵夜', '炸', '烤', '滷味'], iconClass: 'fa-drumstick-bite', bgColor: 'bg-amber-400', textColor: 'text-amber-600', emoji: '🍗' },
         { keywords: ['鍋', '火鍋', '鐵板'], iconClass: 'fa-fire-burner', bgColor: 'bg-red-400', textColor: 'text-red-500', emoji: '🍲' },
         { keywords: ['異國', '日式', '韓式', '泰式'], iconClass: 'fa-earth-americas', bgColor: 'bg-indigo-400', textColor: 'text-indigo-600', emoji: '🍛' },
         
@@ -2063,20 +1844,17 @@
         { keywords: ['捷運', '機捷', '交通'], iconClass: 'fa-train-subway', bgColor: 'bg-themePurple', textColor: 'text-purple-400', emoji: '🚇' },
 
         // --- 樂園救護站 (醫療) ---
-        { keywords: ['牙'], iconClass: 'fa-tooth', bgColor: 'bg-blue-400', textColor: 'text-blue-600', emoji: '🦷' },
-        { keywords: ['小兒', '婦產'], iconClass: 'fa-baby', bgColor: 'bg-pink-400', textColor: 'text-pink-600', emoji: '👶' },
-        { keywords: ['眼'], iconClass: 'fa-eye', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '👁️' },
-        { keywords: ['骨', '復健'], iconClass: 'fa-bone', bgColor: 'bg-purple-400', textColor: 'text-purple-600', emoji: '🦴' },
+        { keywords: ['牙'], iconClass: 'fa-tooth', bgColor: 'bg-purple-400', textColor: 'text-purple-600', emoji: '🦷' },
+        { keywords: ['小兒', '婦產', '兒童診所'], iconClass: 'fa-baby', bgColor: 'bg-pink-400', textColor: 'text-pink-600', emoji: '👶' },
+        { keywords: ['眼'], iconClass: 'fa-eye', bgColor: 'bg-blue-400', textColor: 'text-blue-600', emoji: '👁️' },
+        { keywords: ['骨', '復健'], iconClass: 'fa-bone', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '🦴' },
         { keywords: ['藥'], iconClass: 'fa-pills', bgColor: 'bg-orange-400', textColor: 'text-orange-600', emoji: '💊' },
         { keywords: ['診所', '醫療', '醫院'], iconClass: 'fa-stethoscope', bgColor: 'bg-green-400', textColor: 'text-green-600', emoji: '🩺' },
         
-        // 預設分類 (當都比對不到時的預設值)
-        { keywords: ['預設'], iconClass: 'fa-location-dot', bgColor: 'bg-themePink', textColor: 'text-pink-500', emoji: '📍' }
+        { keywords: ['預設'], iconClass: 'fa-location-dot', bgColor: 'bg-themeBlue', textColor: 'text-blue-500', emoji: '📍' }
     ];
 
-    // 輔助函數：透過分類名稱，找出最適合的樣式設定
     function getCategoryStyle(categoryName, storeName = '') {
-        // 特定店家強制覆寫樣式 (覆寫分類設定)
         if (storeName && storeName.includes('五金')) {
             return { iconClass: 'fa-scissors', bgColor: 'bg-green-400', textColor: 'text-green-500', emoji: '✂️' };
         }
@@ -2084,14 +1862,14 @@
             return { iconClass: 'fa-pills', bgColor: 'bg-orange-400', textColor: 'text-orange-500', emoji: '💊' };
         }
 
-        if (!categoryName) return CATEGORY_STYLES[CATEGORY_STYLES.length - 1]; // 回傳預設
+        if (!categoryName) return CATEGORY_STYLES[CATEGORY_STYLES.length - 1]; 
         
         for (let style of CATEGORY_STYLES) {
             if (style.keywords.some(kw => categoryName.includes(kw))) {
                 return style;
             }
         }
-        return CATEGORY_STYLES[CATEGORY_STYLES.length - 1]; // 找不到配對，回傳預設
+        return CATEGORY_STYLES[CATEGORY_STYLES.length - 1]; 
     }
 
     function loadSharedFoodData() {
@@ -2102,7 +1880,7 @@
                     const rows = parseCSV(csvText);
                     if (rows.length < 2) return resolve([]);
                     const headers = rows[0];
-                    const timeIdx = Math.max(0, headers.findIndex(k => k.includes('時間') || k.toLowerCase().includes('timestamp'))); // 找尋時間戳記欄位
+                    const timeIdx = Math.max(0, headers.findIndex(k => k.includes('時間') || k.toLowerCase().includes('timestamp')));
                     const nameIdx = Math.max(0, headers.findIndex(k => k.includes('店') || k.includes('名')));
                     const catIdx = Math.max(0, headers.findIndex(k => k.includes('分類') || k.includes('類別')));
                     const addressIdx = Math.max(0, headers.findIndex(k => k.includes('地址') || k.includes('位置') || k.includes('地點') || k.includes('網址')));
@@ -2115,9 +1893,7 @@
                         let rawImg = imgIdx !== -1 && row[imgIdx] ? row[imgIdx].trim() : '';
                         let finalImg = rawImg.startsWith('http') ? rawImg : '';
                         
-                        // 處理時間戳記 (轉換為可計算的微秒時間)
                         let rawTime = timeIdx !== -1 && row[timeIdx] ? row[timeIdx].trim() : '';
-                        // 若遇到表單輸出的中文字「上午/下午」，替換以利於解析
                         let cleanTime = rawTime.replace('上午', 'AM').replace('下午', 'PM');
                         let parsedTime = new Date(cleanTime).getTime();
 
@@ -2129,8 +1905,8 @@
                             lat: latIdx !== -1 && row[latIdx] ? parseFloat(row[latIdx]) : null,
                             lng: lngIdx !== -1 && row[lngIdx] ? parseFloat(row[lngIdx]) : null,
                             status: statusIdx !== -1 ? row[statusIdx] : 'OK',
-                            likesCount: parseInt(row[14]) || 0, // 讀取 O 欄作為絕對愛心數量
-                            timestamp: isNaN(parsedTime) ? 0 : parsedTime // 儲存時間以供排序與 NEW 標籤判斷
+                            likesCount: parseInt(row[14]) || 0, 
+                            timestamp: isNaN(parsedTime) ? 0 : parsedTime 
                         };
                     }).filter(item => item.name !== '未命名' && item.name.trim() !== '');
 
@@ -2142,7 +1918,7 @@
                     resolve(globalFoodData);
                 }).catch(err => {
                     console.error('Fetch Food Data Error:', err);
-                    resolve([]); // 發生錯誤時回傳空陣列，避免卡住
+                    resolve([]); 
                 });
             });
         }
@@ -2151,7 +1927,6 @@
             const container = document.getElementById('food-list-container');
             if (!container) return;
 
-            // 等待美食資料與愛心資料同時載入完成
             Promise.all([loadSharedFoodData(), loadSharedLikesData()]).then(([data, likes]) => {
                 if (data.length === 0) {
                     container.innerHTML = '<div class="col-span-full text-center text-gray-500 font-bold py-8">目前沒有美食資料</div>';
@@ -2178,7 +1953,6 @@
                 foodMarkersMap = {};
             }
 
-            // 初始化縮放級別放寬，避免一開始跳動過大
             foodMapInstance = L.map('food-leaflet-map', { zoomControl: false }).setView([25.0425, 121.3870], 15);
             L.control.zoom({ position: 'bottomright' }).addTo(foodMapInstance);
 
@@ -2193,19 +1967,15 @@
             foodMapInstance.addLayer(foodClusterGroup);
         }
 
-        // 動態產生有白色大圓底與 ICON 的水滴圖釘
     function getCategoryIcon(category, storeName = '', state = 'normal', isBouncing = false) {
-        
-        // 透過比對池取得對應的樣式
         const style = getCategoryStyle(category, storeName);
         
         let iconClass = style.iconClass;
         let bgColorClass = style.bgColor;
         let textColorClass = style.textColor;
 
-        let animationClass = isBouncing ? 'bounce-marker' : 'floating-marker'; // 根據狀態切換跳動或平滑漂浮
+        let animationClass = isBouncing ? 'bounce-marker' : 'floating-marker'; 
 
-            // 選取狀態：改為紅色並保持，不再隨時間消失，彈跳動畫則由 isBouncing 獨立控制
             if (state === 'clicked') {
                 bgColorClass = 'bg-red-500';
                 textColorClass = 'text-red-500'; 
@@ -2270,35 +2040,27 @@
             const mobileTagsContainer = document.getElementById('food-tags-mobile');
             if (!container) return;
 
-            // 渲染上方 TAG 分類按鈕
         const categories = ['全部', ...new Set(data.map(item => item.category).filter(c => c))];
         
         const tagsHtml = categories.map(cat => {
             const isActive = cat === activeCategory;
-            
-            // 統一標籤的適應性佈局，取消個別差異
             const activeClass = isActive 
                 ? 'bg-themePink text-white shadow-md scale-[1.02] md:scale-105 z-10' 
                 : 'bg-white text-gray-600 hover:bg-pink-50 shadow-sm border-2 border-transparent hover:-translate-y-1';
             
-            // 透過比對池取得對應的 Emoji，如果沒有就預設
             let icon = cat === '全部' ? '🎡' : getCategoryStyle(cat).emoji;
             
-            // 手機版根據內容自適應寬度 (flex-auto)，大螢幕維持一列 (lg:flex-none)，文字縮小一級，改為全圓角藥丸形狀
                 return `<button onclick="renderFoodData(globalFoodData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-none w-auto py-2 md:py-2.5 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-pink-100 whitespace-nowrap ${activeClass}">
                             <span class="hidden md:inline-block shrink-0">${icon}</span>
                             <span>${cat}</span>
                         </button>`;
             }).join('');
 
-            // 同步渲染到電腦版與手機版的容器
             if (desktopTagsContainer) desktopTagsContainer.innerHTML = tagsHtml;
             if (mobileTagsContainer) mobileTagsContainer.innerHTML = tagsHtml;
 
-            // 過濾資料
             const filteredData = activeCategory === '全部' ? data : data.filter(item => item.category === activeCategory);
             
-            // 依照愛心數量由高至低排序，若愛心相同則依時間由新到舊排序
             filteredData.sort((a, b) => {
                 if ((b.likesCount || 0) !== (a.likesCount || 0)) {
                     return (b.likesCount || 0) - (a.likesCount || 0);
@@ -2311,19 +2073,17 @@
                 return;
             }
 
-            // 繪製地標到 Leaflet 地圖
             if (foodClusterGroup) foodClusterGroup.clearLayers();
             foodMarkersMap = {};
-            activeFoodMarkerName = null; // 重置選取狀態
+            activeFoodMarkerName = null; 
 
             filteredData.forEach(item => {
                 if (item.lat && item.lng) {
                     const marker = L.marker([item.lat, item.lng], { icon: getCategoryIcon(item.category, item.name, 'normal') });
-                    marker.category = item.category; // 記錄分類供還原顏色使用
+                    marker.category = item.category; 
                     
                     marker.bindTooltip(item.name, { direction: 'top', offset: [0, -50], className: 'custom-tooltip' });
                     
-                    // 移除彈出卡片的照片，並將標題字級縮小至 text-sm，加入 leading-[1.1] 及英文縮小。加上 pt-5 預留關閉按鈕空間
                     let popupContent = `
                         <div class="text-center p-1 pt-5 w-44">
                             <h4 class="font-black text-themePink text-sm leading-[1.1] mb-1">${formatStoreName(item.name)}</h4>
@@ -2333,7 +2093,6 @@
                     `;
                     marker.bindPopup(popupContent);
 
-                    // 綁定地圖上的直接點擊事件
                     marker.on('click', () => {
                         if (activeFoodMarkerName && activeFoodMarkerName !== item.name && foodMarkersMap[activeFoodMarkerName]) {
                             const prevMarker = foodMarkersMap[activeFoodMarkerName];
@@ -2356,31 +2115,23 @@
                 }
             });
 
-            // 確保所有地標添加完成後，自動縮放地圖以顯示全部範圍 (初始顯示所有店家分佈)
             if (foodClusterGroup && foodClusterGroup.getLayers().length > 0) {
-                // 綁定縮放完成事件再進行放大一倍，確保繁體中文字清晰可見
                 foodMapInstance.once('moveend', () => {
                     setTimeout(() => {
                         foodMapInstance.setZoom(foodMapInstance.getZoom() + 1);
                     }, 150);
                 });
-                // 預留一點 padding 讓邊緣的圖釘不會貼齊畫面
                 foodMapInstance.fitBounds(foodClusterGroup.getBounds(), { padding: [40, 40] });
             }
 
-            // 渲染下方列表 (點擊觸發 updateFoodMap)
         container.innerHTML = filteredData.map(item => {
-            // 如果沒有照片，顯示 ICON，透過比對池取得對應的圖示與顏色
             let imgContent = '';
             const style = getCategoryStyle(item.category, item.name);
             
-            // 取得該店家的愛心資料
                 const storeLikes = globalLikesData[item.name] || { users: [] };
                 const isLiked = storeLikes.users.includes(currentUserId);
-                // 直接使用表單 O 欄數字
                 const likeCount = item.likesCount || 0;
                 
-                // 判斷是否為 7 天內新增的店家，以加入 NEW 標籤
                 const isNew = item.timestamp && (Date.now() - item.timestamp < 7 * 24 * 60 * 60 * 1000);
                 const newBadge = isNew ? '<span class="ml-1.5 bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-md shadow-sm relative -top-0.5 font-black animate-pulse whitespace-nowrap">NEW</span>' : '';
                 
@@ -2390,11 +2141,9 @@
                     imgContent = `<i class="fa-solid ${style.iconClass} text-4xl ${style.textColor} group-hover:text-themePink transition-colors opacity-80"></i>`;
                 }
 
-                // 店家卡片：移除右上角大標籤，改用小藥丸標籤放在名稱上方。加入絕對定位的愛心評分與標籤
                 return `
                 <div onclick="updateFoodMap('${item.address.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.category.replace(/'/g, "\\'")}')" class="bg-white p-4 rounded-3xl shadow-cute flex items-center gap-4 hover:-translate-y-1 transition-transform cursor-pointer border border-pink-50 group relative">
                     
-                    <!-- 分類小藥丸移至右上角絕對定位 -->
                     <div class="absolute top-3 right-4 ${style.bgColor} text-white text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full shadow-sm tracking-wider inline-block">
                          ${item.category}
                     </div>
@@ -2409,7 +2158,6 @@
                         </div>
                     </div>
                     
-                    <!-- 愛心移至右下角絕對定位 -->
                     <div class="absolute bottom-3 right-4 z-10">
                         <button onclick="toggleLike(event, '${item.name.replace(/'/g, "\\'")}')" class="flex items-center gap-1.5 bg-white hover:bg-pink-50 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-black transition-all shadow-sm hover:scale-105 active:scale-95 border-2 border-pink-100 ${isLiked ? 'bg-pink-50 border-pink-300' : 'text-pink-400'}">
                             <i class="${isLiked ? 'fa-solid text-[#FF4785]' : 'fa-regular text-pink-400'} fa-heart transition-transform"></i> <span class="text-gray-600">${likeCount}</span>
@@ -2420,37 +2168,29 @@
             }).join('');
         }
 
-        // 點擊飛躍動畫與地標顏色變化 (平滑飛躍，徹底移除畫面顫抖衝突)
         async function updateFoodMap(address, name, preLat, preLng, category) {
-            // 如果地圖上已經有該店家地標，直接平滑飛躍 (不顯示載入遮罩避免畫面閃爍)
             if (foodMarkersMap[name]) {
                 const marker = foodMarkersMap[name];
                 
-                // 還原前一個被點擊的店家圖標狀態
                 if (activeFoodMarkerName && activeFoodMarkerName !== name && foodMarkersMap[activeFoodMarkerName]) {
                     const prevMarker = foodMarkersMap[activeFoodMarkerName];
                     if (prevMarker.bounceTimeout) clearTimeout(prevMarker.bounceTimeout);
                     prevMarker.setIcon(getCategoryIcon(prevMarker.category, activeFoodMarkerName, 'normal', false));
                 }
-                activeFoodMarkerName = name; // 更新當前選取店家
+                activeFoodMarkerName = name; 
                 
-                // 計算下修偏移量，讓圖釘落在地圖下方 1/3 處保留上方資訊卡空間
                 const targetZoom = 18;
                 const pt = foodMapInstance.project(marker.getLatLng(), targetZoom);
-                // 將視角中心往上移 (Y軸減去高度的 1/3.5)，讓圖釘在畫面中往下掉
                 pt.y -= foodMapInstance.getSize().y / 3.5; 
                 const offsetLatLng = foodMapInstance.unproject(pt, targetZoom);
                 
-                // 單純使用 flyTo 從目前位置平滑飛躍到目標店家
                 foodMapInstance.flyTo(offsetLatLng, targetZoom, { animate: true, duration: 1.5 });
                 
-                // 必須等飛躍動畫完全結束 ('moveend') 後，再執行地標展開與變色
                 foodMapInstance.once('moveend', () => {
                     foodClusterGroup.zoomToShowLayer(marker, () => {
                         marker.openPopup();
                         marker.setIcon(getCategoryIcon(category, name, 'clicked', true));
                         
-                        // 5 秒後停止跳動，但保持紅色
                         if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
                         marker.bounceTimeout = setTimeout(() => {
                             if (foodMarkersMap[name] && activeFoodMarkerName === name) {
@@ -2462,7 +2202,6 @@
                 return;
             }
 
-            // 以下為無快取時需透過地址解析的 fallback 邏輯
             const overlay = document.getElementById('food-map-overlay');
             const overlayText = document.getElementById('food-map-overlay-text');
             
@@ -2524,9 +2263,7 @@
         // 🛍️ 購物、生活與景點共用資料模組 (Shopping)
         // ==========================================
         
-        // 用來顯示該分類地圖的共用函式
         async function showShoppingMap(safeCatId, catName, storeName, preLat, preLng, address) {
-            // 1. 關閉所有「其他分類」的地圖
             document.querySelectorAll('[id^="map-wrapper-"]').forEach(wrapper => {
                 if (wrapper.id !== 'map-wrapper-' + safeCatId) {
                     wrapper.classList.add('hidden');
@@ -2538,17 +2275,14 @@
             const mapWrapper = document.getElementById('map-wrapper-' + safeCatId);
             if (!mapWrapper) return;
             
-            // 2. 如果目標地圖目前是隱藏的，展開它並加入動畫
             if (mapWrapper.classList.contains('hidden')) {
                 mapWrapper.classList.remove('hidden');
-                // 觸發瀏覽器重繪 (Reflow) 以確保過渡動畫生效
                 void mapWrapper.offsetWidth;
                 mapWrapper.classList.remove('opacity-0');
                 mapWrapper.classList.add('opacity-100');
             }
 
             if (!shoppingMaps[safeCatId]) {
-                // 初始化 Leaflet 地圖 (綁定在內層的 map-xxx)
                 shoppingMaps[safeCatId] = L.map('map-' + safeCatId, { zoomControl: false }).setView([25.0425, 121.3870], 14);
                 L.control.zoom({ position: 'bottomright' }).addTo(shoppingMaps[safeCatId]);
                 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -2577,7 +2311,6 @@
                         `;
                         marker.bindPopup(popupContent);
                         
-                        // Marker click behavior inside shopping map
                         marker.on('click', () => {
                             marker.setIcon(getCategoryIcon(store.category, store.name, 'clicked', true));
                             if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
@@ -2594,21 +2327,18 @@
             
             const map = shoppingMaps[safeCatId];
             
-            // 3. 因為側邊欄展開會改變寬度，必須延遲重整地圖尺寸
             setTimeout(() => {
                 map.invalidateSize();
                 
                 let targetLat = preLat;
                 let targetLng = preLng;
                 
-                // 確保地圖顯示該分類的「所有店家」
                 if (shoppingClusterGroups[safeCatId].getLayers().length > 0) {
                     map.fitBounds(shoppingClusterGroups[safeCatId].getBounds(), { padding: [40, 40], maxZoom: 16, animate: true, duration: 1.5 });
                 } else if (targetLat && targetLng) {
                     map.setView([targetLat, targetLng], 15);
                 }
 
-                // 找出點擊的特定店家並展開 Popup 與變色
                 const marker = shoppingMarkersMap[safeCatId][storeName];
                 if (marker) {
                     map.once('moveend', () => {
@@ -2618,9 +2348,8 @@
                         marker.bounceTimeout = setTimeout(() => marker.setIcon(getCategoryIcon(catName, storeName, 'normal', false)), 5000);
                     });
                 }
-            }, 300); // 配合 Tailwind 的 duration-300 動畫時間
+            }, 300); 
 
-            // 4. 確保使用者視線能看到展開的地圖
             setTimeout(() => {
                 mapWrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 150);
@@ -2653,7 +2382,7 @@
 
                         let addressIdx = headers.findIndex(k => k.includes('地址') || k.includes('位置') || k.includes('地點'));
                         let statusIdx = headers.findIndex(k => k.includes('審核') || k.includes('狀態') || k.includes('OK'));
-                        let imgIdx = headers.findIndex(k => k.includes('照片') || k.includes('圖片') || k.includes('圖')); // 抓取照片
+                        let imgIdx = headers.findIndex(k => k.includes('照片') || k.includes('圖片') || k.includes('圖')); 
                         let latIdx = headers.findIndex(k => k.includes('緯度') || k.toLowerCase().includes('lat'));
                         let lngIdx = headers.findIndex(k => k.includes('經度') || k.toLowerCase().includes('lng'));
 
@@ -2669,7 +2398,7 @@
                                 img: finalImg,
                                 lat: latIdx !== -1 && row[latIdx] ? parseFloat(row[latIdx]) : null,
                                 lng: lngIdx !== -1 && row[lngIdx] ? parseFloat(row[lngIdx]) : null,
-                                likesCount: parseInt(row[14]) || 0 // 讀取 O 欄作為絕對愛心數量
+                                likesCount: parseInt(row[14]) || 0 
                             };
                         }).filter(item => item.name !== '未命名' && item.name.trim() !== '');
 
@@ -2683,7 +2412,7 @@
                     })
                     .catch(err => {
                         console.error('Fetch Shopping Data Error:', err);
-                        resolve([]); // 發生錯誤時回傳空陣列，避免卡住
+                        resolve([]); 
                     });
             });
         }
@@ -2692,7 +2421,6 @@
             const container = document.getElementById('shopping-list-container');
             if (!container) return;
 
-            // 清除之前的地圖實例
             for (let key in shoppingMaps) {
                 if (shoppingMaps[key]) shoppingMaps[key].remove();
             }
@@ -2700,7 +2428,6 @@
             shoppingClusterGroups = {};
             shoppingMarkersMap = {};
 
-            // 等待購物生活資料與愛心資料同時載入
             Promise.all([loadSharedShoppingData(), loadSharedLikesData()]).then(([data, likes]) => {
                 if (data.length === 0) {
                     container.innerHTML = '<div class="col-span-full text-center text-gray-500 font-bold py-8">目前沒有店家資料</div>';
@@ -2718,10 +2445,8 @@
             const tagsContainer = document.getElementById('shopping-tags-container');
             if (!container) return;
 
-            // 改為單一直列佈局 (以利動態左右並排排版)
             container.className = "flex flex-col gap-6 w-full";
 
-            // --- 1. 渲染上方分類 TAG ---
             if (tagsContainer) {
                 const allCategories = ['全部', ...new Set(globalShoppingData.map(item => item.category).filter(c => c))];
                 tagsContainer.innerHTML = allCategories.map(cat => {
@@ -2745,14 +2470,12 @@
                 }).join('');
             }
 
-            // --- 2. 依照選中的分類過濾資料 ---
             const filteredData = activeCategory === '全部' ? data : data.filter(item => item.category === activeCategory);
             if (filteredData.length === 0) {
                 container.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold py-8">這個分類還沒有審核通過的店家喔！</div>';
                 return;
             }
 
-            // --- 3. 依生活分類群組化，並計算各分類的「總愛心數」 ---
             const groupedCategories = {};
             filteredData.forEach(item => {
                 const cat = item.category || '未分類';
@@ -2762,16 +2485,13 @@
 
             const catLikes = {};
             for (const [catName, items] of Object.entries(groupedCategories)) {
-                // 各分類內的店家依愛心數排序
                 items.sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0));
-                // 計算此分類總愛心
                 catLikes[catName] = items.reduce((sum, item) => sum + (item.likesCount || 0), 0);
             }
 
-            // --- 4. 智慧配對與拆分 (有圖/大版面群組 vs 純文字群組) ---
             let mrtCat = null;
-            let mainCats = []; // 主要視覺區 (照片 或 大量文字)
-            let sideCats = []; // 次要視覺區 (純文字)
+            let mainCats = []; 
+            let sideCats = []; 
 
             for (const [catName, items] of Object.entries(groupedCategories)) {
                 if (catName.includes('捷運') || catName.includes('機捷') || catName.includes('交通')) {
@@ -2788,20 +2508,18 @@
                 }
             }
 
-            // 依照分類的總愛心數排序
             mainCats.sort((a, b) => catLikes[b.name] - catLikes[a.name]);
             sideCats.sort((a, b) => catLikes[b.name] - catLikes[a.name]);
 
             const stylePool = [
-                { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-themeYellow', icon: 'fa-cart-shopping', emoji: '🛒' }, // 生鮮
-                { border: 'border-blue-50', textBig: 'text-blue-100', textTitle: 'text-themeBlue', icon: 'fa-house-chimney', emoji: '🏠' }, // 居家
-                { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', icon: 'fa-hand-holding-heart', emoji: '🤝' }, // 服務
-                { border: 'border-green-50', textBig: 'text-green-100', textTitle: 'text-themeGreen', icon: 'fa-tree-city', emoji: '🌲' }, // 觀光景點
-                { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', icon: 'fa-bag-shopping', emoji: '🛍️' }, // 購物中心
-                { border: 'border-orange-50', textBig: 'text-orange-100', textTitle: 'text-orange-500', icon: 'fa-gift', emoji: '🎁' } // 預設
+                { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-themeYellow', icon: 'fa-cart-shopping', emoji: '🛒' }, 
+                { border: 'border-blue-50', textBig: 'text-blue-100', textTitle: 'text-themeBlue', icon: 'fa-house-chimney', emoji: '🏠' }, 
+                { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', icon: 'fa-hand-holding-heart', emoji: '🤝' }, 
+                { border: 'border-green-50', textBig: 'text-green-100', textTitle: 'text-themeGreen', icon: 'fa-tree-city', emoji: '🌲' }, 
+                { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', icon: 'fa-bag-shopping', emoji: '🛍️' }, 
+                { border: 'border-orange-50', textBig: 'text-orange-100', textTitle: 'text-orange-500', icon: 'fa-gift', emoji: '🎁' } 
             ];
 
-            // 共通的單一項目 HTML 產生函數
             const generateItemHTML = (item, catName, safeCatId, isPhotoCategory) => {
                 const itemStyle = getCategoryStyle(catName, item.name);
                 const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
@@ -2865,7 +2583,6 @@
                 }
             };
 
-            // 共通的區塊 HTML 產生函數
             const renderBlock = (catObj, widthClass) => {
                 if (!catObj) return '';
                 const { name: catName, items, isPhoto: isPhotoCategory } = catObj;
@@ -2886,7 +2603,6 @@
                     ? "grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-3 relative z-10 flex-1 content-start"
                     : "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
 
-                // 因為是左右並排配對，所以內部地圖統一改成在清單「正下方」展開 (flex-col) 避免擠壓
                 return `
                     <div class="w-full ${widthClass} flex flex-col">
                         <div class="bg-white rounded-[2rem] p-5 md:p-6 shadow-cute border-4 ${style.border} relative flex flex-col h-full w-full break-inside-avoid overflow-hidden">
@@ -2912,7 +2628,6 @@
 
             let finalOutput = '';
 
-            // --- 5. 渲染：機場捷運 (優先置頂，且預設只顯示A7站，其餘折疊) ---
             if (mrtCat) {
                 const { name: catName, items } = mrtCat;
                 const style = { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', icon: 'fa-train-subway', emoji: '🚇' };
@@ -2921,7 +2636,6 @@
                 let a7Items = items.filter(i => i.name.includes('A7') || i.name.includes('體育大學'));
                 let otherItems = items.filter(i => !i.name.includes('A7') && !i.name.includes('體育大學'));
                 
-                // 防呆：如果都沒找到A7站，就把第一筆當作主要顯示
                 if (a7Items.length === 0 && items.length > 0) {
                     a7Items = [items[0]];
                     otherItems = items.slice(1);
@@ -2937,11 +2651,9 @@
                             <span class="mr-2">${style.emoji}</span> ${catName} <span class="text-sm font-bold text-gray-400 ml-2">(${items.length})</span>
                         </h3>
 
-                        <!-- MRT Layout: 電腦版 A7左側，其他折疊在右側 -->
                         <div class="flex flex-col gap-4 relative z-10 items-stretch w-full">
                             <div class="flex flex-col lg:flex-row gap-6 w-full">
                                 
-                                <!-- 左半部：A7站 -->
                                 <div class="w-full lg:w-1/2 flex flex-col gap-3">
                                     <div class="text-xs font-black text-purple-500 bg-purple-50 px-3 py-1.5 rounded-lg w-fit flex items-center shadow-sm border border-purple-100">
                                         <i class="fa-solid fa-location-dot mr-1.5"></i> 核心站點
@@ -2951,7 +2663,6 @@
                                     </ul>
                                 </div>
 
-                                <!-- 右半部：其他站點 (折疊) -->
                                 ${otherItems.length > 0 ? `
                                 <div class="w-full lg:w-1/2 flex flex-col gap-3 lg:border-l-2 lg:border-t-0 border-t-2 border-dashed border-purple-100 lg:pl-6 pt-4 lg:pt-0">
                                     <details class="group transition-all duration-300 w-full">
@@ -2967,7 +2678,6 @@
                                 ` : ''}
                             </div>
 
-                            <!-- 地圖容器 (預設隱藏，置於下方滿版展開) -->
                             <div id="map-wrapper-${safeCatId}" class="hidden w-full shrink-0 transition-all duration-300 opacity-0 flex-col mt-2">
                                 
                                 <div id="map-${safeCatId}" class="w-full h-[250px] min-h-[250px] rounded-b-[1rem] border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 flex-1"></div>
@@ -2977,7 +2687,6 @@
                 `;
             }
 
-            // --- 6. 渲染：自動將 主分類(含圖片/生鮮) 與 副分類(純文字) 兩兩配對並排 ---
             const maxLen = Math.max(mainCats.length, sideCats.length);
             
             for (let i = 0; i < maxLen; i++) {
@@ -2986,19 +2695,15 @@
 
                 let rowHtml = `<div class="flex flex-col lg:flex-row gap-6 w-full mb-6 items-stretch">`;
 
-                // 左側主位
                 if (mainCat) {
-                    // 如果是生鮮超市或便利商店，讓它佔據 2/3 寬度
                     let widthClass = mainCat.isLargeText ? 'lg:w-2/3' : 'lg:w-1/2';
-                    if (!sideCat) widthClass = 'w-full'; // 若沒配對到，直接滿版
+                    if (!sideCat) widthClass = 'w-full'; 
                     rowHtml += renderBlock(mainCat, widthClass);
                 }
 
-                // 右側配對位
                 if (sideCat) {
-                    // 如果配對到的大分類是生鮮，自己就縮小成 1/3
                     let widthClass = (mainCat && mainCat.isLargeText) ? 'lg:w-1/3' : 'lg:w-1/2';
-                    if (!mainCat) widthClass = 'w-full'; // 若沒配對到，直接滿版
+                    if (!mainCat) widthClass = 'w-full'; 
                     rowHtml += renderBlock(sideCat, widthClass);
                 }
 
@@ -3026,7 +2731,6 @@
             const container = document.getElementById('attractions-list-container');
             if (!container) return;
 
-            // 條件：只要生活分類是「購物中心」或「觀光景點」
             const attractions = data.filter(item => item.category === '購物中心' || item.category === '觀光景點');
 
             if (attractions.length === 0) {
@@ -3034,14 +2738,12 @@
                 return;
             }
 
-            // 渲染橫向景點卡片
             container.innerHTML = attractions.map(item => {
                 const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
                 const imgContent = item.img 
                     ? `<img src="${item.img}" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition-transform">` 
                     : `<i class="fa-solid fa-camera-retro text-3xl sm:text-4xl text-purple-200"></i>`;
 
-                // 修改：進一步縮小手機版的寬度與高度，讓畫面能顯示更多張卡片，並加入地址標示
                 return `
                     <div onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${navTarget}', '_blank')" class="w-[135px] sm:w-[220px] bg-white rounded-[1.2rem] sm:rounded-[2rem] p-2 sm:p-3 shadow-sm border-2 border-purple-50 shrink-0 hover:-translate-y-2 transition-transform cursor-pointer group flex flex-col snap-start">
                         <div class="w-full h-20 sm:h-32 rounded-[1rem] sm:rounded-[1.5rem] mb-2 overflow-hidden bg-purple-50 flex items-center justify-center shrink-0">
@@ -3060,7 +2762,6 @@
                 `;
             }).join('');
 
-            // 觸發非同步的車程計算
             calculateCarTime();
         }
 
@@ -3080,11 +2781,10 @@
                     let nameIdx = headers.findIndex(k => k.includes('名稱') || k.includes('機構') || k.includes('店名'));
                     if (nameIdx === -1) nameIdx = 0; 
                     let catIdx = headers.findIndex(k => k.includes('醫療分類'));
-                    if (catIdx === -1) catIdx = 8; // 預設使用 I 欄
+                    if (catIdx === -1) catIdx = 8; 
                     let addressIdx = headers.findIndex(k => k.includes('地址'));
                     let phoneIdx = headers.findIndex(k => k.includes('電話'));
                     
-                    // 尋找機構代碼/核准字號欄位，預設為 O 欄 (第15欄，即 index 14)
                     let licenseIdx = 14; 
 
                     let parsedData = rows.slice(1).map(row => {
@@ -3119,10 +2819,8 @@
             const container = document.getElementById('medical-list-container');
             if (!container) return;
 
-            // 確保外層容器改為單一直列排版，滿版顯示 (取消原本的 columns 瀑布流)
             container.className = "flex flex-col gap-6 w-full";
 
-            // 依照醫療分類(I欄) 群組化資料
             const groupedCategories = {};
             data.forEach(item => {
                 const cat = item.category || '其他醫療';
@@ -3132,24 +2830,23 @@
 
             const stylePool = [
                 { border: 'border-green-50', textBig: 'text-green-100', textTitle: 'text-themeGreen', badgeBg: 'bg-themeGreen', icon: 'fa-stethoscope' },
-                { border: 'border-blue-50', textBig: 'text-blue-100', textTitle: 'text-themeBlue', badgeBg: 'bg-themeBlue', icon: 'fa-tooth' },
-                { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', badgeBg: 'bg-themePink', icon: 'fa-baby' },
-                { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-yellow-500', badgeBg: 'bg-yellow-500', icon: 'fa-eye' },
-                { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', badgeBg: 'bg-themePurple', icon: 'fa-bone' },
-                { border: 'border-orange-50', textBig: 'text-orange-100', textTitle: 'text-orange-400', badgeBg: 'bg-orange-400', icon: 'fa-pills' }
+                { border: 'border-purple-50', textBig: 'text-purple-100', textTitle: 'text-themePurple', badgeBg: 'bg-themePurple', icon: 'fa-tooth' },
+                { border: 'border-orange-50', textBig: 'text-orange-100', textTitle: 'text-orange-400', badgeBg: 'bg-orange-400', icon: 'fa-baby' },
+                { border: 'border-blue-50', textBig: 'text-blue-100', textTitle: 'text-themeBlue', badgeBg: 'bg-themeBlue', icon: 'fa-eye' },
+                { border: 'border-yellow-50', textBig: 'text-yellow-100', textTitle: 'text-themeYellow', badgeBg: 'bg-themeYellow', icon: 'fa-bone' },
+                { border: 'border-pink-50', textBig: 'text-pink-100', textTitle: 'text-themePink', badgeBg: 'bg-themePink', icon: 'fa-pills' }
             ];
 
             let html = '';
 
             for (const [catName, items] of Object.entries(groupedCategories)) {
-                // 智慧配對：依分類名稱關鍵字給予適合的顏色與圖示
                 let style;
                 if (catName.includes('牙')) style = stylePool[1];
-                else if (catName.includes('小儿') || catName.includes('婦產')) style = stylePool[2];
+                else if (catName.includes('小兒') || catName.includes('婦產') || catName.includes('兒童')) style = stylePool[2];
                 else if (catName.includes('眼')) style = stylePool[3];
                 else if (catName.includes('骨') || catName.includes('復健')) style = stylePool[4];
                 else if (catName.includes('藥')) style = stylePool[5];
-                else style = stylePool[0];
+                else style = stylePool[0]; // 預設(長庚、診所、醫院)為綠色
 
                 const itemsHtml = items.map(item => {
                     const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
@@ -3175,7 +2872,6 @@
                     `;
                 }).join('');
 
-                // 滿版大卡片結構
                 html += `
                     <div class="w-full">
                         <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${style.border} relative h-full flex flex-col">
@@ -3183,7 +2879,6 @@
                             <h3 class="text-2xl font-black ${style.textTitle} mb-5 border-b-2 border-gray-100 pb-3 relative z-10 shrink-0">
                                 ${catName}
                             </h3>
-                            <!-- 電腦螢幕一排顯示店家卡片 (md:grid-cols-2 lg:grid-cols-3) -->
                             <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 font-bold text-gray-600 relative z-10 flex-1 content-start">
                                 ${itemsHtml}
                             </ul>
@@ -3195,10 +2890,8 @@
         }
 
         // ==========================================
-        // 🎠 探索在地A7 (Explore) 相關函數
+        // 全域搜尋所需的探索模組資料 (以供統計與搜尋使用)
         // ==========================================
-        
-        // --- 探索在地A7：社群推薦模組 ---
         function loadSharedCommunityData() {
             return new Promise((resolve, reject) => {
                 if (globalCommunityData) return resolve(globalCommunityData);
@@ -3214,18 +2907,13 @@
                     if (catIdx === -1) catIdx = 1;
                     let linkIdx = headers.findIndex(k => k.includes('連結') || k.includes('網址') || k.includes('URL'));
                     if (linkIdx === -1) linkIdx = 2;
-                    
-                    // 強制指定讀取表單 E 欄 (Index 4 為 E 欄) 作為照片備註來源
                     let imgIdx = 4;
 
                     let parsedData = rows.slice(1).map(row => {
-                        // 如果有找到對應欄位，嘗試從裡面萃取出 http 開頭的網址
                         let rawImg = (row.length > imgIdx && row[imgIdx]) ? row[imgIdx].trim() : '';
                         let finalImg = '';
                         const urlMatch = rawImg.match(/https?:\/\/[^\s]+/);
-                        if (urlMatch) {
-                            finalImg = urlMatch[0];
-                        }
+                        if (urlMatch) finalImg = urlMatch[0];
 
                         return {
                             name: row[nameIdx] ? row[nameIdx].trim() : '',
@@ -3235,200 +2923,12 @@
                         };
                     }).filter(item => item.name !== '' && item.link !== '#');
 
-                    // 直接使用表單載入的資料，不再強制寫死
                     globalCommunityData = parsedData;
                     resolve(globalCommunityData);
                 }).catch(reject);
             });
         }
 
-        function fetchCommunityData() {
-            const container = document.getElementById('community-list-container');
-            if (!container) return;
-
-            loadSharedCommunityData().then(data => {
-                renderCommunityData(data);
-            }).catch(err => {
-                console.error('Community Fetch Error:', err);
-                container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8 bg-white rounded-3xl">社群資料載入失敗，請稍後再試。</div>';
-            });
-        }
-
-        function renderCommunityData(data) {
-            const container = document.getElementById('community-list-container');
-            if (!container) return;
-
-            // 初始化時先設定好「在地社群」與「地方互助」，利用 JS 物件屬性順序特性，確保排在前面
-            const groupedCategories = { '在地社群': [], '地方互助': [] };
-            
-            data.forEach(item => {
-                const cat = item.category || '其他推薦';
-                if (!groupedCategories[cat]) groupedCategories[cat] = [];
-                groupedCategories[cat].push(item);
-            });
-
-            // 若未來真的沒有資料，則清除空陣列避免顯示空白區塊
-            if (groupedCategories['在地社群'].length === 0) {
-                delete groupedCategories['在地社群'];
-            }
-            if (groupedCategories['地方互助'] && groupedCategories['地方互助'].length === 0) {
-                delete groupedCategories['地方互助'];
-            }
-
-            let html = '';
-            for (const [catName, items] of Object.entries(groupedCategories)) {
-                
-                const isLocalCommunity = catName === '在地社群';
-                const isMutualHelp = catName === '地方互助';
-                
-                // 動態排版：根據分類決定 Grid 或 Flex
-                let gridClass = '';
-                let wrapperSpan = 'lg:col-span-3'; // 預設為換行顯示全幅寬
-
-                if (isLocalCommunity) {
-                    gridClass = 'flex flex-wrap justify-center items-stretch gap-3 md:gap-4';
-                    wrapperSpan = 'lg:col-span-2'; // 佔畫面的 2/3
-                } else if (isMutualHelp) {
-                    // 手機版一排兩張，桌機版(佔 1/3 寬度)一排一張
-                    gridClass = 'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-1 gap-3'; 
-                    wrapperSpan = 'lg:col-span-1'; // 佔畫面的 1/3
-                } else {
-                    // 其他分類 (例如興趣群組、媽媽群等)
-                    gridClass = 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3';
-                }
-
-                const itemsHtml = items.map(item => {
-                    let snsType = 'Web';
-                    let snsBadgeClass = 'bg-gray-500 text-white';
-                    let snsIcon = 'fa-solid fa-globe';
-                    let avatarBg = 'random'; // 頭像背景色
-                    let btnClasses = 'bg-gray-500 hover:bg-gray-600 text-white';
-                    
-                    const searchStr = (item.name + ' ' + item.link).toUpperCase();
-                    if (searchStr.includes('LINE') || searchStr.includes('賴')) {
-                        snsType = 'LINE'; 
-                        snsBadgeClass = 'bg-[#00B900] text-white'; 
-                        snsIcon = 'fa-brands fa-line';
-                        avatarBg = '00B900';
-                        btnClasses = 'bg-[#00B900] hover:bg-[#009900] text-white';
-                    } else if (searchStr.includes('THREADS')) {
-                        snsType = 'Threads'; 
-                        snsBadgeClass = 'bg-black text-white'; 
-                        snsIcon = 'fa-brands fa-threads';
-                        avatarBg = '000000'; // Threads 品牌色
-                        btnClasses = 'bg-black hover:bg-gray-800 text-white';
-                    } else if (searchStr.includes('FB') || searchStr.includes('FACEBOOK') || searchStr.includes('臉書')) {
-                        snsType = 'Facebook'; 
-                        snsBadgeClass = 'bg-[#1877F2] text-white'; 
-                        snsIcon = 'fa-brands fa-facebook';
-                        avatarBg = '1877F2'; // Facebook 品牌色
-                        btnClasses = 'bg-[#1877F2] hover:bg-[#166FE5] text-white';
-                    } else {
-                        btnClasses = 'bg-themePink hover:bg-pink-400 text-white';
-                    }
-
-                    // 判斷是否需要顯示 QR Code (僅一般社群的 LINE 顯示)
-                    const showQR = snsType === 'LINE' && !isLocalCommunity;
-                    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
-                    
-                    // 預設文字頭像 URL (使用品牌色或隨機色)
-                    let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150&font-size=0.35`;
-
-                    // 動態解析頭像：若表單有圖片則優先使用，否則 Threads 顯示社群名稱前兩個字
-                    let fallbackName = item.name;
-                    if (item.img) {
-                        avatarUrl = item.img;
-                    } else if (snsType === 'Threads') {
-                        let fallbackName = item.name.substring(0, 2);
-                        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(fallbackName)}&background=000000&color=fff&size=150&bold=true&length=2&font-size=0.4`;
-                    }
-
-                    // 取得社群 ID 顯示文字 (自動過濾網址擷取並移除 @)
-                    let displayId = "點擊進入";
-                    if (item.link.includes('@')) {
-                        const match = item.link.match(/@([a-zA-Z0-9_.]+)/);
-                        if (match && match[1]) {
-                            displayId = match[1];
-                        }
-                    } else if (snsType === 'LINE') {
-                        displayId = "加入 LINE 社群";
-                    } else if (snsType === 'Facebook') {
-                        displayId = "前往粉絲專頁";
-                    }
-                    
-                    // 動態決定卡片寬度：如果名稱超過 9 個字，手機版改為佔滿整排 (col-span-2)
-                    const isLongText = item.name.length > 9;
-                    const colClass = (!isLocalCommunity && isLongText) ? 'col-span-2 sm:col-span-1 lg:col-span-1' : 'col-span-1';
-
-                    // === 在地社群 (精緻直式彈性卡片置中排版) ===
-                    if (isLocalCommunity) {
-                        const imgElement = `<div class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full shadow-sm border-2 border-gray-100 group-hover:border-themePink group-hover:scale-105 transition-all mx-auto mb-3 shrink-0 bg-gray-50 overflow-hidden"><img src="${avatarUrl}" class="w-full h-full object-cover" alt="頭像" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff'"></div>`;
-
-                        // 移除 SNS 標籤，讓卡片極簡，寬度會依據 flex-1 與 min-w / max-w 自動調整
-                        return `
-                            <a href="${item.link}" target="_blank" class="flex-1 min-w-[140px] sm:min-w-[160px] max-w-[240px] shrink-0 flex flex-col bg-white rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-5 shadow-cute border-2 border-gray-100 hover:border-pink-200 hover:shadow-xl transition-all group hover:-translate-y-2 text-center justify-between items-center relative overflow-hidden">
-                                <!-- 裝飾背景 Icon -->
-                                <div class="absolute -right-3 -bottom-3 text-6xl opacity-[0.03] text-gray-500 pointer-events-none"><i class="${snsIcon}"></i></div>
-
-                                ${imgElement}
-
-                                <h4 class="font-black text-gray-800 text-sm sm:text-base md:text-lg mb-4 line-clamp-2 leading-snug group-hover:text-themePink transition-colors flex-1 w-full">${item.name}</h4>
-
-                                <div class="w-full ${btnClasses} py-2 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-sm flex items-center justify-center gap-1.5 transition-colors mt-auto z-10 relative">
-                                    <i class="${snsIcon}"></i> <span class="truncate">${displayId}</span>
-                                </div>
-                            </a>
-                        `;
-                    }
-
-                    // === 一般社群 (橫式條列卡片排版) ===
-                    return `
-                        <a href="${item.link}" target="_blank" class="${colClass} bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-1 transition-all flex items-center justify-between group h-full">
-                            <!-- 左側：標題與藥丸標籤 -->
-                            <div class="flex flex-col items-start pr-2 flex-1 min-w-0">
-                                <h4 class="font-black text-gray-800 text-sm md:text-base mb-2 line-clamp-2 group-hover:text-themePink transition-colors w-full">${item.name}</h4>
-                                <div class="${snsBadgeClass} text-[10px] md:text-xs font-black px-2 py-1 rounded-lg shadow-sm flex items-center shrink-0">
-                                    <i class="${snsIcon} mr-1"></i> ${snsType}
-                                </div>
-                            </div>
-                            
-                            <!-- 右側：QR Code 或 自動頭像 -->
-                            ${showQR ? `
-                            <div class="w-12 h-12 md:w-16 md:h-16 shrink-0 bg-white rounded-xl p-1 border border-dashed border-gray-200 group-hover:border-themePink transition-colors relative flex items-center justify-center">
-                                <img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100" alt="QR Code">
-                            </div>
-                            ` : `
-                            <div class="w-10 h-10 md:w-14 md:h-14 shrink-0 rounded-full border-2 border-gray-100 group-hover:border-themePink transition-colors relative flex items-center justify-center overflow-hidden shadow-sm bg-gray-50 p-0.5">
-                                <img src="${avatarUrl}" class="w-full h-full object-cover rounded-full" alt="社群頭像">
-                            </div>
-                            `}
-                        </a>
-                    `;
-                }).join('');
-
-                // 針對在地社群給予特殊的樣式 (圖釘圖示與微紅邊框)
-                const catIcon = catName === '在地社群' ? 'fa-thumbtack text-red-400' : 'fa-hashtag text-themePink';
-                const catBorder = catName === '在地社群' ? 'border-red-50' : 'border-blue-50';
-                const catBgIcon = catName === '在地社群' ? 'text-red-100' : 'text-blue-100';
-
-                // 外層大區塊加入 flex 確保等高，並用動態 Class 來排版 (含 2/3, 1/3 全寬控制)
-                html += `
-                    <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 ${catBorder} relative h-full flex flex-col ${wrapperSpan}">
-                        <div class="absolute -top-4 -right-4 ${catBgIcon} text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
-                        <h3 class="text-lg font-black text-themeBlue mb-6 border-b-4 border-blue-100 pb-3 inline-block relative z-10 shrink-0">
-                            <i class="fa-solid ${catIcon} mr-2"></i>${catName}
-                        </h3>
-                        <!-- 應用動態網格：根據是否為在地社群決定彈性或網格 -->
-                        <div class="${gridClass} relative z-10 flex-1 content-start items-stretch">
-                            ${itemsHtml}
-                        </div>
-                    </div>
-                `;
-            }
-            container.innerHTML = html;
-        }
-
-        // --- 探索在地A7：建案分佈模組 ---
         function loadSharedBuildingData() {
             return new Promise((resolve, reject) => {
                 if (globalBuildingData) return resolve(globalBuildingData);
@@ -3443,7 +2943,7 @@
                     let villageIdx = headers.findIndex(k => k.includes('里'));
                     if (villageIdx === -1) villageIdx = 1;
                     let imgIdx = headers.findIndex(k => k.includes('照片') || k.includes('圖片'));
-                    if (imgIdx === -1) imgIdx = 3; // D column fallback
+                    if (imgIdx === -1) imgIdx = 3; 
 
                     let parsedData = rows.slice(1).map(row => {
                         return {
@@ -3458,116 +2958,6 @@
                 }).catch(reject);
             });
         }
-
-        function fetchBuildingData() {
-            const container = document.getElementById('buildings-list-container');
-            if (!container) return;
-
-            loadSharedBuildingData().then(data => {
-                renderBuildingData(data);
-            }).catch(err => {
-                console.error('Building CSV Fetch Error:', err);
-                container.innerHTML = '<div class="col-span-full text-center text-red-500 font-bold py-8 bg-white rounded-3xl">建案資料載入失敗，請稍後再試。</div>';
-            });
-        }
-
-        function renderBuildingData(data) {
-            const container = document.getElementById('buildings-list-container');
-            const tagsContainer = document.getElementById('village-tags-container'); // 新增：抓取標籤容器
-            if (!container) return;
-
-            const groupedVillages = {};
-            data.forEach(item => {
-                const village = item.village;
-                if (!groupedVillages[village]) groupedVillages[village] = [];
-                groupedVillages[village].push(item);
-            });
-
-            // == 依照地圖照片顏色綁定各里別的專屬色彩 ==
-            // 嚴格配置專屬的 Tailwind 色系，以精準對應上方地圖照片的區塊顏色。
-            const fallbackPool = [
-                { border: 'border-gray-200', textTitle: 'text-gray-600', icon: 'fa-building', bg: 'bg-gray-50', iconColor: 'text-gray-200', activeIcon: 'text-gray-400', hoverBg: 'hover:bg-gray-50' },
-                { border: 'border-teal-200', textTitle: 'text-teal-600', icon: 'fa-building', bg: 'bg-teal-50', iconColor: 'text-teal-200', activeIcon: 'text-teal-500', hoverBg: 'hover:bg-teal-50' }
-            ];
-            let fallbackStyleIndex = 0;
-
-            function getStyleForVillage(name) {
-                if (name.includes('文青')) return { border: 'border-orange-200', textTitle: 'text-orange-500', icon: 'fa-building', bg: 'bg-orange-50', iconColor: 'text-orange-300', activeIcon: 'text-orange-500', hoverBg: 'hover:bg-orange-50' };
-                if (name.includes('樂善')) return { border: 'border-yellow-200', textTitle: 'text-themeYellow', icon: 'fa-city', bg: 'bg-yellow-50', iconColor: 'text-yellow-200', activeIcon: 'text-themeYellow', hoverBg: 'hover:bg-yellow-50' };
-                if (name.includes('長樂')) return { border: 'border-green-200', textTitle: 'text-themeGreen', icon: 'fa-city', bg: 'bg-green-50', iconColor: 'text-green-200', activeIcon: 'text-themeGreen', hoverBg: 'hover:bg-green-50' };
-                if (name.includes('文桃')) return { border: 'border-pink-200', textTitle: 'text-themePink', icon: 'fa-city', bg: 'bg-pink-50', iconColor: 'text-pink-200', activeIcon: 'text-themePink', hoverBg: 'hover:bg-pink-50' };
-                if (name.includes('文藝')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-city', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
-                if (name.includes('文樂')) return { border: 'border-purple-200', textTitle: 'text-themePurple', icon: 'fa-city', bg: 'bg-purple-50', iconColor: 'text-purple-200', activeIcon: 'text-themePurple', hoverBg: 'hover:bg-purple-50' };
-                if (name.includes('長庚')) return { border: 'border-blue-200', textTitle: 'text-themeBlue', icon: 'fa-city', bg: 'bg-blue-50', iconColor: 'text-blue-200', activeIcon: 'text-themeBlue', hoverBg: 'hover:bg-blue-50' };
-                
-                // 找不到對應里別時，使用備用色彩輪替
-                const style = fallbackPool[fallbackStyleIndex % fallbackPool.length];
-                fallbackStyleIndex++;
-                return style;
-            }
-
-            let html = '';
-            let tagsHtml = ''; // 準備標籤的 HTML
-
-            for (const [villageName, items] of Object.entries(groupedVillages)) {
-                const style = getStyleForVillage(villageName);
-                
-                // 產生安全且唯一的 ID 供錨點跳轉使用
-                const safeId = `village-${villageName.replace(/\s+/g, '')}`;
-
-                // 生成各里的快速跳轉標籤 (手機版縮小 padding、字體、圖示及內部 gap)
-                tagsHtml += `
-                    <button onclick="document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'})"
-                            class="py-1.5 px-3 sm:px-4 md:px-5 sm:py-2.5 md:py-3 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-full md:rounded-2xl ${style.hoverBg} transition-all shadow-sm text-xs sm:text-base md:text-lg flex items-center justify-center sm:justify-start gap-1 sm:gap-2 md:gap-3 hover:-translate-y-1 w-auto text-center sm:text-left group">
-                        <div class="flex w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid ${style.icon} text-[9px] sm:text-xs md:text-sm"></i>
-                        </div>
-                        <span class="tracking-wide whitespace-nowrap">${villageName}</span>
-                    </button>
-                `;
-
-                const itemsHtml = items.map(item => {
-                    let imgContent = '';
-                    if (item.img && item.img.startsWith('http')) {
-                        imgContent = `<img src="${item.img}" class="w-full h-full object-cover" alt="${item.name}">`;
-                    } else {
-                        imgContent = `<i class="fa-solid ${style.icon} ${style.iconColor} text-2xl"></i>`;
-                    }
-
-                    // 修改為自適應寬度 (w-auto) 並設定最小與最大寬度，以符合名稱長度
-                    return `
-                    <div class="${style.bg} p-2 rounded-2xl border border-white shadow-sm flex items-center gap-3 hover:-translate-y-1 transition-transform cursor-default w-auto min-w-[120px] max-w-full">
-                        <div class="w-12 h-12 shrink-0 rounded-xl overflow-hidden bg-white flex items-center justify-center border border-gray-100 shadow-inner">
-                            ${imgContent}
-                        </div>
-                        <span class="font-bold text-gray-700 text-sm whitespace-nowrap overflow-hidden text-ellipsis">${item.name}</span>
-                    </div>
-                    `;
-                }).join('');
-
-                // 在外層 div 加上 id，並加上 scroll-mt 確保被固定的 Navbar 擋住
-                // 修改內部容器為 flex-wrap 以支援自適應寬度項目的排列
-                html += `
-                    <div id="${safeId}" class="bg-white rounded-[2.5rem] shadow-cute p-6 border-4 ${style.border} hover:shadow-lg transition-shadow relative overflow-hidden scroll-mt-[100px]">
-                        <div class="absolute -right-4 -bottom-4 text-6xl ${style.iconColor} opacity-50 pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
-                        <div class="flex items-center justify-between mb-4 border-b-2 border-gray-100 pb-3 relative z-10">
-                            <h3 class="text-xl font-black ${style.textTitle}">${villageName} <span class="text-sm font-bold text-gray-400 ml-1">(${items.length})</span></h3>
-                            <i class="fa-solid ${style.icon} text-2xl ${style.activeIcon}"></i>
-                        </div>
-                        <div class="flex flex-wrap gap-3 relative z-10">
-                            ${itemsHtml}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // 渲染列表與標籤
-            container.innerHTML = html;
-            if (tagsContainer) {
-                tagsContainer.innerHTML = tagsHtml;
-            }
-        }
-
     </script>
 </body>
 </html>
