@@ -917,17 +917,7 @@
                             </p>
                         </details>
 
-                        <!-- Q2: 垃圾車 -->
-                        <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
-                            <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg outline-none">
-                                <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 社區還沒有垃圾室，垃圾車的時間和路線該怎麼查？</span>
-                                <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
-                            </summary>
-                            <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed">
-                                若您的社區尚未建置完整的垃圾集中區，需自行倒垃圾，強烈建議下載 <span class="text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-200">「桃園垃圾車」APP</span>！<br>
-                                APP 內會即時顯示垃圾車的 GPS 定位與各里清運時間表。以文青里與樂善里為例，通常會於晚間 <span class="text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-100">18:30 ~ 20:30 間</span> 進行清運。
-                            </p>
-                        </details>
+
 
                         <!-- Q3: 買菜與機能 -->
                         <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
@@ -943,6 +933,68 @@
                                 <a href="https://a7club.github.io/life/#shopping" class="inline-flex items-center text-sm font-black text-yellow-700 bg-themeYellow hover:bg-Yellow-400 px-4 py-2 rounded-xl transition-colors shadow-sm">
                                     <i class="fa-solid fa-cart-shopping mr-2"></i> 前往【購物與生活】看在地推薦清單
                                 </a>
+                            </div>
+                        </details>
+
+                        <!-- Q4: 交通塞車與路況 (使用 JS API，並設定 1:1 長寬比) -->
+                        <details id="traffic-details" class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
+                            <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg outline-none">
+                                <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 聽說文化一路和青山路容易塞車，出門前怎麼看路況？</span>
+                                <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                            </summary>
+                            <div class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed text-center">
+                                <p class="mb-4 text-left">
+                                    上下班尖峰時段往台北方向的車流確實較大，建議通勤族多利用 <span class="text-purple-600 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-100">桃園機場捷運</span> 時間最穩。<br>
+                                    開車族出門前，可以參考下方的 <span class="text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">Google Maps 區域地圖</span> 掌握「文化一路 / 青山路」周邊動態，提早避開車潮！
+                                </p>
+                                
+                                <!-- Google Maps 區塊 (使用 JS API，並設定 1:1 長寬比) -->
+                                <div class="bg-white rounded-xl overflow-hidden shadow-sm w-full max-w-lg border-2 border-gray-200 mx-auto group flex flex-col aspect-square relative">
+                                    <div class="bg-white/90 backdrop-blur-sm px-3 py-2.5 flex justify-between items-center border-b border-gray-200 shrink-0 z-10 shadow-sm">
+                                        <div class="flex items-center text-[11px] sm:text-xs font-black text-gray-700">
+                                            <i class="fa-solid fa-map-location-dot text-blue-500 mr-2 text-sm"></i> 文化一路 / 青山路口即時路況
+                                        </div>
+                                    </div>
+                                    <!-- 地圖容器 -->
+                                    <div id="traffic-map-container" class="w-full flex-1 relative bg-gray-100">
+                                        <div id="traffic-map" class="w-full h-full absolute inset-0"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- Q5: 空氣品質 (真串接 EPA API) -->
+                        <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
+                            <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg outline-none">
+                                <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 常常聞到異味？A7 附近的空氣品質到底好不好？</span>
+                                <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                            </summary>
+                            <div class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed">
+                                <p class="mb-4">
+                                    異味問題是 A7 居民非常關心的議題。桃園市環保局已在周邊佈建了多組 微型感測器 (AirBox) 進行 24 小時監控。<br>
+                                    請參考政府公開 <span class="text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-100">林口測站 AQI 數據</span>，隨時查看真實數據！
+                                </p>
+                                
+                                <!-- 真實環境部微型感測器儀表板 (同步使用 class 更新) -->
+                                <div class="bg-white rounded-xl border-2 border-gray-100 p-4 shadow-sm flex flex-col relative overflow-hidden group/air hover:border-teal-200 transition-colors mt-2">
+                                    <div class="absolute -right-4 -bottom-4 text-teal-50 text-7xl z-0 pointer-events-none group-hover/air:scale-110 transition-transform"><i class="fa-solid fa-wind"></i></div>
+                                    
+                                    <div class="flex items-start gap-3 relative z-10 w-full flex-1">
+                                        <div class="aqi-icon-container w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xl sm:text-2xl shrink-0 transition-colors mt-0.5"><i class="fa-solid fa-leaf"></i></div>
+                                        <div class="flex flex-col flex-1 min-w-0">
+                                            <div class="text-sm sm:text-base text-gray-700 font-black mb-1 leading-tight">林口測站 (鄰近A7)</div>
+                                            <div class="font-black text-gray-800 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xs sm:text-sm">
+                                                <span class="aqi-status text-gray-400 transition-colors">連線中...</span>
+                                                <span class="aqi-value text-gray-500 font-bold text-[10px] sm:text-xs transition-colors">(AQI: --)</span>
+                                                <span class="text-gray-300 hidden sm:inline">|</span>
+                                                <span class="text-gray-600">PM 2.5: <span class="pm25-value font-black">--</span> <span class="text-[9px] font-sans font-bold text-gray-400">μg/m³</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="air-update-time text-right w-full text-[9px] sm:text-[10px] text-gray-400 font-bold mt-2 relative z-10">最後更新: --:--</div>
+                                </div>
+                                <div class="w-full text-right mt-2"><a href="https://data.gov.tw/dataset/40448" target="_blank" class="text-[10px] text-gray-400 hover:text-emerald-500 font-bold transition-colors"><i class="fa-solid fa-link mr-1"></i>資料來源：環境部開放資料</a></div>
                             </div>
                         </details>
 
@@ -996,6 +1048,7 @@
                     </div>
                 </div>
             </div>
+
 
             <!-- ============================================== -->
             <!-- 模組：就學與設籍 (不再顯示於 overview，僅顯示於 buildings) -->
