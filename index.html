@@ -2295,12 +2295,14 @@
                 });
                 shoppingMaps[safeCatId].addLayer(shoppingClusterGroups[safeCatId]);
                 shoppingMarkersMap[safeCatId] = {};
+                shoppingMaps[safeCatId].activeMarker = null; // 初始化紀錄點擊的 marker
 
                 const catStores = globalShoppingData.filter(s => s.category === catName);
                 for (let store of catStores) {
                     if (store.lat && store.lng) {
                         const marker = L.marker([store.lat, store.lng], { icon: getCategoryIcon(store.category, store.name, 'normal') });
                         marker.category = store.category;
+                        marker.storeName = store.name; // 儲存店名
                         marker.bindTooltip(store.name, { direction: 'top', offset: [0, -50], className: 'custom-tooltip' });
                         
                         let popupContent = `
@@ -2316,7 +2318,7 @@
                             marker.setIcon(getCategoryIcon(store.category, store.name, 'clicked', true));
                             if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
                             marker.bounceTimeout = setTimeout(() => {
-                                marker.setIcon(getCategoryIcon(store.category, store.name, 'normal', false));
+                                marker.setIcon(getCategoryIcon(store.category, store.name, 'clicked', false));
                             }, 5000);
                         });
 
@@ -2327,6 +2329,7 @@
             }
             
             const map = shoppingMaps[safeCatId];
+            const clusterGroup = shoppingClusterGroups[safeCatId];
             
             setTimeout(() => {
                 map.invalidateSize();
@@ -2334,20 +2337,46 @@
                 let targetLat = preLat;
                 let targetLng = preLng;
                 
-                if (shoppingClusterGroups[safeCatId].getLayers().length > 0) {
-                    map.fitBounds(shoppingClusterGroups[safeCatId].getBounds(), { padding: [40, 40], maxZoom: 16, animate: true, duration: 1.5 });
-                } else if (targetLat && targetLng) {
-                    map.setView([targetLat, targetLng], 15);
-                }
-
                 const marker = shoppingMarkersMap[safeCatId][storeName];
+
                 if (marker) {
+                    // 如果有上一個被點擊的 marker，將它放回群聚(Cluster)中
+                    if (map.activeMarker && map.activeMarker !== marker) {
+                        map.removeLayer(map.activeMarker);
+                        clusterGroup.addLayer(map.activeMarker);
+                        map.activeMarker.setIcon(getCategoryIcon(map.activeMarker.category, map.activeMarker.storeName, 'normal', false));
+                    }
+
+                    // 把當前點擊的 marker 從群聚中移出，直接加到地圖上（確保它在群聚上方顯示且不會被合併）
+                    map.activeMarker = marker;
+                    clusterGroup.removeLayer(marker);
+                    map.addLayer(marker);
+                    marker.setZIndexOffset(1000); // 確保在最上層
+
+                    // 取得全部標記的邊界範圍 (包含群聚和獨立出來的 marker)
+                    let bounds;
+                    if (clusterGroup.getLayers().length === 0) {
+                        bounds = L.latLngBounds([marker.getLatLng(), marker.getLatLng()]);
+                    } else {
+                        bounds = clusterGroup.getBounds();
+                        bounds.extend(marker.getLatLng());
+                    }
+
+                    // 鎖定較廣的範圍 (maxZoom: 15)
+                    map.fitBounds(bounds, { padding: [40, 40], maxZoom: 15, animate: true, duration: 1.5 });
+
                     map.once('moveend', () => {
                         marker.openPopup();
                         marker.setIcon(getCategoryIcon(catName, storeName, 'clicked', true));
                         if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
-                        marker.bounceTimeout = setTimeout(() => marker.setIcon(getCategoryIcon(catName, storeName, 'normal', false)), 5000);
+                        marker.bounceTimeout = setTimeout(() => marker.setIcon(getCategoryIcon(catName, storeName, 'clicked', false)), 5000);
                     });
+                } else {
+                    if (clusterGroup.getLayers().length > 0) {
+                        map.fitBounds(clusterGroup.getBounds(), { padding: [40, 40], maxZoom: 15, animate: true, duration: 1.5 });
+                    } else if (targetLat && targetLng) {
+                        map.setView([targetLat, targetLng], 15);
+                    }
                 }
             }, 300); 
 
