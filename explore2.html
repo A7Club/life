@@ -130,62 +130,61 @@
                 <h2 class="text-2xl font-black text-purple-400">探索在地A7 <span class="text-lg text-gray-400 font-bold ml-2">了解在地生活</span></h2>
             </div>
 
-            <!-- 分頁選單列 (調整為中大螢幕一排 3 個，確保文字完美顯示) -->
-            <div id="tab-container" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-10 pb-8 border-b-4 border-dashed border-pink-100">
+            <!-- 分頁選單列 (在中螢幕 sm 斷點改為 flex-col 排版，確保一排四個時分類文字完整呈現) -->
+            <div id="tab-container" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-3 lg:gap-4 mb-10 pb-8 border-b-4 border-dashed border-pink-100">
                 <!-- 總覽 -->
-                <button style="display: none;" data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-yellow-100 text-yellow-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-yellow-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-house"></i></div>
-                    <div class="flex flex-col flex-1 min-w-0 justify-center">
-                        <h3 class="font-black text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-800 leading-none truncate w-full">首頁總覽</h3>
-                        <p class="text-gray-400 text-[10px] sm:text-xs lg:text-sm font-bold truncate w-full mt-1.5 sm:mt-2">快速瀏覽情報</p>
+                <button style="display: none;" data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
+                    <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-yellow-100 text-yellow-600 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-yellow-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-house"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
+                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">首頁總覽</h3>
+                        <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">快速瀏覽情報</p>
                     </div>
                 </button>
 
                 <!-- 市政工程 -->
-                <button data-tab="engineering" data-active="bg-emerald-50 border-emerald-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-emerald-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-100 text-emerald-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-emerald-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-person-digging"></i></div>
-                    <div class="flex flex-col flex-1 min-w-0 justify-center">
-                        <h3 class="font-black text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-800 leading-none truncate w-full">市政工程</h3>
-                        <p class="text-gray-400 text-[10px] sm:text-xs lg:text-sm font-bold truncate w-full mt-1.5 sm:mt-2">追蹤 <span id="badge-eng" class="text-emerald-600 font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 項建設</p>
+                <button data-tab="engineering" data-active="bg-emerald-50 border-emerald-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-emerald-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
+                    <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-emerald-100 text-emerald-600 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-emerald-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-person-digging"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
+                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">市政工程</h3>
+                        <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">追蹤 <span id="badge-eng" class="text-emerald-600 font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 項建設</p>
                     </div>
                 </button>
 
                 <!-- 在地社群 -->
-                <button data-tab="community" data-active="bg-purple-50 border-purple-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-purple-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-purple-100 text-themePurple rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-purple-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-users"></i></div>
-                    <div class="flex flex-col flex-1 min-w-0 justify-center">
-                        <h3 class="font-black text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-800導致 leading-none truncate w-full">在地社群</h3>
-                        <p class="text-gray-400 text-[10px] sm:text-xs lg:text-sm font-bold truncate w-full mt-1.5 sm:mt-2">已收錄 <span id="badge-com" class="text-themePurple font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 群組</p>
+                <button data-tab="community" data-active="bg-purple-50 border-purple-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-purple-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
+                    <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-purple-100 text-themePurple rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-purple-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-users"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
+                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">在地社群</h3>
+                        <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">已收錄 <span id="badge-com" class="text-themePurple font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 群組</p>
                     </div>
                 </button>
 
                 <!-- 行政區劃 -->
-                <button data-tab="buildings" data-active="bg-blue-50 border-blue-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-blue-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-blue-100 text-themeBlue rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-blue-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-map-location-dot"></i></div>
-                    <div class="flex flex-col flex-1 min-w-0 justify-center">
-                        <h3 class="font-black text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-800 leading-none truncate w-full">行政區劃</h3>
-                        <p class="text-gray-400 text-[10px] sm:text-xs lg:text-sm font-bold truncate w-full mt-1.5 sm:mt-2">建案、戶籍學區</p>
+                <button data-tab="buildings" data-active="bg-blue-50 border-blue-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-blue-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
+                    <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-blue-100 text-themeBlue rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-blue-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-map-location-dot"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
+                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">行政區劃</h3>
+                        <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">建案、戶籍學區</p>
                     </div>
                 </button>
 
                 <!-- 交通指南 -->
-                <button data-tab="transit" data-active="bg-rose-50 border-rose-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-rose-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-rose-100 text-rose-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-rose-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-train-subway"></i></div>
-                    <div class="flex flex-col flex-1 min-w-0 justify-center">
-                        <h3 class="font-black text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-800 leading-none truncate w-full">交通指南</h3>
-                        <p class="text-gray-400 text-[10px] sm:text-xs lg:text-sm font-bold truncate w-full mt-1.5 sm:mt-2">公車與捷運</p>
+                <button data-tab="transit" data-active="bg-rose-50 border-rose-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-rose-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
+                    <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-rose-100 text-rose-500 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-rose-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-train-subway"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
+                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">交通指南</h3>
+                        <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">公車與捷運</p>
                     </div>
                 </button>
 
                 <!-- 在地新聞 -->
-                <button style="display: none;" data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-3 sm:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-[2rem] border-4 transition-all flex flex-row items-center text-left group cursor-pointer focus:outline-none gap-3 sm:gap-4">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-cyan-100 text-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-regular fa-newspaper"></i></div>
-                    <div class="flex flex-col flex-1 min-w-0 justify-center">
-                        <h3 class="font-black text-base sm:text-lg lg:text-xl xl:text-2xl text-gray-800 leading-none truncate w-full">在地新聞</h3>
-                        <div id="dynamic-news-tags" class="flex flex-row flex-nowrap overflow-hidden gap-1.5 mt-1.5 w-full">
-                            <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-xs px-2 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">機捷</span>
-                            <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-xs px-2 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">A7</span>
-                            <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-xs px-2 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">龜山</span>
+                <button style="display: none;" data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
+                    <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-cyan-100 text-cyan-500 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-regular fa-newspaper"></i></div>
+                    <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
+                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">在地新聞</h3>
+                        <div id="dynamic-news-tags" class="flex flex-row flex-nowrap overflow-hidden gap-1 mt-1 lg:mt-1.5 w-full justify-start sm:justify-center lg:justify-start">
+                            <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[8px] lg:text-[10px] px-1.5 py-0.5 rounded flex items-center leading-none font-bold shrink-0">機捷</span>
+                            <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[8px] lg:text-[10px] px-1.5 py-0.5 rounded flex items-center leading-none font-bold shrink-0">A7</span>
                         </div>
                     </div>
                 </button>
@@ -195,60 +194,67 @@
             <!-- 模組：天氣與空氣品質 (首頁總覽專屬 - 清新水藍綠配色) -->
             <!-- ============================================== -->
             <div id="mod-weather-aqi" class="content-module mb-10 hidden" data-shows-on="overview">
-    <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 items-stretch">
-        <div class="bg-white rounded-[1.5rem] sm:rounded-[2rem] border-4 border-teal-50 p-4 sm:p-5 md:p-6 shadow-cute flex flex-col justify-center relative overflow-hidden group/air hover:border-teal-100 transition-colors flex-1 min-w-0">
-            <div class="absolute -right-4 -bottom-4 text-teal-50 text-7xl sm:text-8xl z-0 pointer-events-none group-hover/air:scale-110 transition-transform"><i class="fa-solid fa-wind"></i></div>
-            
-            <div class="relative z-10 w-full flex-1 flex flex-col justify-center">
-                <div class="flex items-center gap-2 mb-2 sm:mb-4">
-                    <div class="aqi-icon-container w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-teal-50 text-teal-500 flex items-center justify-center text-sm sm:text-lg md:text-xl shrink-0 transition-colors"><i class="fa-solid fa-leaf"></i></div>
-                    <div class="text-base sm:text-lg md:text-3xl text-gray-500 font-black tracking-wide truncate">環保署空氣品質</div>
-                </div>
-                
-                <div class="font-black text-gray-800 flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-4 md:gap-6">
-                    <div class="flex items-baseline shrink-0">
-                        <span class="aqi-status text-3xl sm:text-4xl lg:text-5xl text-teal-500 transition-colors leading-none">連線</span>
-                        <span class="aqi-value text-[10px] sm:text-sm md:text-base font-bold text-teal-400 ml-1.5 transition-colors">(AQI: --)</span>
+                <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 items-stretch">
+                    <!-- 左側：空氣品質 (手機置中顯示，放大字體) -->
+                    <div class="bg-white rounded-[1.5rem] sm:rounded-[2rem] border-4 border-teal-50 p-4 sm:p-5 md:p-6 shadow-cute flex flex-col justify-center relative overflow-hidden group/air hover:border-teal-100 transition-colors flex-1 min-w-0">
+                        <div class="absolute -right-4 -bottom-4 text-teal-50 text-7xl sm:text-8xl z-0 pointer-events-none group-hover/air:scale-110 transition-transform"><i class="fa-solid fa-wind"></i></div>
+                        
+                        <div class="relative z-10 w-full flex-1 flex flex-col justify-center">
+                            <!-- AQI Title (手機版置中) -->
+                            <div class="flex items-center justify-center sm:justify-start gap-2 mb-2 sm:mb-4 w-full">
+                                <div class="aqi-icon-container w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-teal-50 text-teal-500 flex items-center justify-center text-sm sm:text-lg md:text-xl shrink-0 transition-colors"><i class="fa-solid fa-leaf"></i></div>
+                                <div class="text-base sm:text-lg md:text-3xl text-gray-500 font-black tracking-wide truncate">環保署空氣品質</div>
+                            </div>
+                            
+                            <!-- AQI Data Row (手機版垂直堆疊並置中，確保文字夠大) -->
+                            <div class="font-black text-gray-800 flex flex-col sm:flex-row items-center sm:items-baseline justify-center sm:justify-start gap-1 sm:gap-4 md:gap-6 w-full">
+                                <!-- Status & AQI Value -->
+                                <div class="flex items-baseline justify-center sm:justify-start shrink-0">
+                                    <span class="aqi-status text-3xl sm:text-4xl lg:text-5xl text-teal-500 transition-colors leading-none">連線</span>
+                                    <span class="aqi-value text-sm sm:text-sm md:text-base font-bold text-teal-400 ml-1.5 transition-colors">(AQI: --)</span>
+                                </div>
+                                
+                                <span class="text-teal-100 text-3xl font-light shrink-0 hidden sm:inline">|</span>
+                                
+                                <!-- PM 2.5 Value -->
+                                <div class="flex items-baseline justify-center sm:justify-start shrink-0 mt-1 sm:mt-0">
+                                    <span class="text-xs sm:text-sm md:text-base font-bold text-gray-400 mr-1.5">PM2.5</span>
+                                    <span class="pm25-value text-3xl sm:text-4xl lg:text-5xl text-teal-500 transition-colors leading-none">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Update Time -->
+                        <div class="mt-3 flex justify-center sm:justify-end w-full relative z-10">
+                            <div class="air-update-time text-[10px] sm:text-[10px] md:text-xs text-gray-300 font-bold">最後更新: --:--</div>
+                        </div>
                     </div>
-                    
-                    <span class="text-teal-100 text-3xl font-light shrink-0 hidden sm:inline">|</span>
-                    
-                    <div class="flex items-baseline shrink-0">
-                        <span class="text-[10px] sm:text-sm md:text-base font-bold text-gray-400 mr-1.5">PM2.5</span>
-                        <span class="pm25-value text-3xl sm:text-4xl lg:text-5xl text-teal-500 transition-colors leading-none">--</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-3 flex justify-end w-full relative z-10">
-                <div class="air-update-time text-[10px] sm:text-[10px] md:text-xs text-gray-300 font-bold">最後更新: --:--</div>
-            </div>
-        </div>
 
-        <div class="bg-gradient-to-br from-blue-400 to-sky-300 rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-6 shadow-cute flex items-center relative overflow-hidden text-white flex-1 min-w-0 border-4 border-white/20">
-            <div class="absolute -right-4 -bottom-4 text-sky-200/40 text-8xl sm:text-9xl z-0 pointer-events-none hover:scale-110 transition-transform"><i class="fa-solid fa-cloud"></i></div>
-            
-            <div class="flex-1 relative z-10">
-                <div class="flex flex-col h-full justify-between">
-                    <div class="flex flex-col">
-                        <div class="text-[10px] sm:text-xs md:text-sm font-bold text-sky-100 mb-2 flex items-center bg-black/10 w-max px-2 py-1 rounded-lg backdrop-blur-sm"><i class="fa-solid fa-location-dot mr-1.5"></i>龜山</div>
-                        <div class="text-3xl sm:text-4xl lg:text-5xl font-black mb-1 drop-shadow-md weather-temp leading-none">--°C</div>
-                        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1">
-                            <div class="text-xs sm:text-base md:text-lg font-bold drop-shadow-sm weather-desc">讀取中...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center justify-between mt-3">
-                        <div class="text-[10px] sm:text-xs md:text-sm font-bold text-sky-100 bg-black/20 px-2 py-0.5 rounded-md drop-shadow-sm weather-hl whitespace-nowrap">-- / --</div>
-                        <div class="text-4xl sm:text-6xl md:text-7xl drop-shadow-lg weather-icon text-white shrink-0">
-                            <i class="fa-solid fa-cloud-sun"></i>
+                    <!-- 右側：天氣預報 (字體放大調整) -->
+                    <div class="bg-gradient-to-br from-blue-400 to-sky-300 rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-6 shadow-cute flex items-center relative overflow-hidden text-white flex-1 min-w-0 border-4 border-white/20">
+                        <div class="absolute -right-4 -bottom-4 text-sky-200/40 text-8xl sm:text-9xl z-0 pointer-events-none hover:scale-110 transition-transform"><i class="fa-solid fa-cloud"></i></div>
+                        
+                        <div class="flex-1 relative z-10">
+                            <div class="flex flex-col h-full justify-between">
+                                <div class="flex flex-col">
+                                    <div class="text-[10px] sm:text-xs md:text-sm font-bold text-sky-100 mb-2 flex items-center bg-black/10 w-max px-2 py-1 rounded-lg backdrop-blur-sm"><i class="fa-solid fa-location-dot mr-1.5"></i>龜山</div>
+                                    <div class="text-4xl sm:text-4xl lg:text-5xl font-black mb-1 drop-shadow-md weather-temp leading-none">--°C</div>
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1">
+                                        <div class="text-sm sm:text-base md:text-lg font-bold drop-shadow-sm weather-desc">讀取中...</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-end justify-between mt-3">
+                                    <div class="text-xs sm:text-xs md:text-sm font-bold text-sky-100 bg-black/20 px-2 py-1 rounded-md drop-shadow-sm weather-hl whitespace-nowrap">-- / --</div>
+                                    <div class="text-4xl sm:text-6xl md:text-7xl drop-shadow-lg weather-icon text-white shrink-0">
+                                        <i class="fa-solid fa-cloud-sun"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
             <!-- ============================================== -->
             <!-- 模組：市政工程公告欄 (僅工程分頁顯示，且排在時間軸前) -->
@@ -324,13 +330,13 @@
                                 </div>
                                 <div class="px-2">
                                     <h4 class="font-black text-gray-800 text-lg mb-2">重大建設落成</h4>
-                                    <div class="text-gray-500 text-xs sm:text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
+                                    <div class="text-gray-500 text-sm font-bold bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm text-left h-full">
                                         <span class="block text-emerald-500 mb-2 font-black"><i class="fa-solid fa-person-digging mr-1"></i> 建造中項目：</span>
                                         <ul class="space-y-1.5 list-none">
-                                            <li class="flex items-center gap-2 truncate">○ 變一文學路延伸 <span class="text-[9px] bg-emerald-100 px-1 rounded">建造中</span></li>
-                                            <li class="flex items-center gap-2 truncate">○ 第七標地下停車場 <span class="text-[9px] bg-emerald-100 px-1 rounded">建造中</span></li>
-                                            <li class="flex items-center gap-2 truncate">○ 龜山國民運動中心 <span class="text-[9px] bg-emerald-100 px-1 rounded">建造中</span></li>
-                                            <li class="flex items-center gap-2 truncate">○ 文青國中小二期 <span class="text-[9px] bg-emerald-100 px-1 rounded">建造中</span></li>
+                                            <li class="flex items-center gap-2 truncate">○ 變一文學路延伸</li>
+                                            <li class="flex items-center gap-2 truncate">○ 第七標地下停車場</li>
+                                            <li class="flex items-center gap-2 truncate">○ 龜山國民運動中心</li>
+                                            <li class="flex items-center gap-2 truncate">○ 文青國中小二期</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -428,7 +434,7 @@
                                     </div>
                                 </div>
                                 <!-- 南下 -->
-                                <div class="flex-1 bg-purple-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-sm border border-purple-700 flex items-center justify-between">
+                                <div class="flex-1 bg-purple-500 rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-sm border border-purple-700 flex items-center justify-between">
                                     <div>
                                         <div class="text-[10px] sm:text-xs text-purple-200 font-bold mb-0.5">往機場</div>
                                         <div class="text-sm sm:text-xl font-black text-white">南下</div>
@@ -554,7 +560,7 @@
                 <div class="bg-gradient-to-br from-rose-50 to-pink-100 rounded-[2.5rem] shadow-cute p-8 border-4 border-white relative overflow-hidden mb-8 group">
                     <div class="absolute -right-6 -bottom-6 text-rose-200 text-9xl floating pointer-events-none z-0 opacity-40 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map-location-dot"></i></div>
                     <h2 class="text-2xl md:text-3xl font-black text-rose-600 mb-4 relative z-10 flex items-center">
-                        <i class="fa-solid fa-route mr-3 text-rose-400"></i>機捷 A7 站轉乘全攻略
+                        <i class="fa-solid fa-route mr-3 text-rose-400"></i>機捷 A7 轉乘全攻略
                     </h2>
                     <h3 class="text-lg font-black text-gray-700 mb-4 relative z-10">為通勤族量身打造的公車、捷運即時動態總整理</h3>
                     <p class="text-gray-600 font-bold leading-relaxed relative z-10 md:w-5/6">
@@ -600,7 +606,7 @@
                                         </div>
                                     </div>
                                     <!-- 南下 (往機場/中壢) - 深紫色反白卡片 -->
-                                    <div class="flex-1 bg-purple-700 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 shadow-md border-2 border-white flex items-center justify-between hover:-translate-y-1 transition-transform">
+                                    <div class="flex-1 bg-purple-500 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 shadow-md border-2 border-white flex items-center justify-between hover:-translate-y-1 transition-transform">
                                         <div>
                                             <div class="text-[10px] sm:text-xs text-purple-200 font-bold mb-0.5">往機場/中壢</div>
                                             <div class="text-sm sm:text-xl font-black text-white">南下</div>
@@ -729,13 +735,13 @@
                         </div>
                     </details>
                     
-                    <!-- 4. 區域微循環與接駁 -->
+                    <!-- 4. 區域循環與接駁 -->
                     <details class="bg-white rounded-[2rem] shadow-sm border-[3px] border-pink-50 hover:border-pink-200 transition-colors group mb-4 overflow-hidden">
                         <summary class="p-5 md:p-6 flex items-center justify-between cursor-pointer list-none outline-none select-none active:bg-pink-50/50 transition-colors">
                             <div class="flex items-center">
                                 <div class="w-12 h-12 bg-pink-100 text-themePink rounded-2xl flex items-center justify-center text-2xl mr-4 shrink-0 shadow-inner"><i class="fa-solid fa-van-shuttle"></i></div>
                                 <div>
-                                    <h3 class="text-lg md:text-xl font-black text-gray-800">區域微循環 / 社區接駁</h3>
+                                    <h3 class="text-lg md:text-xl font-black text-gray-800">區域循環 / 社區接駁</h3>
                                     <p class="text-xs text-gray-400 font-bold mt-0.5">文青路、樂善二路生活圈</p>
                                 </div>
                             </div>
@@ -794,6 +800,19 @@
                         <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-[10px] md:text-xs opacity-70"></i>
                     </a>
                 </div>
+
+                <!-- Google Maps 區塊 (使用 JS API，並設定 1:1 長寬比) -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm w-full max-w-2xl border-2 border-gray-200 mx-auto group flex flex-col aspect-square relative">
+                    <div class="bg-white/90 backdrop-blur-sm px-3 py-2.5 flex justify-between items-center border-b border-gray-200 shrink-0 z-10 shadow-sm">
+                        <div class="flex items-center text-[11px] sm:text-xs font-black text-gray-700">
+                            <i class="fa-solid fa-map-location-dot text-blue-500 mr-2 text-sm"></i> 文化一路 / 青山路口即時路況
+                        </div>
+                    </div>
+                    <!-- 地圖容器 -->
+                    <div id="traffic-map-container" class="w-full flex-1 relative bg-gray-100">
+                        <div id="traffic-map" class="w-full h-full absolute inset-0"></div>
+                        </div>
+                    </div>
             </div>
 
             <!-- ============================================== -->
@@ -852,7 +871,7 @@
             <!-- ============================================== -->
             <!-- 模組：建案地圖與標籤 (總覽、建案分頁皆顯示) -->
             <!-- ============================================== -->
-            <div id="mod-buildings-map" class="content-module mb-8 hidden" data-shows-on="overview,buildings">
+            <div id="mod-buildings-map" class="content-module mb-8 hidden scroll-mt-[100px]" data-shows-on="overview,buildings">
                 <div class="flex items-center mb-6">
                     <h2 class="text-2xl font-black text-themeBlue flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeBlue"></i>A7行政里分區地圖</h2>
                 </div>
@@ -898,7 +917,17 @@
                             </p>
                         </details>
 
-
+                        <!-- Q2: 垃圾車 -->
+                        <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
+                            <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg outline-none">
+                                <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 社區還沒有垃圾室，垃圾車的時間和路線該怎麼查？</span>
+                                <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
+                            </summary>
+                            <p class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed">
+                                若您的社區尚未建置完整的垃圾集中區，需自行倒垃圾，強烈建議下載 <span class="text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-200">「桃園垃圾車」APP</span>！<br>
+                                APP 內會即時顯示垃圾車的 GPS 定位與各里清運時間表。以文青里與樂善里為例，通常會於晚間 <span class="text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-100">18:30 ~ 20:30 間</span> 進行清運。
+                            </p>
+                        </details>
 
                         <!-- Q3: 買菜與機能 -->
                         <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
@@ -914,68 +943,6 @@
                                 <a href="https://a7club.github.io/life/#shopping" class="inline-flex items-center text-sm font-black text-yellow-700 bg-themeYellow hover:bg-Yellow-400 px-4 py-2 rounded-xl transition-colors shadow-sm">
                                     <i class="fa-solid fa-cart-shopping mr-2"></i> 前往【購物與生活】看在地推薦清單
                                 </a>
-                            </div>
-                        </details>
-
-                        <!-- Q4: 交通塞車與路況 (使用 JS API，並設定 1:1 長寬比) -->
-                        <details id="traffic-details" class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
-                            <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg outline-none">
-                                <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 聽說文化一路和青山路容易塞車，出門前怎麼看路況？</span>
-                                <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
-                            </summary>
-                            <div class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed text-center">
-                                <p class="mb-4 text-left">
-                                    上下班尖峰時段往台北方向的車流確實較大，建議通勤族多利用 <span class="text-purple-600 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-100">桃園機場捷運</span> 時間最穩。<br>
-                                    開車族出門前，可以參考下方的 <span class="text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">Google Maps 區域地圖</span> 掌握「文化一路 / 青山路」周邊動態，提早避開車潮！
-                                </p>
-                                
-                                <!-- Google Maps 區塊 (使用 JS API，並設定 1:1 長寬比) -->
-                                <div class="bg-white rounded-xl overflow-hidden shadow-sm w-full max-w-lg border-2 border-gray-200 mx-auto group flex flex-col aspect-square relative">
-                                    <div class="bg-white/90 backdrop-blur-sm px-3 py-2.5 flex justify-between items-center border-b border-gray-200 shrink-0 z-10 shadow-sm">
-                                        <div class="flex items-center text-[11px] sm:text-xs font-black text-gray-700">
-                                            <i class="fa-solid fa-map-location-dot text-blue-500 mr-2 text-sm"></i> 文化一路 / 青山路口即時路況
-                                        </div>
-                                    </div>
-                                    <!-- 地圖容器 -->
-                                    <div id="traffic-map-container" class="w-full flex-1 relative bg-gray-100">
-                                        <div id="traffic-map" class="w-full h-full absolute inset-0"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </details>
-
-                        <!-- Q5: 空氣品質 (真串接 EPA API) -->
-                        <details class="group bg-yellow-50 rounded-2xl p-4 cursor-pointer border border-pink-100 hover:border-pink-300 transition-colors">
-                            <summary class="font-black text-gray-800 list-none flex justify-between items-center text-lg outline-none">
-                                <span class="flex items-center"><i class="fa-solid fa-q text-themePink mr-2"></i> 常常聞到異味？A7 附近的空氣品質到底好不好？</span>
-                                <span class="text-pink-300 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
-                            </summary>
-                            <div class="mt-3 text-gray-600 font-bold pt-3 border-t border-pink-200 leading-relaxed">
-                                <p class="mb-4">
-                                    異味問題是 A7 居民非常關心的議題。桃園市環保局已在周邊佈建了多組 微型感測器 (AirBox) 進行 24 小時監控。<br>
-                                    請參考政府公開 <span class="text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-100">林口測站 AQI 數據</span>，隨時查看真實數據！
-                                </p>
-                                
-                                <!-- 真實環境部微型感測器儀表板 (同步使用 class 更新) -->
-                                <div class="bg-white rounded-xl border-2 border-gray-100 p-4 shadow-sm flex flex-col relative overflow-hidden group/air hover:border-teal-200 transition-colors mt-2">
-                                    <div class="absolute -right-4 -bottom-4 text-teal-50 text-7xl z-0 pointer-events-none group-hover/air:scale-110 transition-transform"><i class="fa-solid fa-wind"></i></div>
-                                    
-                                    <div class="flex items-start gap-3 relative z-10 w-full flex-1">
-                                        <div class="aqi-icon-container w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xl sm:text-2xl shrink-0 transition-colors mt-0.5"><i class="fa-solid fa-leaf"></i></div>
-                                        <div class="flex flex-col flex-1 min-w-0">
-                                            <div class="text-sm sm:text-base text-gray-700 font-black mb-1 leading-tight">林口測站 (鄰近A7)</div>
-                                            <div class="font-black text-gray-800 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xs sm:text-sm">
-                                                <span class="aqi-status text-gray-400 transition-colors">連線中...</span>
-                                                <span class="aqi-value text-gray-500 font-bold text-[10px] sm:text-xs transition-colors">(AQI: --)</span>
-                                                <span class="text-gray-300 hidden sm:inline">|</span>
-                                                <span class="text-gray-600">PM 2.5: <span class="pm25-value font-black">--</span> <span class="text-[9px] font-sans font-bold text-gray-400">μg/m³</span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="air-update-time text-right w-full text-[9px] sm:text-[10px] text-gray-400 font-bold mt-2 relative z-10">最後更新: --:--</div>
-                                </div>
-                                <div class="w-full text-right mt-2"><a href="https://data.gov.tw/dataset/40448" target="_blank" class="text-[10px] text-gray-400 hover:text-emerald-500 font-bold transition-colors"><i class="fa-solid fa-link mr-1"></i>資料來源：環境部開放資料</a></div>
                             </div>
                         </details>
 
@@ -1066,7 +1033,7 @@
                             <div class="bg-orange-50/50 rounded-2xl p-4 md:p-5 border border-orange-100 flex flex-col items-start hover:bg-orange-50 transition-colors shadow-sm">
                                 <span class="bg-orange-200 text-orange-700 text-xs font-black px-2.5 py-1 rounded-lg mb-3">STEP 3 / 房屋證明</span>
                                 <strong class="text-orange-600 text-lg mb-1.5">房屋所有權狀 <span class="text-sm text-orange-500">正本</span></strong>
-                                <p class="text-sm text-gray-500 font-bold導致 leading-snug">單獨成立一戶者必備，或提供最近一期房屋稅單。</p>
+                                <p class="text-sm text-gray-500 font-bold leading-snug">單獨成立一戶者必備，或提供最近一期房屋稅單。</p>
                             </div>
                         </div>
 
@@ -1228,6 +1195,36 @@
         // 🔄 模組化顯示：分頁切換邏輯 (全域函數)
         // ==========================================
         window.switchTab = function(tabId, isClick = false) {
+            // 切換導航 Pill 樣式
+            document.querySelectorAll('#tab-container .tab-btn').forEach(btn => {
+                const isActive = btn.getAttribute('data-tab') === tabId;
+                const activeClasses = btn.getAttribute('data-active').split(' ');
+                const inactiveClasses = btn.getAttribute('data-inactive').split(' ');
+                
+                if (isActive) {
+                    btn.classList.add(...activeClasses);
+                    btn.classList.remove(...inactiveClasses);
+                } else {
+                    btn.classList.remove(...activeClasses);
+                    btn.classList.add(...inactiveClasses);
+                }
+            });
+
+            // 切換舊版大按鈕樣式 (為了相容性保留邏輯)
+            document.querySelectorAll('.tab-btn[data-active*="border-yellow-400"]').forEach(btn => {
+                if (btn.closest('#tab-container')) return; // 跳過上方膠囊導航
+                const isActive = btn.getAttribute('data-tab') === tabId;
+                const activeClasses = btn.getAttribute('data-active').split(' ');
+                const inactiveClasses = btn.getAttribute('data-inactive').split(' ');
+                if (isActive) {
+                    btn.classList.add(...activeClasses);
+                    btn.classList.remove(...inactiveClasses);
+                } else {
+                    btn.classList.remove(...activeClasses);
+                    btn.classList.add(...inactiveClasses);
+                }
+            });
+
             document.querySelectorAll('.content-module').forEach(el => {
                 const showsOn = el.getAttribute('data-shows-on').split(',');
                 if (showsOn.includes(tabId)) {
@@ -1237,19 +1234,6 @@
                 } else {
                     el.classList.add('hidden');
                     el.classList.remove('fade-in');
-                }
-            });
-
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                const activeClasses = btn.getAttribute('data-active').trim().split(/\s+/);
-                const inactiveClasses = btn.getAttribute('data-inactive').trim().split(/\s+/);
-                
-                if (btn.getAttribute('data-tab') === tabId) {
-                    btn.classList.remove(...inactiveClasses);
-                    btn.classList.add(...activeClasses);
-                } else {
-                    btn.classList.remove(...activeClasses);
-                    btn.classList.add(...inactiveClasses);
                 }
             });
 
@@ -1270,23 +1254,15 @@
             
             if (isClick) {
                 // 點擊切換時，畫面直接捲動到內容區塊的開頭 (跳過上方按鈕區)
-                const tabContainer = document.getElementById('tab-container');
-                if (tabContainer) {
-                    const offset = 90; // 考慮上方固定導航列的高度，預留緩衝空間
-                    const targetY = tabContainer.getBoundingClientRect().bottom + window.scrollY - offset;
-                    window.scrollTo({top: targetY, behavior: 'smooth'});
-                }
+                const appRoot = document.getElementById('app-root');
+                window.scrollTo({top: appRoot.offsetTop - 80, behavior: 'smooth'});
             } else {
                 // 初次載入時的處理
                 if (window.location.hash && window.location.hash !== '#overview') {
                     // 如果網址帶有特定標籤，延遲一下自動往下捲
                     setTimeout(() => {
-                        const tabContainer = document.getElementById('tab-container');
-                        if (tabContainer) {
-                            const offset = 90;
-                            const targetY = tabContainer.getBoundingClientRect().bottom + window.scrollY - offset;
-                            window.scrollTo({top: targetY, behavior: 'smooth'});
-                        }
+                        const appRoot = document.getElementById('app-root');
+                        window.scrollTo({top: appRoot.offsetTop - 80, behavior: 'smooth'});
                     }, 100);
                 } else {
                     window.scrollTo({top: 0, behavior: 'smooth'});
@@ -1684,10 +1660,10 @@
             } catch (error) {
                 // 更新為政府官方全名、最新期程與進度，並為已完工項目加上照片
                 const fallbackData = [
-                    { name: '桃園市龜山區A7站區開發案站外道路(變一)新闢工程', start: '2025年01月', end: '2026年12月', status: '施工中。文學路及樂善一路延伸接文化一路，目前進行地下管線與路基工程。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
-                    { name: '桃園市龜山區A7站區開發案站外道路(變二)新闢工程', start: '2022年11月', end: '2025年12月', status: '已完工。牛角坡路延伸至文化一路，改善周邊交通瓶頸，工程已完工通車。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', img: 'https://ws.tycg.gov.tw/001/Upload/116/relpic/13501/1008952/9e0ec611-0c3c-4f37-87ef-7e763bd4caad.jpg' },
-                    { name: '桃園市龜山區A7站區開發案(變三)文藝街及南林路拓寬與連通道工程', start: '2022年03月', end: '2024年08月', status: '已完工。文藝街延伸與南林路拓寬，並建置銜接A7站體與周邊空橋系統之人行連通道。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', img: 'https://ws.tycg.gov.tw/001/Upload/116/RelPic/13501/1008956/%E8%AE%8A%E4%B8%89%E5%AE%8C%E5%B7%A5%E5%9C%96.jpg' },
-                    { name: '桃園市龜山區A7站區開發案(變四)景觀滯洪池工程', start: '2023年10月', end: '2025年12月', status: '施工中。配合A7站區排水計畫，打造兼具防洪與生態休憩功能之滯洪公園。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
+                    { name: '桃園市龜山區A7站區開發案站外道路(變一)新闢工程', start: '2025年10月', end: '2026年12月', status: '施工中。文學路及樂善一路延伸接文化一路，目前進行地下管線與路基工程。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
+                    { name: '桃園市龜山區A7站區開發案站外道路(變二)新闢工程', start: '2022年11月', end: '2025年6月', status: '已完工通車。牛角坡路延伸至文化一路，改善周邊交通瓶頸，工程已完工通車。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', img: 'https://ws.tycg.gov.tw/001/Upload/116/relpic/13501/1008952/9e0ec611-0c3c-4f37-87ef-7e763bd4caad.jpg' },
+                    { name: '桃園市龜山區A7站區開發案(變三)文藝街及南林路拓寬與連通道工程', start: '2022年03月', end: '2023年01月', status: '正式完工通車。文藝街延伸與南林路拓寬，並建置銜接A7站體與周邊空橋系統之人行連通道。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', img: 'https://ws.tycg.gov.tw/001/Upload/116/RelPic/13501/1008956/%E8%AE%8A%E4%B8%89%E5%AE%8C%E5%B7%A5%E5%9C%96.jpg' },
+                    { name: '桃園市龜山區A7站區開發案站外道路(變四)新闢工程', start: '2023年10月', end: '2026年6月', status: '施工中。紓解A7重劃區塞車問題，串聯文化一路、文學路與青山路。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
                     { name: '機場捷運A7站地區區段徵收公共工程第七標廣場地下停車場工程', start: '2023年05月', end: '2026年06月', status: '施工中。提供A7站區周邊與未來空橋串聯之大型轉乘停車空間。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
                     { name: '機場捷運A7站區開發案立體連通系統(A7站區立體空橋計畫)', start: '2024年01月', end: '2028年12月', status: '陸續規劃/施工中。串聯A7中心商業區與周邊住宅之立體人行通道網絡，部分建案已預留。' },
                     { name: '桃園市龜山區文青國民中小學新建工程(第二期)', start: '2024年05月', end: '2026年08月', status: '施工中。接續一期工程，興建國中部校舍與專科教室，完善在地就學機能。', link: 'https://opc.tycg.gov.tw/News_Content.aspx?n=9370&s=990552' },
@@ -1959,14 +1935,14 @@
                 const style = getStyleForVillage(villageName);
                 const safeId = `village-${villageName.replace(/\s+/g, '')}`;
 
-                // 加上 w-full 讓手機版撐滿寬度一排一個，並隱藏 icon，保留純淨的左對齊或置中文字
+                // 中螢幕隱藏圖示：將 icon 的 div 加上 lg:flex (在 sm, md 隱藏)
                 tagsHtml += `
                     <button onclick="window.switchTab('buildings'); setTimeout(() => { const el = document.getElementById('mod-buildings-list'); if(el){ window.scrollTo({top: el.offsetTop - 100, behavior: 'smooth'}); setTimeout(()=>document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'}), 300); } }, 50);"
                             class="py-1.5 px-1.5 sm:px-3 md:px-4 sm:py-2 md:py-2.5 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-lg md:rounded-xl ${style.hoverBg} transition-all shadow-sm text-[11px] sm:text-sm md:text-base flex items-center justify-center sm:justify-start gap-0 sm:gap-2 hover:-translate-y-1 w-full lg:w-auto text-center sm:text-left group">
-                        <div class="hidden sm:flex w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                        <div class="hidden lg:flex w-4 h-4 md:w-6 md:h-6 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                             <i class="fa-solid ${style.icon} text-[8px] sm:text-[10px]"></i>
                         </div>
-                        <span class="tracking-wide whitespace-nowrap truncate w-full text-center sm:text-left">${villageName}</span>
+                        <span class="tracking-wide whitespace-nowrap truncate w-full text-center lg:text-left">${villageName}</span>
                     </button>
                 `;
 
@@ -1979,12 +1955,15 @@
                     </div>
                 `).join('');
 
+                // 標題右側加入「回分類」小標籤
                 html += `
                     <div id="${safeId}" class="bg-white rounded-[2.5rem] shadow-cute p-6 border-4 ${style.border} hover:shadow-lg transition-shadow relative overflow-hidden scroll-mt-[100px]">
                         <div class="absolute -right-4 -bottom-4 text-6xl ${style.iconColor} opacity-50 pointer-events-none"><i class="fa-solid ${style.icon}"></i></div>
                         <div class="flex items-center justify-between mb-4 border-b-2 border-gray-100 pb-3 relative z-10">
-                            <h3 class="text-xl font-black ${style.textTitle}">${villageName} <span class="text-sm font-bold text-gray-400 ml-1">(${items.length})</span></h3>
-                            <i class="fa-solid ${style.icon} text-2xl ${style.activeIcon}"></i>
+                            <h3 class="text-xl font-black ${style.textTitle} flex items-center">${villageName} <span class="text-sm font-bold text-gray-400 ml-1">(${items.length})</span></h3>
+                            <button onclick="document.getElementById('mod-buildings-map').scrollIntoView({behavior: 'smooth', block: 'start'})" class="text-[10px] sm:text-xs font-bold text-gray-500 bg-gray-100 hover:bg-gray-200 px-2.5 py-1 sm:py-1.5 rounded-lg transition-colors flex items-center shadow-sm whitespace-nowrap active:scale-95">
+                                <i class="fa-solid fa-arrow-up mr-1.5"></i> 回分類
+                            </button>
                         </div>
                         <div class="flex flex-wrap gap-3 relative z-10">${itemsHtml}</div>
                     </div>
@@ -2069,14 +2048,14 @@
                 
                 const minTemp = Math.round(data.daily.temperature_2m_min[0]);
                 const maxTemp = Math.round(data.daily.temperature_2m_max[0]);
-                const hlText = `${maxTemp}° / ${minTemp}°`;
+                const hlText = `最高 ${maxTemp}° / 最低 ${minTemp}°`;
 
                 let desc = '晴時多雲';
                 let icon = '<i class="fa-solid fa-cloud-sun text-yellow-300"></i>';
 
                 // WMO 天氣代碼對應表
                 if (code === 0) { 
-                    desc = '晴朗'; 
+                    desc = '晴朗無雲'; 
                     icon = isDay ? '<i class="fa-solid fa-sun text-yellow-300"></i>' : '<i class="fa-solid fa-moon text-yellow-100"></i>'; 
                 } else if (code >= 1 && code <= 3) { 
                     desc = code === 1 ? '晴時多雲' : (code === 2 ? '多雲' : '陰天'); 
@@ -2098,7 +2077,7 @@
                 renderWeather(temp, desc, hlText, icon);
             } catch (e) {
                 console.info('天氣 API 無法讀取，自動使用備用呈現。');
-                renderWeather(22, '多雲時晴', '24° / 18°', '<i class="fa-solid fa-cloud-sun text-yellow-300"></i>');
+                renderWeather(22, '多雲時晴', '最高 24° / 最低 18°', '<i class="fa-solid fa-cloud-sun text-yellow-300"></i>');
             }
         }
 
@@ -2113,7 +2092,7 @@
             const statusEls = document.querySelectorAll('.aqi-status');
             const iconContainers = document.querySelectorAll('.aqi-icon-container');
 
-            timeEls.forEach(el => el.textContent = '最後更新: 讀取中...');
+            timeEls.forEach(el => el.textContent = '更新: 讀取中...');
 
             // 使用動態修改 classList 取代覆蓋 className，確保不會覆蓋掉外觀尺寸設計
             const setTailwindColor = (els, type, level) => {
@@ -2122,19 +2101,19 @@
                     el.className = el.className.replace(/\b(text|bg)-(gray|emerald|teal|yellow|orange|amber|red)-[0-9]{3,4}\b/g, '').trim();
                     
                     if (type === 'text-status') {
-                        if(level==='good') el.classList.add('text-blue-400');
-                        if(level==='mod') el.classList.add('text-teal-400');
+                        if(level==='good') el.classList.add('text-teal-500');
+                        if(level==='mod') el.classList.add('text-yellow-500');
                         if(level==='bad') el.classList.add('text-orange-500');
                         if(level==='none') el.classList.add('text-gray-400');
                     } else if (type === 'text-val') {
-                        if(level==='good') el.classList.add('text-blue-400');
-                        if(level==='mod') el.classList.add('text-teal-400');
+                        if(level==='good') el.classList.add('text-teal-400');
+                        if(level==='mod') el.classList.add('text-yellow-500');
                         if(level==='bad') el.classList.add('text-orange-600');
                         if(level==='none') el.classList.add('text-gray-400');
                     } else if (type === 'bg-icon') {
-                        if(level==='good') el.classList.add('bg-blue-100', 'text-blue-400');
-                        if(level==='mod') el.classList.add('bg-teal-100', 'text-teal-400');
-                        if(level==='bad') el.classList.add('bg-orange-100', 'text-orange-500');
+                        if(level==='good') el.classList.add('bg-teal-50', 'text-teal-500');
+                        if(level==='mod') el.classList.add('bg-yellow-50', 'text-yellow-500');
+                        if(level==='bad') el.classList.add('bg-orange-50', 'text-orange-500');
                         if(level==='none') el.classList.add('bg-gray-100', 'text-gray-400');
                     }
                 });
@@ -2150,10 +2129,13 @@
                     timeStr = pubDate.toLocaleTimeString('zh-TW', {hour: '2-digit', minute:'2-digit', hour12: false});
                 }
 
-                timeEls.forEach(el => el.textContent = `最後更新: ${timeStr}`);
+                timeEls.forEach(el => el.textContent = `更新: ${timeStr}`);
                 
-                pm25ValEls.forEach(el => el.textContent = pm25);
-                aqiValEls.forEach(el => el.textContent = `(AQI: ${aqi})`);
+                pm25ValEls.forEach(el => {
+                    el.textContent = pm25;
+                });
+                
+                aqiValEls.forEach(el => el.textContent = `(AQI:${aqi})`);
                 statusEls.forEach(el => el.textContent = status);
 
                 let level = 'none';
