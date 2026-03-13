@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="faviconico.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/A7Club/life/refs/heads/main/ios.png">
+    <link rel="apple-touch-icon" href="ios.png">
     <title>A7 柒樂部🎡｜林口、龜山美食生活地圖指南</title>
     <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
@@ -486,7 +486,7 @@
                             <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                             <div>
                                 <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-blue-500 transition-colors line-clamp-1">光川製麵－長庚店</h4>
-                                <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3">長庚店於3/5開始試營運，主打手工麵與暖心湯頭，歡迎大家來嚐鮮，一起為在地新店家加油！三月為不定休，敬請注意粉絲專頁及店頭告示。</p>
+                                <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 ">長庚店於3/5開始試營運，主打手工麵與暖心湯頭，歡迎大家來嚐鮮，一起為在地新店家加油！三月為不定休，敬請注意粉絲專頁及店頭告示。</p>
                             </div>
                             <div class="flex items-center justify-between text-xs font-bold mt-auto pt-1">
                                 <span class="text-blue-500 bg-white px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>文興路222號</span>
@@ -1170,6 +1170,47 @@
 
                 const q = query.toLowerCase();
 
+                // 新增：動態抓取並搜尋 explore.html 靜態內容
+                let exploreSnippet = null;
+                try {
+                    const res = await fetch('explore.html');
+                    if (res.ok) {
+                        const htmlText = await res.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(htmlText, 'text/html');
+                        
+                        // 移除不需要被搜尋的標籤
+                        doc.querySelectorAll('script, style, nav, footer, header, template, svg').forEach(el => el.remove());
+                        
+                        // 遍歷所有文字節點尋找關鍵字
+                        const walkDOM = (node) => {
+                            if (exploreSnippet) return;
+                            if (node.nodeType === Node.TEXT_NODE) {
+                                const text = node.textContent.trim();
+                                if (text.toLowerCase().includes(q) && text.length > 1) {
+                                    const matchIdx = text.toLowerCase().indexOf(q);
+                                    const startIndex = Math.max(0, matchIdx - 25);
+                                    const endIndex = Math.min(text.length, matchIdx + q.length + 25);
+                                    let snippet = text.substring(startIndex, endIndex);
+                                    if (startIndex > 0) snippet = '...' + snippet;
+                                    if (endIndex < text.length) snippet = snippet + '...';
+                                    
+                                    // 關鍵字高亮
+                                    const regex = new RegExp(`(${q})`, 'gi');
+                                    exploreSnippet = snippet.replace(regex, '<span class="bg-purple-200 text-purple-700 px-1 rounded font-black">$1</span>');
+                                }
+                            } else {
+                                for (let child of node.childNodes) {
+                                    walkDOM(child);
+                                }
+                            }
+                        };
+                        walkDOM(doc.body);
+                    }
+                } catch(e) {
+                    console.warn('無法抓取 explore.html 進行搜尋', e);
+                }
+
                 const matchedFood = foodData.filter(item => 
                     (item.name && item.name.toLowerCase().includes(q)) || 
                     (item.category && item.category.toLowerCase().includes(q)) ||
@@ -1204,6 +1245,27 @@
                 );
 
                 let html = '';
+
+                // 渲染探索頁面匹配結果 (動態內文或通用關鍵字)
+                const exploreKeywords = ['探索', 'a7', '建案', '社群', '討論', '房子', '社區', '買房', '發展', '區域'];
+                const matchExploreKw = exploreKeywords.some(k => k.toLowerCase().includes(q));
+                
+                if (exploreSnippet || matchExploreKw) {
+                    html += `
+                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-purple-50 relative overflow-hidden">
+                            <h3 class="text-2xl font-black text-themePurple mb-4 border-b-2 border-purple-100 pb-2"><i class="fa-solid fa-map-location-dot mr-2"></i> 探索在地A7 (頁面內容)</h3>
+                            <a href="explore.html" class="block bg-purple-50 p-4 rounded-2xl shadow-sm border border-white hover:-translate-y-1 hover:shadow-md transition-all group">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-themePurple text-xl shadow-sm shrink-0"><i class="fa-solid fa-compass"></i></div>
+                                    <h4 class="font-black text-gray-800 text-lg group-hover:text-themePurple transition-colors">前往「探索柒」專區</h4>
+                                </div>
+                                <p class="text-sm text-gray-600 font-bold sm:pl-[3.25rem]">
+                                    ${exploreSnippet ? `找到相關內容：<span class="text-gray-800">${exploreSnippet}</span>` : '此頁面包含 A7 重劃區的在地建案地圖、熱門討論社群與發展資訊。'}
+                                </p>
+                            </a>
+                        </div>
+                    `;
+                }
 
                 // 渲染美食結果
                 if(matchedFood.length > 0) {
@@ -1330,9 +1392,9 @@
                             <div class="flex flex-wrap gap-3 relative z-10">
                                 ${matchedBuildings.map(item => {
                                     return `
-                                        <span class="bg-green-50 text-gray-800 font-bold px-4 py-2 rounded-xl border border-white shadow-sm flex items-center gap-2 hover:-translate-y-1 transition-transform cursor-default">
-                                            <i class="fa-solid fa-leaf text-themeGreen"></i> ${item.name} <span class="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-md ml-1 shadow-sm">${item.village}</span>
-                                        </span>
+                                        <a href="explore.html" class="bg-green-50 text-gray-800 font-bold px-4 py-2 rounded-xl border border-white shadow-sm flex items-center gap-2 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                                            <i class="fa-solid fa-leaf text-themeGreen group-hover:scale-110 transition-transform"></i> <span class="group-hover:text-themeGreen transition-colors">${item.name}</span> <span class="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-md ml-1 shadow-sm">${item.village}</span>
+                                        </a>
                                     `;
                                 }).join('')}
                             </div>
