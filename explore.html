@@ -20,6 +20,7 @@
 </script>
 
 
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -144,7 +145,7 @@
             <!-- 分頁選單列 (在中螢幕 sm 斷點改為 flex-col 排版，確保一排四個時分類文字完整呈現) -->
             <div id="tab-container" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-3 lg:gap-4 mb-10 pb-8 border-b-4 border-dashed border-pink-100">
                 <!-- 總覽 -->
-                <button data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
+                <button style="display: none;" data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
                     <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-yellow-100 text-yellow-600 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-yellow-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-house"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
                         <h3 class="font-black text-base sm:text-xs md:text-sm lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">首頁總覽</h3>
@@ -189,7 +190,7 @@
                 </button>
 
                 <!-- 在地新聞 -->
-                <button data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
+                <button style="display: none;" data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
                     <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-cyan-100 text-cyan-500 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-regular fa-newspaper"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
                         <h3 class="font-black text-base sm:text-xs md:text-sm lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">在地新聞</h3>
@@ -1721,7 +1722,7 @@
                     { name: '桃園市龜山區A7站區開發案站外道路(變一)新闢工程', start: '2025年10月', end: '2026年12月', status: '施工中。文學路及樂善一路延伸接文化一路，目前進行地下管線與路基工程。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
                     { name: '桃園市龜山區A7站區開發案站外道路(變二)新闢工程', start: '2022年11月', end: '2025年6月', status: '已完工通車。牛角坡路延伸至文化一路，改善周邊交通瓶頸，工程已完工通車。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', img: 'https://ws.tycg.gov.tw/001/Upload/116/relpic/13501/1008952/9e0ec611-0c3c-4f37-87ef-7e763bd4caad.jpg' },
                     { name: '桃園市龜山區A7站區開發案(變三)文藝街及南林路拓寬與連通道工程', start: '2022年03月', end: '2023年01月', status: '已完工通車。文藝街延伸與南林路拓寬，並建置銜接A7站體與周邊空橋系統之人行連通道。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', img: 'https://ws.tycg.gov.tw/001/Upload/116/RelPic/13501/1008956/%E8%AE%8A%E4%B8%89%E5%AE%8C%E5%B7%A5%E5%9C%96.jpg' },
-                    { name: '桃園市龜山區A7站區開發案站外道路(變四)新闢工程', start: '2023年10月', end: '2026年6月', status: '施工中。紓解A7重劃區塞車問題，串聯文化一路、文學路與青山路。', link: 'https://www.nlma.gov.tw/ch/titlelist/briefings/17003' },
+                    { name: '桃園市龜山區A7站區開發案站外道路(變四)新闢工程', start: '2023年10月', end: '2026年6月', status: '施工中。紓解A7重劃區塞車問題，串聯文化一路、文學路與青山路。', link: '' },
                     { name: '機場捷運A7站地區區段徵收公共工程第七標廣場地下停車場工程', start: '2023年05月', end: '2026年06月', status: '施工中。提供A7站區周邊與未來空橋串聯之大型轉乘停車空間。', link: 'https://www.lceb.gov.tw/LCEB_Content.aspx?n=7339&s=320243' },
                     { name: '機場捷運A7站區開發案立體連通系統(A7站區立體空橋計畫)', start: '2024年01月', end: '2028年12月', status: '陸續規劃/施工中。串聯A7中心商業區與周邊住宅之立體人行通道網絡，部分建案已預留。', link: 'https://urbandesign.tycg.gov.tw/tysb/web_upload/SBZ001/20231027174409.pdf'},
                     { name: '桃園市龜山區文青國民中小學新建工程(第二期)', start: '2024年05月', end: '2026年08月', status: '施工中。接續一期工程，興建國中部校舍與專科教室，完善在地就學機能。', link: 'https://opc.tycg.gov.tw/News_Content.aspx?n=9370&s=990552' },
