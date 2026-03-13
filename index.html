@@ -10,7 +10,7 @@
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
     
-    <!-- 📊 Google Analytics (GA4) 追蹤代碼放置區 -->
+    <!-- 📊 Google Analytics (GA4)追蹤代碼放置區 -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
 <script>
@@ -362,25 +362,25 @@
 
                     <div class="flex flex-row lg:flex-col gap-3 md:gap-4 h-full">
                         <!-- 北上 (往台北) -->
-                        <div class="flex-1 bg-green-50 rounded-2xl p-4 shadow-sm border border-green-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                        <div class="flex-1 bg-purple-50 rounded-2xl p-4 shadow-sm border border-green-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
                             <div>
-                                <div class="text-[10px] sm:text-xs text-green-400 font-bold mb-0.5">往台北</div>
-                                <div class="text-sm sm:text-lg font-black text-themeGreen">北上</div>
+                                <div class="text-[10px] sm:text-xs text-purple-400 font-bold mb-0.5">往台北</div>
+                                <div class="text-sm sm:text-lg font-black text-themePurple">北上</div>
                             </div>
                             <div class="flex items-baseline gap-1">
-                                <span id="mrt-time-north" class="text-3xl sm:text-4xl font-black text-themeGreen font-mono w-10 text-center">--</span>
+                                <span id="mrt-time-north" class="text-3xl sm:text-4xl font-black text-themePurple font-mono w-10 text-center">--</span>
                                 <span id="mrt-unit-north" class="text-xs sm:text-sm font-bold text-gray-500">分</span>
                             </div>
                         </div>
                         <!-- 南下 (往中壢) -->
-                        <div class="flex-1 bg-blue-50 rounded-2xl p-4 shadow-sm border border-blue-100 flex items-center justify-between hover:-translate-y-1 transition-transform">
+                        <div class="flex-1 bg-purple-400 rounded-2xl p-4 shadow-sm border border-white flex items-center justify-between hover:-translate-y-1 transition-transform">
                             <div>
-                                <div class="text-[10px] sm:text-xs text-blue-400 font-bold mb-0.5">往機場/中壢</div>
-                                <div class="text-sm sm:text-lg font-black text-themeBlue">南下</div>
+                                <div class="text-[10px] sm:text-xs text-purple-100 font-bold mb-0.5">往機場/中壢</div>
+                                <div class="text-sm sm:text-lg font-black text-white">南下</div>
                             </div>
                             <div class="flex items-baseline gap-1">
-                                <span id="mrt-time-south" class="text-3xl sm:text-4xl font-black text-themeBlue font-mono w-10 text-center">--</span>
-                                <span id="mrt-unit-south" class="text-xs sm:text-sm font-bold text-gray-500">分</span>
+                                <span id="mrt-time-south" class="text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center">--</span>
+                                <span id="mrt-unit-south" class="text-xs sm:text-sm font-bold text-purple-100">分</span>
                             </div>
                         </div>
                     </div>
@@ -453,7 +453,7 @@
             <div class="bg-white rounded-3xl shadow-cute p-6 md:p-8 border-4 border-orange-50 relative overflow-hidden">
                 <div class="absolute -top-5 -right-4 text-orange-100 text-7xl floating z-0 pointer-events-none"><i class="fa-solid fa-shop"></i></div>
                 
-                <div class="flex items-center justify-between mb-1 relative z-10 gap-2">
+                <div class="flex items-center justify-between mb-4 relative z-10 gap-2">
                     <h2 class="text-lg sm:text-2xl font-black text-orange-400 flex items-center whitespace-nowrap shrink-0">
                         <i class="fa-solid fa-gift mr-2 sm:mr-3"></i> 在地新商家情報
                     </h2>
@@ -462,79 +462,64 @@
                     </a>
                 </div>
                 
-                <!-- 手機版向右滑動提示 -->
-                <div class="text-left text-yellow-400 text-[10px] sm:text-xs font-black mb-2 lg:hidden animate-pulse relative z-10">
-                    向右滑動查看更多 <i class="fa-solid fa-arrow-right-long ml-0.5"></i>
-                </div>
-                
-                <!-- 卡片區塊 -->
-                <div class="flex gap-3 md:gap-4 overflow-x-auto pt-1 pb-4 relative z-10 snap-x snap-mandatory scrollbar-orange">
-                    <!-- 模擬推廣卡片 1 -->
-                    <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
-                         class="w-[260px] lg:w-[280px] bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
-                        <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-沐荼寺手搖飲以真材實料、茶香回甘聞名，清爽不膩口，喝得到細膩層次與職人溫度。</p>
+                <!-- 外層使用 Flex 控制電腦版與手機版的佈局切換 -->
+                <div class="flex flex-col lg:flex-row gap-5 relative z-10">
+                    <!-- 主要推廣卡片區塊 (左側：改為 Grid 網格佈局，佔據主要空間) -->
+                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 w-full lg:w-[65%] xl:w-[70%] shrink-0">
+                        <!-- 模擬推廣卡片 1 -->
+                        <div onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
+                             class="w-full bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 sm:p-5 shadow-sm border-2 border-white relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                            <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
+                            <div>
+                                <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-orange-500 transition-colors line-clamp-1">沐荼寺林口龜山店</h4>
+                                <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">臺灣精品茶飲專門-沐荼寺手搖飲以真材實料、茶香回甘聞名，清爽不膩口，喝得到細膩層次與職人溫度。</p>
+                            </div>
+                            <div class="flex items-center justify-between text-xs font-bold mt-auto pt-1">
+                                <span class="text-orange-500 bg-white px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>長慶一街39號</span>
+                                <span class="text-orange-400 bg-orange-100 w-7 h-7 flex items-center justify-center rounded-lg"><i class="fa-solid fa-glass-water"></i></span>
+                            </div>
                         </div>
-                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-orange-500 bg-white px-2 py-1 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>長慶一街39號</span>
-                            <span class="text-orange-400 bg-orange-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-glass-water"></i></span>
+
+                        <!-- 模擬推廣卡片 2 -->
+                        <div onclick="openStoreModal('光川製麵－長庚店', '試營運', 'bg-blue-500', '主打現做手工麵與濃郁湯頭，搭配簡單卻用心的配料，每一口都吃得到麵香與溫暖。喜歡麵食的朋友不妨趁試營運期間來嚐鮮，一起為在地新店家加油，也感受一碗熱騰騰的日常美味。 🍜', '桃園市龜山區文興路222號', '11:00–14:00, 17:00–20:00 (星期一公休)', 'https://s3-ap-northeast-1.amazonaws.com/ichef-images/7fbe9940-c295-443c-b624-e9af61a5235d/online_restaurant_default/e684f0f3-1bb5-4fb0-adb6-1ef9ea4cc4a2.jpg?channel=online-restaurant', '光川製麵－長庚店')" 
+                             class="w-full bg-gradient-to-br from-blue-50 to-pink-50 rounded-[1.5rem] p-4 sm:p-5 shadow-sm border-2 border-white relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                            <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
+                            <div>
+                                <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-blue-500 transition-colors line-clamp-1">光川製麵－長庚店</h4>
+                                <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">主打手工麵與暖心湯頭，歡迎大家來嚐鮮，一起為在地新店家加油！</p>
+                            </div>
+                            <div class="flex items-center justify-between text-xs font-bold mt-auto pt-1">
+                                <span class="text-blue-500 bg-white px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>文興路222號</span>
+                                <span class="text-blue-400 bg-blue-100 w-7 h-7 flex items-center justify-center rounded-lg"><i class="fa-solid fa-bowl-food"></i></span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 模擬推廣卡片 Blue -->
-                    <div onclick="openStoreModal('光川製麵－長庚店', '試營運', 'bg-blue-500', '主打現做手工麵與濃郁湯頭，搭配簡單卻用心的配料，每一口都吃得到麵香與溫暖。喜歡麵食的朋友不妨趁試營運期間來嚐鮮，一起為在地新店家加油，也感受一碗熱騰騰的日常美味。 🍜', '桃園市龜山區文興路222號', '11:00–14:00, 17:00–20:00 (星期一公休)', 'https://s3-ap-northeast-1.amazonaws.com/ichef-images/7fbe9940-c295-443c-b624-e9af61a5235d/online_restaurant_default/e684f0f3-1bb5-4fb0-adb6-1ef9ea4cc4a2.jpg?channel=online-restaurant', '光川製麵－長庚店')" 
-                         class="w-[260px] lg:w-[280px] bg-gradient-to-br from-blue-50 to-pink-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
-                        <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-blue-500 transition-colors line-clamp-1">光川製麵－長庚店</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">主打手工麵與暖心湯頭，歡迎大家來嚐鮮，一起為在地新店家加油！</p>
-                        </div>
-                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <span class="text-blue-500 bg-white px-2 py-1 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>文興路222號</span>
-                            <span class="text-blue-400 bg-blue-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-bowl-food"></i></span>
-                        </div>
-                    </div>
+                    <!-- 藥丸標籤區塊 (右側/下方：更多情報) -->
+                    <div class="w-full lg:w-[35%] xl:w-[30%] flex flex-row lg:flex-col flex-wrap gap-2.5 items-center lg:items-stretch border-t-2 lg:border-t-0 lg:border-l-2 border-dashed border-orange-100 pt-4 lg:pt-0 lg:pl-5 mt-1 lg:mt-0 relative z-10 h-full">
+                        <span class="hidden lg:flex text-xs sm:text-sm font-black text-orange-400 bg-orange-50 border border-orange-100 px-2.5 py-1.5 rounded-lg mr-1 lg:mr-0 items-center justify-center lg:mb-1 w-fit lg:w-full"><i class="fa-solid fa-bullhorn mr-1"></i> 更多推薦</span>
+                        
+                        <!-- Pill: 粉粉兔 -->
+                        <a href="https://rabbitpinkpink.meimeicircle.workers.dev/" target="_blank" class="bg-white hover:bg-pink-50 text-gray-700 hover:text-themePink border border-gray-200 hover:border-pink-200 px-3.5 py-2 rounded-full text-xs sm:text-sm font-black shadow-sm transition-all flex items-center gap-1.5 cursor-pointer group hover:-translate-y-0.5 lg:w-full">
+                            <span class="bg-themePink text-white text-[9px] px-1.5 py-0.5 rounded-md shadow-sm shrink-0">建案</span>
+                            <span class="truncate flex-1">粉粉兔看房地圖</span> 
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-gray-300 group-hover:text-pink-300 ml-auto shrink-0"></i>
+                        </a>
 
-                    <!-- 模擬推廣卡片 Pink (無放大) -->
-                    <div class="w-[260px] lg:w-[280px] bg-gradient-to-br from-pink-50 to-purple-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 bg-themePink text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">建案分享</div>
-                        <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themePink transition-colors line-clamp-1">粉粉兔看房地圖</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">追蹤看房粉粉兔了解詳細建案懶人包，參考 300+ 筆預售屋評比資料 + 建材等級加權...等的精密建案分析。</p>
+                        <!-- Pill: 台灣房屋 -->
+                        <div onclick="openStoreModal('台灣房屋 (胡哲嘉)', '在地經營', 'bg-themeGreen', '我是您的在地專業房仲，專營 A7 重劃區及周邊建案。不管是買屋、賣屋還是租屋，都能給您最精準、最實在的建議，歡迎預約賞屋！', '桃園市龜山區 (A7重劃區)', '09:00 - 20:00', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe0lcXuBdkigxkB6vF83oRy31Ol8swsPVNAQ&s', 'https://line.me/ti/p/~ID')" 
+                             class="bg-white hover:bg-green-50 text-gray-700 hover:text-themeGreen border border-gray-200 hover:border-green-200 px-3.5 py-2 rounded-full text-xs sm:text-sm font-black shadow-sm transition-all flex items-center gap-1.5 cursor-pointer group hover:-translate-y-0.5 lg:w-full">
+                            <span class="bg-themeGreen text-white text-[9px] px-1.5 py-0.5 rounded-md shadow-sm shrink-0">房仲</span>
+                            <span class="truncate flex-1">台灣房屋 (胡哲嘉)</span> 
+                            <i class="fa-solid fa-chevron-right text-[10px] text-gray-300 group-hover:text-green-400 ml-auto shrink-0"></i>
                         </div>
-                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <a href="https://rabbitpinkpink.meimeicircle.workers.dev/" target="_blank" onclick="event.stopPropagation()" class="text-pink-300 bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-pink-300 hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-solid fa-globe mr-1 text-sm"></i>線上查詢</a>
-                            <span class="text-themePink bg-Pink-100 px-2 py-1 rounded-lg"><i class="fa-solid fa-solid fa-mouse-pointer"></i></span>
-                        </div>
-                    </div>
 
-                    <!-- 模擬推廣卡片 3 (LINE 推廣) -->
-                    <div onclick="openStoreModal('台灣房屋 (胡哲嘉)', '在地經營', 'bg-themeGreen', '我是您的在地專業房仲，專營 A7 重劃區及周邊建案。不管是買屋、賣屋還是租屋，都能給您最精準、最實在的建議，歡迎預約賞屋！', '桃園市龜山區 (A7重劃區)', '09:00 - 20:00', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe0lcXuBdkigxkB6vF83oRy31Ol8swsPVNAQ&s', 'https://line.me/ti/p/~ID')"
-                         class="w-[260px] lg:w-[280px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">在地經營</div>
-                        <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeGreen transition-colors line-clamp-1">台灣房屋</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">台灣房屋房仲-胡哲嘉，專業細心、行情透明，站在客戶立場評估，溝通誠懇不強推，買賣安心有保障。</p>
-                        </div>
-                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" -->
-                            <a href="https://line.me/ti/p/~cwalkedwin" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
-                        </div>
-                    </div>
-                    <!-- 模擬推廣卡片 5 (LINE 推廣) -->
-                    <div onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeGreen', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://lh3.googleusercontent.com/p/AF1QipMUDvKqf0Ztz5j0QrfKr4EbkHZh2av3xbG-O7Ah=s1360-w1360-h1020-rw', 'https://line.me/R/ti/p/@791bjdaj')"
-                         class="w-[260px] lg:w-[280px] bg-gradient-to-br from-green-50 to-yellow-50 rounded-[1.5rem] p-4 shadow-sm border border-white shrink-0 snap-start relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
-                        <div class="absolute top-0 right-0 bg-themeGreen text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">統包裝潢</div>
-                        <div>
-                            <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-themeGreen transition-colors line-clamp-1">凱驛空間</h4>
-                            <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">社群推薦統包裝潢規劃細緻、工班穩定，報價透明好溝通，從設計到完工一條龍，省心又安心。</p>
-                        </div>
-                        <div class="flex items-center justify-between text-xs font-bold mt-auto">
-                            <!-- 變更為直接加入 LINE 的按鈕，並加上 onclick="event.stopPropagation()" -->
-                            <a href="https://line.me/ti/p/~@791bjdaj" target="_blank" onclick="event.stopPropagation()" class="text-[#00B900] bg-white px-2 py-1.5 rounded-lg shadow-sm hover:bg-[#00B900] hover:text-white transition-colors flex items-center border border-gray-100"><i class="fa-brands fa-line mr-1 text-sm"></i>加LINE好友</a>
-                            
+                        <!-- Pill: 凱驛空間 -->
+                        <div onclick="openStoreModal('凱驛空間', '裝潢統包', 'bg-themeGreen', 'A7在地深耕，提供專業的室內設計、老屋翻新與裝潢統包服務，以實在的價格打造夢想家，LINE群友強力推薦！', '線上預約丈量諮詢', '09:00 - 18:00', 'https://lh3.googleusercontent.com/p/AF1QipMUDvKqf0Ztz5j0QrfKr4EbkHZh2av3xbG-O7Ah=s1360-w1360-h1020-rw', 'https://line.me/R/ti/p/@791bjdaj')" 
+                             class="bg-white hover:bg-green-50 text-gray-700 hover:text-themeGreen border border-gray-200 hover:border-green-200 px-3.5 py-2 rounded-full text-xs sm:text-sm font-black shadow-sm transition-all flex items-center gap-1.5 cursor-pointer group hover:-translate-y-0.5 lg:w-full">
+                            <span class="bg-themeGreen text-white text-[9px] px-1.5 py-0.5 rounded-md shadow-sm shrink-0">裝潢</span>
+                            <span class="truncate flex-1">凱驛空間</span> 
+                            <i class="fa-solid fa-chevron-right text-[10px] text-gray-300 group-hover:text-green-400 ml-auto shrink-0"></i>
                         </div>
                     </div>
                 </div>
@@ -1367,7 +1352,7 @@
                         pos = Math.max(0, Math.min(100, pos));
                         
                         nbTrainsHTML += `<div class="absolute top-[0px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
-                            <div class="bg-white text-themeGreen rounded-full shadow-md border-2 border-green-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
+                            <div class="bg-white text-themePurple rounded-full shadow-md border-2 border-purple-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
                                 <i class="fa-solid fa-caret-left text-[10px]"></i>
                                 <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
                             </div>
@@ -1390,7 +1375,7 @@
                         pos = Math.max(0, Math.min(100, pos));
                         
                         sbTrainsHTML += `<div class="absolute top-[26px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
-                            <div class="bg-white text-themeBlue rounded-full shadow-md border-2 border-blue-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
+                            <div class="bg-purple-500 text-white rounded-full shadow-md border-2 border-white flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
                                 <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
                                 <i class="fa-solid fa-caret-right text-[10px]"></i>
                             </div>
@@ -1409,7 +1394,7 @@
                     if(unitEl) unitEl.style.display = 'none';
                 } else {
                     el.innerText = Math.ceil(diff);
-                    el.className = el.id.includes('north') ? 'text-3xl sm:text-4xl font-black text-themeGreen font-mono w-10 text-center' : 'text-3xl sm:text-4xl font-black text-themeBlue font-mono w-10 text-center';
+                    el.className = el.id.includes('north') ? 'text-3xl sm:text-4xl font-black text-purple-400 font-mono w-10 text-center' : 'text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center';
                     if(unitEl) unitEl.style.display = 'inline';
                 }
             };
