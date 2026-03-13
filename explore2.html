@@ -1249,6 +1249,17 @@
         // 🔄 模組化顯示：分頁切換邏輯 (全域函數)
         // ==========================================
         window.switchTab = function(tabId, isClick = false) {
+            // 動態更新網頁標題，方便 GA 分析追蹤
+            const tabTitles = {
+                'overview': '生活攻略 - A7 柒樂部🎡｜探索在地A7',
+                'engineering': '市政工程 - A7 柒樂部🎡｜探索在地A7',
+                'community': '在地社群 - A7 柒樂部🎡｜探索在地A7',
+                'buildings': '行政區劃 - A7 柒樂部🎡｜探索在地A7',
+                'transit': '即時交通 - A7 柒樂部🎡｜探索在地A7',
+                'news': '在地新聞 - A7 柒樂部🎡｜探索在地A7'
+            };
+            document.title = tabTitles[tabId] || 'A7 柒樂部🎡｜探索在地A7';
+
             // 切換導航 Pill 樣式
             document.querySelectorAll('#tab-container .tab-btn').forEach(btn => {
                 const isActive = btn.getAttribute('data-tab') === tabId;
