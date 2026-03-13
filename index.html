@@ -11,16 +11,17 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
     
     <!-- 📊 Google Analytics (GA4)追蹤代碼放置區 -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-YJ9RJC2DRS');
-</script>
-
+    <!-- 
+      請將您的 GA4 gtag.js 代碼貼在下方。
+      範例：
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX'); // 將 X 替換為您的評估 ID
+      </script>
+    -->
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -465,7 +466,7 @@
                 <!-- 外層使用 Flex 控制電腦版與手機版的佈局切換 -->
                 <div class="flex flex-col lg:flex-row gap-5 relative z-10">
                     <!-- 主要推廣卡片區塊 (左側：改為 Grid 網格佈局，佔據主要空間) -->
-                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 w-full lg:w-[65%] xl:w-[70%] shrink-0">
+                    <div class="grid grid-cols-2 gap-4 w-full lg:w-[65%] xl:w-[70%] shrink-0">
                         <!-- 模擬推廣卡片 1 -->
                         <div style="display: none;" onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
                              class="w-full bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 sm:p-5 shadow-sm border-2 border-white relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
@@ -486,7 +487,7 @@
                             <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-xl z-10 shadow-sm">全新開幕</div>
                             <div>
                                 <h4 class="font-black text-gray-800 text-base sm:text-lg mb-1 group-hover:text-blue-500 transition-colors line-clamp-1">光川製麵－長庚店</h4>
-                                <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 ">長庚店將於3/5開始試營運，主打手工麵與暖心湯頭，歡迎大家來嚐鮮，一起為在地新店家加油！三月為不定休，敬請注意粉絲專頁及店頭告示。</p>
+                                <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 line-clamp-2">主打手工麵與暖心湯頭，歡迎大家來嚐鮮，一起為在地新店家加油！</p>
                             </div>
                             <div class="flex items-center justify-between text-xs font-bold mt-auto pt-1">
                                 <span class="text-blue-500 bg-white px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100"><i class="fa-solid fa-location-dot mr-1"></i>文興路222號</span>
