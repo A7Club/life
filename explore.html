@@ -8,7 +8,19 @@
     <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
-    
+    <!-- 📊 Google Analytics (GA4)追蹤代碼放置區 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YJ9RJC2DRS');
+</script>
+
+
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -39,16 +51,6 @@
             }
         }
     </script>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-YJ9RJC2DRS');
-</script>
-
     <style>
         body { 
             background-color: #FDFBF7; 
@@ -146,7 +148,7 @@
                 <button style="display: none;" data-tab="overview" data-active="bg-yellow-50 border-yellow-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-yellow-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
                     <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-yellow-100 text-yellow-600 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-yellow-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-house"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
-                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">生活攻略</h3>
+                        <h3 class="font-black text-base sm:text-xs md:text-sm lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">首頁總覽</h3>
                         <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">快速瀏覽情報</p>
                     </div>
                 </button>
@@ -155,7 +157,7 @@
                 <button data-tab="engineering" data-active="bg-emerald-50 border-emerald-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-emerald-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
                     <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-emerald-100 text-emerald-600 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-emerald-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-person-digging"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
-                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">市政工程</h3>
+                        <h3 class="font-black text-base sm:text-xs md:text-sm lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">市政工程</h3>
                         <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">追蹤 <span id="badge-eng" class="text-emerald-600 font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 項建設</p>
                     </div>
                 </button>
@@ -164,7 +166,7 @@
                 <button data-tab="community" data-active="bg-purple-50 border-purple-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-purple-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
                     <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-purple-100 text-themePurple rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-purple-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-users"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
-                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">在地社群</h3>
+                        <h3 class="font-black text-base sm:text-xs md:text-sm lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">在地社群</h3>
                         <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">已收錄 <span id="badge-com" class="text-themePurple font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 群組</p>
                     </div>
                 </button>
@@ -173,16 +175,16 @@
                 <button data-tab="buildings" data-active="bg-blue-50 border-blue-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-blue-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
                     <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-blue-100 text-themeBlue rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-blue-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-map-location-dot"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
-                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">行政區劃</h3>
+                        <h3 class="font-black text-base sm:text-xs md:text-sm lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">行政區劃</h3>
                         <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">建案、戶籍學區</p>
                     </div>
                 </button>
 
-                <!-- 即時交通 -->
+                <!-- 交通指南 -->
                 <button data-tab="transit" data-active="bg-rose-50 border-rose-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-rose-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
                     <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-rose-100 text-rose-500 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-rose-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-solid fa-train-subway"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
-                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">即時交通</h3>
+                        <h3 class="font-black text-base sm:text-xs md:text-sm lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">交通指南</h3>
                         <p class="text-gray-400 text-[10px] sm:text-[9px] lg:text-sm font-bold truncate w-full mt-1 sm:mt-0.5 lg:mt-2">公車與捷運</p>
                     </div>
                 </button>
@@ -191,8 +193,8 @@
                 <button style="display: none;" data-tab="news" data-active="bg-cyan-50 border-cyan-400 shadow-md scale-[1.02]" data-inactive="bg-white border-transparent shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-cyan-200" class="tab-btn p-3 sm:p-2.5 md:p-3 lg:p-4 xl:p-5 rounded-[1.5rem] sm:rounded-2xl lg:rounded-[2rem] border-4 transition-all flex flex-row sm:flex-col lg:flex-row items-center text-left sm:text-center lg:text-left group cursor-pointer focus:outline-none gap-3 sm:gap-1.5 lg:gap-4">
                     <div class="w-12 h-12 sm:w-10 sm:h-10 lg:w-14 lg:h-14 bg-cyan-100 text-cyan-500 rounded-xl sm:rounded-lg lg:rounded-2xl flex items-center justify-center text-xl sm:text-base lg:text-2xl group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 shrink-0"><i class="fa-regular fa-newspaper"></i></div>
                     <div class="flex flex-col flex-1 min-w-0 justify-center w-full items-start sm:items-center lg:items-start mt-0 sm:mt-1 lg:mt-0">
-                        <h3 class="font-black text-base lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">在地新聞</h3>
-                        <div id="dynamic-news-tags" class="flex flex-row flex-nowrap overflow-hidden gap-1 mt-1 lg:mt-1.5 w-full justify-start sm:justify-center lg:justify-start">
+                        <h3 class="font-black text-base sm:text-xs md:text-sm lg:text-xl xl:text-2xl text-gray-800 leading-tight w-full whitespace-nowrap">在地新聞</h3>
+                        <div id="dynamic-news-tags" class="flex flex-row flex-nowrap overflow-hidden gap-1.5 mt-1 lg:mt-1.5 w-full justify-start sm:justify-center lg:justify-start">
                             <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[8px] lg:text-[10px] px-1.5 py-0.5 rounded flex items-center leading-none font-bold shrink-0">機捷</span>
                             <span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[8px] lg:text-[10px] px-1.5 py-0.5 rounded flex items-center leading-none font-bold shrink-0">A7</span>
                         </div>
@@ -201,7 +203,7 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：天氣與空氣品質 (生活攻略專屬 - 清新水藍綠配色) -->
+            <!-- 模組：天氣與空氣品質 (手機也併排) -->
             <!-- ============================================== -->
             <div id="mod-weather-aqi" class="content-module mb-10 hidden" data-shows-on="overview">
                 <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 items-stretch">
@@ -1245,79 +1247,72 @@
     </footer>
 
     <script>
-        // 全域機捷動態間隔控制
         window.globalMrtInterval = null;
 
-        // 手機版選單開關
+        // 定義標題對應表
+        const tabTitles = {
+            'overview': '首頁總覽',
+            'engineering': '市政工程',
+            'community': '在地社群',
+            'buildings': '分區學區',
+            'transit': '交通指南',
+            'news': '在地新聞'
+        };
+
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
             menu.classList.toggle('flex');
         }
 
-        // ==========================================
-        // 🔄 模組化顯示：分頁切換邏輯 (全域函數)
-        // ==========================================
         window.switchTab = function(tabId, isClick = false) {
-            // 定義標題對應表，動態更新網頁標題讓 GA 方便讀取
-            const tabTitles = {
-                'overview': '首頁總覽',
-                'engineering': '市政工程',
-                'community': '在地社群',
-                'buildings': '行政區劃',
-                'transit': '交通指南',
-                'news': '在地新聞'
-            };
+            // 更新網頁 <title>
             const pageTitle = tabTitles[tabId] || '探索在地A7';
             document.title = `A7 柒樂部🎡｜${pageTitle}`;
 
-            document.querySelectorAll('.content-module').forEach(el => {
-                const showsOn = el.getAttribute('data-shows-on').split(',');
-                if (showsOn.includes(tabId)) {
-                    el.classList.remove('hidden');
-                    void el.offsetWidth; // 觸發重繪以重新播起動畫
-                    el.classList.add('fade-in');
+            // 處理導航大按鈕的樣式切換 (確保正確讀取 active/inactive classes)
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                const isActive = btn.getAttribute('data-tab') === tabId;
+                const activeClasses = btn.getAttribute('data-active').trim().split(/\s+/).filter(Boolean);
+                const inactiveClasses = btn.getAttribute('data-inactive').trim().split(/\s+/).filter(Boolean);
+                
+                if (isActive) {
+                    if (inactiveClasses.length) btn.classList.remove(...inactiveClasses);
+                    if (activeClasses.length) btn.classList.add(...activeClasses);
                 } else {
-                    el.classList.add('hidden');
-                    el.classList.remove('fade-in');
+                    if (activeClasses.length) btn.classList.remove(...activeClasses);
+                    if (inactiveClasses.length) btn.classList.add(...inactiveClasses);
                 }
             });
 
-            // 控制機捷軌道動畫的啟動與關閉
+            document.querySelectorAll('.content-module').forEach(el => {
+                const showsOn = el.getAttribute('data-shows-on');
+                if (showsOn && showsOn.split(',').includes(tabId)) {
+                    el.classList.remove('hidden');
+                    void el.offsetWidth;
+                    el.classList.add('fade-in');
+                } else if (el) {
+                    el.classList.add('hidden');
+                }
+            });
+
             if (tabId === 'transit' || tabId === 'overview') {
                 if (window.updateMRTStatus) window.updateMRTStatus();
-                if (!window.globalMrtInterval) {
-                    window.globalMrtInterval = setInterval(window.updateMRTStatus, 1000);
-                }
+                if (!window.globalMrtInterval) window.globalMrtInterval = setInterval(window.updateMRTStatus, 1000);
             } else {
-                if (window.globalMrtInterval) {
-                    clearInterval(window.globalMrtInterval);
-                    window.globalMrtInterval = null;
-                }
+                if (window.globalMrtInterval) { clearInterval(window.globalMrtInterval); window.globalMrtInterval = null; }
             }
 
-            // 修改 URL Hash 並推入歷史紀錄，幫助 GA 自動記錄不同頁面的 page_view
+            // 修改 URL Hash，幫助 GA 記錄不同頁面 (使用 pushState 而非 replaceState，讓上一頁可以回上一個 tab)
             try { 
-                if (window.location.hash !== '#' + tabId) {
-                    history.pushState(null, null, '#' + tabId); 
+                if (window.location.hash !== `#${tabId}`) {
+                    history.pushState(null, null, `#${tabId}`); 
                 }
             } catch(e) {}
-            
+
             if (isClick) {
-                // 點擊切換時，畫面直接捲動到內容區塊的開頭 (跳過上方按鈕區)
                 const appRoot = document.getElementById('app-root');
                 window.scrollTo({top: appRoot.offsetTop - 80, behavior: 'smooth'});
-            } else {
-                // 初次載入時的處理
-                if (window.location.hash && window.location.hash !== '#overview') {
-                    // 如果網址帶有特定標籤，延遲一下自動往下捲
-                    setTimeout(() => {
-                        const appRoot = document.getElementById('app-root');
-                        window.scrollTo({top: appRoot.offsetTop - 80, behavior: 'smooth'});
-                    }, 100);
-                } else {
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                }
             }
         }
 
@@ -1727,7 +1722,7 @@
                     { name: '桃園市龜山區A7站區開發案站外道路(變一)新闢工程', start: '2025年10月', end: '2026年12月', status: '施工中。文學路及樂善一路延伸接文化一路，目前進行地下管線與路基工程。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483' },
                     { name: '桃園市龜山區A7站區開發案站外道路(變二)新闢工程', start: '2022年11月', end: '2025年6月', status: '已完工通車。牛角坡路延伸至文化一路，改善周邊交通瓶頸，工程已完工通車。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', img: 'https://ws.tycg.gov.tw/001/Upload/116/relpic/13501/1008952/9e0ec611-0c3c-4f37-87ef-7e763bd4caad.jpg' },
                     { name: '桃園市龜山區A7站區開發案(變三)文藝街及南林路拓寬與連通道工程', start: '2022年03月', end: '2023年01月', status: '已完工通車。文藝街延伸與南林路拓寬，並建置銜接A7站體與周邊空橋系統之人行連通道。', link: 'https://opc.tycg.gov.tw/News.aspx?n=9330&sms=13483', img: 'https://ws.tycg.gov.tw/001/Upload/116/RelPic/13501/1008956/%E8%AE%8A%E4%B8%89%E5%AE%8C%E5%B7%A5%E5%9C%96.jpg' },
-                    { name: '桃園市龜山區A7站區開發案站外道路(變四)新闢工程', start: '2023年10月', end: '2026年6月', status: '施工中。紓解A7重劃區塞車問題，串聯文化一路、文學路與青山路。', link: 'https://www.nlma.gov.tw/ch/titlelist/briefings/17003' },
+                    { name: '桃園市龜山區A7站區開發案站外道路(變四)新闢工程', start: '2023年10月', end: '2026年6月', status: '施工中。紓解A7重劃區塞車問題，串聯文化一路、文學路與青山路。', link: '' },
                     { name: '機場捷運A7站地區區段徵收公共工程第七標廣場地下停車場工程', start: '2023年05月', end: '2026年06月', status: '施工中。提供A7站區周邊與未來空橋串聯之大型轉乘停車空間。', link: 'https://www.lceb.gov.tw/LCEB_Content.aspx?n=7339&s=320243' },
                     { name: '機場捷運A7站區開發案立體連通系統(A7站區立體空橋計畫)', start: '2024年01月', end: '2028年12月', status: '陸續規劃/施工中。串聯A7中心商業區與周邊住宅之立體人行通道網絡，部分建案已預留。', link: 'https://urbandesign.tycg.gov.tw/tysb/web_upload/SBZ001/20231027174409.pdf'},
                     { name: '桃園市龜山區文青國民中小學新建工程(第二期)', start: '2024年05月', end: '2026年08月', status: '施工中。接續一期工程，興建國中部校舍與專科教室，完善在地就學機能。', link: 'https://opc.tycg.gov.tw/News_Content.aspx?n=9370&s=990552' },
