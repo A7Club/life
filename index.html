@@ -1172,6 +1172,7 @@
 
                 // 新增：動態抓取並搜尋 explore.html 靜態內容
                 let exploreSnippet = null;
+                let exploreLinkTarget = 'explore.html'; // 預設連結
                 try {
                     const res = await fetch('explore.html');
                     if (res.ok) {
@@ -1198,6 +1199,24 @@
                                     // 關鍵字高亮
                                     const regex = new RegExp(`(${q})`, 'gi');
                                     exploreSnippet = snippet.replace(regex, '<span class="bg-purple-200 text-purple-700 px-1 rounded font-black">$1</span>');
+
+                                    // 尋找內容所屬的分類區塊 ID 作為精準錨點
+                                    let parent = node.parentElement;
+                                    let validIds = [];
+                                    // 往上層找尋帶有 ID 的容器 (收集所有父層 ID)
+                                    while(parent && parent.tagName !== 'BODY') {
+                                        if (parent.id && parent.id !== 'app-root' && !parent.id.includes('container')) {
+                                            validIds.push(parent.id);
+                                        }
+                                        parent = parent.parentElement;
+                                    }
+                                    
+                                    // 取最上層 (陣列最後一個) 的分類 ID，並移除 text fragment 以免影響路由
+                                    if (validIds.length > 0) {
+                                        exploreLinkTarget = `explore.html#${validIds[validIds.length - 1]}`;
+                                    } else {
+                                        exploreLinkTarget = `explore.html`;
+                                    }
                                 }
                             } else {
                                 for (let child of node.childNodes) {
@@ -1254,10 +1273,10 @@
                     html += `
                         <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-purple-50 relative overflow-hidden">
                             <h3 class="text-2xl font-black text-themePurple mb-4 border-b-2 border-purple-100 pb-2"><i class="fa-solid fa-map-location-dot mr-2"></i> 探索在地A7 (頁面內容)</h3>
-                            <a href="explore.html" class="block bg-purple-50 p-4 rounded-2xl shadow-sm border border-white hover:-translate-y-1 hover:shadow-md transition-all group">
+                            <a href="${exploreLinkTarget}" class="block bg-purple-50 p-4 rounded-2xl shadow-sm border border-white hover:-translate-y-1 hover:shadow-md transition-all group">
                                 <div class="flex items-center gap-3 mb-2">
                                     <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-themePurple text-xl shadow-sm shrink-0"><i class="fa-solid fa-compass"></i></div>
-                                    <h4 class="font-black text-gray-800 text-lg group-hover:text-themePurple transition-colors">前往「探索柒」專區</h4>
+                                    <h4 class="font-black text-gray-800 text-lg group-hover:text-themePurple transition-colors">前往「探索柒」相關段落</h4>
                                 </div>
                                 <p class="text-sm text-gray-600 font-bold sm:pl-[3.25rem]">
                                     ${exploreSnippet ? `找到相關內容：<span class="text-gray-800">${exploreSnippet}</span>` : '此頁面包含 A7 重劃區的在地建案地圖、熱門討論社群與發展資訊。'}
@@ -1392,7 +1411,7 @@
                             <div class="flex flex-wrap gap-3 relative z-10">
                                 ${matchedBuildings.map(item => {
                                     return `
-                                        <a href="explore.html" class="bg-green-50 text-gray-800 font-bold px-4 py-2 rounded-xl border border-white shadow-sm flex items-center gap-2 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                                        <a href="explore.html#:~:text=${encodeURIComponent(item.name)}" class="bg-green-50 text-gray-800 font-bold px-4 py-2 rounded-xl border border-white shadow-sm flex items-center gap-2 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
                                             <i class="fa-solid fa-leaf text-themeGreen group-hover:scale-110 transition-transform"></i> <span class="group-hover:text-themeGreen transition-colors">${item.name}</span> <span class="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-md ml-1 shadow-sm">${item.village}</span>
                                         </a>
                                     `;
