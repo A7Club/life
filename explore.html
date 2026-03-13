@@ -15,16 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts (可愛圓潤字體) -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-YJ9RJC2DRS');
-</script>
-
+    
     <script>
         tailwind.config = {
             theme: {
@@ -91,6 +82,16 @@
         .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YJ9RJC2DRS');
+</script>
+
 <body class="text-gray-700 antialiased min-h-screen flex flex-col relative">
 
     <!-- 🎪 導航列 (雲朵造型) -->
@@ -1258,35 +1259,17 @@
         // 🔄 模組化顯示：分頁切換邏輯 (全域函數)
         // ==========================================
         window.switchTab = function(tabId, isClick = false) {
-            // 切換導航 Pill 樣式
-            document.querySelectorAll('#tab-container .tab-btn').forEach(btn => {
-                const isActive = btn.getAttribute('data-tab') === tabId;
-                const activeClasses = btn.getAttribute('data-active').split(' ');
-                const inactiveClasses = btn.getAttribute('data-inactive').split(' ');
-                
-                if (isActive) {
-                    btn.classList.add(...activeClasses);
-                    btn.classList.remove(...inactiveClasses);
-                } else {
-                    btn.classList.remove(...activeClasses);
-                    btn.classList.add(...inactiveClasses);
-                }
-            });
-
-            // 切換舊版大按鈕樣式 (為了相容性保留邏輯)
-            document.querySelectorAll('.tab-btn[data-active*="border-yellow-400"]').forEach(btn => {
-                if (btn.closest('#tab-container')) return; // 跳過上方膠囊導航
-                const isActive = btn.getAttribute('data-tab') === tabId;
-                const activeClasses = btn.getAttribute('data-active').split(' ');
-                const inactiveClasses = btn.getAttribute('data-inactive').split(' ');
-                if (isActive) {
-                    btn.classList.add(...activeClasses);
-                    btn.classList.remove(...inactiveClasses);
-                } else {
-                    btn.classList.remove(...activeClasses);
-                    btn.classList.add(...inactiveClasses);
-                }
-            });
+            // 定義標題對應表，動態更新網頁標題讓 GA 方便讀取
+            const tabTitles = {
+                'overview': '首頁總覽',
+                'engineering': '市政工程',
+                'community': '在地社群',
+                'buildings': '行政區劃',
+                'transit': '交通指南',
+                'news': '在地新聞'
+            };
+            const pageTitle = tabTitles[tabId] || '探索在地A7';
+            document.title = `A7 柒樂部🎡｜${pageTitle}`;
 
             document.querySelectorAll('.content-module').forEach(el => {
                 const showsOn = el.getAttribute('data-shows-on').split(',');
@@ -1313,7 +1296,12 @@
                 }
             }
 
-            try { history.replaceState(null, null, '#' + tabId); } catch(e) {}
+            // 修改 URL Hash 並推入歷史紀錄，幫助 GA 自動記錄不同頁面的 page_view
+            try { 
+                if (window.location.hash !== '#' + tabId) {
+                    history.pushState(null, null, '#' + tabId); 
+                }
+            } catch(e) {}
             
             if (isClick) {
                 // 點擊切換時，畫面直接捲動到內容區塊的開頭 (跳過上方按鈕區)
@@ -1338,6 +1326,19 @@
                 btn.addEventListener('click', () => {
                     window.switchTab(btn.getAttribute('data-tab'), true); // 傳入 true 標示為點擊行為
                 });
+            });
+
+            // 支援使用瀏覽器上一頁/下一頁功能時切換 tab 與標題，確保 GA 停留時間計算正確
+            window.addEventListener('popstate', () => {
+                let currentTab = 'overview';
+                if (window.location.hash) {
+                    const hashTab = window.location.hash.replace('#', '');
+                    const validTabs = ['overview', 'engineering', 'community', 'faq', 'buildings', 'news', 'transit'];
+                    if (validTabs.includes(hashTab)) {
+                        currentTab = hashTab;
+                    }
+                }
+                window.switchTab(currentTab, false);
             });
 
             let initialTab = 'overview';
