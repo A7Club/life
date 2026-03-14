@@ -1830,6 +1830,7 @@
         window.filterStoreBrand = function(safeCatId, brand) {
             const container = document.getElementById('list-' + safeCatId);
             const nearestContainer = document.getElementById('nearest-container-' + safeCatId);
+            const nearestContent = document.getElementById('nearest-content-' + safeCatId);
             if (!container) return;
             
             const items = container.querySelectorAll('.store-item');
@@ -1856,7 +1857,7 @@
                     }
                 }
             } else {
-                // 選擇某個品牌：顯示對應店家，隱藏 Nearest 區塊，高亮卡片
+                // 選擇某個品牌：顯示對應店家，高亮卡片，並將 Nearest 區塊折疊保留
                 window.activeConvenienceBrand[safeCatId] = brand;
                 items.forEach(item => {
                     if (item.dataset.brand === brand) {
@@ -1866,7 +1867,16 @@
                     }
                 });
                 
-                if (nearestContainer) nearestContainer.classList.add('hidden');
+                // 保留折疊後的 "離我最近的店家" 區塊
+                if (nearestContainer) nearestContainer.classList.remove('hidden');
+                if (nearestContent) {
+                    nearestContent.classList.add('hidden');
+                    nearestContent.classList.remove('flex');
+                    const nearestBtn = document.querySelector(`#nearest-header-${safeCatId} button`);
+                    if (nearestBtn) {
+                        nearestBtn.innerHTML = '<i class="fa-solid fa-map-location-dot"></i> 點擊尋找 (Top 5)';
+                    }
+                }
 
                 cards.forEach(card => {
                     if (card.dataset.brand === brand) {
