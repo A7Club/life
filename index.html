@@ -21,6 +21,7 @@
   gtag('config', 'G-YJ9RJC2DRS');
 </script>
 
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -464,7 +465,7 @@
                 <!-- 外層使用 Flex 控制電腦版與手機版的佈局切換 -->
                 <div class="flex flex-col lg:flex-row gap-5 relative z-10">
                     <!-- 主要推廣卡片區塊 (左側：改為 Grid 網格佈局，佔據主要空間) -->
-                    <div class="grid grid-cols-2 gap-4 w-full lg:w-[65%] xl:w-[70%] shrink-0">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full lg:w-[65%] xl:w-[70%] shrink-0">
                         <!-- 模擬推廣卡片 1 -->
                         <div style="display: none;" onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
                              class="w-full bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 sm:p-5 shadow-sm border-2 border-white relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
@@ -511,7 +512,7 @@
                             <!-- 點擊展開的詳細內容 -->
                             <details class="bg-white/80 rounded-xl border border-red-100 overflow-hidden transition-all text-sm w-full shadow-sm mt-1">
                                 <summary class="cursor-pointer font-black px-4 py-2.5 text-red-500 hover:bg-white flex items-center justify-between outline-none transition-colors">
-                                    <span><i class="fa-solid fa-circle-chevron-down mr-1.5"></i> 查看指定品項與外送門檻</span>
+                                    <span><i class="fa-solid fa-circle-chevron-down mr-1.5"></i> 查看指定品項</span>
                                     <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform text-red-300"></i>
                                 </summary>
                                 <div class="p-4 border-t border-red-100 text-gray-700 bg-white/60 flex flex-col md:flex-row gap-5 md:gap-6">
@@ -525,25 +526,9 @@
                                                 <li><span class="text-green-500">● 綠茶系列：</span>香片釀梅綠、香片奶綠 L、香片葡柚綠</li>
                                             </ul>
                                         </div>
-                                        <div class="bg-white p-2.5 rounded-lg border border-green-100 flex items-center justify-between shadow-sm w-full gap-4">
-                                            <span class="text-[11px] sm:text-xs font-black text-gray-600 flex items-center"><i class="fa-brands fa-line text-[#00B900] text-lg mr-1.5"></i>客服 ID: @283akdci <span class="hidden sm:inline-block ml-1">(有問題歡迎詢問)</span></span>
-                                            <a href="https://line.me/R/ti/p/@283akdci" target="_blank" class="bg-[#00B900] text-white text-[10px] font-black px-3 py-1.5 rounded-md shadow-sm hover:bg-[#009900] transition-colors whitespace-nowrap">加好友</a>
-                                        </div>
+
                                     </div>
-                                    <!-- 右側：外送門檻 -->
-                                    <div class="flex-1 space-y-2 border-t md:border-t-0 md:border-l border-dashed border-red-200 pt-4 md:pt-0 md:pl-5">
-                                        <div class="text-themePink font-black border-b-2 border-pink-100 pb-1 mb-2 inline-block">🛵 外送優惠與金額門檻</div>
-                                        <div class="text-xs font-black text-red-500 bg-red-50 px-2 py-0.5 rounded w-fit mb-2 shadow-sm">外送滿 350 元以上享 9 折</div>
-                                        <ul class="list-none text-xs font-bold space-y-1.5 text-gray-600">
-                                            <li class="flex justify-between border-b border-red-50/50 pb-0.5"><span>0～2公里</span> <span class="text-green-500">免外送費</span></li>
-                                            <li class="flex justify-between border-b border-red-50/50 pb-0.5"><span>2～3公里</span> <span>滿 NT$200 起送</span></li>
-                                            <li class="flex justify-between border-b border-red-50/50 pb-0.5"><span>3～4公里</span> <span>滿 NT$250 起送</span></li>
-                                            <li class="flex justify-between border-b border-red-50/50 pb-0.5"><span>4～5公里</span> <span>滿 NT$300 起送</span></li>
-                                            <li class="flex justify-between"><span>林口地區</span> <span>需滿 NT$1000</span></li>
-                                        </ul>
-                                        <div class="text-[10px] text-gray-500 mt-3 font-bold leading-relaxed bg-white/80 p-2.5 rounded-lg border border-gray-100 shadow-sm">
-                                            💡 外送時間依系統預估，若希望快速出單，請於備註留言<span class="text-themePink">「做好馬上送」</span>。<br>若門市繁忙將電話聯繫調整外送時間。
-                                        </div>
+ 
                                     </div>
                                 </div>
                             </details>
