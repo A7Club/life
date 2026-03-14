@@ -1825,61 +1825,89 @@
             return '其他';
         }
 
-        // 新增：全域的品牌過濾邏輯
+        // 新增：全域的品牌過濾邏輯 (支援切換與摺疊 Nearest 區塊)
+        window.activeConvenienceBrand = window.activeConvenienceBrand || {};
         window.filterStoreBrand = function(safeCatId, brand) {
             const container = document.getElementById('list-' + safeCatId);
+            const nearestContainer = document.getElementById('nearest-container-' + safeCatId);
             if (!container) return;
             
-            // 處理列表顯示隱藏
             const items = container.querySelectorAll('.store-item');
-            const buttons = document.querySelectorAll('.brand-btn-' + safeCatId);
+            const cards = document.querySelectorAll('.brand-card-' + safeCatId);
 
-            buttons.forEach(btn => {
-                if (btn.dataset.brand === brand) {
-                    btn.classList.add('bg-yellow-400', 'text-white');
-                    btn.classList.remove('bg-white', 'text-gray-500');
-                } else {
-                    btn.classList.remove('bg-yellow-400', 'text-white');
-                    btn.classList.add('bg-white', 'text-gray-500');
-                }
-            });
-
-            items.forEach(item => {
-                if (brand === '全部' || item.dataset.brand === brand) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // 如果有打開的地圖，同步處理地圖上的標記
-            const clusterGroup = shoppingClusterGroups[safeCatId];
-            const markersMap = shoppingMarkersMap[safeCatId];
-            const map = shoppingMaps[safeCatId];
-            
-            if (clusterGroup && markersMap && map) {
-                clusterGroup.clearLayers();
-                if (map.activeMarker) {
-                    map.removeLayer(map.activeMarker);
-                    map.activeMarker = null;
-                }
+            if (window.activeConvenienceBrand[safeCatId] === brand) {
+                // 取消選擇：隱藏所有店家，顯示 Nearest 區塊，取消卡片高亮
+                window.activeConvenienceBrand[safeCatId] = null;
+                items.forEach(item => item.style.display = 'none');
+                if (nearestContainer) nearestContainer.classList.remove('hidden');
                 
-                for (let storeName in markersMap) {
-                    const marker = markersMap[storeName];
-                    const storeBrand = getStoreBrand(storeName);
-                    if (brand === '全部' || storeBrand === brand) {
-                        clusterGroup.addLayer(marker);
+                cards.forEach(card => {
+                    card.classList.remove('border-yellow-400', 'bg-yellow-50');
+                    card.classList.add('border-transparent', 'bg-white');
+                });
+
+                const clusterGroup = shoppingClusterGroups[safeCatId];
+                if (clusterGroup) {
+                    clusterGroup.clearLayers();
+                    const map = shoppingMaps[safeCatId];
+                    if (map && map.activeMarker) {
+                        map.removeLayer(map.activeMarker);
+                        map.activeMarker = null;
                     }
                 }
+            } else {
+                // 選擇某個品牌：顯示對應店家，隱藏 Nearest 區塊，高亮卡片
+                window.activeConvenienceBrand[safeCatId] = brand;
+                items.forEach(item => {
+                    if (item.dataset.brand === brand) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
                 
-                if (clusterGroup.getLayers().length > 0) {
-                    map.fitBounds(clusterGroup.getBounds(), { padding: [40, 40], maxZoom: 15, animate: true });
+                if (nearestContainer) nearestContainer.classList.add('hidden');
+
+                cards.forEach(card => {
+                    if (card.dataset.brand === brand) {
+                        card.classList.add('border-yellow-400', 'bg-yellow-50');
+                        card.classList.remove('border-transparent', 'bg-white');
+                    } else {
+                        card.classList.remove('border-yellow-400', 'bg-yellow-50');
+                        card.classList.add('border-transparent', 'bg-white');
+                    }
+                });
+
+                // 更新地圖標記
+                const clusterGroup = shoppingClusterGroups[safeCatId];
+                const markersMap = shoppingMarkersMap[safeCatId];
+                const map = shoppingMaps[safeCatId];
+                
+                if (clusterGroup && markersMap && map) {
+                    clusterGroup.clearLayers();
+                    if (map.activeMarker) {
+                        map.removeLayer(map.activeMarker);
+                        map.activeMarker = null;
+                    }
+                    
+                    for (let storeName in markersMap) {
+                        const marker = markersMap[storeName];
+                        const storeBrand = getStoreBrand(storeName);
+                        if (storeBrand === brand) {
+                            clusterGroup.addLayer(marker);
+                        }
+                    }
+                    
+                    if (clusterGroup.getLayers().length > 0) {
+                        map.fitBounds(clusterGroup.getBounds(), { padding: [40, 40], maxZoom: 15, animate: true });
+                    }
                 }
             }
         };
 
         // 新增：尋找離我最近的 5 間店家邏輯與專屬地圖
         window.nearestMaps = {};
+        window.nearestMarkersMap = {};
         window.findNearestConvenienceStores = function(safeCatId, catName) {
             const btn = document.querySelector(`#nearest-header-${safeCatId} button`);
             if (btn) {
@@ -1913,16 +1941,16 @@
                             : `<div class="w-8 flex justify-center shrink-0 text-orange-400"><i class="fa-solid fa-store text-lg"></i></div>`;
                         
                         listHtml += `
-                            <li class="flex flex-row items-center justify-between bg-white p-2.5 rounded-xl shadow-sm border border-orange-50 hover:border-orange-200 transition-colors group">
+                            <li onclick="focusNearestStore('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${store.name.replace(/'/g, "\\'")}', ${store.lat}, ${store.lng})" class="cursor-pointer flex flex-row items-center justify-between bg-white p-2.5 rounded-xl shadow-sm border border-orange-50 hover:border-orange-300 hover:shadow-md hover:-translate-y-1 transition-all group">
                                 <div class="flex items-center flex-1 overflow-hidden pr-2">
                                     <div class="font-black text-white bg-orange-400 rounded-full w-5 h-5 flex items-center justify-center text-[10px] mr-2 shrink-0 shadow-sm">${index + 1}</div>
                                     ${storeIconHtml}
                                     <div class="flex flex-col overflow-hidden pl-2">
-                                        <span class="font-bold text-gray-800 text-sm line-clamp-1" title="${store.name}">${store.name}</span>
+                                        <span class="font-bold text-gray-800 text-sm line-clamp-1 group-hover:text-orange-600 transition-colors" title="${store.name}">${store.name}</span>
                                         <span class="text-[10px] text-orange-500 font-black mt-0.5"><i class="fa-solid fa-person-walking mr-1 text-orange-300"></i>約 ${(store.distance).toFixed(2)} km</span>
                                     </div>
                                 </div>
-                                <a href="https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${store.lat},${store.lng}" target="_blank" class="bg-orange-50 text-orange-500 hover:bg-orange-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow-sm shrink-0" title="導航去">
+                                <a href="https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${store.lat},${store.lng}" target="_blank" onclick="event.stopPropagation()" class="bg-orange-50 text-orange-500 hover:bg-orange-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow-sm shrink-0" title="導航去">
                                     <i class="fa-solid fa-location-arrow text-xs"></i>
                                 </a>
                             </li>
@@ -1955,6 +1983,8 @@
                     }).addTo(map);
                     
                     window.nearestMaps[safeCatId] = map;
+                    window.nearestMarkersMap[safeCatId] = {};
+                    map.activeNearestMarker = null;
                     const bounds = L.latLngBounds();
 
                     // 1. 加入使用者位置標記
@@ -1970,7 +2000,8 @@
                     // 2. 加入店家標記
                     nearestStores.forEach((store, idx) => {
                         const marker = L.marker([store.lat, store.lng], { icon: getCategoryIcon(catName, store.name, 'normal') }).addTo(map);
-                        
+                        window.nearestMarkersMap[safeCatId][store.name] = marker;
+
                         let popupContent = `
                             <div class="text-center p-1 pt-5 w-50">
                                 <div class="font-black text-white bg-orange-400 px-2 py-0.5 rounded-md inline-block text-[10px] mb-1.5 shadow-sm">離你第 ${idx + 1} 近</div>
@@ -1981,6 +2012,10 @@
                         `;
                         marker.bindPopup(popupContent);
                         bounds.extend([store.lat, store.lng]);
+
+                        marker.on('click', () => {
+                            focusNearestStore(safeCatId, catName, store.name, store.lat, store.lng, false);
+                        });
                     });
 
                     // 調整地圖範圍以包含所有標記
@@ -2005,6 +2040,50 @@
                     btn.disabled = false;
                 }
             }
+        };
+
+        window.focusNearestStore = function(safeCatId, catName, storeName, lat, lng, doFly = true) {
+            const map = window.nearestMaps[safeCatId];
+            const markersMap = window.nearestMarkersMap[safeCatId];
+            if (!map || !markersMap) return;
+
+            const marker = markersMap[storeName];
+            if (!marker) return;
+
+            // 恢復前一個點擊的標記狀態
+            if (map.activeNearestMarker && map.activeNearestMarker !== storeName && markersMap[map.activeNearestMarker]) {
+                const prevMarker = markersMap[map.activeNearestMarker];
+                if (prevMarker.bounceTimeout) clearTimeout(prevMarker.bounceTimeout);
+                prevMarker.setIcon(getCategoryIcon(catName, map.activeNearestMarker, 'normal', false));
+            }
+
+            map.activeNearestMarker = storeName;
+
+            if (doFly) {
+                // 移動地圖並稍微偏上以確保 popup 顯示完整
+                const targetZoom = 16;
+                const pt = map.project([lat, lng], targetZoom);
+                pt.y -= map.getSize().y / 4; 
+                const offsetLatLng = map.unproject(pt, targetZoom);
+                
+                map.flyTo(offsetLatLng, targetZoom, { animate: true, duration: 1 });
+                map.once('moveend', () => {
+                    marker.openPopup();
+                });
+            } else {
+                marker.openPopup();
+            }
+
+            // 設定為點擊狀態（紅色閃示與彈跳）
+            marker.setIcon(getCategoryIcon(catName, storeName, 'clicked', true));
+
+            // 設定 5 秒後恢復正常狀態
+            if (marker.bounceTimeout) clearTimeout(marker.bounceTimeout);
+            marker.bounceTimeout = setTimeout(() => {
+                if (markersMap[storeName] && map.activeNearestMarker === storeName) {
+                    marker.setIcon(getCategoryIcon(catName, storeName, 'clicked', false));
+                }
+            }, 5000);
         };
 
         // --- 全域資料快取 ---
@@ -2877,6 +2956,10 @@
                 const isMRT = catName.includes('捷運') || catName.includes('機捷');
                 const brandLogo = getBrandLogo(item.name);
                 const storeBrand = getStoreBrand(item.name);
+                
+                // 判斷如果是便利商店，預設將店家列表隱藏
+                const isConvenienceItem = catName.includes('便利');
+                const displayStyle = isConvenienceItem ? 'style="display: none;"' : '';
 
                 if (isPhotoCategory) {
                     let imgContent = '';
@@ -2895,7 +2978,7 @@
                     `;
 
                     return `
-                        <div data-brand="${storeBrand}" onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="store-item bg-gray-50 rounded-[1.5rem] p-2 sm:p-3 shadow-sm border-2 border-transparent hover:border-gray-200 hover:bg-white hover:-translate-y-1 transition-all cursor-pointer group flex flex-col h-full relative">
+                        <div data-brand="${storeBrand}" ${displayStyle} onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="store-item bg-gray-50 rounded-[1.5rem] p-2 sm:p-3 shadow-sm border-2 border-transparent hover:border-gray-200 hover:bg-white hover:-translate-y-1 transition-all cursor-pointer group flex flex-col h-full relative">
                             <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" onclick="event.stopPropagation()" class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm w-7 h-7 rounded-lg shadow-sm hover:bg-blue-500 hover:text-white transition-colors z-20 text-gray-400 flex items-center justify-center border border-gray-100" title="開啟導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
                             <div class="w-full h-24 sm:h-32 rounded-[1rem] mb-2 overflow-hidden bg-white relative flex items-center justify-center shrink-0 border border-gray-100 shadow-inner">
                                 ${imgContent}
@@ -2924,7 +3007,7 @@
                     }
 
                     return `
-                        <li data-brand="${storeBrand}" onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="store-item flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group cursor-pointer border border-transparent hover:border-gray-100">
+                        <li data-brand="${storeBrand}" ${displayStyle} onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="store-item flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group cursor-pointer border border-transparent hover:border-gray-100">
                             <div class="flex items-start flex-1 overflow-hidden pr-2">
                                 ${storeIconHtml}
                                 <div class="flex flex-col overflow-hidden pl-1.5">
@@ -2965,33 +3048,36 @@
                 let isSupermarket = catName.includes('超市') || catName.includes('生鮮');
 
                 let brandTagsHtml = '';
+                let nearestStoresHtml = '';
+
                 if (isConvenience) {
-                    const brandCounts = { '全部': items.length };
+                    const brandCounts = {};
                     items.forEach(item => {
                         const brand = getStoreBrand(item.name);
                         brandCounts[brand] = (brandCounts[brand] || 0) + 1;
                     });
 
-                    // 排序：確保全部在第一位，其他依照數量多寡排序
-                    const sortedBrands = Object.keys(brandCounts).filter(b => b !== '全部').sort((a, b) => brandCounts[b] - brandCounts[a]);
-                    const allBrands = ['全部', ...sortedBrands];
+                    // 排序依照數量多寡
+                    const sortedBrands = Object.keys(brandCounts).sort((a, b) => brandCounts[b] - brandCounts[a]);
 
-                    const brandBtns = allBrands.map(brand => {
-                        const isActive = brand === '全部';
-                        const activeClasses = isActive ? "bg-yellow-400 text-white" : "bg-white text-gray-500 hover:bg-yellow-50";
-                        return `<button data-brand="${brand}" onclick="filterStoreBrand('${safeCatId}', '${brand}')" class="brand-btn-${safeCatId} px-3 py-1.5 rounded-full text-xs font-black shadow-sm transition-all border border-yellow-100 flex items-center gap-1.5 ${activeClasses}">
-                                    ${brand} <span class="bg-black/10 px-1.5 py-0.5 rounded-md text-[9px]">${brandCounts[brand]}</span>
-                                </button>`;
+                    const brandBtns = sortedBrands.map(brand => {
+                        const brandLogo = getBrandLogo(brand) || getBrandLogo(brand + '超商'); 
+                        let logoHtml = brandLogo 
+                            ? `<img src="${brandLogo}" class="w-8 h-8 sm:w-10 sm:h-10 object-contain mb-1.5 drop-shadow-sm group-hover:scale-110 transition-transform">`
+                            : `<div class="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-100 text-yellow-500 rounded-full flex items-center justify-center text-sm sm:text-base font-black mb-1.5 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>`;
+
+                        return `<div data-brand="${brand}" onclick="filterStoreBrand('${safeCatId}', '${brand}')" class="brand-card-${safeCatId} bg-white rounded-[1.2rem] p-3 sm:p-4 shadow-sm border-2 border-transparent hover:border-yellow-200 hover:-translate-y-1 cursor-pointer flex flex-col items-center justify-center transition-all group">
+                                    ${logoHtml}
+                                    <span class="text-xs sm:text-sm font-black text-gray-700">${brand}</span>
+                                    <span class="text-[10px] sm:text-xs text-gray-400 font-bold mt-0.5 bg-gray-50 px-2 py-0.5 rounded-md border border-gray-100 shadow-sm">${brandCounts[brand]} 間門市</span>
+                                </div>`;
                     }).join('');
 
-                    brandTagsHtml = `<div class="flex flex-wrap gap-2 mb-3 mt-1 relative z-10">${brandBtns}</div>`;
-                }
+                    brandTagsHtml = `<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-4 relative z-10">${brandBtns}</div>`;
 
-                // 新增：專屬於便利商店的「尋找最近 5 間店」區塊
-                let nearestStoresHtml = '';
-                if (isConvenience) {
+                    // 新增：專屬於便利商店的「尋找最近 5 間店」區塊 (加入 id 方便隱藏)
                     nearestStoresHtml = `
-                        <div class="mb-4 bg-gradient-to-br from-orange-50 to-yellow-50 p-4 sm:p-5 rounded-2xl border-2 border-orange-100 relative z-10 w-full shadow-sm">
+                        <div id="nearest-container-${safeCatId}" class="mb-4 bg-gradient-to-br from-orange-50 to-yellow-50 p-4 sm:p-5 rounded-2xl border-2 border-orange-100 relative z-10 w-full shadow-sm transition-all duration-300">
                             <div id="nearest-header-${safeCatId}" class="flex flex-row items-center justify-between gap-3">
                                 <h4 class="font-black text-orange-500 text-sm sm:text-base flex items-center shrink-0">
                                     <i class="fa-solid fa-location-crosshairs mr-2 animate-pulse text-orange-400"></i> 離我最近的店家
