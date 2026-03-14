@@ -1810,6 +1810,203 @@
             return null;
         }
 
+        // 新增：提取店家的所屬連鎖品牌（用於次分類標籤）
+        function getStoreBrand(name) {
+            if (!name) return '其他';
+            const upperName = name.toUpperCase();
+            if (upperName.includes('7-ELEVEN') || upperName.includes('7-11')) return '7-ELEVEN';
+            if (upperName.includes('全家')) return '全家';
+            if (upperName.includes('萊爾富')) return '萊爾富';
+            if (upperName.includes('OK超商') || upperName.includes('OK MART')) return 'OK超商';
+            if (upperName.includes('全聯')) return '全聯';
+            if (upperName.includes('家樂福')) return '家樂福';
+            if (upperName.includes('蝦皮')) return '蝦皮';
+            if (upperName.includes('COSTCO') || upperName.includes('好市多')) return '好市多';
+            return '其他';
+        }
+
+        // 新增：全域的品牌過濾邏輯
+        window.filterStoreBrand = function(safeCatId, brand) {
+            const container = document.getElementById('list-' + safeCatId);
+            if (!container) return;
+            
+            // 處理列表顯示隱藏
+            const items = container.querySelectorAll('.store-item');
+            const buttons = document.querySelectorAll('.brand-btn-' + safeCatId);
+
+            buttons.forEach(btn => {
+                if (btn.dataset.brand === brand) {
+                    btn.classList.add('bg-yellow-400', 'text-white');
+                    btn.classList.remove('bg-white', 'text-gray-500');
+                } else {
+                    btn.classList.remove('bg-yellow-400', 'text-white');
+                    btn.classList.add('bg-white', 'text-gray-500');
+                }
+            });
+
+            items.forEach(item => {
+                if (brand === '全部' || item.dataset.brand === brand) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // 如果有打開的地圖，同步處理地圖上的標記
+            const clusterGroup = shoppingClusterGroups[safeCatId];
+            const markersMap = shoppingMarkersMap[safeCatId];
+            const map = shoppingMaps[safeCatId];
+            
+            if (clusterGroup && markersMap && map) {
+                clusterGroup.clearLayers();
+                if (map.activeMarker) {
+                    map.removeLayer(map.activeMarker);
+                    map.activeMarker = null;
+                }
+                
+                for (let storeName in markersMap) {
+                    const marker = markersMap[storeName];
+                    const storeBrand = getStoreBrand(storeName);
+                    if (brand === '全部' || storeBrand === brand) {
+                        clusterGroup.addLayer(marker);
+                    }
+                }
+                
+                if (clusterGroup.getLayers().length > 0) {
+                    map.fitBounds(clusterGroup.getBounds(), { padding: [40, 40], maxZoom: 15, animate: true });
+                }
+            }
+        };
+
+        // 新增：尋找離我最近的 5 間店家邏輯與專屬地圖
+        window.nearestMaps = {};
+        window.findNearestConvenienceStores = function(safeCatId, catName) {
+            const btn = document.querySelector(`#nearest-header-${safeCatId} button`);
+            if (btn) {
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在定位...';
+                btn.disabled = true;
+            }
+
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+
+                    // 取得該分類下的所有店家 (必須有座標)
+                    const stores = globalShoppingData.filter(item => item.category === catName && item.lat && item.lng);
+                    
+                    // 計算距離並排序
+                    stores.forEach(store => {
+                        store.distance = calculateDistance(userLat, userLng, store.lat, store.lng);
+                    });
+                    
+                    stores.sort((a, b) => a.distance - b.distance);
+                    const nearestStores = stores.slice(0, 5); // 取前五名
+
+                    // 渲染列表
+                    const listEl = document.getElementById(`nearest-list-${safeCatId}`);
+                    let listHtml = '';
+                    nearestStores.forEach((store, index) => {
+                        const brandLogo = getBrandLogo(store.name);
+                        const storeIconHtml = brandLogo 
+                            ? `<div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white rounded-lg shadow-sm border border-gray-100"><img src="${brandLogo}" class="w-5 h-5 object-contain" alt="Logo"></div>`
+                            : `<div class="w-8 flex justify-center shrink-0 text-orange-400"><i class="fa-solid fa-store text-lg"></i></div>`;
+                        
+                        listHtml += `
+                            <li class="flex flex-row items-center justify-between bg-white p-2.5 rounded-xl shadow-sm border border-orange-50 hover:border-orange-200 transition-colors group">
+                                <div class="flex items-center flex-1 overflow-hidden pr-2">
+                                    <div class="font-black text-white bg-orange-400 rounded-full w-5 h-5 flex items-center justify-center text-[10px] mr-2 shrink-0 shadow-sm">${index + 1}</div>
+                                    ${storeIconHtml}
+                                    <div class="flex flex-col overflow-hidden pl-2">
+                                        <span class="font-bold text-gray-800 text-sm line-clamp-1" title="${store.name}">${store.name}</span>
+                                        <span class="text-[10px] text-orange-500 font-black mt-0.5"><i class="fa-solid fa-person-walking mr-1 text-orange-300"></i>約 ${(store.distance).toFixed(2)} km</span>
+                                    </div>
+                                </div>
+                                <a href="https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${store.lat},${store.lng}" target="_blank" class="bg-orange-50 text-orange-500 hover:bg-orange-500 hover:text-white w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow-sm shrink-0" title="導航去">
+                                    <i class="fa-solid fa-location-arrow text-xs"></i>
+                                </a>
+                            </li>
+                        `;
+                    });
+                    listEl.innerHTML = listHtml;
+
+                    // 顯示內容區塊
+                    const contentEl = document.getElementById(`nearest-content-${safeCatId}`);
+                    contentEl.classList.remove('hidden');
+                    contentEl.classList.add('flex');
+
+                    if (btn) {
+                        btn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> 重新定位';
+                        btn.disabled = false;
+                    }
+
+                    // 初始化或更新專屬地圖
+                    const mapId = `nearest-map-${safeCatId}`;
+                    let map = window.nearestMaps[safeCatId];
+                    
+                    if (map) {
+                        map.remove();
+                    }
+                    
+                    map = L.map(mapId, { zoomControl: false }).setView([userLat, userLng], 15);
+                    L.control.zoom({ position: 'bottomright' }).addTo(map);
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                        attribution: '&copy; OpenStreetMap', maxZoom: 20
+                    }).addTo(map);
+                    
+                    window.nearestMaps[safeCatId] = map;
+                    const bounds = L.latLngBounds();
+
+                    // 1. 加入使用者位置標記
+                    const userIcon = L.divIcon({
+                        className: 'user-location-icon border-0 bg-transparent',
+                        html: `<div class="w-5 h-5 bg-blue-500 rounded-full border-2 border-white shadow-md relative mt-2"><div class="absolute inset-0 bg-blue-500 rounded-full animate-ping opacity-75"></div></div>`,
+                        iconSize: [20, 20], iconAnchor: [10, 10]
+                    });
+                    const userMarker = L.marker([userLat, userLng], {icon: userIcon, zIndexOffset: 1000}).addTo(map);
+                    userMarker.bindPopup('<div class="font-black text-blue-500 text-center">您的現在位置</div>').openPopup();
+                    bounds.extend([userLat, userLng]);
+
+                    // 2. 加入店家標記
+                    nearestStores.forEach((store, idx) => {
+                        const marker = L.marker([store.lat, store.lng], { icon: getCategoryIcon(catName, store.name, 'normal') }).addTo(map);
+                        
+                        let popupContent = `
+                            <div class="text-center p-1 pt-5 w-50">
+                                <div class="font-black text-white bg-orange-400 px-2 py-0.5 rounded-md inline-block text-[10px] mb-1.5 shadow-sm">離你第 ${idx + 1} 近</div>
+                                <h4 class="font-black text-gray-800 text-sm leading-[1.1] mb-1">${formatStoreName(store.name)}</h4>
+                                <p class="text-[10px] text-gray-500 font-bold mb-1"><i class="fa-solid fa-location-dot mr-1"></i>${store.address}</p>
+                                <a href="https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${store.lat},${store.lng}" target="_blank" class="mt-2 block w-full bg-orange-100 text-orange-600 font-black py-1.5 rounded-lg text-xs hover:bg-orange-500 hover:text-white transition-colors shadow-sm">開始導航</a>
+                            </div>
+                        `;
+                        marker.bindPopup(popupContent);
+                        bounds.extend([store.lat, store.lng]);
+                    });
+
+                    // 調整地圖範圍以包含所有標記
+                    setTimeout(() => {
+                        map.invalidateSize();
+                        if (bounds.isValid()) {
+                            map.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
+                        }
+                    }, 300);
+
+                }, (error) => {
+                    alert("無法取得您的位置，請確認是否允許瀏覽器存取定位權限。");
+                    if (btn) {
+                        btn.innerHTML = '<i class="fa-solid fa-map-location-dot"></i> 點擊尋找 (Top 5)';
+                        btn.disabled = false;
+                    }
+                });
+            } else {
+                alert("您的瀏覽器不支援定位功能。");
+                if (btn) {
+                    btn.innerHTML = '<i class="fa-solid fa-map-location-dot"></i> 點擊尋找 (Top 5)';
+                    btn.disabled = false;
+                }
+            }
+        };
+
         // --- 全域資料快取 ---
         let globalFoodData = null; 
         let globalShoppingData = null; 
@@ -2679,6 +2876,7 @@
                 const likeCount = item.likesCount || 0;
                 const isMRT = catName.includes('捷運') || catName.includes('機捷');
                 const brandLogo = getBrandLogo(item.name);
+                const storeBrand = getStoreBrand(item.name);
 
                 if (isPhotoCategory) {
                     let imgContent = '';
@@ -2697,7 +2895,7 @@
                     `;
 
                     return `
-                        <div onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="bg-gray-50 rounded-[1.5rem] p-2 sm:p-3 shadow-sm border-2 border-transparent hover:border-gray-200 hover:bg-white hover:-translate-y-1 transition-all cursor-pointer group flex flex-col h-full relative">
+                        <div data-brand="${storeBrand}" onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="store-item bg-gray-50 rounded-[1.5rem] p-2 sm:p-3 shadow-sm border-2 border-transparent hover:border-gray-200 hover:bg-white hover:-translate-y-1 transition-all cursor-pointer group flex flex-col h-full relative">
                             <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" onclick="event.stopPropagation()" class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm w-7 h-7 rounded-lg shadow-sm hover:bg-blue-500 hover:text-white transition-colors z-20 text-gray-400 flex items-center justify-center border border-gray-100" title="開啟導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
                             <div class="w-full h-24 sm:h-32 rounded-[1rem] mb-2 overflow-hidden bg-white relative flex items-center justify-center shrink-0 border border-gray-100 shadow-inner">
                                 ${imgContent}
@@ -2726,7 +2924,7 @@
                     }
 
                     return `
-                        <li onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group cursor-pointer border border-transparent hover:border-gray-100">
+                        <li data-brand="${storeBrand}" onclick="showShoppingMap('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${item.name.replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${item.address.replace(/'/g, "\\'")}')" class="store-item flex items-center justify-between bg-gray-50 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all group cursor-pointer border border-transparent hover:border-gray-100">
                             <div class="flex items-start flex-1 overflow-hidden pr-2">
                                 ${storeIconHtml}
                                 <div class="flex flex-col overflow-hidden pl-1.5">
@@ -2766,6 +2964,53 @@
                 let isConvenience = catName.includes('便利');
                 let isSupermarket = catName.includes('超市') || catName.includes('生鮮');
 
+                let brandTagsHtml = '';
+                if (isConvenience) {
+                    const brandCounts = { '全部': items.length };
+                    items.forEach(item => {
+                        const brand = getStoreBrand(item.name);
+                        brandCounts[brand] = (brandCounts[brand] || 0) + 1;
+                    });
+
+                    // 排序：確保全部在第一位，其他依照數量多寡排序
+                    const sortedBrands = Object.keys(brandCounts).filter(b => b !== '全部').sort((a, b) => brandCounts[b] - brandCounts[a]);
+                    const allBrands = ['全部', ...sortedBrands];
+
+                    const brandBtns = allBrands.map(brand => {
+                        const isActive = brand === '全部';
+                        const activeClasses = isActive ? "bg-yellow-400 text-white" : "bg-white text-gray-500 hover:bg-yellow-50";
+                        return `<button data-brand="${brand}" onclick="filterStoreBrand('${safeCatId}', '${brand}')" class="brand-btn-${safeCatId} px-3 py-1.5 rounded-full text-xs font-black shadow-sm transition-all border border-yellow-100 flex items-center gap-1.5 ${activeClasses}">
+                                    ${brand} <span class="bg-black/10 px-1.5 py-0.5 rounded-md text-[9px]">${brandCounts[brand]}</span>
+                                </button>`;
+                    }).join('');
+
+                    brandTagsHtml = `<div class="flex flex-wrap gap-2 mb-3 mt-1 relative z-10">${brandBtns}</div>`;
+                }
+
+                // 新增：專屬於便利商店的「尋找最近 5 間店」區塊
+                let nearestStoresHtml = '';
+                if (isConvenience) {
+                    nearestStoresHtml = `
+                        <div class="mb-4 bg-gradient-to-br from-orange-50 to-yellow-50 p-4 sm:p-5 rounded-2xl border-2 border-orange-100 relative z-10 w-full shadow-sm">
+                            <div id="nearest-header-${safeCatId}" class="flex flex-row items-center justify-between gap-3">
+                                <h4 class="font-black text-orange-500 text-sm sm:text-base flex items-center shrink-0">
+                                    <i class="fa-solid fa-location-crosshairs mr-2 animate-pulse text-orange-400"></i> 離我最近的店家
+                                </h4>
+                                <button onclick="findNearestConvenienceStores('${safeCatId}', '${catName.replace(/'/g, "\\'")}')" class="bg-orange-400 hover:bg-orange-500 text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-black shadow-md transition-all hover:scale-105 active:scale-95 flex items-center gap-1.5 shrink-0">
+                                    <i class="fa-solid fa-map-location-dot"></i> 點擊尋找 (Top 5)
+                                </button>
+                            </div>
+                            <!-- 預設隱藏，點擊後展開列表與地圖 -->
+                            <div id="nearest-content-${safeCatId}" class="hidden flex-col gap-4 mt-4">
+                                <ul id="nearest-list-${safeCatId}" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3"></ul>
+                                <div class="relative w-full rounded-[1rem] border-2 border-orange-200 shadow-inner overflow-hidden p-1 bg-white">
+                                    <div id="nearest-map-${safeCatId}" class="w-full h-[250px] rounded-xl relative z-10"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
                 let listClass = isPhotoCategory
                     ? "grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-3 relative z-10 flex-1 content-start"
                     : isConvenience
@@ -2781,9 +3026,11 @@
                             <h3 class="text-xl font-black ${style.textTitle} mb-4 border-b-2 border-gray-100 pb-3 relative z-10 shrink-0 flex items-center">
                                 <span class="mr-2">${style.emoji}</span> ${catName} <span class="text-sm font-bold text-gray-400 ml-2">(${items.length})</span>
                             </h3>
+                            ${brandTagsHtml}
+                            ${nearestStoresHtml}
                             <div class="flex flex-col gap-4 relative z-10 w-full flex-1">
                                 <div class="flex-1 w-full transition-all duration-300">
-                                    <${containerTag} class="${listClass}">
+                                    <${containerTag} id="list-${safeCatId}" class="${listClass}">
                                         ${itemsHtml}
                                     </${containerTag}>
                                 </div>
