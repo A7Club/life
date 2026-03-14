@@ -2762,14 +2762,17 @@
 
                 let containerTag = isPhotoCategory ? 'div' : 'ul';
                 
-                // 針對便利商店、生鮮超市自訂排版 (中螢幕 2 間，大螢幕 3 間)
-                let isConvenience = catName.includes('便利') || catName.includes('超市') || catName.includes('生鮮');
+                // 針對便利商店、生鮮超市自訂排版
+                let isConvenience = catName.includes('便利');
+                let isSupermarket = catName.includes('超市') || catName.includes('生鮮');
 
                 let listClass = isPhotoCategory
                     ? "grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-3 relative z-10 flex-1 content-start"
                     : isConvenience
-                        ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start"
-                        : "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
+                        ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start"
+                        : isSupermarket
+                            ? "grid grid-cols-1 sm:grid-cols-2 gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start"
+                            : "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
 
                 return `
                     <div class="w-full ${widthClass} flex flex-col">
