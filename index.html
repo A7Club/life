@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="ios.png">
     <title>A7 柒樂部🎡｜林口、龜山美食生活地圖指南</title>
     <meta name="description" content="提供在地住戶推薦的桃園龜山 A7 重劃區生活資訊。包含美食推薦、診所藥局、生活代辦及在地社群及建案地圖，讓住戶輕鬆掌握社區大小事。">
@@ -464,8 +464,8 @@
                 
                 <!-- 外層使用 Flex 控制電腦版與手機版的佈局切換 -->
                 <div class="flex flex-col lg:flex-row gap-5 relative z-10">
-                    <!-- 主要推廣卡片區塊 (左側：改為 Grid 網格佈局，佔據主要空間) -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full lg:w-[65%] xl:w-[70%] shrink-0">
+                    <!-- 主要推廣卡片區塊 (左側：改為自動填滿剩餘空間，解決寬度衝突) -->
+                    <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
                         <!-- 模擬推廣卡片 1 -->
                         <div style="display: none;" onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')" 
                              class="w-full bg-gradient-to-br from-orange-50 to-pink-50 rounded-[1.5rem] p-4 sm:p-5 shadow-sm border-2 border-white relative group cursor-pointer hover:-translate-y-2 transition-transform flex flex-col justify-between">
@@ -495,7 +495,7 @@
                         </div>
                         <!-- 🎁 嵌入的新商家限時優惠卡片 (茶聚) -->
                 
-                    <div class="bg-gradient-to-br from-red-50 to-pink-50 rounded-[1.5rem] p-4 sm:p-5 shadow-sm border border-red-100 flex flex-col lg:flex-row gap-4 items-start lg:items-center relative overflow-hidden group">
+                    <div class="md:col-span-2 xl:col-span-2 bg-gradient-to-br from-red-50 to-pink-50 rounded-[1.5rem] p-4 sm:p-5 shadow-sm border border-red-100 flex flex-col lg:flex-row gap-4 items-start lg:items-center relative overflow-hidden group">
                         <div class="absolute -right-4 -bottom-4 text-red-100 text-6xl transform -rotate-12 z-0 pointer-events-none"><i class="fa-solid fa-mug-hot"></i></div>                        
                         <div class="flex-1 w-full relative z-10">
                             <div class="flex flex-wrap items-center gap-2 mb-1.5">
@@ -542,7 +542,7 @@
                 
 
                     <!-- 藥丸標籤區塊 (右側/下方：更多情報) -->
-                    <div class="w-full lg:w-[35%] xl:w-[30%] flex flex-row lg:flex-col flex-wrap gap-2.5 items-center lg:items-stretch border-t-2 lg:border-t-0 lg:border-l-2 border-dashed border-orange-100 pt-4 lg:pt-0 lg:pl-5 mt-1 lg:mt-0 relative z-10 h-full">
+                    <div class="w-full lg:w-[240px] xl:w-[280px] shrink-0 flex flex-row lg:flex-col flex-wrap gap-2.5 items-center lg:items-stretch border-t-2 lg:border-t-0 lg:border-l-2 border-dashed border-orange-100 pt-4 lg:pt-0 lg:pl-5 mt-1 lg:mt-0 relative z-10 h-full">
                         <span class="hidden lg:flex text-xs sm:text-sm font-black text-orange-400 bg-orange-50 border border-orange-100 px-2.5 py-1.5 rounded-lg mr-1 lg:mr-0 items-center justify-center lg:mb-1 w-fit lg:w-full"><i class="fa-solid fa-bullhorn mr-1"></i> 更多推薦</span>
                         
                         <!-- Pill: 粉粉兔 -->
