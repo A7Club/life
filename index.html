@@ -765,7 +765,7 @@
                 <h2 class="text-2xl font-black text-themeYellow">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
             </div>
 
-            <!-- 橫向 TAG 分類按鈕 (修正電腦版不換行問題) -->
+            <!-- 橫向 TAG 分類按鈕 (移除 lg:flex-nowrap 讓電腦版也能自動換行) -->
             <div id="shopping-tags-container" class="flex flex-wrap gap-2 md:gap-3 w-full mb-4">
                 <!-- 動態注入分類按鈕 -->
             </div>
@@ -3332,37 +3332,24 @@
                 `;
             }
 
-            // 配對邏輯修改：將 mainCats 與 sideCats 配對，若有剩餘則同類互相配對，維持半寬
-            let i = 0;
-            let j = 0;
+            const maxLen = Math.max(mainCats.length, sideCats.length);
             
-            while (i < mainCats.length || j < sideCats.length) {
+            for (let i = 0; i < maxLen; i++) {
+                const mainCat = mainCats[i];
+                const sideCat = sideCats[i];
+
                 let rowHtml = `<div class="flex flex-col lg:flex-row gap-6 w-full mb-6 items-stretch">`;
 
-                if (i < mainCats.length && j < sideCats.length) {
-                    // main 與 side 互相配對
-                    let mainCat = mainCats[i++];
-                    let sideCat = sideCats[j++];
-                    let wMain = mainCat.isLargeText ? 'lg:w-2/3' : 'lg:w-1/2';
-                    let wSide = mainCat.isLargeText ? 'lg:w-1/3' : 'lg:w-1/2';
-                    rowHtml += renderBlock(mainCat, wMain);
-                    rowHtml += renderBlock(sideCat, wSide);
-                } else if (i < mainCats.length) {
-                    // 只剩 mainCat，兩兩配對
-                    let mainCat1 = mainCats[i++];
-                    rowHtml += renderBlock(mainCat1, 'lg:w-1/2');
-                    if (i < mainCats.length) {
-                        let mainCat2 = mainCats[i++];
-                        rowHtml += renderBlock(mainCat2, 'lg:w-1/2');
-                    }
-                } else if (j < sideCats.length) {
-                    // 只剩 sideCat，兩兩配對 (解決美容護理變全寬的問題)
-                    let sideCat1 = sideCats[j++];
-                    rowHtml += renderBlock(sideCat1, 'lg:w-1/2');
-                    if (j < sideCats.length) {
-                        let sideCat2 = sideCats[j++];
-                        rowHtml += renderBlock(sideCat2, 'lg:w-1/2');
-                    }
+                if (mainCat) {
+                    let widthClass = mainCat.isLargeText ? 'lg:w-2/3' : 'lg:w-1/2';
+                    if (!sideCat) widthClass = 'w-full'; 
+                    rowHtml += renderBlock(mainCat, widthClass);
+                }
+
+                if (sideCat) {
+                    let widthClass = (mainCat && mainCat.isLargeText) ? 'lg:w-1/3' : 'lg:w-1/2';
+                    if (!mainCat) widthClass = 'lg:w-1/2'; // 強制落單的副分類(如美容護理)與其他副分類維持一半寬度
+                    rowHtml += renderBlock(sideCat, widthClass);
                 }
 
                 rowHtml += `</div>`;
