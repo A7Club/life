@@ -765,8 +765,8 @@
                 <h2 class="text-2xl font-black text-themeYellow">購物與生活 <span class="text-lg text-gray-400 font-bold ml-2">商圈機能</span></h2>
             </div>
 
-            <!-- 橫向 TAG 分類按鈕 -->
-            <div id="shopping-tags-container" class="flex flex-wrap lg:flex-nowrap lg:overflow-x-auto hide-scrollbar gap-2 md:gap-3 w-full mb-4">
+            <!-- 橫向 TAG 分類按鈕 (修正電腦版不換行問題) -->
+            <div id="shopping-tags-container" class="flex flex-wrap gap-2 md:gap-3 w-full mb-4">
                 <!-- 動態注入分類按鈕 -->
             </div>
 
@@ -2383,9 +2383,9 @@
         { keywords: ['捷運', '機捷', '交通'], iconClass: 'fa-train-subway', bgColor: 'bg-themePurple', textColor: 'text-purple-400', emoji: '🚇' },
 
         // --- 樂園救護站 (醫療) ---
-        { keywords: ['牙'], iconClass: 'fa-tooth', bgColor: 'bg-purple-400', textColor: 'text-purple-600', emoji: '🦷' },
+        { keywords: ['牙'], iconClass: 'fa-tooth', bgColor: 'bg-blue-400', textColor: 'text-blue-600', emoji: '🦷' },
         { keywords: ['小兒', '婦產', '兒童診所'], iconClass: 'fa-baby', bgColor: 'bg-pink-400', textColor: 'text-pink-600', emoji: '👶' },
-        { keywords: ['眼'], iconClass: 'fa-eye', bgColor: 'bg-blue-400', textColor: 'text-blue-600', emoji: '👁️' },
+        { keywords: ['眼'], iconClass: 'fa-eye', bgColor: 'bg-blue-200', textColor: 'text-blue-500', emoji: '👁️' },
         { keywords: ['骨', '復健'], iconClass: 'fa-bone', bgColor: 'bg-yellow-400', textColor: 'text-yellow-600', emoji: '🦴' },
         { keywords: ['藥'], iconClass: 'fa-pills', bgColor: 'bg-orange-400', textColor: 'text-orange-600', emoji: '💊' },
         { keywords: ['診所', '醫療', '醫院'], iconClass: 'fa-stethoscope', bgColor: 'bg-green-400', textColor: 'text-green-600', emoji: '🩺' },
@@ -2692,7 +2692,7 @@
                     </div>
                     <div class="flex-1 overflow-hidden flex flex-col justify-center h-full pt-4 relative">
                         <div>
-                            <h4 class="font-black text-lg leading-[1.1] text-gray-800 line-clamp-2 group-hover:text-themePink transition-colors pr-10">${formatStoreName(item.name)}${newBadge}</h4>
+                            <h4 class="font-black text-base lg:text-lg leading-[1.1] text-gray-800 line-clamp-2 group-hover:text-themePink transition-colors pr-10">${formatStoreName(item.name)}${newBadge}</h4>
                             <p class="text-sm text-gray-500 font-bold mt-1.5 flex items-start pr-16 sm:pr-20"><i class="fa-solid fa-location-dot mt-0.5 mr-1.5 text-pink-400 shrink-0"></i><span class="line-clamp-2">${item.address}</span></p>
                         </div>
                     </div>
@@ -3332,24 +3332,37 @@
                 `;
             }
 
-            const maxLen = Math.max(mainCats.length, sideCats.length);
+            // 配對邏輯修改：將 mainCats 與 sideCats 配對，若有剩餘則同類互相配對，維持半寬
+            let i = 0;
+            let j = 0;
             
-            for (let i = 0; i < maxLen; i++) {
-                const mainCat = mainCats[i];
-                const sideCat = sideCats[i];
-
+            while (i < mainCats.length || j < sideCats.length) {
                 let rowHtml = `<div class="flex flex-col lg:flex-row gap-6 w-full mb-6 items-stretch">`;
 
-                if (mainCat) {
-                    let widthClass = mainCat.isLargeText ? 'lg:w-2/3' : 'lg:w-1/2';
-                    if (!sideCat) widthClass = 'w-full'; 
-                    rowHtml += renderBlock(mainCat, widthClass);
-                }
-
-                if (sideCat) {
-                    let widthClass = (mainCat && mainCat.isLargeText) ? 'lg:w-1/3' : 'lg:w-1/2';
-                    if (!mainCat) widthClass = 'w-full'; 
-                    rowHtml += renderBlock(sideCat, widthClass);
+                if (i < mainCats.length && j < sideCats.length) {
+                    // main 與 side 互相配對
+                    let mainCat = mainCats[i++];
+                    let sideCat = sideCats[j++];
+                    let wMain = mainCat.isLargeText ? 'lg:w-2/3' : 'lg:w-1/2';
+                    let wSide = mainCat.isLargeText ? 'lg:w-1/3' : 'lg:w-1/2';
+                    rowHtml += renderBlock(mainCat, wMain);
+                    rowHtml += renderBlock(sideCat, wSide);
+                } else if (i < mainCats.length) {
+                    // 只剩 mainCat，兩兩配對
+                    let mainCat1 = mainCats[i++];
+                    rowHtml += renderBlock(mainCat1, 'lg:w-1/2');
+                    if (i < mainCats.length) {
+                        let mainCat2 = mainCats[i++];
+                        rowHtml += renderBlock(mainCat2, 'lg:w-1/2');
+                    }
+                } else if (j < sideCats.length) {
+                    // 只剩 sideCat，兩兩配對 (解決美容護理變全寬的問題)
+                    let sideCat1 = sideCats[j++];
+                    rowHtml += renderBlock(sideCat1, 'lg:w-1/2');
+                    if (j < sideCats.length) {
+                        let sideCat2 = sideCats[j++];
+                        rowHtml += renderBlock(sideCat2, 'lg:w-1/2');
+                    }
                 }
 
                 rowHtml += `</div>`;
