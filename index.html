@@ -1488,7 +1488,7 @@
             let useCache = false;
             let fetchFailed = false;
 
-            // 1. 檢查快取是否有效
+            // 1. 檢查快取是否有效 (120 秒內絕對有效)
             if (cachedDataStr && (now - cachedTime < cacheValidTime)) {
                 try {
                     tdxData = JSON.parse(cachedDataStr);
@@ -1511,11 +1511,14 @@
                 } catch(e) {
                     console.warn('TDX API failed, checking fallback...', e);
                     fetchFailed = true;
-                    // API 失敗時，嘗試拿舊的快取來用
-                    if (cachedDataStr) {
+                    // API 失敗時，嘗試拿舊的快取來用 (但不能超過 5 分鐘，否則火車會變過去式)
+                    if (cachedDataStr && (now - cachedTime <= 300000)) {
                         try {
                             tdxData = JSON.parse(cachedDataStr);
                         } catch(e2) {}
+                    } else {
+                        // 快取太舊，強制清空讓它走靜態時刻表
+                        tdxData = null; 
                     }
                 }
             }
@@ -1535,8 +1538,16 @@
                         else if (train.Direction === 0) southTimes.push(targetTime); // 往機場/中壢
                     }
                 });
-                
-                // 狀態顯示 UI
+            }
+
+            // 判斷是否需要降級為靜態時刻表 (完全無資料、快取太舊、或TDX回傳空班次)
+            if (northTimes.length === 0 && southTimes.length === 0) {
+                northTimes = generateStaticMrtTimes([5, 20, 35, 50]);
+                southTimes = generateStaticMrtTimes([10, 25, 40, 55]);
+                statusHtml = `<i class="fa-solid fa-calendar-days mr-1.5"></i>靜態表預估 (目前無連線)`;
+                badgeStyle = 'bg-gray-100 text-gray-500 border-gray-200';
+            } else {
+                // 有動態資料的狀態顯示 UI
                 if (fetchFailed) {
                     const diffMinutes = Math.floor((now - cachedTime) / 60000);
                     statusHtml = `<i class="fa-solid fa-clock-rotate-left mr-1.5"></i>資料更新於 ${diffMinutes} 分鐘前`;
@@ -1548,13 +1559,6 @@
                     statusHtml = `<i class="fa-solid fa-satellite-dish mr-1.5 animate-pulse"></i>TDX 即時動態連線`;
                     badgeStyle = 'bg-green-50 text-green-600 border-green-200';
                 }
-                
-            } else {
-                // 完全沒有資料或快取時，套用靜態時刻表
-                northTimes = generateStaticMrtTimes([5, 20, 35, 50]);
-                southTimes = generateStaticMrtTimes([10, 25, 40, 55]);
-                statusHtml = `<i class="fa-solid fa-calendar-days mr-1.5"></i>靜態時刻表預估 (目前無連線)`;
-                badgeStyle = 'bg-gray-100 text-gray-500 border-gray-200';
             }
 
             globalMrtData.north = northTimes.sort((a,b)=>a-b);
