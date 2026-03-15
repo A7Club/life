@@ -3348,7 +3348,7 @@
 
                 if (sideCat) {
                     let widthClass = (mainCat && mainCat.isLargeText) ? 'lg:w-1/3' : 'lg:w-1/2';
-                    if (!mainCat) widthClass = 'lg:w-1/2'; // 強制落單的副分類(如美容護理)與其他副分類維持一半寬度
+                    if (!mainCat) widthClass = 'lg:w-1/3'; // 強制落單的副分類(如美容護理)與其他副分類維持一半寬度
                     rowHtml += renderBlock(sideCat, widthClass);
                 }
 
