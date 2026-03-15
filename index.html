@@ -3031,7 +3031,7 @@
                     if(cat.includes('捷運') || cat.includes('機捷') || cat.includes('交通')) icon = '🚇';
                     if(cat === '全部') icon = '🎡';
                     
-                    return `<button onclick="renderShoppingData(globalShoppingData, '${cat.replace(/'/g, "\\'")}')" class="flex-auto lg:flex-1 w-auto py-2.5 md:py-3 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-yellow-100 whitespace-nowrap ${activeClass}">
+                    return `<button onclick="renderShoppingData(globalShoppingData, '${cat.replace(/'/g, "\\'")}')" class="w-auto py-2.5 md:py-3 px-4 md:px-6 rounded-full font-black text-xs md:text-sm transition-all transform flex items-center justify-center gap-1 md:gap-2 border border-yellow-100 whitespace-nowrap ${activeClass}">
                                 <span class="hidden md:inline-block shrink-0">${icon}</span>
                                 <span>${cat}</span>
                             </button>`;
@@ -3347,8 +3347,8 @@
                 }
 
                 if (sideCat) {
-                    let widthClass = (mainCat && mainCat.isLargeText) ? 'lg:w-1/3' : 'lg:w-1/4';
-                    if (!mainCat) widthClass = 'lg:w-1/4'; // 強制落單的副分類(如美容護理)與其他副分類維持一半寬度
+                    let widthClass = (mainCat && mainCat.isLargeText) ? 'lg:w-1/3' : 'lg:w-1/3';
+                    if (!mainCat) widthClass = 'lg:w-1/3'; // 強制落單的副分類(如美容護理)與其他副分類維持一半寬度
                     rowHtml += renderBlock(sideCat, widthClass);
                 }
 
