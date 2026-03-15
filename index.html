@@ -3062,7 +3062,7 @@
             let sideCats = []; 
 
             for (const [catName, items] of Object.entries(groupedCategories)) {
-                if (catName.includes('捷運') || catName.includes('機捷') || catName.includes('交通')) {
+                if (catName.includes('捷運') || catName.includes('機捷') || catName.includes('機場')) {
                     mrtCat = { name: catName, items: items };
                 } else {
                     const isPhoto = catName.includes('購物中心') || catName.includes('觀光景點') || catName.includes('百貨') || catName.includes('商場') || catName.includes('公園');
