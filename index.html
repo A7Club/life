@@ -390,7 +390,7 @@
                 <div class="w-full lg:w-[65%] relative z-10 bg-white rounded-[1.5rem] p-4 sm:p-6 border-2 border-gray-100 shadow-inner flex flex-col justify-center">
                     <div class="flex justify-between items-center mb-6">
                         <span class="text-xs sm:text-sm text-gray-500 font-black"><i class="fa-solid fa-location-crosshairs mr-1.5"></i>列車即時位置</span>
-                        <span class="text-[10px] sm:text-xs text-gray-400 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>系統推算中</span>
+                        <span id="mrt-status-badge" class="text-[10px] sm:text-xs text-gray-400 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 shadow-sm transition-colors"><i class="fa-solid fa-circle-notch fa-spin mr-1.5"></i>連線 TDX 中...</span>
                     </div>
                     
                     <!-- 動態列車與軌道區域 -->
@@ -889,6 +889,8 @@
 
         // 用於存放全域 setInterval 以便切換頁面時清除
         let globalMrtInterval = null;
+        let globalMrtFetchInterval = null;
+        let globalMrtData = { north: [], south: [] };
         
         // --- Leaflet 全域變數 ---
         let foodMapInstance = null;
@@ -1071,6 +1073,10 @@
                         fetchAttractionsData(); 
                         fetchLocalNews(); 
                         
+                        fetchMrtData(); // 初始化並抓取 TDX
+                        if (globalMrtFetchInterval) clearInterval(globalMrtFetchInterval);
+                        globalMrtFetchInterval = setInterval(fetchMrtData, 60000); // 每 60 秒定期更新/檢查快取
+
                         updateMRTStatus();
                         if (globalMrtInterval) clearInterval(globalMrtInterval);
                         globalMrtInterval = setInterval(updateMRTStatus, 1000);
@@ -1079,6 +1085,10 @@
                     if (globalMrtInterval) {
                         clearInterval(globalMrtInterval);
                         globalMrtInterval = null;
+                    }
+                    if (globalMrtFetchInterval) {
+                        clearInterval(globalMrtFetchInterval);
+                        globalMrtFetchInterval = null;
                     }
                 }
 
@@ -1443,80 +1453,197 @@
             }
         }
 
-        // --- 機捷動態模擬更新函數 ---
+        // --- 產生靜態備援時刻表 (Fallback) ---
+        function generateStaticMrtTimes(minutesPattern) {
+            const now = new Date();
+            const currentMin = now.getMinutes();
+            const currentSec = now.getSeconds();
+            const currentTotalMin = currentMin + currentSec / 60;
+            let times = [];
+
+            // 往後推算兩小時內的班次，確保跨小時正常
+            for (let h = 0; h < 2; h++) {
+                for (let m of minutesPattern) {
+                    let targetMin = m + (h * 60);
+                    if (targetMin > currentTotalMin - 1) { // 允許過去一分鐘內的車(進站中)
+                        let diffMinutes = targetMin - currentTotalMin;
+                        times.push(Date.now() + diffMinutes * 60 * 1000);
+                    }
+                }
+            }
+            return times.sort((a,b) => a-b);
+        }
+
+        // --- 串接 TDX 交通部 API 與快取機制 ---
+        async function fetchMrtData() {
+            const cacheKey = 'tdx_mrt_a7_data';
+            const cacheTimeKey = 'tdx_mrt_a7_time';
+            const now = Date.now();
+            const cacheValidTime = 120 * 1000; // 120秒內使用快取避免被 BAN
+
+            let cachedDataStr = localStorage.getItem(cacheKey);
+            let cachedTime = parseInt(localStorage.getItem(cacheTimeKey) || '0');
+
+            let tdxData = null;
+            let useCache = false;
+            let fetchFailed = false;
+
+            // 1. 檢查快取是否有效
+            if (cachedDataStr && (now - cachedTime < cacheValidTime)) {
+                try {
+                    tdxData = JSON.parse(cachedDataStr);
+                    useCache = true;
+                } catch(e) {}
+            }
+
+            // 2. 若無效則發送 API 請求
+            if (!useCache) {
+                try {
+                    const res = await fetch("https://tdx.transportdata.tw/api/basic/v2/Rail/Metro/LiveBoard/TYMC?$filter=StationID%20eq%20'A7'&$format=JSON");
+                    if (res.ok) {
+                        tdxData = await res.json();
+                        cachedTime = now;
+                        localStorage.setItem(cacheKey, JSON.stringify(tdxData));
+                        localStorage.setItem(cacheTimeKey, cachedTime.toString());
+                    } else {
+                        throw new Error('TDX Rate limit or Server Error');
+                    }
+                } catch(e) {
+                    console.warn('TDX API failed, checking fallback...', e);
+                    fetchFailed = true;
+                    // API 失敗時，嘗試拿舊的快取來用
+                    if (cachedDataStr) {
+                        try {
+                            tdxData = JSON.parse(cachedDataStr);
+                        } catch(e2) {}
+                    }
+                }
+            }
+
+            let northTimes = [];
+            let southTimes = [];
+            let statusHtml = '';
+            let badgeStyle = '';
+
+            // 3. 處理資料 (動態或靜態)
+            if (tdxData && tdxData.length > 0) {
+                tdxData.forEach(train => {
+                    if (train.EstimateTime !== undefined && train.EstimateTime !== null) {
+                        // 依照抓取當時的時間推算絕對的 Timestamp
+                        let targetTime = cachedTime + (train.EstimateTime * 60 * 1000);
+                        if (train.Direction === 1) northTimes.push(targetTime);      // 往台北
+                        else if (train.Direction === 0) southTimes.push(targetTime); // 往機場/中壢
+                    }
+                });
+                
+                // 狀態顯示 UI
+                if (fetchFailed) {
+                    const diffMinutes = Math.floor((now - cachedTime) / 60000);
+                    statusHtml = `<i class="fa-solid fa-clock-rotate-left mr-1.5"></i>資料更新於 ${diffMinutes} 分鐘前`;
+                    badgeStyle = 'bg-orange-50 text-orange-500 border-orange-200';
+                } else if (useCache) {
+                    statusHtml = `<i class="fa-solid fa-bolt mr-1.5"></i>即時動態 (快取)`;
+                    badgeStyle = 'bg-green-50 text-green-600 border-green-200';
+                } else {
+                    statusHtml = `<i class="fa-solid fa-satellite-dish mr-1.5 animate-pulse"></i>TDX 即時動態連線`;
+                    badgeStyle = 'bg-green-50 text-green-600 border-green-200';
+                }
+                
+            } else {
+                // 完全沒有資料或快取時，套用靜態時刻表
+                northTimes = generateStaticMrtTimes([5, 20, 35, 50]);
+                southTimes = generateStaticMrtTimes([10, 25, 40, 55]);
+                statusHtml = `<i class="fa-solid fa-calendar-days mr-1.5"></i>靜態時刻表預估 (目前無連線)`;
+                badgeStyle = 'bg-gray-100 text-gray-500 border-gray-200';
+            }
+
+            globalMrtData.north = northTimes.sort((a,b)=>a-b);
+            globalMrtData.south = southTimes.sort((a,b)=>a-b);
+            
+            const badgeEl = document.getElementById('mrt-status-badge');
+            if (badgeEl) {
+                badgeEl.className = `text-[10px] sm:text-xs font-black px-2.5 py-1 rounded-md shadow-sm border ${badgeStyle}`;
+                badgeEl.innerHTML = statusHtml;
+            }
+        }
+
+        // --- 機捷動態更新與渲染 (1秒刷新1次) ---
         function updateMRTStatus() {
             const container = document.getElementById('mrt-track-container');
             const nbEl = document.getElementById('mrt-time-north');
             const sbEl = document.getElementById('mrt-time-south');
             if (!container || !nbEl || !sbEl) return;
 
-            const now = new Date();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
-            const currentTotalMinutes = minutes + seconds / 60;
-
-            // 假設北上列車 (往台北) 在每個小時的 5, 20, 35, 50 分抵達 A7
-            const baseNbArrivals = [5, 20, 35, 50]; 
-            // 假設南下列車 (往機場) 在每個小時的 10, 25, 40, 55 分抵達 A7
-            const baseSbArrivals = [10, 25, 40, 55]; 
-
+            const now = Date.now();
             let nbTrainsHTML = '';
-            let minNbDiff = 999;
-            
-            // 處理北上列車 
-            baseNbArrivals.forEach(arr => {
-                [-60, 0, 60].forEach(offset => {
-                    let diff = (arr + offset) - currentTotalMinutes;
-                    if (diff > 0 && diff < minNbDiff) minNbDiff = diff;
-                    
-                    if (diff >= -9 && diff <= 9) {
-                        let pos = 50 + (diff * (50/9));
-                        pos = Math.max(0, Math.min(100, pos));
-                        
-                        nbTrainsHTML += `<div class="absolute top-[0px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
-                            <div class="bg-white text-themePurple rounded-full shadow-md border-2 border-purple-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
-                                <i class="fa-solid fa-caret-left text-[10px]"></i>
-                                <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
-                            </div>
-                        </div>`;
-                    }
-                });
-            });
-
             let sbTrainsHTML = '';
+            let minNbDiff = 999;
             let minSbDiff = 999;
-            
-            // 處理南下列車 
-            baseSbArrivals.forEach(arr => {
-                [-60, 0, 60].forEach(offset => {
-                    let diff = (arr + offset) - currentTotalMinutes;
-                    if (diff > 0 && diff < minSbDiff) minSbDiff = diff;
+
+            const processTrains = (times, direction) => {
+                let minDiff = 999;
+                let html = '';
+                times.forEach(targetTime => {
+                    let diffMin = (targetTime - now) / 60000;
                     
-                    if (diff >= -9 && diff <= 9) {
-                        let pos = 50 - (diff * (50/9));
-                        pos = Math.max(0, Math.min(100, pos));
-                        
-                        sbTrainsHTML += `<div class="absolute top-[26px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
-                            <div class="bg-purple-500 text-white rounded-full shadow-md border-2 border-white flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
-                                <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
-                                <i class="fa-solid fa-caret-right text-[10px]"></i>
-                            </div>
-                        </div>`;
+                    // 保留過去1分鐘內(進站中)及未來的班車
+                    if (diffMin > -1 && diffMin < minDiff) minDiff = diffMin;
+                    
+                    // 顯示在軌道區間 (-9 到 9 分鐘)
+                    if (diffMin >= -9 && diffMin <= 9) {
+                        if (direction === 'north') {
+                            let pos = 50 + (diffMin * (50/9));
+                            pos = Math.max(0, Math.min(100, pos));
+                            html += `<div class="absolute top-[0px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
+                                <div class="bg-white text-themePurple rounded-full shadow-md border-2 border-purple-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
+                                    <i class="fa-solid fa-caret-left text-[10px]"></i>
+                                    <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
+                                </div>
+                            </div>`;
+                        } else {
+                            let pos = 50 - (diffMin * (50/9));
+                            pos = Math.max(0, Math.min(100, pos));
+                            html += `<div class="absolute top-[26px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
+                                <div class="bg-purple-500 text-white rounded-full shadow-md border-2 border-white flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
+                                    <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
+                                    <i class="fa-solid fa-caret-right text-[10px]"></i>
+                                </div>
+                            </div>`;
+                        }
                     }
                 });
-            });
+                return { minDiff, html };
+            };
+
+            if (globalMrtData.north && globalMrtData.north.length > 0) {
+                const res = processTrains(globalMrtData.north, 'north');
+                minNbDiff = res.minDiff;
+                nbTrainsHTML = res.html;
+            }
+            if (globalMrtData.south && globalMrtData.south.length > 0) {
+                const res = processTrains(globalMrtData.south, 'south');
+                minSbDiff = res.minDiff;
+                sbTrainsHTML = res.html;
+            }
 
             container.innerHTML = nbTrainsHTML + sbTrainsHTML;
 
             const updateText = (el, diff, unitId) => {
                 const unitEl = document.getElementById(unitId);
+                if (diff === 999) {
+                    el.innerText = '--';
+                    el.className = el.id.includes('north') ? 'text-3xl sm:text-4xl font-black text-themePurple font-mono w-10 text-center' : 'text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center';
+                    if(unitEl) unitEl.style.display = 'inline';
+                    return;
+                }
+                
                 if (Math.ceil(diff) <= 1 && Math.ceil(diff) >= 0) {
                     el.innerText = '進站中';
                     el.className = 'text-2xl sm:text-3xl font-black text-red-400 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest';
                     if(unitEl) unitEl.style.display = 'none';
                 } else {
-                    el.innerText = Math.ceil(diff);
-                    el.className = el.id.includes('north') ? 'text-3xl sm:text-4xl font-black text-purple-400 font-mono w-10 text-center' : 'text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center';
+                    el.innerText = Math.max(0, Math.ceil(diff)); // 避免顯示負數
+                    el.className = el.id.includes('north') ? 'text-3xl sm:text-4xl font-black text-themePurple font-mono w-10 text-center' : 'text-3xl sm:text-4xl font-black text-white font-mono w-10 text-center';
                     if(unitEl) unitEl.style.display = 'inline';
                 }
             };
