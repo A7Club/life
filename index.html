@@ -1456,18 +1456,20 @@
         // --- 產生靜態備援時刻表 (Fallback) ---
         function generateStaticMrtTimes(minutesPattern) {
             const now = new Date();
-            const currentMin = now.getMinutes();
-            const currentSec = now.getSeconds();
-            const currentTotalMin = currentMin + currentSec / 60;
             let times = [];
 
-            // 往後推算兩小時內的班次，確保跨小時正常
-            for (let h = 0; h < 2; h++) {
+            // 產生目前與下一個小時的固定班次
+            for (let hOffset = 0; hOffset <= 1; hOffset++) {
                 for (let m of minutesPattern) {
-                    let targetMin = m + (h * 60);
-                    if (targetMin > currentTotalMin - 1) { // 允許過去一分鐘內的車(進站中)
-                        let diffMinutes = targetMin - currentTotalMin;
-                        times.push(Date.now() + diffMinutes * 60 * 1000);
+                    let targetDate = new Date(now.getTime());
+                    // 原生 API：即使 now.getHours() + 1 跨越 24 點，也會自動進位到隔天，不會產生錯誤
+                    targetDate.setHours(now.getHours() + hOffset, m, 0, 0);
+                    
+                    let diffMinutes = (targetDate.getTime() - now.getTime()) / 60000;
+                    
+                    // 允許過去 1 分鐘內的車 (顯示進站中)，並確保只取未來班次
+                    if (diffMinutes > -1 && diffMinutes <= 120) {
+                        times.push(targetDate.getTime());
                     }
                 }
             }
@@ -1541,10 +1543,11 @@
             }
 
             // 判斷是否需要降級為靜態時刻表 (完全無資料、快取太舊、或TDX回傳空班次)
-            if (northTimes.length === 0 && southTimes.length === 0) {
-                northTimes = generateStaticMrtTimes([5, 20, 35, 50]);
-                southTimes = generateStaticMrtTimes([10, 25, 40, 55]);
-                statusHtml = `<i class="fa-solid fa-calendar-days mr-1.5"></i>靜態表預估 (目前無連線)`;
+            if (!tdxData || (northTimes.length === 0 && southTimes.length === 0)) {
+                // 依照 A7 體育大學站目前的官方時刻表推算 (每15分鐘一班)
+                northTimes = generateStaticMrtTimes([2, 17, 32, 47]); // 往台北
+                southTimes = generateStaticMrtTimes([0, 15, 30, 45]); // 往機場/中壢
+                statusHtml = `<i class="fa-solid fa-calendar-days mr-1.5"></i>依A7時刻表推算 (無連線)`;
                 badgeStyle = 'bg-gray-100 text-gray-500 border-gray-200';
             } else {
                 // 有動態資料的狀態顯示 UI
@@ -1587,6 +1590,8 @@
             const processTrains = (times, direction) => {
                 let minDiff = 999;
                 let html = '';
+                let hasOutsideTrain = false; // 避免重疊畫太多個邊界列車
+
                 times.forEach(targetTime => {
                     let diffMin = (targetTime - now) / 60000;
                     
@@ -1609,6 +1614,26 @@
                             pos = Math.max(0, Math.min(100, pos));
                             html += `<div class="absolute top-[26px] -translate-x-1/2 z-20 transition-all duration-1000" style="left: ${pos}%;">
                                 <div class="bg-purple-500 text-white rounded-full shadow-md border-2 border-white flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
+                                    <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
+                                    <i class="fa-solid fa-caret-right text-[10px]"></i>
+                                </div>
+                            </div>`;
+                        }
+                    } else if (diffMin > 9 && !hasOutsideTrain) {
+                        // 還沒進站 (大於 9 分鐘) 的列車，在最邊緣淡化閃爍顯示
+                        hasOutsideTrain = true;
+                        if (direction === 'north') {
+                            // 北上從右邊來 (100%)
+                            html += `<div class="absolute top-[0px] -translate-x-1/2 z-10 transition-all duration-1000 opacity-40 scale-90" style="left: 100%;">
+                                <div class="bg-white text-themePurple rounded-full shadow-sm border-2 border-purple-200 flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse">
+                                    <i class="fa-solid fa-caret-left text-[10px]"></i>
+                                    <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
+                                </div>
+                            </div>`;
+                        } else {
+                            // 南下從左邊來 (0%)
+                            html += `<div class="absolute top-[26px] -translate-x-1/2 z-10 transition-all duration-1000 opacity-40 scale-90" style="left: 0%;">
+                                <div class="bg-purple-500 text-white rounded-full shadow-sm border-2 border-white flex items-center justify-center relative px-2 py-1 gap-1 animate-pulse" style="animation-delay: 0.5s;">
                                     <i class="fa-solid fa-train-subway text-xs sm:text-sm"></i>
                                     <i class="fa-solid fa-caret-right text-[10px]"></i>
                                 </div>
@@ -1936,7 +1961,7 @@
             if (upperName.includes('OK便利商店') || upperName.includes('OK MART')) return 'https://cdn2.downdetector.com/static/uploads/c/300/b0efe/okmart.png';
             if (upperName.includes('全聯')) return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCfyVcpZT_j32ZCmCrv9FTONBY2mP4F9vJUw&s';
             if (upperName.includes('家樂福')) return 'https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-6/301208324_652113043274590_8822712815443496120_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=ZXLQgv40k_cQ7kNvwEHNeby&_nc_oc=Adk12Gzama5oRdCqvIg7IBR7aHxJWQZTxmLEH-ftxiKqWR2umGVaprnn_JJqEOr5Hw5HRRf05u0-JSNeojxzbXDh&_nc_zt=23&_nc_ht=scontent-tpe1-1.xx&_nc_gid=IV27qNMpH8_blC1P20ht2A&_nc_ss=8&oh=00_AfzVRuuIAsW7sq3b8bAjifLjx83H-hxiGC0oFqUO0e9sQQ&oe=69BB08D2';
-            if (upperName.includes('蝦皮')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Shopee.svg/300px-Shopee.svg.png';
+            if (upperName.includes('蝦皮')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Shopee_logo.svg/330px-Shopee_logo.svg.png';
             if (upperName.includes('COSTCO')) return 'https://www.logo.wine/a/logo/Costco/Costco-Logo.wine.svg';
             return null;
         }
@@ -3062,7 +3087,7 @@
             let sideCats = []; 
 
             for (const [catName, items] of Object.entries(groupedCategories)) {
-                if (catName.includes('捷運') || catName.includes('機捷') || catName.includes('機場')) {
+                if (catName.includes('捷運') || catName.includes('機捷') || catName.includes('交通')) {
                     mrtCat = { name: catName, items: items };
                 } else {
                     const isPhoto = catName.includes('購物中心') || catName.includes('觀光景點') || catName.includes('百貨') || catName.includes('商場') || catName.includes('公園');
