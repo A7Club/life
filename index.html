@@ -1470,11 +1470,13 @@
                     // 原生 API：即使 now.getHours() + 1 跨越 24 點，也會自動進位到隔天，不會產生錯誤
                     targetDate.setHours(now.getHours() + hOffset, m, 0, 0);
                     
-                    let diffMinutes = (targetDate.getTime() - now.getTime()) / 60000;
+                    // 依使用者要求，所有到站時間減 1 分鐘 (提早顯示)
+                    let adjustedTime = targetDate.getTime() - 60000;
+                    let diffMinutes = (adjustedTime - now.getTime()) / 60000;
                     
-                    // 允許過去 1 分鐘內的車 (顯示進站中)，並確保只取未來班次
-                    if (diffMinutes > -1 && diffMinutes <= 120) {
-                        times.push(targetDate.getTime());
+                    // 允許過去 2 分鐘內的車 (顯示進站中)，並確保只取未來班次
+                    if (diffMinutes > -2 && diffMinutes <= 120) {
+                        times.push(adjustedTime);
                     }
                 }
             }
@@ -1539,8 +1541,8 @@
             if (tdxData && tdxData.length > 0) {
                 tdxData.forEach(train => {
                     if (train.EstimateTime !== undefined && train.EstimateTime !== null) {
-                        // 依照抓取當時的時間推算絕對的 Timestamp
-                        let targetTime = cachedTime + (train.EstimateTime * 60 * 1000);
+                        // 依照抓取當時的時間推算絕對的 Timestamp，並依要求減去 1 分鐘
+                        let targetTime = cachedTime + ((train.EstimateTime - 1) * 60 * 1000);
                         if (train.Direction === 1) northTimes.push(targetTime);      // 往台北
                         else if (train.Direction === 0) southTimes.push(targetTime); // 往機場/中壢
                     }
@@ -1600,8 +1602,8 @@
                 times.forEach(targetTime => {
                     let diffMin = (targetTime - now) / 60000;
                     
-                    // 保留過去1分鐘內(進站中)及未來的班車
-                    if (diffMin > -1 && diffMin < minDiff) minDiff = diffMin;
+                    // 保留過去2分鐘內(進站中)及未來的班車 (因整體時間減1分鐘，放寬容錯)
+                    if (diffMin > -2 && diffMin < minDiff) minDiff = diffMin;
                     
                     // 顯示在軌道區間 (-9 到 9 分鐘)
                     if (diffMin >= -9 && diffMin <= 9) {
@@ -1671,7 +1673,8 @@
                     return;
                 }
                 
-                if (Math.ceil(diff) <= 1 && Math.ceil(diff) >= 0) {
+                // 擴大進站中的判定範圍 (配合時間減 1 分鐘的邏輯)
+                if (Math.ceil(diff) <= 1 && Math.ceil(diff) >= -1) {
                     el.innerText = '進站中';
                     el.className = 'text-xl md:text-3xl font-black text-red-400 animate-pulse text-right tracking-widest whitespace-nowrap shrink-0 mt-1 md:mt-2';
                     if(unitEl) unitEl.style.display = 'none';
