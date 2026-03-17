@@ -11,15 +11,17 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
     
     <!-- 📊 Google Analytics (GA4)追蹤代碼放置區 -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-YJ9RJC2DRS');
-</script>
+    <!-- 
+      請將您的 GA4 gtag.js 代碼貼在下方。
+      範例：
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX'); // 將 X 替換為您的評估 ID
+      </script>
+    -->
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -210,7 +212,7 @@
         <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
             <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
             <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</button>
-            <button onclick="loadPage('lifehub'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 公共服務與醫療</button>
+            <button onclick="loadPage('lifehub'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 公務與醫療</button>
             <!-- 將探索柒改為外部連結 -->
             <a href="explore.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</a>
         </div>
@@ -795,7 +797,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themeGreen text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform rotate-3 shadow-md"><i class="fa-solid fa-heart-pulse"></i></div>
-                <h2 class="text-2xl font-black text-themeGreen">公共服務與醫療 <span class="text-lg text-gray-400 font-bold ml-2">醫療與公家機關</span></h2>
+                <h2 class="text-2xl font-black text-themeGreen">公務與醫療 <span class="text-lg text-gray-400 font-bold ml-2">民生必需有我們的關心</span></h2>
             </div>
 
             <!-- 獨立保留緊急聯絡電話區塊 -->
@@ -1253,7 +1255,7 @@
                 <div class="absolute -right-4 -top-4 text-green-100 text-8xl floating opacity-50 z-0 pointer-events-none"><i class="fa-solid fa-school"></i></div>
                 <h3 class="text-2xl font-black mb-6 relative z-10 flex items-center text-themeGreen"><i class="fa-solid fa-book-open mr-3"></i> 在地教育單位</h3>
                 
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 relative z-10">
+                <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 relative z-10">
                     <!-- 1. 文青國民中小學 -->
                     <div class="bg-white rounded-[1.5rem] shadow-sm border-2 border-green-50 hover:border-green-300 hover:shadow-md hover:-translate-y-1.5 transition-all group flex flex-col h-full overflow-hidden relative">
                         <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區文青路" target="_blank" class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm w-8 h-8 rounded-full shadow-md hover:bg-green-500 hover:text-white transition-colors z-20 text-gray-500 flex items-center justify-center border border-gray-100" title="開啟導航"><i class="fa-solid fa-location-arrow text-xs"></i></a>
@@ -3041,7 +3043,7 @@
         { keywords: ['購物中心', '百貨', '商場'], iconClass: 'fa-bag-shopping', bgColor: 'bg-pink-400', textColor: 'text-pink-400', emoji: '🛍️' },
         { keywords: ['捷運', '機捷', '交通'], iconClass: 'fa-train-subway', bgColor: 'bg-themePurple', textColor: 'text-purple-400', emoji: '🚇' },
 
-        // --- 公共服務與醫療 (醫療) ---
+        // --- 公務與醫療 (醫療) ---
         { keywords: ['牙'], iconClass: 'fa-tooth', bgColor: 'bg-blue-400', textColor: 'text-blue-600', emoji: '🦷' },
         { keywords: ['小兒', '婦產', '兒童診所'], iconClass: 'fa-baby', bgColor: 'bg-pink-400', textColor: 'text-pink-600', emoji: '👶' },
         { keywords: ['眼'], iconClass: 'fa-eye', bgColor: 'bg-blue-200', textColor: 'text-blue-500', emoji: '👁️' },
@@ -4063,7 +4065,7 @@
     }
 
     // ==========================================
-    // 🩺 公共服務與醫療 (Medical) 模組
+    // 🩺 公務與醫療 (Medical) 模組
     // ==========================================
     function loadSharedMedicalData() {
         return new Promise((resolve, reject) => {
