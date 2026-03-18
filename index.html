@@ -1776,12 +1776,13 @@
             const query = input.value.trim();
             if(!query) return;
             
-            const searchVal = document.getElementById('homeSearchInput').value;
-    if (searchVal) {
-        // 跳轉到探索頁，並帶上參數
-        window.location.href = `explore_0317.html?search=${encodeURIComponent(searchVal)}`;
-    }
-}
+            const route = 'search=' + encodeURIComponent(query);
+            try {
+                history.pushState(null, '', '#' + route);
+            } catch (e) {
+            }
+            handleRoute(route);
+        }
 
         async function executeSearchLogic(query) {
             const display = document.getElementById('search-query-display');
