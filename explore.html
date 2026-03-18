@@ -2964,6 +2964,30 @@
             if (window.gasTransitCache) renderAllTransit();
         }, 15000);
 
+document.addEventListener('DOMContentLoaded', () => {
+    // 檢查網址是否有 hashtag (例如 #transit, #buildings)
+    if (window.location.hash) {
+        // 延遲一下讓網頁先排版完成
+        setTimeout(() => {
+            const targetId = window.location.hash.substring(1);
+            const targetEl = document.getElementById(targetId);
+            
+            if (targetEl) {
+                // 平滑捲動到該區塊
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // 加入紫色的高亮提示光環 (對應探索頁面的主題色)
+                targetEl.classList.add('ring-4', 'ring-purple-400', 'transition-all', 'duration-500', 'shadow-lg', 'rounded-2xl');
+                
+                // 2.5 秒後移除光環
+                setTimeout(() => {
+                    targetEl.classList.remove('ring-4', 'ring-purple-400', 'shadow-lg');
+                }, 2500);
+            }
+        }, 500);
+    }
+});
+        
     </script>
     
     <!-- Google Maps API -->
