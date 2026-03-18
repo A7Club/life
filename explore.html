@@ -21,7 +21,6 @@
 </script>
 
 
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -921,14 +920,14 @@
                 </div>
                 <div class="flex flex-col lg:flex-row gap-6 items-stretch">
                     <!-- 左側 2/3：在地社群 -->
-                    <div class="w-full lg:w-2/3 flex flex-col" id="community-local-container-tab">
+                    <div class="w-full lg:w-1/2 flex flex-col" id="community-local-container-tab">
                         <div class="text-center text-themePurple py-12 bg-white rounded-[2rem] border-4 border-purple-50 shadow-cute">
                             <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
                             <p class="font-bold">載入社群中...</p>
                         </div>
                     </div>
                     <!-- 右側 1/3：地方互助 -->
-                    <div class="w-full lg:w-1/3 flex flex-col" id="community-mutual-container"></div>
+                    <div class="w-full lg:w-1/2 flex flex-col" id="community-mutual-container"></div>
                 </div>
             </div>
 
@@ -1981,7 +1980,7 @@
             };
 
             // 產生 右側「地方互助」的橫式卡片
-            const generateMutualCard = (item, isColSpan = false) => {
+            const generateMutualCard = (item) => {
                 let snsType = 'Web'; let snsBadgeClass = 'bg-gray-500 text-white'; let snsIcon = 'fa-solid fa-globe';
                 let avatarBg = 'random'; 
                 
@@ -1994,21 +1993,20 @@
                 const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(item.link)}`;
                 let avatarUrl = item.img || `https://ui-avatars.com/api/?name=${encodeURIComponent(snsType === 'Threads' ? item.name.substring(0,2) : item.name)}&background=${avatarBg === 'random' ? 'random' : avatarBg}&color=fff&size=150${snsType === 'Threads' ? '&bold=true&length=2' : ''}&font-size=0.35`;
 
-                let gridClass = isColSpan && item.name.length > 9 ? 'col-span-1 sm:col-span-2 lg:col-span-1 xl:col-span-2' : 'col-span-1';
-
-                return `<a href="${item.link}" target="_blank" class="${gridClass} bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-1 transition-all flex items-center justify-between group h-full">
-                        <div class="flex flex-col items-start pr-2 flex-1 min-w-0">
-                            <h4 class="font-black text-gray-800 text-sm md:text-base mb-2 line-clamp-2 group-hover:text-themePink transition-colors w-full">${item.name}</h4>
+                // 統一移除原本複雜的跨欄邏輯，交由網格斷點直接控制，並加入 overflow-hidden 徹底防範破版
+                return `<a href="${item.link}" target="_blank" class="col-span-1 bg-white rounded-[1.5rem] p-3 md:p-4 shadow-sm border-2 border-gray-100 hover:border-pink-200 hover:-translate-y-1 transition-all flex items-center justify-between gap-2 sm:gap-3 group h-full overflow-hidden">
+                        <div class="flex flex-col items-start flex-1 min-w-0 pr-1">
+                            <h4 class="font-black text-gray-800 text-sm md:text-base mb-2 line-clamp-2 group-hover:text-themePink transition-colors w-full break-words">${item.name}</h4>
                             <div class="${snsBadgeClass} text-[10px] md:text-xs font-black px-2 py-1 rounded-lg shadow-sm flex items-center shrink-0"><i class="${snsIcon} mr-1"></i> ${snsType}</div>
                         </div>
-                        ${showQR ? `<div class="w-12 h-12 md:w-16 md:h-16 shrink-0 bg-white rounded-xl p-1 border border-dashed border-gray-200 group-hover:border-themePink transition-colors relative flex items-center justify-center"><img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100" alt="QR Code"></div>` 
-                                 : `<div class="w-10 h-10 md:w-14 md:h-14 shrink-0 rounded-full border-2 border-gray-100 group-hover:border-themePink transition-colors relative flex items-center justify-center overflow-hidden shadow-sm bg-gray-50 p-0.5"><img src="${avatarUrl}" class="w-full h-full object-cover rounded-full" alt="社群頭像"></div>`}
+                        ${showQR ? `<div class="w-12 h-12 md:w-14 md:h-14 shrink-0 bg-white rounded-xl p-1 border border-dashed border-gray-200 group-hover:border-themePink transition-colors relative flex items-center justify-center"><img src="${qrUrl}" class="w-full h-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100" alt="QR Code"></div>` 
+                                 : `<div class="w-10 h-10 md:w-12 md:h-12 shrink-0 rounded-full border-2 border-gray-100 group-hover:border-themePink transition-colors relative flex items-center justify-center overflow-hidden shadow-sm bg-gray-50 p-0.5"><img src="${avatarUrl}" class="w-full h-full object-cover rounded-full" alt="社群頭像"></div>`}
                     </a>`;
             };
 
             const localCardsHtml = localItems.map(generateLocalCard).join('');
-            const mutualCardsAll = mutualItems.map(item => generateMutualCard(item, true)).join('');
-            const mutualCardsTop3 = mutualItems.slice(0, 3).map(item => generateMutualCard(item, false)).join('');
+            const mutualCardsAll = mutualItems.map(item => generateMutualCard(item)).join('');
+            const mutualCardsTop3 = mutualItems.slice(0, 3).map(item => generateMutualCard(item)).join('');
 
             // 產生區塊版面，且強制卡片群置中 (justify-center)
             const localBlockHtml = `
@@ -2019,6 +2017,7 @@
                 </div>
             `;
 
+            // 將 lg:grid-cols-2 調整為 lg:grid-cols-1 xl:grid-cols-2 (讓版面在擠壓時能自動變換為單欄)
             const mutualBlockHtmlAll = `
                 <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-cute border-4 border-blue-50 relative h-full flex flex-col">
                     <div class="absolute -top-4 -right-4 text-blue-100 text-6xl floating z-0 pointer-events-none"><i class="fa-solid fa-users-rectangle"></i></div>
