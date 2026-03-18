@@ -1776,13 +1776,12 @@
             const query = input.value.trim();
             if(!query) return;
             
-            const route = 'search=' + encodeURIComponent(query);
-            try {
-                history.pushState(null, '', '#' + route);
-            } catch (e) {
-            }
-            handleRoute(route);
-        }
+            const searchVal = document.getElementById('homeSearchInput').value;
+    if (searchVal) {
+        // 跳轉到探索頁，並帶上參數
+        window.location.href = `explore_0317.html?search=${encodeURIComponent(searchVal)}`;
+    }
+}
 
         async function executeSearchLogic(query) {
             const display = document.getElementById('search-query-display');
@@ -1853,11 +1852,11 @@
                                         parent = parent.parentElement;
                                     }
                                     
-                                    // 取最上層 (陣列最後一個) 的分類 ID，並移除 text fragment 以免影響路由
+                                    // 取最上層 (陣列最後一個) 的分類 ID，並加入 Text Fragment 讓瀏覽器自動捲動並高亮文字
                                     if (validIds.length > 0) {
-                                        exploreLinkTarget = `explore.html#${validIds[validIds.length - 1]}`;
+                                        exploreLinkTarget = `explore.html#${validIds[validIds.length - 1]}:~:text=${encodeURIComponent(q)}`;
                                     } else {
-                                        exploreLinkTarget = `explore.html`;
+                                        exploreLinkTarget = `explore.html#:~:text=${encodeURIComponent(q)}`;
                                     }
                                 }
                             } else {
