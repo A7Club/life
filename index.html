@@ -1911,18 +1911,38 @@
                 let domainContentHtml = '';
 
                 // 1. 探索頁面匹配結果
-                const exploreKeywords = ['探索', 'a7', '建案', '社群', '討論', '房子', '社區', '買房', '發展', '區域'];
-                const matchExploreKw = exploreKeywords.some(k => k.toLowerCase().includes(q));
+                let matchExploreKw = false;
+                let predefinedTarget = null;
+                
+                const exploreMappings = [
+                    { hash: 'transit', keywords: ['公車', '客運', '接駁車', '交通', '捷運', '站牌', '路線', 'ubike', 'youbike', '腳踏車'] },
+                    { hash: 'buildings', keywords: ['建案', '房子', '社區', '買房', '發展', '區域', '建商', '預售'] },
+                    { hash: 'community', keywords: ['社群', '討論', '群組', 'line', '臉書', '論壇', '網址'] },
+                    { hash: '', keywords: ['探索', 'a7', '柒樂部'] }
+                ];
+
+                for (const mapping of exploreMappings) {
+                    if (mapping.keywords.some(k => q.includes(k))) {
+                        matchExploreKw = true;
+                        if (mapping.hash) {
+                            predefinedTarget = `explore.html#${mapping.hash}`;
+                        }
+                        break;
+                    }
+                }
+                
+                // 優先使用預先定義的精準錨點，若無則使用動態抓取到的錨點
+                const finalExploreTarget = predefinedTarget || exploreLinkTarget;
                 
                 if (exploreSnippet || matchExploreKw) {
                     domainContentHtml += `
-                        <a href="${exploreLinkTarget}" class="block bg-purple-50 p-4 rounded-2xl shadow-sm border border-white hover:-translate-y-1 hover:shadow-md transition-all group mb-3">
+                        <a href="${finalExploreTarget}" class="block bg-purple-50 p-4 rounded-2xl shadow-sm border border-white hover:-translate-y-1 hover:shadow-md transition-all group mb-3">
                             <div class="flex items-center gap-3 mb-2">
                                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-themePurple text-xl shadow-sm shrink-0"><i class="fa-solid fa-compass"></i></div>
                                 <h4 class="font-black text-gray-800 text-lg group-hover:text-themePurple transition-colors">前往「探索柒」</h4>
                             </div>
                             <p class="text-sm text-gray-600 font-bold sm:pl-[3.25rem]">
-                                ${exploreSnippet ? `找到相關內容：<span class="text-gray-800">${exploreSnippet}</span>` : '此頁面包含 A7 重劃區的在地建案地圖、熱門討論社群與發展資訊。'}
+                                ${exploreSnippet ? `找到相關內容：<span class="text-gray-800">${exploreSnippet}</span>` : '此頁面包含 A7 重劃區的在地交通、建案、熱門討論社群與發展資訊。'}
                             </p>
                         </a>
                     `;
