@@ -1317,7 +1317,7 @@
                     <div class="bg-white rounded-[1.5rem] shadow-sm border-2 border-green-50 hover:border-green-300 hover:shadow-md hover:-translate-y-1.5 transition-all group flex flex-col h-full overflow-hidden relative">
                         <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區樂善街200巷71號" target="_blank" class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm w-8 h-8 rounded-full shadow-md hover:bg-green-500 hover:text-white transition-colors z-20 text-gray-500 flex items-center justify-center border border-gray-100" title="開啟導航"><i class="fa-solid fa-location-arrow text-xs"></i></a>
                         <div class="w-full h-32 sm:h-40 relative overflow-hidden bg-gray-100 shrink-0">
-                            <img src="https://img1.591.com.tw/house/2025/12/12/176550459390441101.jpg!900x.water3.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="">
+                            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="">
                             <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent h-1/2"></div>
                             <div class="absolute bottom-3 left-3 bg-themeGreen text-white text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm tracking-widest"><i class="fa-solid fa-star mr-1"></i>雙語教學</div>
                         </div>
@@ -1907,23 +1907,76 @@
 
                 let html = '';
 
-                // 渲染探索頁面匹配結果 (動態內文或通用關鍵字)
+                // 新增：網域內容與頁面搜尋 (SPA Templates + Explore.html)
+                let domainContentHtml = '';
+
+                // 1. 探索頁面匹配結果
                 const exploreKeywords = ['探索', 'a7', '建案', '社群', '討論', '房子', '社區', '買房', '發展', '區域'];
                 const matchExploreKw = exploreKeywords.some(k => k.toLowerCase().includes(q));
                 
                 if (exploreSnippet || matchExploreKw) {
+                    domainContentHtml += `
+                        <a href="${exploreLinkTarget}" class="block bg-purple-50 p-4 rounded-2xl shadow-sm border border-white hover:-translate-y-1 hover:shadow-md transition-all group mb-3">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-themePurple text-xl shadow-sm shrink-0"><i class="fa-solid fa-compass"></i></div>
+                                <h4 class="font-black text-gray-800 text-lg group-hover:text-themePurple transition-colors">前往「探索柒」</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 font-bold sm:pl-[3.25rem]">
+                                ${exploreSnippet ? `找到相關內容：<span class="text-gray-800">${exploreSnippet}</span>` : '此頁面包含 A7 重劃區的在地建案地圖、熱門討論社群與發展資訊。'}
+                            </p>
+                        </a>
+                    `;
+                }
+
+                // 2. 本地 SPA 模板內文搜尋
+                const templates = [
+                    { id: 'tpl-home', name: '首頁', hash: 'home', color: 'themePink', icon: 'fa-mountain-city', bg: 'bg-pink-50' },
+                    { id: 'tpl-food', name: '美食販賣部', hash: 'food', color: 'themePink', icon: 'fa-burger', bg: 'bg-pink-50' },
+                    { id: 'tpl-shopping', name: '購物與生活', hash: 'shopping', color: 'themeYellow', icon: 'fa-store', bg: 'bg-yellow-50' },
+                    { id: 'tpl-lifehub', name: '公務與醫療', hash: 'lifehub', color: 'themeGreen', icon: 'fa-briefcase-medical', bg: 'bg-green-50' }
+                ];
+
+                templates.forEach(tpl => {
+                    const el = document.getElementById(tpl.id);
+                    if (el) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = el.innerHTML;
+                        tempDiv.querySelectorAll('script, style').forEach(s => s.remove());
+                        const text = tempDiv.textContent.replace(/\s+/g, ' ');
+                        
+                        const matchIdx = text.toLowerCase().indexOf(q);
+                        if (matchIdx !== -1) {
+                            const startIndex = Math.max(0, matchIdx - 25);
+                            const endIndex = Math.min(text.length, matchIdx + q.length + 25);
+                            let snippet = text.substring(startIndex, endIndex);
+                            if (startIndex > 0) snippet = '...' + snippet;
+                            if (endIndex < text.length) snippet = snippet + '...';
+                            
+                            const regex = new RegExp(`(${q})`, 'gi');
+                            snippet = snippet.replace(regex, '<span class="bg-blue-200 text-blue-700 px-1 rounded font-black">$1</span>');
+
+                            domainContentHtml += `
+                                <a href="#${tpl.hash}" class="block ${tpl.bg} p-4 rounded-2xl shadow-sm border border-white hover:-translate-y-1 hover:shadow-md transition-all group mb-3">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-${tpl.color} text-xl shadow-sm shrink-0"><i class="fa-solid ${tpl.icon}"></i></div>
+                                        <h4 class="font-black text-gray-800 text-lg transition-colors">前往「${tpl.name}」</h4>
+                                    </div>
+                                    <p class="text-sm text-gray-600 font-bold sm:pl-[3.25rem]">
+                                        頁面內文：<span class="text-gray-800">${snippet}</span>
+                                    </p>
+                                </a>
+                            `;
+                        }
+                    }
+                });
+
+                if (domainContentHtml) {
                     html += `
-                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-purple-50 relative overflow-hidden">
-                            <h3 class="text-2xl font-black text-themePurple mb-4 border-b-2 border-purple-100 pb-2"><i class="fa-solid fa-map-location-dot mr-2"></i> 探索在地A7 (頁面內容)</h3>
-                            <a href="${exploreLinkTarget}" class="block bg-purple-50 p-4 rounded-2xl shadow-sm border border-white hover:-translate-y-1 hover:shadow-md transition-all group">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-themePurple text-xl shadow-sm shrink-0"><i class="fa-solid fa-compass"></i></div>
-                                    <h4 class="font-black text-gray-800 text-lg group-hover:text-themePurple transition-colors">前往「探索柒」相關段落</h4>
-                                </div>
-                                <p class="text-sm text-gray-600 font-bold sm:pl-[3.25rem]">
-                                    ${exploreSnippet ? `找到相關內容：<span class="text-gray-800">${exploreSnippet}</span>` : '此頁面包含 A7 重劃區的在地建案地圖、熱門討論社群與發展資訊。'}
-                                </p>
-                            </a>
+                        <div class="bg-white rounded-[2rem] p-6 shadow-cute border-4 border-blue-50 relative overflow-hidden">
+                            <h3 class="text-2xl font-black text-themeBlue mb-4 border-b-2 border-blue-100 pb-2"><i class="fa-solid fa-file-lines mr-2"></i> 網域內容與頁面</h3>
+                            <div class="relative z-10">
+                                ${domainContentHtml}
+                            </div>
                         </div>
                     `;
                 }
@@ -1942,17 +1995,22 @@
                                     const newBadge = isNew ? '<span class="ml-1.5 bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-md shadow-sm relative -top-0.5 font-black animate-pulse whitespace-nowrap">NEW</span>' : '';
                                     
                                     return `
-                                        <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-pink-50 p-3 rounded-2xl shadow-sm border border-white flex items-center gap-3 hover:-translate-y-1 hover:shadow-md transition-all group">
-                                            <div class="w-14 h-14 bg-white rounded-xl overflow-hidden shrink-0 flex items-center justify-center">${imgContent}</div>
-                                            <div class="flex-1 overflow-hidden pr-2">
+                                        <div class="bg-pink-50 p-3 rounded-2xl shadow-sm border border-white flex items-center gap-3 hover:-translate-y-1 hover:shadow-md transition-all group relative">
+                                            <a href="#food" class="absolute inset-0 z-0 rounded-2xl" onclick="setTimeout(() => { if(typeof updateFoodMap === 'function') updateFoodMap('${(item.address||'').replace(/'/g, "\\'")}', '${(item.name||'').replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${(item.category||'').replace(/'/g, "\\'")}') }, 800);"></a>
+                                            <div class="w-14 h-14 bg-white rounded-xl overflow-hidden shrink-0 flex items-center justify-center relative z-10 pointer-events-none">${imgContent}</div>
+                                            <div class="flex-1 overflow-hidden pr-2 relative z-10 pointer-events-none">
                                                 <div class="flex items-center gap-2 mb-0.5">
                                                     <span class="text-[10px] bg-white text-themePink px-1.5 py-0.5 rounded-md font-black shadow-sm shrink-0">${item.category}</span>
                                                     <h4 class="font-black text-gray-800 line-clamp-1 group-hover:text-themePink">${item.name}${newBadge}</h4>
                                                 </div>
                                                 <p class="text-xs text-gray-500 font-bold line-clamp-1"><i class="fa-solid fa-location-dot mr-1 text-pink-400"></i>${item.address || 'A7 在地美食'}</p>
                                             </div>
-                                            <div class="text-pink-400 text-xl pl-1"><i class="fa-solid fa-location-arrow"></i></div>
-                                        </a>
+                                            <div class="relative z-10 shrink-0">
+                                                <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-white text-pink-400 hover:bg-pink-500 hover:text-white w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-sm transition-colors cursor-pointer" title="Google導航">
+                                                    <i class="fa-solid fa-location-arrow"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     `;
                                 }).join('')}
                             </div>
@@ -1968,18 +2026,24 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
                                 ${matchedShopping.map(item => {
                                     let navTarget = encodeURIComponent(item.address || item.name);
+                                    let safeCatId = btoa(encodeURIComponent(item.category||'')).replace(/[^a-zA-Z0-9]/g, '');
                                     return `
-                                        <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-yellow-50 p-3 rounded-2xl shadow-sm border border-white flex items-center gap-3 hover:-translate-y-1 hover:shadow-md transition-all group">
-                                            <div class="w-10 h-10 bg-white rounded-full shrink-0 flex items-center justify-center text-yellow-500 text-lg shadow-sm"><i class="fa-solid fa-bag-shopping"></i></div>
-                                            <div class="flex-1 overflow-hidden pr-2">
+                                        <div class="bg-yellow-50 p-3 rounded-2xl shadow-sm border border-white flex items-center gap-3 hover:-translate-y-1 hover:shadow-md transition-all group relative">
+                                            <a href="#shopping" class="absolute inset-0 z-0 rounded-2xl" onclick="setTimeout(() => { if(typeof showShoppingMap === 'function') showShoppingMap('${safeCatId}', '${(item.category||'').replace(/'/g, "\\'")}', '${(item.name||'').replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${(item.address||'').replace(/'/g, "\\'")}') }, 800);"></a>
+                                            <div class="w-10 h-10 bg-white rounded-full shrink-0 flex items-center justify-center text-yellow-500 text-lg shadow-sm relative z-10 pointer-events-none"><i class="fa-solid fa-bag-shopping"></i></div>
+                                            <div class="flex-1 overflow-hidden pr-2 relative z-10 pointer-events-none">
                                                 <div class="flex items-center gap-2 mb-0.5">
                                                     <span class="text-[10px] bg-white text-themeYellow px-1.5 py-0.5 rounded-md font-black shadow-sm shrink-0">${item.category}</span>
-                                                    <h4 class="font-black text-gray-800 line-clamp-1 ">${item.name}</h4>
+                                                    <h4 class="font-black text-gray-800 line-clamp-1 group-hover:text-yellow-600">${item.name}</h4>
                                                 </div>
                                                 <p class="text-xs text-gray-500 font-bold line-clamp-1"><i class="fa-solid fa-location-dot mr-1 text-yellow-500"></i>${item.address || '在地生活圈'}</p>
                                             </div>
-                                            <div class="text-yellow-500 text-xl pl-1"><i class="fa-solid fa-location-arrow"></i></div>
-                                        </a>
+                                            <div class="relative z-10 shrink-0">
+                                                <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-white text-yellow-500 hover:bg-yellow-500 hover:text-white w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-sm transition-colors cursor-pointer" title="Google導航">
+                                                    <i class="fa-solid fa-location-arrow"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     `;
                                 }).join('')}
                             </div>
@@ -2072,17 +2136,22 @@
                                 ${matchedMedical.map(item => {
                                     let navTarget = encodeURIComponent(item.address || item.name);
                                     return `
-                                        <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-green-50 p-3 rounded-2xl shadow-sm border border-white flex items-center gap-3 hover:-translate-y-1 hover:shadow-md transition-all group">
-                                            <div class="w-10 h-10 bg-white rounded-full shrink-0 flex items-center justify-center text-themeGreen text-lg shadow-sm"><i class="fa-solid fa-stethoscope"></i></div>
-                                            <div class="flex-1 overflow-hidden pr-2">
+                                        <div class="bg-green-50 p-3 rounded-2xl shadow-sm border border-white flex items-center gap-3 hover:-translate-y-1 hover:shadow-md transition-all group relative">
+                                            <a href="#lifehub" class="absolute inset-0 z-0 rounded-2xl"></a>
+                                            <div class="w-10 h-10 bg-white rounded-full shrink-0 flex items-center justify-center text-themeGreen text-lg shadow-sm relative z-10 pointer-events-none"><i class="fa-solid fa-stethoscope"></i></div>
+                                            <div class="flex-1 overflow-hidden pr-2 relative z-10 pointer-events-none">
                                                 <div class="flex items-center gap-2 mb-0.5">
                                                     <span class="text-[10px] bg-white text-themeGreen px-1.5 py-0.5 rounded-md font-black shadow-sm shrink-0">${item.category}</span>
                                                     <h4 class="font-black text-gray-800 line-clamp-1 group-hover:text-themeGreen">${item.name}</h4>
                                                 </div>
                                                 <p class="text-xs text-gray-500 font-bold line-clamp-1"><i class="fa-solid fa-location-dot mr-1 text-green-500"></i>${item.address || '在地醫療'}</p>
                                             </div>
-                                            <div class="text-themeGreen text-xl pl-1"><i class="fa-solid fa-location-arrow"></i></div>
-                                        </a>
+                                            <div class="relative z-10 shrink-0">
+                                                <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="bg-white text-green-500 hover:bg-green-500 hover:text-white w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-sm transition-colors cursor-pointer" title="Google導航">
+                                                    <i class="fa-solid fa-location-arrow"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     `;
                                 }).join('')}
                             </div>
