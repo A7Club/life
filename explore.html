@@ -2968,41 +2968,5 @@
     
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC6jJNCtT1kpYg_BdS-s1p2Ml-mwwt0hA&callback=initMap" async defer></script>
-document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const query = params.get('search');
-
-    if (query) {
-        // 1. 尋找畫面上所有的內容區塊（假設你的店家或內容 class 是 .card）
-        const cards = document.querySelectorAll('.card, .content-box, h3'); 
-        let foundElement = null;
-
-        cards.forEach(card => {
-            if (card.textContent.includes(query) && !foundElement) {
-                foundElement = card;
-            }
-        });
-
-        // 2. 執行滾動與視覺提示
-        if (foundElement) {
-            // 延遲一點點執行，確保頁面元素都渲染完成
-            setTimeout(() => {
-                foundElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-
-                // 3. 增加一個簡單的閃爍效果 (Highlight)
-                foundElement.style.transition = 'outline 0.5s ease-in-out';
-                foundElement.style.outline = '4px solid #FFD700'; // 金色外框
-                
-                setTimeout(() => {
-                    foundElement.style.outline = '0px solid transparent';
-                }, 2000);
-            }, 300);
-        }
-    }
-});
-
 </body>
 </html>
