@@ -2442,24 +2442,32 @@ exploreLinkTarget = `explore.html?search=${encodeURIComponent(query)}#${targetTa
         // --- 首頁店家數量動態統計與動畫 ---
         async function fetchAndUpdateHomeCounts() {
             try {
-                const [foodData, shoppingData, medicalData, communityData] = await Promise.all([
-                    loadSharedFoodData(),
-                    loadSharedShoppingData(),
-                    loadSharedMedicalData(),
-                    loadSharedCommunityData()
-                ]);
-
+                // 【修改】補上 likesData 與 loadSharedLikesData()
+const [foodData, shoppingData, medicalData, communityData, likesData] = await Promise.all([
+    loadSharedFoodData(),
+    loadSharedShoppingData(),
+    loadSharedMedicalData(),
+    loadSharedCommunityData(),
+    loadSharedLikesData() 
+]);
                 // 加上靜態寫在 HTML 中的政府機關(18)與學校(7)總數量
                 const staticLifehubCount = 25;
                 
                 // 計算總愛心數：直接從解析完畢的美食與生活店家資料庫中加總
-                let totalLikes = 0;
-                if (foodData) {
-                    foodData.forEach(item => totalLikes += (item.likesCount || 0));
-                }
-                if (shoppingData) {
-                    shoppingData.forEach(item => totalLikes += (item.likesCount || 0));
-                }
+                // 【修改】計算總愛心數：比對 CSV 數字與即時快取，取最大值加總
+let totalLikes = 0;
+if (foodData) {
+    foodData.forEach(item => {
+        const localLikes = likesData[item.name] ? likesData[item.name].users.length : 0;
+        totalLikes += Math.max((item.likesCount || 0), localLikes);
+    });
+}
+if (shoppingData) {
+    shoppingData.forEach(item => {
+        const localLikes = likesData[item.name] ? likesData[item.name].users.length : 0;
+        totalLikes += Math.max((item.likesCount || 0), localLikes);
+    });
+}
 
                 const counts = {
                     'counter-food': foodData?.length || 0,
@@ -3470,8 +3478,9 @@ exploreLinkTarget = `explore.html?search=${encodeURIComponent(query)}#${targetTa
             const style = getCategoryStyle(item.category, item.name);
             
             const storeLikes = globalLikesData[item.name] || { users: [] };
-            const isLiked = storeLikes.users.includes(currentUserId);
-            const likeCount = item.likesCount || 0;
+const isLiked = storeLikes.users.includes(currentUserId);
+// 【修改這裡】比對資料庫與快取，取兩者之間的最大值
+const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
             
             const isNew = item.timestamp && (Date.now() - item.timestamp < 7 * 24 * 60 * 60 * 1000);
             const newBadge = isNew ? '<span class="ml-1.5 bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-md shadow-sm relative -top-0.5 font-black animate-pulse whitespace-nowrap">NEW</span>' : '';
@@ -3888,10 +3897,11 @@ exploreLinkTarget = `explore.html?search=${encodeURIComponent(query)}#${targetTa
 
         const generateItemHTML = (item, catName, safeCatId, isPhotoCategory) => {
             const itemStyle = getCategoryStyle(catName, item.name);
-            const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
-            const storeLikes = globalLikesData[item.name] || { users: [] };
-            const isLiked = storeLikes.users.includes(currentUserId);
-            const likeCount = item.likesCount || 0;
+const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
+const storeLikes = globalLikesData[item.name] || { users: [] };
+const isLiked = storeLikes.users.includes(currentUserId);
+// 【修改這裡】比對資料庫與快取，取兩者之間的最大值
+const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
             const isMRT = catName.includes('捷運') || catName.includes('機捷');
             const brandLogo = getBrandLogo(item.name);
             const storeBrand = getStoreBrand(item.name);
