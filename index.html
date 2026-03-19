@@ -21,7 +21,6 @@
   gtag('config', 'G-YJ9RJC2DRS');
 </script>
 
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -1879,7 +1878,8 @@
                                     
                                     // 將網址設定為 explore.html#(分頁名稱)
                                     // 同時附帶搜尋關鍵字，讓 explore.html 的腳本可以進行高亮
-                                    exploreLinkTarget = `explore.html#${targetTab}?search=${encodeURIComponent(query)}`;
+                                    // 將查詢參數放在 hash 前面，確保腳本與分頁都能正確讀取
+exploreLinkTarget = `explore.html?search=${encodeURIComponent(query)}#${targetTab}`;
 
 
                                 }
@@ -2140,7 +2140,7 @@
                             <div class="flex flex-wrap gap-3 relative z-10">
                                 ${matchedBuildings.map(item => {
                                     return `
-                                        <a href="explore.html#:~:text=${encodeURIComponent(item.name)}" class="bg-green-50 text-gray-800 font-bold px-4 py-2 rounded-xl border border-white shadow-sm flex items-center gap-2 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
+                                        <a href="explore.html?search=${encodeURIComponent(item.name)}#buildings" class="bg-green-50 text-gray-800 font-bold px-4 py-2 rounded-xl border border-white shadow-sm flex items-center gap-2 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group">
                                             <i class="fa-solid fa-leaf text-themeGreen group-hover:scale-110 transition-transform"></i> <span class="group-hover:text-themeGreen transition-colors">${item.name}</span> <span class="text-xs text-gray-500 bg-white px-2 py-0.5 rounded-md ml-1 shadow-sm">${item.village}</span>
                                         </a>
                                     `;
