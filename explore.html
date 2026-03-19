@@ -21,6 +21,7 @@
 </script>
 
 
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -126,8 +127,8 @@
         <!-- 手機版展開選單 -->
         <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
             <a href="index.html#food" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</a>
-            <a href="index.html#shopping" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 購物與生活</a>
-            <a href="index.html#lifehub" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 樂園救護站</a>
+            <a href="index.html#shopping" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 生活補給站</a>
+            <a href="index.html#lifehub" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 安心支援中心</a>
             <a href="explore.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-white bg-themePurple shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</a>
         </div>
     </nav>
@@ -2964,30 +2965,6 @@
             if (window.gasTransitCache) renderAllTransit();
         }, 15000);
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 檢查網址是否有 hashtag (例如 #transit, #buildings)
-    if (window.location.hash) {
-        // 延遲一下讓網頁先排版完成
-        setTimeout(() => {
-            const targetId = window.location.hash.substring(1);
-            const targetEl = document.getElementById(targetId);
-            
-            if (targetEl) {
-                // 平滑捲動到該區塊
-                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // 加入紫色的高亮提示光環 (對應探索頁面的主題色)
-                targetEl.classList.add('ring-4', 'ring-purple-400', 'transition-all', 'duration-500', 'shadow-lg', 'rounded-2xl');
-                
-                // 2.5 秒後移除光環
-                setTimeout(() => {
-                    targetEl.classList.remove('ring-4', 'ring-purple-400', 'shadow-lg');
-                }, 2500);
-            }
-        }, 500);
-    }
-});
-        
     </script>
     
     <!-- Google Maps API -->
