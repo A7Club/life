@@ -21,6 +21,7 @@
   gtag('config', 'G-YJ9RJC2DRS');
 </script>
 
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -1854,21 +1855,33 @@
 
                                     // 尋找內容所屬的分類區塊 ID 作為精準錨點
                                     let parent = node.parentElement;
-                                    let validIds = [];
-                                    // 往上層找尋帶有 ID 的容器 (收集所有父層 ID)
+                                    let targetTab = 'overview'; // 預設導向總覽分頁
+
+                                    // 往上層找尋帶有 data-shows-on 屬性的容器，以決定該切換到哪個分頁
                                     while(parent && parent.tagName !== 'BODY') {
-                                        if (parent.id && parent.id !== 'app-root' && !parent.id.includes('container')) {
-                                            validIds.push(parent.id);
+                                        if (parent.hasAttribute('data-shows-on')) {
+                                            const showsOnTabs = parent.getAttribute('data-shows-on').split(',');
+                                            
+                                            // 決定最佳的分頁：
+                                            // 1. 如果此區塊只在特定分頁顯示（不是 overview），則優先使用該分頁。
+                                            // 2. 如果包含 overview，但在其他特定分頁也有，盡量導向特定分頁，避免總覽內容過多。
+                                            // 3. 否則就用陣列中的第一個分頁。
+                                            if (showsOnTabs.length === 1 && showsOnTabs[0] !== 'overview') {
+                                                targetTab = showsOnTabs[0];
+                                            } else {
+                                                const nonOverviewTab = showsOnTabs.find(tab => tab !== 'overview');
+                                                targetTab = nonOverviewTab || showsOnTabs[0];
+                                            }
+                                            break; // 找到第一個定義了分頁的父容器就停止
                                         }
                                         parent = parent.parentElement;
                                     }
                                     
-                                    // 取最上層 (陣列最後一個) 的分類 ID，並移除 text fragment 以免影響路由
-                                    if (validIds.length > 0) {
-                                        exploreLinkTarget = `explore.html#${validIds[validIds.length - 1]}`;
-                                    } else {
-                                        exploreLinkTarget = `explore.html`;
-                                    }
+                                    // 將網址設定為 explore.html#(分頁名稱)
+                                    // 同時附帶搜尋關鍵字，讓 explore.html 的腳本可以進行高亮
+                                    exploreLinkTarget = `explore.html#${targetTab}?search=${encodeURIComponent(query)}`;
+
+
                                 }
                             } else {
                                 for (let child of node.childNodes) {
