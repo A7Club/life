@@ -188,7 +188,7 @@
                 </button>
 
                 <!-- 行政區劃 -->
-                <button data-tab="buildings" data-active="bg-blue-50/80 border-blue-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-blue-200" class="tab-btn pt-6 pb-5 px-3 md:pt-8 md:pb-6 md:px-4 lg:pt-10 lg:pb-8 rounded-[2rem] lg:rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
+                <button data-tab="A7area" data-active="bg-blue-50/80 border-blue-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-blue-200" class="tab-btn pt-6 pb-5 px-3 md:pt-8 md:pb-6 md:px-4 lg:pt-10 lg:pb-8 rounded-[2rem] lg:rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
                     <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-blue-100 text-themeBlue rounded-full flex items-center justify-center text-3xl md:text-4xl lg:text-5xl group-hover:bg-blue-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-3 md:mb-5">
                         <i class="fa-solid fa-map-location-dot"></i>
@@ -951,7 +951,7 @@
             <!-- ============================================== -->
             <!-- 模組：建案地圖與標籤 (總覽、建案分頁皆顯示) -->
             <!-- ============================================== -->
-            <div id="mod-buildings-map" class="content-module mb-8 hidden scroll-mt-[100px]" data-shows-on="overview,buildings">
+            <div id="mod-buildings-map" class="content-module mb-8 hidden scroll-mt-[100px]" data-shows-on="overview,A7area">
                 <div class="flex items-center mb-6">
                     <h2 class="text-xl font-black text-themeBlue flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeBlue"></i>A7 行政里分區地圖</h2>
                 </div>
@@ -980,7 +980,7 @@
                     </div>
 
                     <!-- 新編鄰里查詢區塊 -->
-                    <div style="display: none;" class="col-span-full lg:col-span-1 bg-gradient-to-r from-purple-50 to-fuchsia-50 rounded-[2rem] p-5 sm:p-6 border-4 border-white shadow-cute relative overflow-hidden flex flex-col h-full lg:h-auto">
+                    <div class="col-span-full lg:col-span-1 bg-gradient-to-r from-purple-50 to-fuchsia-50 rounded-[2rem] p-5 sm:p-6 border-4 border-white shadow-cute relative overflow-hidden flex flex-col h-full lg:h-auto">
                         <div class="absolute -right-4 -top-4 text-6xl text-purple-100 opacity-50 pointer-events-none"><i class="fa-solid fa-map-location-dot"></i></div>
                         <div class="w-full relative z-10 flex flex-col h-full">
                             <h3 class="text-lg font-black text-purple-800 mb-2 flex items-center flex-wrap gap-y-1"><i class="fa-solid fa-magnifying-glass-location mr-2 text-purple-500"></i> 新編鄰里查詢 <span class="text-xs bg-purple-200 text-purple-700 px-2 py-0.5 rounded-lg ml-1 shadow-sm whitespace-nowrap">115年3月1日生效</span></h3>
@@ -1001,7 +1001,7 @@
             <!-- ============================================== -->
             <!-- 模組：常見問題 (併入行政區劃分頁) -->
             <!-- ============================================== -->
-            <div id="mod-faq" class="content-module mb-12 hidden" data-shows-on="overview,buildings">
+            <div id="mod-faq" class="content-module mb-12 hidden" data-shows-on="overview,A7area">
                 <div class="bg-white rounded-[2.5rem] shadow-cute p-8 border-4 border-pink-50 relative overflow-hidden">
                     <div class="absolute -right-6 -top-6 text-pink-100 text-8xl floating"><i class="fa-solid fa-circle-question"></i></div>
                     <h2 class="text-2xl font-black text-themePink mb-6 relative z-10 flex items-center"><i class="fa-solid fa-clipboard-question mr-3"></i>A7 新手村生存指南 FAQ</h2>
@@ -1124,10 +1124,9 @@
                                         <div class="text-sm text-gray-600 flex-1">
                                             <div class="flex items-center">
                                                 <span class="bg-gray-100 px-2 py-0.5 rounded text-xs font-black mr-2">4-33鄰</span> 
-                                                樂善國中
+                                                樂善國中、文青國中小 <span class="text-cyan-600 bg-cyan-50 px-1.5 py-0.5 rounded text-[10px] border border-cyan-100 ml-1">自由學區</span>
                                             </div>
-                                            <div class="flex items-center"> 其他為 文青國中小 <span class="text-cyan-600 bg-cyan-50 px-1.5 py-0.5 rounded text-[10px] border border-cyan-100 ml-1">自由學區</span>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                     
@@ -1167,7 +1166,7 @@
                                     <i class="fa-solid fa-circle-exclamation text-yellow-500 mr-1"></i> 具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所確認。
                                 </div>
                                 
-                                <button onclick="window.switchTab('buildings'); setTimeout(() => { const el = document.getElementById('mod-schooling-registry'); if(el) { const offset = 100; const targetY = el.getBoundingClientRect().top + window.scrollY - offset; window.scrollTo({top: targetY, behavior: 'smooth'}); } }, 100);" class="w-full sm:w-auto inline-flex items-center justify-center text-sm font-black text-themePurple bg-purple-50 hover:bg-purple-100 border border-purple-200 px-4 py-2.5 rounded-xl transition-colors shadow-sm active:scale-95">
+                                <button onclick="window.switchTab('A7area'); setTimeout(() => { const el = document.getElementById('mod-schooling-registry'); if(el) { const offset = 100; const targetY = el.getBoundingClientRect().top + window.scrollY - offset; window.scrollTo({top: targetY, behavior: 'smooth'}); } }, 100);" class="w-full sm:w-auto inline-flex items-center justify-center text-sm font-black text-themePurple bg-purple-50 hover:bg-purple-100 border border-purple-200 px-4 py-2.5 rounded-xl transition-colors shadow-sm active:scale-95">
                                     <i class="fa-solid fa-school mr-2"></i> 了解更多各里「就學與設籍指南」
                                 </button>
                             </div>
@@ -1180,7 +1179,7 @@
             <!-- ============================================== -->
             <!-- 模組：就學與設籍 (不再顯示於 overview，僅顯示於 buildings) -->
             <!-- ============================================== -->
-            <div id="mod-schooling-registry" class="content-module mb-12 hidden" data-shows-on="buildings">
+            <div id="mod-schooling-registry" class="content-module mb-12 hidden" data-shows-on="A7area">
                 <div class="flex items-center mb-8">
                     <h3 class="text-xl md:text-2xl font-black text-orange-500 flex items-center">
                         <div class="w-12 h-12 bg-orange-100 text-orange-500 rounded-2xl flex items-center justify-center mr-4 shadow-sm transform -rotate-3"><i class="fa-solid fa-school"></i></div>
@@ -1315,7 +1314,7 @@
             <!-- ============================================== -->
             <!-- 模組：建案列表 (僅建案分頁顯示) -->
             <!-- ============================================== -->
-            <div id="mod-buildings-list" class="content-module mb-8 hidden scroll-mt-[100px]" data-shows-on="buildings">
+            <div id="mod-buildings-list" class="content-module mb-8 hidden scroll-mt-[100px]" data-shows-on="A7area">
                 <div id="buildings-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div class="col-span-full text-center text-themeYellow py-12 bg-white rounded-[2rem] border-4 border-green-50 shadow-cute">
                         <i class="fa-solid fa-spinner fa-spin text-4xl mb-5"></i>
@@ -1374,7 +1373,7 @@
             'overview': '在地生活總覽',
             'engineering': '市政建設追蹤',
             'community': '在地社群交流',
-            'buildings': '分區建案與學區',
+            'A7area': '分區建案與學區',
             'transit': '通勤交通指南',
             'news': 'A7 最新焦點'
         };
@@ -1466,7 +1465,7 @@
                 let currentTab = 'overview';
                 if (window.location.hash) {
                     const hashTab = window.location.hash.replace('#', '');
-                    const validTabs = ['overview', 'engineering', 'community', 'faq', 'buildings', 'news', 'transit'];
+                    const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'news', 'transit'];
                     if (validTabs.includes(hashTab)) {
                         currentTab = hashTab;
                     }
@@ -1477,7 +1476,7 @@
             let initialTab = 'overview';
             try {
                 const hash = window.location.hash.replace('#', '');
-                const validTabs = ['overview', 'engineering', 'community', 'faq', 'buildings', 'news', 'transit'];
+                const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'news', 'transit'];
                 if (validTabs.includes(hash)) {
                     initialTab = hash;
                 }
@@ -2134,7 +2133,7 @@
 
                 // 中螢幕隱藏圖示：將 icon 的 div 加上 lg:flex (在 sm, md 隱藏)
                 tagsHtml += `
-                    <button onclick="window.switchTab('buildings'); setTimeout(() => { const el = document.getElementById('mod-buildings-list'); if(el){ window.scrollTo({top: el.offsetTop - 100, behavior: 'smooth'}); setTimeout(()=>document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'}), 300); } }, 50);"
+                    <button onclick="window.switchTab('A7area'); setTimeout(() => { const el = document.getElementById('mod-buildings-list'); if(el){ window.scrollTo({top: el.offsetTop - 100, behavior: 'smooth'}); setTimeout(()=>document.getElementById('${safeId}').scrollIntoView({behavior: 'smooth', block: 'start'}), 300); } }, 50);"
                             class="py-1.5 px-1.5 sm:px-3 md:px-4 sm:py-2 md:py-2.5 bg-white border-2 ${style.border} ${style.textTitle} font-black rounded-lg md:rounded-xl ${style.hoverBg} transition-all shadow-sm text-[11px] sm:text-sm md:text-base flex items-center justify-center sm:justify-start gap-0 sm:gap-2 hover:-translate-y-1 w-full lg:w-auto text-center sm:text-left group">
                         <div class="hidden lg:flex w-4 h-4 md:w-6 md:h-6 rounded-full ${style.bg} items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                             <i class="fa-solid ${style.icon} text-[8px] sm:text-[10px]"></i>
@@ -2173,7 +2172,211 @@
 
         // A7 門牌自動對照表 (全局掃描版)
         const ADVANCED_ROAD_DISTRICTS = {
-            "文禾路": [
+    "文信路": [
+        {
+            "type": "odd",
+            "min": 9,
+            "max": 325,
+            "village": "長樂里",
+            "neighborhood": "1"
+        },
+        {
+            "type": "range",
+            "min": 286,
+            "max": 389,
+            "village": "文桃里",
+            "neighborhood": "1"
+        }
+    ],
+    "文化一路": [
+        {
+            "type": "range",
+            "min": 103,
+            "max": 103,
+            "village": "長樂里",
+            "neighborhood": "1"
+        },
+        {
+            "type": "even",
+            "min": 196,
+            "max": 242,
+            "village": "文樂里",
+            "neighborhood": "1"
+        },
+        {
+            "type": "even",
+            "min": 246,
+            "max": 278,
+            "village": "文樂里",
+            "neighborhood": "2"
+        },
+        {
+            "type": "even",
+            "min": 280,
+            "max": 328,
+            "village": "文樂里",
+            "neighborhood": "3"
+        },
+        {
+            "type": "even",
+            "min": 218,
+            "max": 312,
+            "village": "文樂里",
+            "neighborhood": "4"
+        },
+        {
+            "type": "range",
+            "min": 1,
+            "max": 368,
+            "village": "文樂里",
+            "neighborhood": "5"
+        },
+        {
+            "type": "range",
+            "min": 1,
+            "max": 372,
+            "village": "文樂里",
+            "neighborhood": "6"
+        },
+        {
+            "type": "even",
+            "min": 386,
+            "max": 388,
+            "village": "文樂里",
+            "neighborhood": "7"
+        },
+        {
+            "type": "range",
+            "min": 1,
+            "max": 66,
+            "village": "文樂里",
+            "neighborhood": "11"
+        },
+        {
+            "type": "even",
+            "min": 662,
+            "max": 668,
+            "village": "文樂里",
+            "neighborhood": "12"
+        },
+        {
+            "type": "range",
+            "min": 6,
+            "max": 688,
+            "village": "文樂里",
+            "neighborhood": "13"
+        },
+        {
+            "type": "even",
+            "min": 88,
+            "max": 100,
+            "village": "樂善里",
+            "neighborhood": "1"
+        },
+        {
+            "type": "even",
+            "min": 16,
+            "max": 108,
+            "village": "樂善里",
+            "neighborhood": "15"
+        },
+        {
+            "type": "even",
+            "min": 16,
+            "max": 108,
+            "village": "樂善里",
+            "neighborhood": "28"
+        },
+        {
+            "type": "range",
+            "min": 1,
+            "max": 89,
+            "village": "樂善里",
+            "neighborhood": "33"
+        },
+        {
+            "type": "odd",
+            "min": 1,
+            "max": 257,
+            "village": "文藝里",
+            "neighborhood": "4"
+        }
+    ],
+    "文桃路": [
+        {
+            "type": "range",
+            "min": 650,
+            "max": 650,
+            "village": "長樂里",
+            "neighborhood": "1"
+        },
+        {
+            "type": "even",
+            "min": 8,
+            "max": 428,
+            "village": "文桃里",
+            "neighborhood": "1"
+        },
+        {
+            "type": "range",
+            "min": 1,
+            "max": 273,
+            "village": "文桃里",
+            "neighborhood": "2"
+        },
+        {
+            "type": "odd",
+            "min": 339,
+            "max": 365,
+            "village": "文桃里",
+            "neighborhood": "4"
+        },
+        {
+            "type": "range",
+            "min": 399,
+            "max": 399,
+            "village": "文桃里",
+            "neighborhood": "5"
+        },
+        {
+            "type": "odd",
+            "min": 419,
+            "max": 435,
+            "village": "文桃里",
+            "neighborhood": "6"
+        },
+        {
+            "type": "odd",
+            "min": 437,
+            "max": 447,
+            "village": "文桃里",
+            "neighborhood": "7"
+        },
+        {
+            "type": "odd",
+            "min": 489,
+            "max": 493,
+            "village": "文桃里",
+            "neighborhood": "8"
+        }
+    ],
+    "文茂路": [
+        {
+            "type": "even",
+            "min": 86,
+            "max": 90,
+            "village": "長樂里",
+            "neighborhood": "1"
+        }
+    ],
+    "文禾路": [
+        {
+            "type": "range",
+            "min": 188,
+            "max": 289,
+            "village": "長樂里",
+            "neighborhood": "1"
+        },
         {
             "type": "odd",
             "min": 239,
@@ -2208,15 +2411,78 @@
             "max": 185,
             "village": "長樂里",
             "neighborhood": "6"
+        },
+        {
+            "type": "odd",
+            "min": 105,
+            "max": 107,
+            "village": "長樂里",
+            "neighborhood": "7"
+        },
+        {
+            "type": "odd",
+            "min": 101,
+            "max": 103,
+            "village": "長樂里",
+            "neighborhood": "8"
         }
     ],
     "樂學路": [
+        {
+            "type": "even",
+            "min": 192,
+            "max": 210,
+            "village": "長樂里",
+            "neighborhood": "7"
+        },
+        {
+            "type": "even",
+            "min": 156,
+            "max": 190,
+            "village": "長樂里",
+            "neighborhood": "8"
+        },
+        {
+            "type": "even",
+            "min": 118,
+            "max": 152,
+            "village": "長樂里",
+            "neighborhood": "9"
+        },
         {
             "type": "even",
             "min": 470,
             "max": 490,
             "village": "長樂里",
             "neighborhood": "11"
+        },
+        {
+            "type": "even",
+            "min": 492,
+            "max": 512,
+            "village": "長樂里",
+            "neighborhood": "12"
+        },
+        {
+            "type": "even",
+            "min": 528,
+            "max": 560,
+            "village": "長樂里",
+            "neighborhood": "15"
+        },
+        {
+            "type": "even",
+            "min": 20,
+            "max": 32,
+            "village": "長樂里",
+            "neighborhood": "19"
+        },
+        {
+            "type": "range",
+            "min": 26,
+            "max": 62,
+            "village": "長樂里",
+            "neighborhood": "20"
         },
         {
             "type": "even",
@@ -2241,76 +2507,499 @@
         },
         {
             "type": "odd",
+            "min": 95,
+            "max": 97,
+            "village": "樂善里",
+            "neighborhood": "9"
+        },
+        {
+            "type": "odd",
             "min": 1,
             "max": 3,
             "village": "樂善里",
             "neighborhood": "30"
+        },
+        {
+            "type": "range",
+            "min": 2,
+            "max": 2,
+            "village": "樂善里",
+            "neighborhood": "31"
+        }
+    ],
+    "文達路": [
+        {
+            "type": "even",
+            "min": 258,
+            "max": 268,
+            "village": "長樂里",
+            "neighborhood": "9"
+        },
+        {
+            "type": "even",
+            "min": 270,
+            "max": 322,
+            "village": "樂善里",
+            "neighborhood": "9"
+        },
+        {
+            "type": "odd",
+            "min": 233,
+            "max": 235,
+            "village": "樂善里",
+            "neighborhood": "10"
+        },
+        {
+            "type": "odd",
+            "min": 293,
+            "max": 299,
+            "village": "樂善里",
+            "neighborhood": "32"
+        }
+    ],
+    "長慶一街": [
+        {
+            "type": "range",
+            "min": 28,
+            "max": 60,
+            "village": "長樂里",
+            "neighborhood": "10"
+        },
+        {
+            "type": "odd",
+            "min": 33,
+            "max": 39,
+            "village": "長樂里",
+            "neighborhood": "12"
+        },
+        {
+            "type": "odd",
+            "min": 1,
+            "max": 41,
+            "village": "長樂里",
+            "neighborhood": "13"
+        },
+        {
+            "type": "range",
+            "min": 2,
+            "max": 97,
+            "village": "長樂里",
+            "neighborhood": "14"
+        }
+    ],
+    "長慶二街": [
+        {
+            "type": "even",
+            "min": 6,
+            "max": 26,
+            "village": "長樂里",
+            "neighborhood": "12"
+        },
+        {
+            "type": "even",
+            "min": 78,
+            "max": 82,
+            "village": "長樂里",
+            "neighborhood": "14"
+        },
+        {
+            "type": "odd",
+            "min": 1,
+            "max": 17,
+            "village": "長樂里",
+            "neighborhood": "15"
+        },
+        {
+            "type": "odd",
+            "min": 61,
+            "max": 83,
+            "village": "長樂里",
+            "neighborhood": "16"
+        },
+        {
+            "type": "odd",
+            "min": 85,
+            "max": 111,
+            "village": "長樂里",
+            "neighborhood": "17"
+        },
+        {
+            "type": "odd",
+            "min": 113,
+            "max": 123,
+            "village": "長樂里",
+            "neighborhood": "18"
+        }
+    ],
+    "長慶三街": [
+        {
+            "type": "even",
+            "min": 18,
+            "max": 36,
+            "village": "長樂里",
+            "neighborhood": "16"
+        },
+        {
+            "type": "even",
+            "min": 38,
+            "max": 58,
+            "village": "長樂里",
+            "neighborhood": "17"
+        },
+        {
+            "type": "even",
+            "min": 60,
+            "max": 82,
+            "village": "長樂里",
+            "neighborhood": "18"
+        },
+        {
+            "type": "odd",
+            "min": 41,
+            "max": 79,
+            "village": "長樂里",
+            "neighborhood": "19"
         }
     ],
     "文德路": [
         {
-            "type": "even",
+            "type": "range",
             "min": 108,
             "max": 108,
             "village": "長庚里",
             "neighborhood": "1"
+        },
+        {
+            "type": "range",
+            "min": 12,
+            "max": 12,
+            "village": "樂善里",
+            "neighborhood": "28"
         }
     ],
-    "樂善街": [
+    "（文化一路": [
         {
-            "type": "odd",
-            "min": 1,
-            "max": 65,
+            "type": "even",
+            "min": 250,
+            "max": 260,
             "village": "文樂里",
-            "neighborhood": "13"
+            "neighborhood": "2"
         }
     ],
-    "文桃路": [
+    "樂善二路": [
         {
             "type": "odd",
-            "min": 365,
-            "max": 365,
-            "village": "文桃里",
-            "neighborhood": "4"
+            "min": 203,
+            "max": 223,
+            "village": "文樂里",
+            "neighborhood": "7"
         },
         {
             "type": "odd",
-            "min": 399,
-            "max": 399,
+            "min": 181,
+            "max": 201,
+            "village": "文樂里",
+            "neighborhood": "8"
+        },
+        {
+            "type": "odd",
+            "min": 139,
+            "max": 169,
+            "village": "文樂里",
+            "neighborhood": "10"
+        },
+        {
+            "type": "even",
+            "min": 316,
+            "max": 326,
+            "village": "文樂里",
+            "neighborhood": "11"
+        },
+        {
+            "type": "odd",
+            "min": 513,
+            "max": 543,
+            "village": "文桃里",
+            "neighborhood": "3"
+        },
+        {
+            "type": "odd",
+            "min": 477,
+            "max": 511,
             "village": "文桃里",
             "neighborhood": "5"
         },
         {
             "type": "odd",
-            "min": 437,
-            "max": 447,
+            "min": 427,
+            "max": 457,
             "village": "文桃里",
-            "neighborhood": "7"
+            "neighborhood": "6"
         },
         {
             "type": "odd",
-            "min": 489,
-            "max": 493,
+            "min": 341,
+            "max": 395,
             "village": "文桃里",
-            "neighborhood": "8"
-        }
-    ],
-    "樂善二路": [
+            "neighborhood": "9"
+        },
+        {
+            "type": "range",
+            "min": 1,
+            "max": 830,
+            "village": "文桃里",
+            "neighborhood": "10"
+        },
+        {
+            "type": "even",
+            "min": 650,
+            "max": 652,
+            "village": "文桃里",
+            "neighborhood": "11"
+        },
         {
             "type": "even",
             "min": 518,
             "max": 580,
             "village": "文桃里",
             "neighborhood": "12"
+        },
+        {
+            "type": "even",
+            "min": 458,
+            "max": 468,
+            "village": "文桃里",
+            "neighborhood": "15"
+        },
+        {
+            "type": "odd",
+            "min": 101,
+            "max": 119,
+            "village": "樂善里",
+            "neighborhood": "5"
+        }
+    ],
+    "樂善三路": [
+        {
+            "type": "odd",
+            "min": 85,
+            "max": 149,
+            "village": "文樂里",
+            "neighborhood": "9"
+        },
+        {
+            "type": "odd",
+            "min": 151,
+            "max": 191,
+            "village": "文樂里",
+            "neighborhood": "10"
+        },
+        {
+            "type": "even",
+            "min": 2,
+            "max": 56,
+            "village": "樂善里",
+            "neighborhood": "1"
+        },
+        {
+            "type": "even",
+            "min": 62,
+            "max": 88,
+            "village": "樂善里",
+            "neighborhood": "2"
+        },
+        {
+            "type": "even",
+            "min": 100,
+            "max": 118,
+            "village": "樂善里",
+            "neighborhood": "6"
+        }
+    ],
+    "文學路": [
+        {
+            "type": "odd",
+            "min": 31,
+            "max": 55,
+            "village": "文樂里",
+            "neighborhood": "12"
+        },
+        {
+            "type": "odd",
+            "min": 1,
+            "max": 29,
+            "village": "文樂里",
+            "neighborhood": "13"
+        }
+    ],
+    "樂善街": [
+        {
+            "type": "range",
+            "min": 1,
+            "max": 346,
+            "village": "文樂里",
+            "neighborhood": "13"
+        },
+        {
+            "type": "even",
+            "min": 72,
+            "max": 90,
+            "village": "樂善里",
+            "neighborhood": "6"
+        }
+    ],
+    "文華路": [
+        {
+            "type": "range",
+            "min": 18,
+            "max": 18,
+            "village": "文桃里",
+            "neighborhood": "1"
+        }
+    ],
+    "文工一路": [
+        {
+            "type": "range",
+            "min": 220,
+            "max": 618,
+            "village": "文桃里",
+            "neighborhood": "1"
+        },
+        {
+            "type": "odd",
+            "min": 27,
+            "max": 29,
+            "village": "文桃里",
+            "neighborhood": "3"
+        }
+    ],
+    "文吉路": [
+        {
+            "type": "odd",
+            "min": 31,
+            "max": 33,
+            "village": "文桃里",
+            "neighborhood": "3"
+        },
+        {
+            "type": "range",
+            "min": 28,
+            "max": 28,
+            "village": "文桃里",
+            "neighborhood": "5"
+        },
+        {
+            "type": "range",
+            "min": 1,
+            "max": 146,
+            "village": "文桃里",
+            "neighborhood": "10"
+        }
+    ],
+    "牛角坡路": [
+        {
+            "type": "odd",
+            "min": 1,
+            "max": 51,
+            "village": "文桃里",
+            "neighborhood": "8"
+        },
+        {
+            "type": "range",
+            "min": 58,
+            "max": 58,
+            "village": "文桃里",
+            "neighborhood": "9"
+        },
+        {
+            "type": "odd",
+            "min": 91,
+            "max": 135,
+            "village": "文桃里",
+            "neighborhood": "11"
+        },
+        {
+            "type": "range",
+            "min": 163,
+            "max": 290,
+            "village": "文桃里",
+            "neighborhood": "13"
+        },
+        {
+            "type": "even",
+            "min": 300,
+            "max": 316,
+            "village": "文桃里",
+            "neighborhood": "14"
+        }
+    ],
+    "樂善一路": [
+        {
+            "type": "range",
+            "min": 1,
+            "max": 500,
+            "village": "文桃里",
+            "neighborhood": "9"
+        },
+        {
+            "type": "even",
+            "min": 250,
+            "max": 276,
+            "village": "文桃里",
+            "neighborhood": "14"
+        },
+        {
+            "type": "odd",
+            "min": 269,
+            "max": 323,
+            "village": "文桃里",
+            "neighborhood": "15"
+        }
+    ],
+    "華亞三路": [
+        {
+            "type": "odd",
+            "min": 49,
+            "max": 55,
+            "village": "樂善里",
+            "neighborhood": "2"
+        },
+        {
+            "type": "odd",
+            "min": 1,
+            "max": 47,
+            "village": "樂善里",
+            "neighborhood": "3"
+        },
+        {
+            "type": "even",
+            "min": 36,
+            "max": 78,
+            "village": "樂善里",
+            "neighborhood": "4"
+        },
+        {
+            "type": "range",
+            "min": 41,
+            "max": 41,
+            "village": "樂善里",
+            "neighborhood": "29"
         }
     ],
     "文化二路": [
         {
             "type": "even",
             "min": 506,
-            "max": 522,
+            "max": 528,
             "village": "樂善里",
             "neighborhood": "4"
+        },
+        {
+            "type": "even",
+            "min": 466,
+            "max": 502,
+            "village": "樂善里",
+            "neighborhood": "5"
         },
         {
             "type": "odd",
@@ -2320,22 +3009,130 @@
             "neighborhood": "29"
         }
     ],
-    "原樂善里22鄰文德二路": [
+    "樂學一路": [
         {
             "type": "even",
+            "min": 122,
+            "max": 128,
+            "village": "樂善里",
+            "neighborhood": "9"
+        },
+        {
+            "type": "even",
+            "min": 56,
+            "max": 78,
+            "village": "樂善里",
+            "neighborhood": "11"
+        },
+        {
+            "type": "odd",
+            "min": 3,
+            "max": 29,
+            "village": "樂善里",
+            "neighborhood": "33"
+        }
+    ],
+    "樂學二路": [
+        {
+            "type": "even",
+            "min": 46,
+            "max": 50,
+            "village": "樂善里",
+            "neighborhood": "10"
+        },
+        {
+            "type": "even",
+            "min": 52,
+            "max": 70,
+            "village": "樂善里",
+            "neighborhood": "11"
+        }
+    ],
+    "文明路": [
+        {
+            "type": "range",
+            "min": 2,
+            "max": 51,
+            "village": "樂善里",
+            "neighborhood": "15"
+        },
+        {
+            "type": "range",
+            "min": 2,
+            "max": 51,
+            "village": "樂善里",
+            "neighborhood": "17"
+        },
+        {
+            "type": "odd",
+            "min": 1,
+            "max": 155,
+            "village": "樂善里",
+            "neighborhood": "31"
+        }
+    ],
+    "原樂善里22鄰文德二路": [
+        {
+            "type": "range",
             "min": 18,
             "max": 18,
             "village": "樂善里",
             "neighborhood": "15"
         }
     ],
-    "華亞三路": [
+    "文德二路": [
+        {
+            "type": "range",
+            "min": 1,
+            "max": 8,
+            "village": "樂善里",
+            "neighborhood": "15"
+        },
         {
             "type": "odd",
-            "min": 41,
-            "max": 41,
+            "min": 5,
+            "max": 9,
             "village": "樂善里",
-            "neighborhood": "29"
+            "neighborhood": "16"
+        },
+        {
+            "type": "range",
+            "min": 5,
+            "max": 18,
+            "village": "樂善里",
+            "neighborhood": "22"
+        },
+        {
+            "type": "range",
+            "min": 1,
+            "max": 122,
+            "village": "樂善里",
+            "neighborhood": "23"
+        },
+        {
+            "type": "odd",
+            "min": 1,
+            "max": 3,
+            "village": "樂善里",
+            "neighborhood": "28"
+        }
+    ],
+    "原樂善里28鄰文德路": [
+        {
+            "type": "range",
+            "min": 12,
+            "max": 12,
+            "village": "樂善里",
+            "neighborhood": "15"
+        }
+    ],
+    "文康街": [
+        {
+            "type": "range",
+            "min": 7,
+            "max": 53,
+            "village": "樂善里",
+            "neighborhood": "17"
         }
     ],
     "樂學三路": [
@@ -2345,12 +3142,65 @@
             "max": 99,
             "village": "樂善里",
             "neighborhood": "30"
+        },
+        {
+            "type": "odd",
+            "min": 1,
+            "max": 67,
+            "village": "樂善里",
+            "neighborhood": "31"
+        },
+        {
+            "type": "even",
+            "min": 88,
+            "max": 92,
+            "village": "樂善里",
+            "neighborhood": "32"
+        }
+    ],
+    "文青路": [
+        {
+            "type": "range",
+            "min": 1,
+            "max": 383,
+            "village": "文青里",
+            "neighborhood": "1"
+        },
+        {
+            "type": "range",
+            "min": 198,
+            "max": 198,
+            "village": "文藝里",
+            "neighborhood": "4"
+        }
+    ],
+    "文藝街": [
+        {
+            "type": "range",
+            "min": 1,
+            "max": 101,
+            "village": "文藝里",
+            "neighborhood": "3"
         }
     ],
     "文青二路": [
         {
+            "type": "range",
+            "min": 5,
+            "max": 238,
+            "village": "文藝里",
+            "neighborhood": "3"
+        },
+        {
             "type": "even",
-            "min": 236,
+            "min": 6,
+            "max": 116,
+            "village": "文藝里",
+            "neighborhood": "4"
+        },
+        {
+            "type": "even",
+            "min": 218,
             "max": 236,
             "village": "文藝里",
             "neighborhood": "5"
@@ -2361,6 +3211,15 @@
             "max": 216,
             "village": "文藝里",
             "neighborhood": "6"
+        }
+    ],
+    "青山路": [
+        {
+            "type": "even",
+            "min": 6,
+            "max": 536,
+            "village": "文藝里",
+            "neighborhood": "4"
         }
     ]
 };
@@ -2390,7 +3249,7 @@
 
             let oldV = "未定/查無資料";
             let newV = "未定/查無資料";
-            let desc = "請輸入更完整的地址（例如包含巷弄或社區），或直接向龜山區戶政事務所確認。";
+            let desc = "請輸入完整地址（例如包含巷弄或社區），或直接向龜山區戶政事務所確認。";
             let found = false;
 
             // 1. 從 ADVANCED_ROAD_DISTRICTS 中尋找符合的街道
@@ -2406,65 +3265,63 @@
                     const exactMatch = rules.find(r => {
                         if (r.type === 'even' && isEven && parsedNum >= r.min && parsedNum <= r.max) return true;
                         if (r.type === 'odd' && !isEven && parsedNum >= r.min && parsedNum <= r.max) return true;
+                        if (r.type === 'range' && parsedNum >= r.min && parsedNum <= r.max) return true;
                         return false;
                     });
                     const allMatch = rules.find(r => r.type === 'all');
 
-                    if (exactMatch) {
-                        oldV = exactMatch.village;
-                    } else if (allMatch) {
-                        oldV = allMatch.village;
+                    const matchRule = exactMatch || allMatch;
+
+                    if (matchRule) {
+                        const nText = matchRule.neighborhood ? ` ${matchRule.neighborhood}鄰` : "";
+                        newV = matchRule.village + nText;
+                        
+                        // 智能反推原行政里
+                        if (matchRule.village === '文藝里') oldV = '文青里';
+                        else if (['長樂里', '文桃里', '文樂里'].includes(matchRule.village)) oldV = '樂善里';
+                        else oldV = matchRule.village; // 未變動
                     } else {
                         oldV = "超出範圍";
+                        newV = "超出範圍";
                     }
                 } else {
                     // 若僅輸入路名，列出可能的里別
                     const villages = Array.from(new Set(rules.map(r => r.village)));
-                    oldV = villages.join(' / ');
+                    newV = villages.join(' / ');
+                    
+                    // 推斷路名的舊里別
+                    if (villages.includes('文藝里') && !villages.includes('文青里')) oldV = '文青里';
+                    else if (villages.some(v => ['長樂里', '文桃里', '文樂里'].includes(v))) oldV = '樂善里';
+                    else oldV = villages.join(' / ');
                 }
             }
 
             // 2. 套用模糊比對與新舊里別轉換防呆機制
-            if (input.includes('文青路')) {
-                oldV = oldV !== "未定/查無資料" ? oldV : "文青里"; 
-                newV = "文青里 / 文藝里"; 
-                desc = "文青路部分區段已劃分至新成立的「文藝里」。"; 
-                found = true;
-            } else if (input.includes('樂善二路') || input.includes('樂善三路') || input.includes('文樂路')) {
-                oldV = oldV !== "未定/查無資料" ? oldV : "樂善里"; 
-                newV = "文樂里"; 
-                desc = "此區域已從樂善里分出，新編為「文樂里」。"; 
-                found = true;
-            } else if (input.includes('文學路') || input.includes('樂善一路')) {
-                oldV = oldV !== "未定/查無資料" ? oldV : "樂善里"; 
-                newV = "樂善里 / 長樂里"; 
-                desc = "部分區段調整至「長樂里」。"; 
-                found = true;
-            } else if (input.includes('牛角坡路') || input.includes('長慶二街') || input.includes('長慶三街')) {
-                oldV = oldV !== "未定/查無資料" ? oldV : "樂善里"; 
-                newV = "長樂里"; 
-                desc = "此區域已從樂善里分出，改編為「長樂里」。"; 
-                found = true;
-            } else if (input.includes('文桃路') || input.includes('體大') || input.includes('龜山一路')) {
-                oldV = oldV !== "未定/查無資料" ? oldV : "文青里 / 樂善里"; 
-                newV = "文桃里"; 
-                desc = "此周邊路段已統整編入「文桃里」。"; 
-                found = true;
-            } else if (input.includes('文化一路')) {
-                oldV = oldV !== "未定/查無資料" ? oldV : "文青里 / 樂善里"; 
-                newV = "多里交界"; 
-                desc = "文化一路跨越多個里別（文青、文桃、長樂等），請輸入巷弄或社區名稱以利精確判斷。"; 
-                found = true;
-            } else {
-                if (found && oldV !== "超出範圍") {
-                    newV = oldV; // 如果精確對照表有找到，但沒有在變更清單裡，表示沒變動
-                    desc = parsedNum !== null ? `根據對照表，門牌維持劃分於 ${oldV}，未有變動。` : `此路段維持劃分於 ${oldV}，未有變動。`;
+            if (!found) {
+                if (input.includes('文青路')) {
+                    oldV = "文青里"; newV = "文青里 / 文藝里"; desc = "文青路部分區段已劃分至新成立的「文藝里」。"; found = true;
+                } else if (input.includes('樂善二路') || input.includes('樂善三路') || input.includes('文樂路')) {
+                    oldV = "樂善里"; newV = "文樂里"; desc = "此區域已從樂善里分出，新編為「文樂里」。"; found = true;
+                } else if (input.includes('文學路') || input.includes('樂善一路')) {
+                    oldV = "樂善里"; newV = "樂善里 / 長樂里"; desc = "部分區段調整至「長樂里」。"; found = true;
+                } else if (input.includes('牛角坡路') || input.includes('長慶二街') || input.includes('長慶三街')) {
+                    oldV = "樂善里"; newV = "長樂里"; desc = "此區域已從樂善里分出，改編為「長樂里」。"; found = true;
+                } else if (input.includes('文桃路') || input.includes('體大') || input.includes('龜山一路')) {
+                    oldV = "文青里 / 樂善里"; newV = "文桃里"; desc = "此周邊路段已統整編入「文桃里」。"; found = true;
+                } else if (input.includes('文化一路')) {
+                    oldV = "文青里 / 樂善里"; newV = "多里交界"; desc = "文化一路跨越多個里別（文青、文桃、長樂等），請輸入巷弄或社區名稱以利精確判斷。"; found = true;
                 }
-            }
-
-            // 若有精確門牌且真的發生變更，強化顯示說明
-            if (parsedNum !== null && oldV !== newV && newV !== "未定/查無資料" && !desc.includes("門牌")) {
-                desc = `門牌 ${parsedNum} 號原屬 ${oldV}。<br>${desc}`;
+            } else {
+                // 如果是透過對照表找到的
+                if (newV !== "超出範圍") {
+                    if (oldV === newV.split(' ')[0]) {
+                        desc = parsedNum !== null ? `根據對照表，門牌 ${parsedNum} 號維持劃分於 ${newV}，里別未有變動。` : `此路段維持劃分於 ${newV}，未有變動。`;
+                    } else {
+                        desc = parsedNum !== null ? `根據對照表，門牌 ${parsedNum} 號原屬 ${oldV}，新編劃入 ${newV}。` : `此路段部分或全部由 ${oldV} 調整編入 ${newV}。`;
+                    }
+                } else {
+                    desc = `對照表中查無 ${parsedNum} 號的確切資料，請確認門牌號碼是否正確。`;
+                }
             }
 
             if(found) {
@@ -2473,14 +3330,14 @@
                         <div class="flex items-stretch justify-center gap-2 sm:gap-6 w-full bg-purple-50/50 p-3 sm:p-5 rounded-2xl border border-purple-100">
                             <div class="text-center flex-1 flex flex-col">
                                 <div class="text-[11px] sm:text-xs text-gray-500 font-bold mb-1.5">原行政里</div>
-                                <div class="bg-gray-100 text-gray-700 font-black px-2 sm:px-5 py-2.5 sm:py-3 rounded-xl text-base sm:text-xl border border-gray-200 w-full shadow-inner flex-1 flex items-center justify-center leading-tight break-words">${oldV}</div>
+                                <div class="bg-gray-100 text-gray-700 font-black px-2 sm:px-3 py-2.5 sm:py-3 rounded-xl text-sm sm:text-lg border border-gray-200 w-full shadow-inner flex-1 flex items-center justify-center leading-tight break-words">${oldV}</div>
                             </div>
                             <div class="flex flex-col items-center justify-center shrink-0 mt-5">
                                 <i class="fa-solid fa-arrow-right text-purple-400 text-xl sm:text-2xl animate-pulse"></i>
                             </div>
                             <div class="text-center flex-1 flex flex-col">
-                                <div class="text-[11px] sm:text-xs text-purple-600 font-bold mb-1.5">115/3/1 生效</div>
-                                <div class="bg-purple-500 text-white font-black px-2 sm:px-5 py-2.5 sm:py-3 rounded-xl text-base sm:text-xl shadow-md w-full flex-1 flex items-center justify-center leading-tight break-words">${newV}</div>
+                                <div class="text-[11px] sm:text-xs text-purple-600 font-bold mb-1.5">3/1 生效</div>
+                                <div class="bg-purple-500 text-white font-black px-2 sm:px-3 py-2.5 sm:py-3 rounded-xl text-sm sm:text-lg shadow-md w-full flex-1 flex items-center justify-center leading-tight break-words">${newV}</div>
                             </div>
                         </div>
                         <div class="text-sm sm:text-base text-gray-600 font-bold text-center mt-4 pt-4 border-t-2 border-dashed border-purple-100 w-full leading-relaxed">${desc}</div>
