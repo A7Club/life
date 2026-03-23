@@ -9,6 +9,7 @@
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
     
+    <!-- 📊 Google Analytics (GA4)追蹤代碼放置區 -->
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
     <script>
@@ -18,6 +19,7 @@
 
       gtag('config', 'G-YJ9RJC2DRS');
     </script>
+
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -125,7 +127,7 @@
         <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
             <a href="index.html#food" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</a>
             <a href="index.html#shopping" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 生活補給站</a>
-            <a href="index.html#lifehub" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 安心支援所</a>
+            <a href="index.html#lifehub" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 安心支援中心</a>
             <a href="explore.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-white bg-themePurple shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</a>
         </div>
     </nav>
@@ -174,7 +176,7 @@
                 </button>
 
                 <!-- 就學設籍 -->
-                <button data-tab="school" data-active="bg-orange-50/80 border-orange-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-orange-200" class="tab-btn pt-4 pb-3 px-1 sm:px-2 md:pt-5 md:pb-4 lg:pt-6 lg:pb-5 rounded-[1.2rem] md:rounded-[1.5rem] lg:rounded-[2rem] border-2 sm:border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
+                <button data-tab="schooling" data-active="bg-orange-50/80 border-orange-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-orange-200" class="tab-btn pt-4 pb-3 px-1 sm:px-2 md:pt-5 md:pb-4 lg:pt-6 lg:pb-5 rounded-[1.2rem] md:rounded-[1.5rem] lg:rounded-[2rem] border-2 sm:border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 w-16 h-16 bg-orange-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
                     <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center text-xl sm:text-2xl md:text-3xl group-hover:bg-orange-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-1.5 sm:mb-2 md:mb-3">
                         <i class="fa-solid fa-school"></i>
@@ -1155,7 +1157,7 @@
                                     <i class="fa-solid fa-circle-exclamation text-yellow-500 mr-1"></i> 具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所確認。
                                 </div>
                                 
-                                <button onclick="window.switchTab('school'); window.scrollTo({top: 0, behavior: 'smooth'});" class="w-full sm:w-auto inline-flex items-center justify-center text-sm font-black text-themePurple bg-purple-50 hover:bg-purple-100 border border-purple-200 px-4 py-2.5 rounded-xl transition-colors shadow-sm active:scale-95">
+                                <button onclick="window.switchTab('schooling'); window.scrollTo({top: 0, behavior: 'smooth'});" class="w-full sm:w-auto inline-flex items-center justify-center text-sm font-black text-themePurple bg-purple-50 hover:bg-purple-100 border border-purple-200 px-4 py-2.5 rounded-xl transition-colors shadow-sm active:scale-95">
                                     <i class="fa-solid fa-school mr-2"></i> 了解更多各里「就學與設籍指南」
                                 </button>
 
@@ -1190,7 +1192,7 @@
             <!-- ============================================== -->
             <!-- 模組：就學與設籍 (獨立分頁) -->
             <!-- ============================================== -->
-            <div id="mod-school-registry" class="content-module mb-12 hidden" data-shows-on="school">
+            <div id="mod-schooling-registry" class="content-module mb-12 hidden" data-shows-on="schooling">
                 <div class="flex items-center mb-8">
                     <h3 class="text-xl md:text-2xl font-black text-orange-500 flex items-center">
                         <div class="w-12 h-12 bg-orange-100 text-orange-500 rounded-2xl flex items-center justify-center mr-4 shadow-sm transform -rotate-3"><i class="fa-solid fa-school"></i></div>
@@ -1228,8 +1230,12 @@
                                 </div>
                             </div>
                             <!-- 右側：結果區 -->
-                            <div class="w-full md:w-1/2 flex flex-col justify-center">
-                                
+                            <div class="w-full md:w-1/2 flex flex-col justify-center min-h-[100px]">
+                                <!-- 預設提示狀態 -->
+                                <div id="school-result-placeholder" class="text-center text-blue-400/60 font-bold text-sm bg-white/50 rounded-xl border border-blue-200/50 p-4 h-full flex flex-col items-center justify-center">
+                                    <i class="fa-solid fa-school text-2xl mb-2 opacity-50"></i>
+                                    查詢結果將顯示於此
+                                </div>
                                 <!-- 實際結果 -->
                                 <div id="school-result" class="hidden w-full h-full"></div>
                             </div>
@@ -1281,7 +1287,7 @@
                 <td class="p-3 md:p-5">
                     <div class="flex flex-col gap-y-2">
                         <div class="flex items-center">
-                            <span>樂善國小、文青國小</span>
+                            <span>樂善國小、文青國中小</span>
                             <span class="ml-2 text-[9px] sm:text-xs text-blue-600 bg-white border border-blue-200 shadow-sm px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg">自由學區</span>
                         </div>
                         <div class="flex items-center">
@@ -1301,7 +1307,7 @@
                 <td class="p-3 md:p-5">
                     <div class="flex flex-col gap-y-2">
                         <div class="flex items-center">
-                            <span>樂善國小、文青國小</span>
+                            <span>樂善國小、文青國中小</span>
                             <span class="ml-2 text-[9px] sm:text-xs text-blue-600 bg-white border border-blue-200 shadow-sm px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg">自由學區</span>
                         </div>
                         <div class="flex items-center">
@@ -1317,7 +1323,7 @@
                 <td class="p-3 md:p-5">
                     <div class="flex flex-col gap-y-2">
                         <div class="flex items-center">
-                            <span>樂善國小、文青國小</span>
+                            <span>樂善國小、文青國中小</span>
                             <span class="ml-2 text-[9px] sm:text-xs text-blue-600 bg-white border border-blue-200 shadow-sm px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-lg">自由學區</span>
                         </div>
                     </div>
@@ -1328,7 +1334,7 @@
                 <td class="p-3 md:p-5 text-gray-800 border-r border-blue-50 leading-snug">文桃里</td>
                 <td class="p-3 md:p-5">
                     <div class="flex items-center">
-                        <span>文青國小</span>
+                        <span>文青國小、文青國中</span>
                     </div>
                 </td>
             </tr>
@@ -1724,7 +1730,7 @@
             'engineering': '市政建設追蹤',
             'community': '在地社群交流',
             'A7area': '分區建案與學區',
-            'school': '就學與設籍指南',
+            'schooling': '就學與設籍指南',
             'transit': '通勤交通指南',
             'news': 'A7 最新焦點'
         };
@@ -1816,7 +1822,7 @@
                 let currentTab = 'overview';
                 if (window.location.hash) {
                     const hashTab = window.location.hash.replace('#', '');
-                    const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'school', 'transit', 'news'];
+                    const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'schooling', 'transit', 'news'];
                     if (validTabs.includes(hashTab)) {
                         currentTab = hashTab;
                     }
@@ -1827,7 +1833,7 @@
             let initialTab = 'overview';
             try {
                 const hash = window.location.hash.replace('#', '');
-                const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'school', 'transit', 'news'];
+                const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'schooling', 'transit', 'news'];
                 if (validTabs.includes(hash)) {
                     initialTab = hash;
                 }
@@ -2646,7 +2652,6 @@
             "文學路": [
                 { "type": "odd", "min": 31, "max": 55, "village": "文樂里", "neighborhood": "12" },
                 { "type": "odd", "min": 1, "max": 29, "village": "文樂里", "neighborhood": "13" },
-                { "type": "range","min": 211,"max": 235, "village": "文青里","neighborhood": "11" },
                 { "type": "range","min": 250,"max": 280, "village": "文青里","neighborhood": "27" },
             ],
             "樂善街": [
@@ -2918,19 +2923,19 @@
             let isFree = false;
 
             if (newVillage === '文青里' || newVillage === '文藝里') {
-                schoolResult = "文青國小、大埔國小";
+                schoolResult = "文青國中小、大埔國小";
                 isFree = true;
             } else if (newVillage === '文桃里') {
                 schoolResult = "文青國中小";
             } else if (newVillage === '樂善里' || newVillage === '文樂里') {
-                schoolResult = "樂善國小、文青國小";
+                schoolResult = "樂善國小、文青國中小";
                 isFree = true;
             } else if (newVillage === '長樂里') {
                 if (neighborhood !== null && neighborhood >= 10 && neighborhood <= 21) {
                     schoolResult = "樂善國小、長庚國小";
                     isFree = true;
                 } else if (neighborhood !== null && neighborhood >= 1 && neighborhood <= 9) {
-                    schoolResult = "樂善國小、文青國小";
+                    schoolResult = "樂善國小、文青國中小";
                     isFree = true;
                 } else {
                     schoolResult = "需確認確切鄰別 (1-9鄰為樂善/文青；10-21鄰為樂善/長庚)";
@@ -3601,16 +3606,13 @@
 
             const GAS_URL = "https://script.google.com/macros/s/AKfycbw0t0lUbxn6MV30sK75uGCNz6y_paQzQHtTvyFBpVd-uuPIAJ3op--wkv9TI6EjuGUxWw/exec";
             
-            // 💡 備援推算函式：依照官方時刻表推算
+            // 💡 備援推算函式：依照官方時刻表推算 (每15分鐘一班)
             const generateStaticMrtTimes = (schedule) => {
                 const now = new Date();
                 const totalCurrentSecs = now.getMinutes() * 60 + now.getSeconds();
                 let nextTotalSecs = schedule.map(m => m * 60).find(s => s >= totalCurrentSecs);
                 if (nextTotalSecs === undefined) nextTotalSecs = (60 + schedule[0]) * 60;
-    
-                // ✨ 關鍵修正：將結果減去 1 分鐘
-                const result = (nextTotalSecs - totalCurrentSecs) / 60;
-                return Math.max(0, result - 1); 
+                return (nextTotalSecs - totalCurrentSecs) / 60;
             };
 
             try {
@@ -3641,18 +3643,14 @@
 
                 // 💡 修正機捷時間解析：找出最小(最快)的時間
                 const getClosestMrt = (dirFilter) => {
-                   const trains = mrtA7Data.filter(dirFilter);
+                    const trains = mrtA7Data.filter(dirFilter);
                     if (!trains.length) return undefined;
                     const times = trains.map(t => {
                         const val = t.CountDownTime !== undefined ? t.CountDownTime : t.EstimateTime;
                         return parseFloat(val);
                     }).filter(t => !isNaN(t));
-                    
                     if (!times.length) return undefined;
-    
-                    // ✨ 關鍵修正：取得最小值後減去 1 分鐘
-                    const closestTime = Math.min(...times);
-                    return Math.max(0, closestTime - 1); 
+                    return Math.min(...times);
                 };
 
                 let northMrt = getClosestMrt(m => String(m.Direction) === "0" || (m.direction && m.direction.includes("北上")));
