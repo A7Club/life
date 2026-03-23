@@ -150,79 +150,78 @@
             </div>
 
             <!-- 分頁選單列 (總覽時顯示) -->
-            <div id="tab-container" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6">
-                <!-- 總覽 (預設隱藏) -->
-                <button style="display: none;" data-tab="overview" data-active="bg-yellow-50/80 border-yellow-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-yellow-200" class="tab-btn pt-6 pb-5 px-3 md:pt-8 md:pb-6 md:px-4 lg:pt-10 lg:pb-8 rounded-[2rem] lg:rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-yellow-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                    <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-yellow-100 text-yellow-500 rounded-full flex items-center justify-center text-3xl md:text-4xl lg:text-5xl group-hover:bg-yellow-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-3 md:mb-5">
-                        <i class="fa-solid fa-house"></i>
-                    </div>
-                    <div class="flex flex-col items-center w-full relative z-10">
-                        <h3 class="font-black text-lg md:text-xl lg:text-2xl text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-yellow-700 transition-colors">首頁總覽</h3>
-                        <p class="text-gray-400 text-xs md:text-sm lg:text-base font-bold truncate w-full mt-1.5 md:mt-2">快速瀏覽情報</p>
-                    </div>
-                </button>
-
+            <div id="tab-container" class="grid grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 lg:gap-4 mb-6">
                 <!-- 市政工程 -->
-                <button data-tab="engineering" data-active="bg-emerald-50/80 border-emerald-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-emerald-200" class="tab-btn pt-6 pb-5 px-3 md:pt-8 md:pb-6 md:px-4 lg:pt-10 lg:pb-8 rounded-[2rem] lg:rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-emerald-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                    <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center text-3xl md:text-4xl lg:text-5xl group-hover:bg-emerald-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-3 md:mb-5">
+                <button data-tab="engineering" data-active="bg-emerald-50/80 border-emerald-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-emerald-200" class="tab-btn pt-4 pb-3 px-1 sm:px-2 md:pt-5 md:pb-4 lg:pt-6 lg:pb-5 rounded-[1.2rem] md:rounded-[1.5rem] lg:rounded-[2rem] border-2 sm:border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-emerald-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center text-xl sm:text-2xl md:text-3xl group-hover:bg-emerald-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-1.5 sm:mb-2 md:mb-3">
                         <i class="fa-solid fa-person-digging"></i>
                     </div>
                     <div class="flex flex-col items-center w-full relative z-10">
-                        <h3 class="font-black text-lg md:text-xl lg:text-2xl text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-emerald-700 transition-colors">市政工程</h3>
-                        <p class="text-gray-400 text-xs md:text-sm lg:text-base font-bold truncate w-full mt-1.5 md:mt-2">追蹤 <span id="badge-eng" class="text-emerald-500 font-black mx-0.5 text-sm md:text-base"><i class="fa-solid fa-spinner fa-spin"></i></span> 項建設</p>
-                    </div>
-                </button>
-
-                <!-- 在地社群 -->
-                <button data-tab="community" data-active="bg-purple-50/80 border-purple-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-purple-200" class="tab-btn pt-6 pb-5 px-3 md:pt-8 md:pb-6 md:px-4 lg:pt-10 lg:pb-8 rounded-[2rem] lg:rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-purple-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                    <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-purple-100 text-themePurple rounded-full flex items-center justify-center text-3xl md:text-4xl lg:text-5xl group-hover:bg-purple-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-3 md:mb-5">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <div class="flex flex-col items-center w-full relative z-10">
-                        <h3 class="font-black text-lg md:text-xl lg:text-2xl text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-purple-700 transition-colors">在地社群</h3>
-                        <p class="text-gray-400 text-xs md:text-sm lg:text-base font-bold truncate w-full mt-1.5 md:mt-2">已收錄 <span id="badge-com" class="text-themePurple font-black mx-0.5 text-sm md:text-base"><i class="fa-solid fa-spinner fa-spin"></i></span> 群組</p>
+                        <h3 class="font-black text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-emerald-700 transition-colors">市政工程</h3>
+                        <p class="text-gray-400 text-[9px] sm:text-[10px] md:text-xs font-bold truncate w-full mt-0.5 sm:mt-1">追蹤 <span id="badge-eng" class="text-emerald-500 font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 項</p>
                     </div>
                 </button>
 
                 <!-- 行政區劃 -->
-                <button data-tab="A7area" data-active="bg-blue-50/80 border-blue-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-blue-200" class="tab-btn pt-6 pb-5 px-3 md:pt-8 md:pb-6 md:px-4 lg:pt-10 lg:pb-8 rounded-[2rem] lg:rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                    <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-blue-100 text-themeBlue rounded-full flex items-center justify-center text-3xl md:text-4xl lg:text-5xl group-hover:bg-blue-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-3 md:mb-5">
+                <button data-tab="A7area" data-active="bg-blue-50/80 border-blue-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-blue-200" class="tab-btn pt-4 pb-3 px-1 sm:px-2 md:pt-5 md:pb-4 lg:pt-6 lg:pb-5 rounded-[1.2rem] md:rounded-[1.5rem] lg:rounded-[2rem] border-2 sm:border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-blue-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-blue-100 text-themeBlue rounded-full flex items-center justify-center text-xl sm:text-2xl md:text-3xl group-hover:bg-blue-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-1.5 sm:mb-2 md:mb-3">
                         <i class="fa-solid fa-map-location-dot"></i>
                     </div>
                     <div class="flex flex-col items-center w-full relative z-10">
-                        <h3 class="font-black text-lg md:text-xl lg:text-2xl text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-blue-700 transition-colors">行政區劃</h3>
-                        <p class="text-gray-400 text-xs md:text-sm lg:text-base font-bold truncate w-full mt-1.5 md:mt-2">建案、戶籍學區</p>
+                        <h3 class="font-black text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-blue-700 transition-colors">行政區劃</h3>
+                        <p class="text-gray-400 text-[9px] sm:text-[10px] md:text-xs font-bold truncate w-full mt-0.5 sm:mt-1">建案地圖</p>
+                    </div>
+                </button>
+
+                <!-- 就學設籍 -->
+                <button data-tab="schooling" data-active="bg-orange-50/80 border-orange-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-orange-200" class="tab-btn pt-4 pb-3 px-1 sm:px-2 md:pt-5 md:pb-4 lg:pt-6 lg:pb-5 rounded-[1.2rem] md:rounded-[1.5rem] lg:rounded-[2rem] border-2 sm:border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-orange-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center text-xl sm:text-2xl md:text-3xl group-hover:bg-orange-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-1.5 sm:mb-2 md:mb-3">
+                        <i class="fa-solid fa-school"></i>
+                    </div>
+                    <div class="flex flex-col items-center w-full relative z-10">
+                        <h3 class="font-black text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-orange-700 transition-colors">就學設籍</h3>
+                        <p class="text-gray-400 text-[9px] sm:text-[10px] md:text-xs font-bold truncate w-full mt-0.5 sm:mt-1">學區與戶籍</p>
                     </div>
                 </button>
 
                 <!-- 交通指南 -->
-                <button data-tab="transit" data-active="bg-rose-50/80 border-rose-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-rose-200" class="tab-btn pt-6 pb-5 px-3 md:pt-8 md:pb-6 md:px-4 lg:pt-10 lg:pb-8 rounded-[2rem] lg:rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-rose-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                    <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center text-3xl md:text-4xl lg:text-5xl group-hover:bg-rose-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-3 md:mb-5">
+                <button data-tab="transit" data-active="bg-rose-50/80 border-rose-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-rose-200" class="tab-btn pt-4 pb-3 px-1 sm:px-2 md:pt-5 md:pb-4 lg:pt-6 lg:pb-5 rounded-[1.2rem] md:rounded-[1.5rem] lg:rounded-[2rem] border-2 sm:border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-rose-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center text-xl sm:text-2xl md:text-3xl group-hover:bg-rose-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-1.5 sm:mb-2 md:mb-3">
                         <i class="fa-solid fa-train-subway"></i>
                     </div>
                     <div class="flex flex-col items-center w-full relative z-10">
-                        <h3 class="font-black text-lg md:text-xl lg:text-2xl text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-rose-700 transition-colors">交通指南</h3>
-                        <p class="text-gray-400 text-xs md:text-sm lg:text-base font-bold truncate w-full mt-1.5 md:mt-2">公車與捷運</p>
+                        <h3 class="font-black text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-rose-700 transition-colors">交通指南</h3>
+                        <p class="text-gray-400 text-[9px] sm:text-[10px] md:text-xs font-bold truncate w-full mt-0.5 sm:mt-1">公車與捷運</p>
                     </div>
                 </button>
 
-                <!-- 在地新聞 (預設隱藏) -->
-                <button style="display: none;" data-tab="news" data-active="bg-cyan-50/80 border-cyan-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-cyan-200" class="tab-btn pt-6 pb-5 px-3 md:pt-8 md:pb-6 md:px-4 lg:pt-10 lg:pb-8 rounded-[2rem] lg:rounded-[2.5rem] border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-cyan-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-                    <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-cyan-100 text-cyan-500 rounded-full flex items-center justify-center text-3xl md:text-4xl lg:text-5xl group-hover:bg-cyan-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-3 md:mb-5">
+                <!-- 在地社群 -->
+                <button data-tab="community" data-active="bg-purple-50/80 border-purple-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-purple-200" class="tab-btn pt-4 pb-3 px-1 sm:px-2 md:pt-5 md:pb-4 lg:pt-6 lg:pb-5 rounded-[1.2rem] md:rounded-[1.5rem] lg:rounded-[2rem] border-2 sm:border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-purple-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-purple-100 text-themePurple rounded-full flex items-center justify-center text-xl sm:text-2xl md:text-3xl group-hover:bg-purple-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-1.5 sm:mb-2 md:mb-3">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="flex flex-col items-center w-full relative z-10">
+                        <h3 class="font-black text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-purple-700 transition-colors">在地社群</h3>
+                        <p class="text-gray-400 text-[9px] sm:text-[10px] md:text-xs font-bold truncate w-full mt-0.5 sm:mt-1">收錄 <span id="badge-com" class="text-themePurple font-black mx-0.5"><i class="fa-solid fa-spinner fa-spin"></i></span> 群</p>
+                    </div>
+                </button>
+
+                <!-- 在地新聞 -->
+                <button data-tab="news" data-active="bg-cyan-50/80 border-cyan-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-cyan-200" class="tab-btn pt-4 pb-3 px-1 sm:px-2 md:pt-5 md:pb-4 lg:pt-6 lg:pb-5 rounded-[1.2rem] md:rounded-[1.5rem] lg:rounded-[2rem] border-2 sm:border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-cyan-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-cyan-100 text-cyan-500 rounded-full flex items-center justify-center text-xl sm:text-2xl md:text-3xl group-hover:bg-cyan-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-1.5 sm:mb-2 md:mb-3">
                         <i class="fa-regular fa-newspaper"></i>
                     </div>
                     <div class="flex flex-col items-center w-full relative z-10">
-                        <h3 class="font-black text-lg md:text-xl lg:text-2xl text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-cyan-700 transition-colors">在地新聞</h3>
-                        <div id="dynamic-news-tags" class="flex flex-row flex-nowrap overflow-hidden gap-1.5 mt-1.5 w-full justify-center">
-                            <!-- 預設標籤，供 js 替換 -->
-                            <span class="bg-gray-100 text-gray-500 text-[10px] md:text-xs px-1.5 py-0.5 rounded flex items-center leading-none font-bold shrink-0">機捷</span>
-                            <span class="bg-gray-100 text-gray-500 text-[10px] md:text-xs px-1.5 py-0.5 rounded flex items-center leading-none font-bold shrink-0">A7</span>
+                        <h3 class="font-black text-xs sm:text-sm md:text-base lg:text-lg text-gray-800 leading-tight whitespace-nowrap tracking-wide group-hover:text-cyan-700 transition-colors">在地新聞</h3>
+                        <div id="dynamic-news-tags" class="flex flex-row flex-nowrap overflow-hidden gap-1 mt-0.5 sm:mt-1 w-full justify-center">
+                            <span class="bg-gray-100 text-gray-500 text-[8px] sm:text-[9px] md:text-[10px] px-1 py-0.5 rounded flex items-center leading-none font-bold shrink-0">機捷</span>
+                            <span class="bg-gray-100 text-gray-500 text-[8px] sm:text-[9px] md:text-[10px] px-1 py-0.5 rounded flex items-center leading-none font-bold shrink-0">A7</span>
                         </div>
                     </div>
                 </button>
@@ -610,27 +609,6 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：A7在地新聞 (總覽精簡版 - 最多顯示3則) -->
-            <!-- ============================================== -->
-            <div id="mod-news-overview" class="content-module mb-12 hidden" data-shows-on="overview">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl md:text-2xl font-black text-cyan-600 flex items-center"><i class="fa-regular fa-newspaper mr-3 text-3xl"></i>地方焦點新聞</h2>
-                    <button onclick="window.switchTab('news', true)" class="text-sm font-bold text-cyan-500 hover:text-cyan-700 bg-cyan-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">更多新聞</i></button>
-                </div>
-                <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-8 border-4 border-cyan-50 relative overflow-hidden">
-                    <div class="absolute -right-4 -top-4 text-cyan-50 text-8xl floating pointer-events-none z-0"><i class="fa-regular fa-newspaper"></i></div>
-                    
-                    <div id="news-overview-container" class="relative z-10 space-y-3">
-                        <div class="text-center text-cyan-400 py-8">
-                            <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
-                            <p class="font-bold">正在搜集最新情報...</p>
-                        </div>
-                    </div>
-                    <div class="mt-4 w-full text-right text-xs text-gray-400 font-bold relative z-10"><i class="fa-solid fa-rotate mr-1"></i>資料來源：Google News</div>
-                </div>
-            </div>
-
-            <!-- ============================================== -->
             <!-- 模組：機捷 A7 站轉乘指南 (僅交通轉乘分頁顯示) -->
             <!-- ============================================== -->
             <div id="mod-transit-guide" class="content-module mb-12 hidden" data-shows-on="transit">
@@ -894,6 +872,7 @@
                         </div>
                     </div>
             </div>
+
 
             <!-- ============================================== -->
             <!-- 模組：在地建設紀錄 (已完工) -->
@@ -1166,7 +1145,7 @@
                                     <i class="fa-solid fa-circle-exclamation text-yellow-500 mr-1"></i> 具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所確認。
                                 </div>
                                 
-                                <button onclick="window.switchTab('A7area'); setTimeout(() => { const el = document.getElementById('mod-schooling-registry'); if(el) { const offset = 100; const targetY = el.getBoundingClientRect().top + window.scrollY - offset; window.scrollTo({top: targetY, behavior: 'smooth'}); } }, 100);" class="w-full sm:w-auto inline-flex items-center justify-center text-sm font-black text-themePurple bg-purple-50 hover:bg-purple-100 border border-purple-200 px-4 py-2.5 rounded-xl transition-colors shadow-sm active:scale-95">
+                                <button onclick="window.switchTab('schooling'); window.scrollTo({top: 0, behavior: 'smooth'});" class="w-full sm:w-auto inline-flex items-center justify-center text-sm font-black text-themePurple bg-purple-50 hover:bg-purple-100 border border-purple-200 px-4 py-2.5 rounded-xl transition-colors shadow-sm active:scale-95">
                                     <i class="fa-solid fa-school mr-2"></i> 了解更多各里「就學與設籍指南」
                                 </button>
                             </div>
@@ -1175,11 +1154,31 @@
                 </div>
             </div>
 
+            <!-- ============================================== -->
+            <!-- 模組：A7在地新聞 (總覽精簡版 - 最多顯示5則) -->
+            <!-- ============================================== -->
+            <div id="mod-news-overview" class="content-module mb-12 hidden" data-shows-on="overview">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl md:text-2xl font-black text-cyan-600 flex items-center"><i class="fa-regular fa-newspaper mr-3 text-3xl"></i>地方焦點新聞</h2>
+                    <button onclick="window.switchTab('news', true)" class="text-sm font-bold text-cyan-500 hover:text-cyan-700 bg-cyan-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">更多新聞</i></button>
+                </div>
+                <div class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-8 border-4 border-cyan-50 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 text-cyan-50 text-8xl floating pointer-events-none z-0"><i class="fa-regular fa-newspaper"></i></div>
+                    
+                    <div id="news-overview-container" class="relative z-10 space-y-3">
+                        <div class="text-center text-cyan-400 py-8">
+                            <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
+                            <p class="font-bold">正在搜集最新情報...</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 w-full text-right text-xs text-gray-400 font-bold relative z-10"><i class="fa-solid fa-rotate mr-1"></i>資料來源：Google News</div>
+                </div>
+            </div>
 
             <!-- ============================================== -->
-            <!-- 模組：就學與設籍 (不再顯示於 overview，僅顯示於 buildings) -->
+            <!-- 模組：就學與設籍 (獨立分頁) -->
             <!-- ============================================== -->
-            <div id="mod-schooling-registry" class="content-module mb-12 hidden" data-shows-on="A7area">
+            <div id="mod-schooling-registry" class="content-module mb-12 hidden" data-shows-on="schooling">
                 <div class="flex items-center mb-8">
                     <h3 class="text-xl md:text-2xl font-black text-orange-500 flex items-center">
                         <div class="w-12 h-12 bg-orange-100 text-orange-500 rounded-2xl flex items-center justify-center mr-4 shadow-sm transform -rotate-3"><i class="fa-solid fa-school"></i></div>
@@ -1235,6 +1234,29 @@
                             <span class="bg-blue-100 text-blue-600 text-xs font-black px-3 py-1.5 rounded-xl flex items-center w-max shadow-sm">
                                 <i class="fa-solid fa-info-circle mr-1.5"></i>依照桃園市教育局公告
                             </span>
+                        </div>
+
+                        <!-- 學區查詢器 -->
+                        <div class="mb-6 relative z-10 bg-blue-50/50 p-4 md:p-6 rounded-[1.5rem] border-2 border-blue-100/60 shadow-inner flex flex-col md:flex-row gap-4 md:gap-6 items-stretch">
+                            <!-- 左側：輸入區 -->
+                            <div class="w-full md:w-1/2 flex flex-col justify-center">
+                                <h4 class="text-sm md:text-base font-black text-blue-700 mb-2 flex items-center"><i class="fa-solid fa-magnifying-glass-location mr-1.5 text-blue-500"></i>一鍵查詢我家學區</h4>
+                                <p class="text-xs text-blue-500 font-bold mb-4">輸入完整地址即可快速對照最新學區（建議包含門牌號碼以利精確判斷）</p>
+                                <div class="flex gap-2 w-full">
+                                    <input type="text" id="school-address-input" placeholder="例如：文青路100號" class="flex-1 min-w-0 rounded-xl border-2 border-blue-200 px-3 sm:px-4 py-2 text-sm font-bold text-gray-700 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white shadow-inner transition-all">
+                                    <button onclick="checkSchoolDistrict()" class="bg-blue-500 hover:bg-blue-600 text-white font-black px-4 py-2 rounded-xl transition-transform shadow-sm shrink-0 active:scale-95">查詢</button>
+                                </div>
+                            </div>
+                            <!-- 右側：結果區 -->
+                            <div class="w-full md:w-1/2 flex flex-col justify-center min-h-[100px]">
+                                <!-- 預設提示狀態 -->
+                                <div id="school-result-placeholder" class="text-center text-blue-400/60 font-bold text-sm bg-white/50 rounded-xl border border-blue-200/50 p-4 h-full flex flex-col items-center justify-center">
+                                    <i class="fa-solid fa-school text-2xl mb-2 opacity-50"></i>
+                                    查詢結果將顯示於此
+                                </div>
+                                <!-- 實際結果 -->
+                                <div id="school-result" class="hidden w-full h-full"></div>
+                            </div>
                         </div>
                         
                         <!-- 優化後的學區表格設計 (移除 min-w-[500px] 讓手機版自適應不被遮蔽) -->
@@ -1374,6 +1396,7 @@
             'engineering': '市政建設追蹤',
             'community': '在地社群交流',
             'A7area': '分區建案與學區',
+            'schooling': '就學與設籍指南',
             'transit': '通勤交通指南',
             'news': 'A7 最新焦點'
         };
@@ -1465,7 +1488,7 @@
                 let currentTab = 'overview';
                 if (window.location.hash) {
                     const hashTab = window.location.hash.replace('#', '');
-                    const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'news', 'transit'];
+                    const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'schooling', 'transit', 'news'];
                     if (validTabs.includes(hashTab)) {
                         currentTab = hashTab;
                     }
@@ -1476,7 +1499,7 @@
             let initialTab = 'overview';
             try {
                 const hash = window.location.hash.replace('#', '');
-                const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'news', 'transit'];
+                const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'schooling', 'transit', 'news'];
                 if (validTabs.includes(hash)) {
                     initialTab = hash;
                 }
@@ -1569,8 +1592,8 @@
                 defaults.forEach(d => { if(!sortedTags.includes(d)) sortedTags.push(d); });
             }
 
-            const top3 = sortedTags.slice(0, 3);
-            container.innerHTML = top3.map(tag => `<span class="bg-gray-100 text-gray-500 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">${tag}</span>`).join('');
+            const top3 = sortedTags.slice(0, 2);
+            container.innerHTML = top3.map(tag => `<span class="bg-gray-100 text-gray-500 text-[8px] sm:text-[9px] md:text-[10px] px-1.5 py-0.5 rounded-lg flex items-center leading-none font-bold shrink-0 group-hover:bg-cyan-100 group-hover:text-cyan-700 transition-colors">${tag}</span>`).join('');
         }
 
         async function fetchLocalNews() {
@@ -1610,7 +1633,7 @@
                 const newsItems = uniqueItems.slice(0, 15);
                 
                 updateDynamicHashtags(newsItems); // 更新熱門標籤
-                renderNewsOverview(newsItems.slice(0, 3)); 
+                renderNewsOverview(newsItems.slice(0, 5)); 
                 renderNewsFull(newsItems, officialNews); 
             } catch (error) {
                 console.info('※ 觸發安全機制：自動切換為在地真實新聞緩存資料。');
@@ -1634,7 +1657,7 @@
                 const fallbackNews = fallbackNewsRaw.map(parseNewsItem);
                 
                 updateDynamicHashtags(fallbackNews); // 更新熱門標籤
-                renderNewsOverview(fallbackNews.slice(0, 3));
+                renderNewsOverview(fallbackNews.slice(0, 5));
                 renderNewsFull(fallbackNews, officialNews);
             }
         }
@@ -2499,6 +2522,118 @@
             resultContainer.classList.add('fade-in');
         };
 
+        // 學區查詢邏輯
+        window.checkSchoolDistrict = function() {
+            const inputEl = document.getElementById('school-address-input');
+            const input = inputEl.value.trim();
+            const resultContainer = document.getElementById('school-result');
+            const resultPlaceholder = document.getElementById('school-result-placeholder');
+
+            if (!input) {
+                resultContainer.innerHTML = '<div class="bg-red-50 text-red-500 text-sm font-bold p-4 rounded-xl border border-red-200 flex items-center justify-center w-full h-full shadow-sm"><i class="fa-solid fa-circle-exclamation mr-2 text-lg"></i>請輸入地址或路名！</div>';
+                resultContainer.classList.remove('hidden');
+                if (resultPlaceholder) resultPlaceholder.classList.add('hidden');
+                return;
+            }
+
+            const cleanedInput = input.replace(/桃園市|龜山區/g, '').trim();
+            let parsedStreet = "";
+            let parsedNum = null;
+            const match = cleanedInput.match(/([一-龥]+(?:路|街|大道|段))(?:\s*(\d+)(?:[~-～－]\d+)?\s*(?:號|之))?/);
+
+            if (match) {
+                parsedStreet = match[1];
+                if (match[2]) parsedNum = parseInt(match[2], 10);
+            } else {
+                parsedStreet = cleanedInput.replace(/\d+[~-～－]?\d*號?/, '').trim();
+            }
+
+            let newVillage = "";
+            let neighborhood = null;
+            let found = false;
+
+            const matchedKey = Object.keys(ADVANCED_ROAD_DISTRICTS).find(k => parsedStreet.includes(k) || k.includes(parsedStreet));
+
+            if (matchedKey && parsedNum !== null) {
+                found = true;
+                const rules = ADVANCED_ROAD_DISTRICTS[matchedKey];
+                const isEven = parsedNum % 2 === 0;
+
+                const exactMatch = rules.find(r => {
+                    if (r.type === 'even' && isEven && parsedNum >= r.min && parsedNum <= r.max) return true;
+                    if (r.type === 'odd' && !isEven && parsedNum >= r.min && parsedNum <= r.max) return true;
+                    if (r.type === 'range' && parsedNum >= r.min && parsedNum <= r.max) return true;
+                    return false;
+                });
+                const allMatch = rules.find(r => r.type === 'all');
+                const matchRule = exactMatch || allMatch;
+
+                if (matchRule) {
+                    newVillage = matchRule.village;
+                    neighborhood = matchRule.neighborhood ? parseInt(matchRule.neighborhood, 10) : null;
+                } else {
+                    found = false; 
+                }
+            }
+
+            if (!found) {
+                if (cleanedInput.includes('文青') || cleanedInput.includes('文藝')) { newVillage = '文青里'; }
+                else if (cleanedInput.includes('文桃') || cleanedInput.includes('體大') || cleanedInput.includes('牛角坡路')) { newVillage = '文桃里'; }
+                else if (cleanedInput.includes('樂善') || cleanedInput.includes('文樂')) { newVillage = '樂善里'; }
+                else if (cleanedInput.includes('長樂') || cleanedInput.includes('長慶')) { newVillage = '長樂里'; }
+                else if (cleanedInput.includes('長庚') || cleanedInput.includes('文德')) { newVillage = '長庚里'; }
+            }
+
+            let schoolResult = "";
+            let isFree = false;
+
+            if (newVillage === '文青里' || newVillage === '文藝里') {
+                schoolResult = "文青國中小、大埔國小";
+                isFree = true;
+            } else if (newVillage === '文桃里') {
+                schoolResult = "文青國中小";
+            } else if (newVillage === '樂善里' || newVillage === '文樂里') {
+                schoolResult = "樂善國小、文青國中小";
+                isFree = true;
+            } else if (newVillage === '長樂里') {
+                if (neighborhood !== null && neighborhood >= 10 && neighborhood <= 21) {
+                    schoolResult = "樂善國小、長庚國小";
+                    isFree = true;
+                } else if (neighborhood !== null && neighborhood >= 1 && neighborhood <= 9) {
+                    schoolResult = "樂善國小、文青國中小";
+                    isFree = true;
+                } else {
+                    schoolResult = "需確認確切鄰別 (1-9鄰為樂善/文青；10-21鄰為樂善/長庚)";
+                    isFree = true; 
+                }
+            } else if (newVillage === '長庚里') {
+                schoolResult = "長庚國小";
+            }
+
+            if (schoolResult) {
+                resultContainer.innerHTML = `
+                    <div class="bg-white rounded-xl p-4 border border-blue-200 shadow-sm flex flex-col items-center justify-center text-center h-full w-full">
+                        <div class="text-xs text-blue-500 font-bold mb-1">根據最新區劃 (${newVillage}${neighborhood ? ' '+neighborhood+'鄰' : ''})</div>
+                        <div class="text-lg md:text-xl font-black text-blue-800 mb-2 flex items-center justify-center flex-wrap gap-2">
+                            ${schoolResult}
+                            ${isFree ? `<span class="bg-blue-50 text-blue-600 text-[10px] px-2 py-0.5 rounded border border-blue-200 shadow-sm ml-1"><i class="fa-solid fa-check text-blue-400 mr-1"></i>自由學區</span>` : ''}
+                        </div>
+                        <div class="text-[11px] text-gray-500 font-bold max-w-sm border-t border-gray-100 pt-2 mt-1 w-full">※ 實際入學資格與分發順序仍以當地學校當年度審查為準。</div>
+                    </div>
+                `;
+            } else {
+                 resultContainer.innerHTML = `
+                    <div class="bg-yellow-50 rounded-xl p-4 border border-yellow-200 shadow-sm flex flex-col items-center justify-center text-center h-full w-full">
+                        <div class="text-sm text-gray-600 font-bold"><i class="fa-solid fa-circle-exclamation text-yellow-500 mr-1.5"></i>無法精確判斷此地址的學區</div>
+                        <div class="text-xs text-gray-500 mt-1">請輸入包含鄰別或完整路段門牌 (如: 文青路100號)，或參考下方總表。</div>
+                    </div>
+                `;
+            }
+            resultContainer.classList.remove('hidden');
+            resultContainer.classList.add('fade-in');
+            if (resultPlaceholder) resultPlaceholder.classList.add('hidden');
+        }
+
         // 監聽 Enter 鍵搜尋
         document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.getElementById('address-input');
@@ -2506,6 +2641,15 @@
                 searchInput.addEventListener('keypress', function (e) {
                     if (e.key === 'Enter') {
                         window.checkVillage();
+                    }
+                });
+            }
+
+            const schoolInput = document.getElementById('school-address-input');
+            if(schoolInput) {
+                schoolInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        window.checkSchoolDistrict();
                     }
                 });
             }
@@ -2945,6 +3089,7 @@
         // ==========================================
         window.mrtBaseData = null;
 
+        // 計算動畫與每秒更新的邏輯
         window.updateMRTStatus = function() {
             const nbEls = document.querySelectorAll('.mrt-time-north');
             const sbEls = document.querySelectorAll('.mrt-time-south');
@@ -2956,6 +3101,7 @@
             let nDiff = window.mrtBaseData.n !== null ? window.mrtBaseData.n - elapsedMin : null;
             let sDiff = window.mrtBaseData.s !== null ? window.mrtBaseData.s - elapsedMin : null;
 
+            // 如果時間減到負數過多（車已開走），自動加上 15 分鐘的推算週期（當 API 尚未抓到下一班時的視覺輔助）
             if (nDiff !== null) { while (nDiff < -1) nDiff += 15; }
             if (sDiff !== null) { while (sDiff < -1) sDiff += 15; }
 
@@ -3009,9 +3155,11 @@
             renderTrack('mrt-track-container-overview');
         };
 
+        // UI 渲染：建立詳細列表中的公車卡片
         function createTransitCard(route, destination, timeStatus, type, stopName = '捷運體育大學站') {
             let statusClass = "bg-gray-100 text-gray-500 border-gray-200"; 
             let timeText = String(timeStatus);
+            // 💡 修正：外層容器改用預設中文字型 font-sans，拔除 font-mono
             let timeTextClass = "text-xl sm:text-2xl flex items-baseline justify-center gap-0.5 font-sans";
             
             if (timeText === '即將進站' || timeText === '進站中' || timeText === '0分' || timeText === '1分') {
@@ -3022,6 +3170,7 @@
                 const minutes = parseInt(timeText.replace('分', ''));
                 if (minutes <= 5) statusClass = "bg-orange-500 text-white border-orange-600 shadow-sm"; 
                 else statusClass = "bg-emerald-50 text-emerald-600 border-emerald-200"; 
+                // 💡 修正：僅對數字套用 font-mono，並明確指定「分」為 font-sans
                 timeText = `<span class="text-2xl sm:text-3xl font-black font-mono">${minutes}</span><span class="text-xs sm:text-sm font-bold font-sans">分</span>`;
             } else {
                 statusClass = "bg-gray-200 text-gray-400 border-gray-300";
@@ -3049,9 +3198,11 @@
             `;
         }
 
+        // UI 渲染：建立總覽的首頁大卡片
         function createOverviewBusCard(direction, route, timeStatus, badgeColorClass, stopName = '捷運體育大學站') {
             let timeText = String(timeStatus);
             let statusClass = "bg-gray-100 text-gray-600 border-gray-200"; 
+            // 💡 修正：外層容器改用預設中文字型 font-sans，拔除 font-mono
             let timeTextClass = "text-xl sm:text-2xl flex items-baseline justify-center gap-0.5 font-sans";
             
             if (timeText === '即將進站' || timeText === '進站中' || timeText === '0分' || timeText === '1分') {
@@ -3060,6 +3211,7 @@
                 timeTextClass = "text-sm sm:text-base font-black tracking-widest font-sans";
             } else if (timeText.includes('分')) {
                 const minutes = parseInt(timeText.replace('分', ''));
+                // 💡 修正：僅對數字套用 font-mono，並明確指定「分」為 font-sans
                 timeText = `<span class="text-2xl sm:text-3xl font-black font-mono">${minutes}</span><span class="text-xs sm:text-sm font-bold font-sans">分</span>`;
             } else {
                 statusClass = "bg-gray-200 text-gray-400 border-gray-300";
@@ -3084,59 +3236,220 @@
             `;
         }
 
+        // ==========================================
+        // 🚌 交通轉乘：改用 GAS 雲端 API，並精準鎖定站牌
+        // ==========================================
         async function fetchRealtimeTransitData() {
-            window.mrtBaseData = {
-                n: Math.floor(Math.random() * 8) + 2, 
-                s: Math.floor(Math.random() * 8) + 2, 
-                timestamp: new Date().getTime()
-            };
-            window.updateMRTStatus();
+            const refreshIcon = document.getElementById('transit-refresh-icon');
+            if (refreshIcon) refreshIcon.classList.add('fa-spin');
+
+            const GAS_URL = "https://script.google.com/macros/s/AKfycbw0t0lUbxn6MV30sK75uGCNz6y_paQzQHtTvyFBpVd-uuPIAJ3op--wkv9TI6EjuGUxWw/exec";
             
-            const mrtTimeEl = document.getElementById('mrt-update-time');
-            if (mrtTimeEl) {
-                mrtTimeEl.textContent = '最後更新：' + new Date().toLocaleTimeString('zh-TW', {hour: '2-digit', minute:'2-digit', second:'2-digit', hour12: false});
-            }
-
-            const busData = {
-                taipei: [
-                    { route: '967', dest: '台北市政府', time: '進站中', type: '快速公車' },
-                    { route: '946', dest: '內湖科學園區', time: '12分', type: '快速公車' }
-                ],
-                hospital: [
-                    { route: '202', dest: '長庚醫院', time: '5分', type: '市區公車' },
-                    { route: '603', dest: '長庚大學', time: '18分', type: '市區公車' }
-                ],
-                xinzhuang: [
-                    { route: '898', dest: '迴龍站', time: '8分', type: '市區公車' },
-                    { route: 'BR7', dest: '新莊', time: '25分', type: '市區公車' }
-                ],
-                local: [
-                    { route: 'L317', dest: '龜山區公所', time: '30分', type: '免費接駁' },
-                    { route: 'L318', dest: '林口長庚', time: '45分', type: '免費接駁' }
-                ]
+            // 💡 備援推算函式：依照官方時刻表推算 (每15分鐘一班)
+            const generateStaticMrtTimes = (schedule) => {
+                const now = new Date();
+                const totalCurrentSecs = now.getMinutes() * 60 + now.getSeconds();
+                let nextTotalSecs = schedule.map(m => m * 60).find(s => s >= totalCurrentSecs);
+                if (nextTotalSecs === undefined) nextTotalSecs = (60 + schedule[0]) * 60;
+                return (nextTotalSecs - totalCurrentSecs) / 60;
             };
 
-            const renderBusSection = (containerId, data) => {
-                const el = document.getElementById(containerId);
-                if (el) {
-                    el.innerHTML = data.map(bus => createTransitCard(bus.route, bus.dest, bus.time, bus.type)).join('');
+            try {
+                if (!GAS_URL || GAS_URL.includes("YOUR_GAS_URL_HERE")) {
+                    throw new Error("尚未設定 GAS_URL");
+                }
+
+                const response = await fetch(GAS_URL, { redirect: "follow" });
+                const res = await response.json();
+                
+                const now = new Date();
+                // 🚀 關鍵修正：相容多種 JSON 結構，確保取得的是陣列
+                const rawData = res.data || res;
+                
+                // 💡 強制防呆轉換，避免 GAS 吐回字串而不是陣列的 Bug
+                const parseSafeArray = (key) => {
+                    let val = rawData[key];
+                    if (!val) return [];
+                    if (typeof val === 'string') {
+                        try { val = JSON.parse(val); } catch(e) { return []; }
+                    }
+                    return Array.isArray(val) ? val : [];
+                };
+
+                const mrtA7Data = parseSafeArray('mrt_A7');
+                const busTaoyuanData = parseSafeArray('bus_Taoyuan');
+                const busNewTaipeiData = parseSafeArray('bus_NewTaipei');
+
+                // 💡 修正機捷時間解析：找出最小(最快)的時間
+                const getClosestMrt = (dirFilter) => {
+                    const trains = mrtA7Data.filter(dirFilter);
+                    if (!trains.length) return undefined;
+                    const times = trains.map(t => {
+                        const val = t.CountDownTime !== undefined ? t.CountDownTime : t.EstimateTime;
+                        return parseFloat(val);
+                    }).filter(t => !isNaN(t));
+                    if (!times.length) return undefined;
+                    return Math.min(...times);
+                };
+
+                let northMrt = getClosestMrt(m => String(m.Direction) === "0" || (m.direction && m.direction.includes("北上")));
+                let southMrt = getClosestMrt(m => String(m.Direction) === "1" || (m.direction && m.direction.includes("南下")));
+
+                // 如果 API 成功但沒有捷運資料（離峰或TDX異常），直接使用時刻表推算
+                if (northMrt === undefined) northMrt = generateStaticMrtTimes([2, 17, 32, 47]); // 往台北
+                if (southMrt === undefined) southMrt = generateStaticMrtTimes([0, 15, 30, 45]); // 往機場/中壢
+
+                const getStatusText = (status) => {
+                    if (status === 1) return '尚未發車';
+                    if (status === 2) return '交管不停靠';
+                    if (status === 3) return '末班已過';
+                    if (status === 4) return '今日未營運';
+                    return '未發車';
+                };
+
+                // 整合所有來源公車資料
+                const allBuses = [...busTaoyuanData, ...busNewTaipeiData].map(b => ({
+                    route: b.RouteName?.Zh_tw || b.RouteName || b.route || "未知路線",
+                    status: b.EstimateTime !== undefined ? Math.floor(b.EstimateTime / 60) : (b.StopStatus !== undefined ? getStatusText(b.StopStatus) : "未發車"),
+                    stopName: b.StopName?.Zh_tw || b.StopName || b.stop || "",
+                    direction: b.Direction !== undefined ? b.Direction : -1 
+                }));
+
+                // 更新快取
+                window.gasTransitCache = {
+                    isFallback: false,
+                    timestamp: now.getTime(),
+                    updateTime: rawData.updateTime ? new Date(rawData.updateTime).toLocaleTimeString('zh-TW', {hour: '2-digit', minute:'2-digit', hour12: false}) : now.toLocaleTimeString('zh-TW', {hour: '2-digit', minute:'2-digit', hour12: false}),
+                    mrtA7: { north: northMrt, south: southMrt },
+                    buses: allBuses
+                };
+
+            } catch (err) {
+                console.warn("※ GAS 連線或格式錯誤:", err.message);
+                
+                window.gasTransitCache = {
+                    isFallback: true,
+                    timestamp: Date.now(),
+                    updateTime: new Date().toLocaleTimeString('zh-TW', {hour: '2-digit', minute:'2-digit', hour12: false}) + ' (備援模式)',
+                    mrtA7: { 
+                        north: generateStaticMrtTimes([2, 17, 32, 47]), 
+                        south: generateStaticMrtTimes([0, 15, 30, 45]) 
+                    },
+                    buses: [] 
+                };
+                window.gasTransitCache.errorMsg = err.message;
+            } finally {
+                if (window.gasTransitCache) {
+                    const parseMrtTime = (val) => {
+                        const m = parseFloat(val);
+                        if (!isNaN(m)) return m; // 回傳分鐘數
+                        return null; 
+                    };
+                    
+                    // 初始化機捷倒數動畫基礎資料
+                    window.mrtBaseData = { 
+                        timestamp: window.gasTransitCache.timestamp, 
+                        n: parseMrtTime(window.gasTransitCache.mrtA7.north), 
+                        s: parseMrtTime(window.gasTransitCache.mrtA7.south) 
+                    };
+                    renderAllTransit();
+                }
+                if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+            }
+        }
+
+        function renderAllTransit() {
+            if (!window.gasTransitCache) return;
+            const cache = window.gasTransitCache;
+            const elapsedMins = Math.floor((Date.now() - cache.timestamp) / 60000);
+            
+            // 💡 取得公車時間：取消嚴格方向限制，僅靠「站牌名稱」過濾最快來的車
+            const getGasBusTime = (routeKeyword, targetStopName) => {
+                if (cache.isFallback) return cache.errorMsg?.includes('GAS') ? '請更新GAS' : '連線異常';
+                if (!cache.buses || cache.buses.length === 0) return '未發車';
+
+                const matchingBuses = cache.buses.filter(b => {
+                    const isRouteMatch = b.route === routeKeyword;
+                    const isStopMatch = targetStopName ? (b.stopName && b.stopName.includes(targetStopName)) : true;
+                    return isRouteMatch && isStopMatch;
+                });
+
+                if (matchingBuses.length === 0) return '未發車';
+
+                const numericBuses = matchingBuses.filter(b => typeof b.status === 'number');
+
+                if (numericBuses.length > 0) {
+                    // 找出該站牌該路線最快到站的一班車
+                    const minStatus = Math.min(...numericBuses.map(b => b.status));
+                    // 💡 在這裡將時間減去 1，刻意提早一分鐘顯示避免住戶錯過公車
+                    let remaining = Math.max(0, minStatus - elapsedMins - 1);
+                    if (remaining <= 1) return '進站中';
+                    return remaining + '分';
+                }
+                return matchingBuses[0].status; 
+            };
+
+            const transitData = {
+                buses: {
+                    overview: [
+                        createOverviewBusCard('台北市府', '967', getGasBusTime('967', '捷運體育大學'), 'bg-blue-500 text-white', '捷運體育大學站'),
+                        createOverviewBusCard('長庚醫院', '202', getGasBusTime('202', '捷運體育大學'), 'bg-emerald-500 text-white', '捷運體育大學站'),
+                        createOverviewBusCard('長庚社區', 'L317', getGasBusTime('L317', '捷運體育大學'), 'bg-amber-100 text-amber-700 border border-amber-200', '捷運體育大學站')
+                    ],
+                    taipei: [
+                        createTransitCard('946', '內湖科學園區', getGasBusTime('946', '長庚醫院'), '新北市區', '長庚醫院站'),
+                        createTransitCard('967', '台北市政府', getGasBusTime('967', '捷運體育大學'), '新北市區', '捷運體育大學站')
+                    ],
+                    hospital: [
+                        createTransitCard('202', '林口長庚醫院', getGasBusTime('202', '捷運體育大學'), '桃園市區', '捷運體育大學站'),
+                        createTransitCard('603', '長庚大學', getGasBusTime('603', '捷運體育大學'), '桃園市區', '捷運體育大學站'),
+                        createTransitCard('606', '林口長庚醫院', getGasBusTime('606', '捷運體育大學'), '桃園市區', '捷運體育大學站'),
+                        createTransitCard('607', '長庚醫院', getGasBusTime('607', '捷運體育大學'), '桃園市區', '捷運體育大學站')
+                    ],
+                    xinzhuang: [
+                        createTransitCard('607', '迴龍', getGasBusTime('607', '捷運體育大學'), '桃園市區', '捷運體育大學站')
+                    ],
+                    local: [
+                        createTransitCard('L317', '長庚社區', getGasBusTime('L317', '捷運體育大學'), '龜山樂活巴士', '捷運體育大學站'),
+                        createTransitCard('L319', '長庚醫院', getGasBusTime('L319', '捷運體育大學'), '龜山樂活巴士', '捷運體育大學站'),
+                        createTransitCard('202', '體育大學', getGasBusTime('202', '長庚醫院'), '桃園市區', '長庚醫院站')
+                    ]
                 }
             };
 
-            renderBusSection('bus-taipei-container', busData.taipei);
-            renderBusSection('bus-hospital-container', busData.hospital);
-            renderBusSection('bus-xinzhuang-container', busData.xinzhuang);
-            renderBusSection('bus-local-container', busData.local);
+            // 渲染各個容器
+            const containers = [
+                { id: 'bus-overview-fastest-container', data: transitData.buses.overview },
+                { id: 'bus-taipei-container', data: transitData.buses.taipei },
+                { id: 'bus-hospital-container', data: transitData.buses.hospital },
+                { id: 'bus-xinzhuang-container', data: transitData.buses.xinzhuang },
+                { id: 'bus-local-container', data: transitData.buses.local }
+            ];
 
-            const overviewEl = document.getElementById('bus-overview-fastest-container');
-            if (overviewEl) {
-                overviewEl.innerHTML = `
-                    ${createOverviewBusCard('台北/內湖', '967', '進站中', 'bg-blue-100 text-blue-600')}
-                    ${createOverviewBusCard('長庚醫院', '202', '5分', 'bg-emerald-100 text-emerald-600')}
-                    ${createOverviewBusCard('下新莊', '898', '8分', 'bg-orange-100 text-orange-600')}
-                `;
+            containers.forEach(c => {
+                const el = document.getElementById(c.id);
+                if (el) el.innerHTML = c.data.join('');
+            });
+
+            const timeElement = document.getElementById('mrt-update-time');
+            if (timeElement) timeElement.textContent = `更新: ${cache.updateTime}`;
+            
+            const statusMsgs = document.querySelectorAll('.tdx-status-msg');
+            if (cache.isFallback) {
+                statusMsgs.forEach(el => el.innerHTML = `<div class="bg-orange-50 text-orange-700 text-[11px] sm:text-xs px-3 py-1.5 rounded-lg border border-orange-200 font-bold inline-flex items-center shadow-sm w-full sm:w-max"><i class="fa-solid fa-triangle-exclamation mr-1.5 shrink-0"></i>異常：${cache.errorMsg}</div>`);
+            } else {
+                statusMsgs.forEach(el => el.innerHTML = `<div class="bg-purple-50 text-purple-700 text-[11px] sm:text-xs px-3 py-1.5 rounded-lg border border-purple-200 font-bold inline-flex items-center shadow-sm w-full sm:w-max"><i class="fa-solid fa-server mr-1.5 shrink-0"></i>已連線雲端資料，每分鐘自動同步最新動態</div>`);
             }
         }
+
+        // 設定每 1 分鐘抓取一次 GAS，確保公車時間絕對準確 (60000 毫秒)
+        setInterval(fetchRealtimeTransitData, 60000);
+        
+        // 本地推算機制：每 15 秒更新一次公車剩餘時間，讓網頁不會停滯
+        setInterval(() => {
+            if (window.gasTransitCache) renderAllTransit();
+        }, 15000);
+
     </script>
 </body>
 </html>
