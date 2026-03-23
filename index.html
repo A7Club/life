@@ -21,7 +21,6 @@
       gtag('config', 'G-YJ9RJC2DRS');
     </script>
 
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -211,7 +210,7 @@
         <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 bg-white rounded-3xl shadow-cute p-5 border-2 border-pink-100 flex-col space-y-3 text-center z-50 w-max min-w-[200px]">
             <button onclick="loadPage('food'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePink bg-pink-50 shadow-sm active:scale-95 transition-transform">🍿 美食販賣部</button>
             <button onclick="loadPage('shopping'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeYellow bg-yellow-50 shadow-sm active:scale-95 transition-transform">🛍️ 生活補給站</button>
-            <button onclick="loadPage('lifehub'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 安心支援中心</button>
+            <button onclick="loadPage('lifehub'); toggleMobileMenu()" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themeGreen bg-green-50 shadow-sm active:scale-95 transition-transform">🩺 安心支援所</button>
             <!-- 將探索柒改為外部連結 -->
             <a href="explore.html" class="w-full py-4 px-6 rounded-2xl font-black text-xl tracking-wider text-themePurple bg-purple-50 shadow-sm active:scale-95 transition-transform">🎠 探索在地A7</a>
         </div>
@@ -803,7 +802,7 @@
         <div class="fade-in">
             <div class="flex items-center mb-8">
                 <div class="w-12 h-12 bg-themeGreen text-white rounded-2xl flex items-center justify-center text-2xl mr-4 transform rotate-3 shadow-md"><i class="fa-solid fa-heart-pulse"></i></div>
-                <h2 class="text-2xl font-black text-themeGreen">安心支援中心 <span class="text-lg text-gray-400 font-bold ml-2">政府機關、行政與醫療服務</span></h2>
+                <h2 class="text-2xl font-black text-themeGreen">安心支援所 <span class="text-lg text-gray-400 font-bold ml-2">政府機關、行政與醫療服務</span></h2>
             </div>
 
             <!-- 獨立保留緊急聯絡電話區塊 -->
@@ -1964,7 +1963,7 @@ exploreLinkTarget = `explore.html?search=${encodeURIComponent(query)}#${targetTa
                     { id: 'tpl-home', name: '首頁', hash: 'home', color: 'themePink', icon: 'fa-mountain-city', bg: 'bg-pink-50' },
                     { id: 'tpl-food', name: '美食販賣部', hash: 'food', color: 'themePink', icon: 'fa-burger', bg: 'bg-pink-50' },
                     { id: 'tpl-shopping', name: '生活補給站', hash: 'shopping', color: 'themeYellow', icon: 'fa-store', bg: 'bg-yellow-50' },
-                    { id: 'tpl-lifehub', name: '安心支援中心', hash: 'lifehub', color: 'themeGreen', icon: 'fa-briefcase-medical', bg: 'bg-green-50' }
+                    { id: 'tpl-lifehub', name: '安心支援所', hash: 'lifehub', color: 'themeGreen', icon: 'fa-briefcase-medical', bg: 'bg-green-50' }
                 ];
 
                 templates.forEach(tpl => {
@@ -3195,7 +3194,7 @@ if (shoppingData) {
         { keywords: ['購物中心', '百貨', '商場'], iconClass: 'fa-bag-shopping', bgColor: 'bg-pink-400', textColor: 'text-pink-400', emoji: '🛍️' },
         { keywords: ['捷運', '機捷', '交通'], iconClass: 'fa-train-subway', bgColor: 'bg-themePurple', textColor: 'text-purple-400', emoji: '🚇' },
 
-        // --- 安心支援中心 (醫療) ---
+        // --- 安心支援所 (醫療) ---
         { keywords: ['牙'], iconClass: 'fa-tooth', bgColor: 'bg-blue-400', textColor: 'text-blue-600', emoji: '🦷' },
         { keywords: ['小兒', '婦產', '兒童診所'], iconClass: 'fa-baby', bgColor: 'bg-pink-400', textColor: 'text-pink-600', emoji: '👶' },
         { keywords: ['眼'], iconClass: 'fa-eye', bgColor: 'bg-blue-200', textColor: 'text-blue-500', emoji: '👁️' },
@@ -4219,7 +4218,7 @@ const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
     }
 
     // ==========================================
-    // 🩺 安心支援中心 (Medical) 模組
+    // 🩺 安心支援所 (Medical) 模組
     // ==========================================
     function loadSharedMedicalData() {
         return new Promise((resolve, reject) => {
