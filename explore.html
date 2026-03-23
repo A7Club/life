@@ -3602,13 +3602,16 @@
 
             const GAS_URL = "https://script.google.com/macros/s/AKfycbw0t0lUbxn6MV30sK75uGCNz6y_paQzQHtTvyFBpVd-uuPIAJ3op--wkv9TI6EjuGUxWw/exec";
             
-            // 💡 備援推算函式：依照官方時刻表推算 (每15分鐘一班)
+            // 💡 備援推算函式：依照官方時刻表推算
             const generateStaticMrtTimes = (schedule) => {
                 const now = new Date();
                 const totalCurrentSecs = now.getMinutes() * 60 + now.getSeconds();
                 let nextTotalSecs = schedule.map(m => m * 60).find(s => s >= totalCurrentSecs);
                 if (nextTotalSecs === undefined) nextTotalSecs = (60 + schedule[0]) * 60;
-                return (nextTotalSecs - totalCurrentSecs) / 60;
+                
+                // ✨ 關鍵修正：將結果減去 1 分鐘
+                const result = (nextTotalSecs - totalCurrentSecs) / 60;
+                return Math.max(0, result - 1); 
             };
 
             try {
