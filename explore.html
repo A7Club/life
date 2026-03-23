@@ -21,6 +21,7 @@
     </script>
 
 
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -176,7 +177,7 @@
                 </button>
 
                 <!-- 就學設籍 -->
-                <button data-tab="#school" data-active="bg-orange-50/80 border-orange-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-orange-200" class="tab-btn pt-4 pb-3 px-1 sm:px-2 md:pt-5 md:pb-4 lg:pt-6 lg:pb-5 rounded-[1.2rem] md:rounded-[1.5rem] lg:rounded-[2rem] border-2 sm:border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
+                <button data-tab="schooling" data-active="bg-orange-50/80 border-orange-400 shadow-cute scale-[1.02]" data-inactive="bg-white border-white shadow-sm hover:shadow-cute hover:-translate-y-2 hover:border-orange-200" class="tab-btn pt-4 pb-3 px-1 sm:px-2 md:pt-5 md:pb-4 lg:pt-6 lg:pb-5 rounded-[1.2rem] md:rounded-[1.5rem] lg:rounded-[2rem] border-2 sm:border-4 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-pointer focus:outline-none w-full relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 w-16 h-16 bg-orange-50 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
                     <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center text-xl sm:text-2xl md:text-3xl group-hover:bg-orange-500 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 shrink-0 relative z-10 mb-1.5 sm:mb-2 md:mb-3">
                         <i class="fa-solid fa-school"></i>
@@ -939,13 +940,12 @@
                 <div class="mt-4 w-full text-right text-xs text-gray-400 font-bold"><i class="fa-solid fa-rotate mr-1"></i>資料來源：Google News</div>
             </div>
 
-            
             <!-- ============================================== -->
             <!-- 模組：建案地圖與標籤 (總覽、建案分頁皆顯示) -->
             <!-- ============================================== -->
             <div id="mod-buildings-map" class="content-module mb-8 hidden scroll-mt-[100px]" data-shows-on="overview,A7area">
                 <div class="flex items-center mb-6">
-                    <h2 class="text-2xl font-black text-themeBlue flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeBlue"></i>A7 行政里分區</h2>
+                    <h2 class="text-xl font-black text-themeBlue flex items-center"><i class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeBlue"></i>A7 行政里分區地圖</h2>
                 </div>
                 
                 <!-- 改用 Grid 佈局：手機版為左右(地圖+標籤)/下方(查詢器)，電腦版為左地圖(跨兩列)/右上標籤/右下查詢 -->
@@ -975,7 +975,7 @@
                     <div class="col-span-full lg:col-span-1 bg-gradient-to-r from-purple-50 to-fuchsia-50 rounded-[2rem] p-5 sm:p-6 border-4 border-white shadow-cute relative overflow-hidden flex flex-col h-full lg:h-auto">
                         <div class="absolute -right-4 -top-4 text-6xl text-purple-100 opacity-50 pointer-events-none"><i class="fa-solid fa-map-location-dot"></i></div>
                         <div class="w-full relative z-10 flex flex-col h-full">
-                            <h3 class="text-lg font-black text-purple-800 mb-2 flex items-center flex-wrap gap-y-1"><i class="fa-solid fa-magnifying-glass-location mr-2 text-purple-500"></i> 新編鄰里查詢 <span class="text-xs bg-purple-200 text-purple-700 px-2 py-0.5 rounded-lg ml-1 shadow-sm whitespace-nowrap">115年3月1日生效</span></h3>
+                            <h3 class="text-lg font-black text-purple-800 mb-2 flex items-center flex-wrap gap-y-1"><i class="fa-solid fa-magnifying-glass-location mr-2 text-purple-500"></i> 新編鄰里查詢 <span class="text-xs bg-purple-200 text-purple-700 px-2 py-0.5 rounded-lg ml-1 shadow-sm whitespace-nowrap">115年3月1日生效</span> (測試中)</h3>
                             <p class="text-xs text-purple-600 font-bold mb-3">輸入路名或社區地址，查詢最新行政里別調整</p>
                             <div class="flex gap-2 w-full">
                                 <input type="text" id="address-input" placeholder="例如：文青路、樂善二路..." class="flex-1 min-w-0 rounded-xl border-2 border-purple-200 px-3 sm:px-4 py-2 text-sm font-bold text-gray-700 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 bg-white shadow-inner transition-all">
@@ -987,408 +987,6 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-
-            <!-- ============================================== -->
-            <!-- 模組：常見問題 (併入行政區劃分頁) -->
-            <!-- ============================================== -->
-            <div id="mod-faq" class="content-module mb-12 hidden" data-shows-on="A7area">
-                
-                <!-- 🏢 便民服務與公共事業 -->
-                <div class="bg-white p-6 md:p-8 rounded-[2.5rem] shadow-cute mb-8 relative overflow-hidden border-4 border-blue-50">
-                    <div class="absolute -right-4 -top-4 text-blue-100 text-8xl floating opacity-50 z-0 pointer-events-none"><i class="fa-solid fa-building-columns"></i></div>
-                    <h3 class="text-2xl font-black mb-2 relative z-10 flex items-center text-themeBlue"><i class="fa-solid fa-landmark-flag mr-3"></i> 公共事業與政府單位</h3>
-                    <p class="text-sm font-bold text-gray-500 mb-6 relative z-10 border-b-2 border-blue-50 pb-4">已為您將公家機關依據屬性分類，點擊標題即可展開或摺疊據點列表。</p>
-                    
-                    <div class="space-y-4 relative z-10">
-                        <!-- 分類 1：龜山在地行政機關 -->
-                        <details open class="group bg-blue-50/50 rounded-[1.5rem] shadow-sm border-2 border-blue-100  transition-all">
-                            <summary class="font-black list-none flex justify-between items-center px-5 py-4 text-lg text-blue-600 cursor-pointer hover:bg-blue-100/50 transition-colors">
-                                <span class="flex items-center"><i class="fa-solid fa-map-location-dot mr-2.5"></i> 龜山在地行政機關</span>
-                                <span class="text-blue-400 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
-                            </summary>
-                            <div class="px-4 pb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <!-- 區公所 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7SDAoh093EX1mN2D6Y9CyMLLOVC5BbO8DKw&s" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="龜山區徽 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://guishan.tycg.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>龜山區公所</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區中山街26號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-320-3711</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市龜山區中山街26號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:00–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 戶政 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnjfnuRmy2flTrRIgwCRjf1KfMnELsnrwxBw&s" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="桃園市政府 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://guishan-hro.tycg.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>龜山戶政事務所</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區自強南路105號1樓" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-320-4389</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市龜山區自強南路105號1樓</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:00–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 地政 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Htnb3WkKYCHlEdwQ6hTafoY00f2SXRbijg&s" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="桃園市政府 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://guishan-land.tycg.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>龜山地政事務所</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區自強南路105號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-320-3721</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市龜山區自強南路105號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:00–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 衛生所 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://static.accupass.com/userupload/3a616741a41d47bea05efcb9c89ee32a.jpg" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="桃園市政府 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://guishan-phc.tycg.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>龜山區衛生所</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區自強南路105號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-320-1414</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市龜山區自強南路105號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:00–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 清潔稽查 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq7_zgUw7AIWh2tLnzznNGq0PBNuV9kix-mg&s" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="桃園市政府 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.tyemid.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>環境清潔稽查大隊</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市桃園區法治路1號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-338-1900</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市桃園區法治路1號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:00–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </details>
-
-                        <!-- 分類 2：市府與中央公家機關 -->
-                        <details class="group bg-blue-50/50 rounded-[1.5rem] shadow-sm border-2 border-blue-100 overflow-hidden transition-all">
-                            <summary class="font-black list-none flex justify-between items-center px-5 py-4 text-lg text-blue-600 cursor-pointer hover:bg-blue-100/50 transition-colors">
-                                <span class="flex items-center"><i class="fa-solid fa-landmark mr-2.5"></i> 桃園市府與中央公家機關</span>
-                                <span class="text-blue-400 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
-                            </summary>
-                            <div class="px-4 pb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <!-- 桃園市政府 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://ws.tycg.gov.tw/001/Upload/1/relpic/7862/8684/8e4b8166-5323-407d-97cf-2d0210bff036.png" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="桃園市政府 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.tycg.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>桃園市政府</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市桃園區縣府路1號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-332-2101</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市桃園區縣府路1號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:00–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 健保署 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVFv49msaZJJVKFM0eqJsnhOD7iZTBWHB2fQ&s" class="w-full h-full object-contain p-2 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="健保署 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.nhi.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>健保署北區辦公室</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市桃園區復興路192號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-336-3209</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市桃園區復興路192號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:30–17:30</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 勞保局 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0HdZGktz9So1ork6OI6vM-1IHeHYBVs_MJg&s" class="w-full h-full object-contain p-2 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="勞保局 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.bli.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>勞保局 桃園辦事處</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市桃園區縣府路59號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-336-0560</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市桃園區縣府路59號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:30–17:30</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 國稅局 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://i0.wp.com/038.news/wp-content/uploads/2022/04/%E8%B2%A1%E6%94%BF%E9%83%A8%E5%8C%97%E5%8D%80%E5%9C%8B%E7%A8%85%E5%B1%80.jpg?resize=382%2C271&ssl=1" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="財政部 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.ntbna.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>財政部北區國稅局</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市桃園區三元街156號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-339-6789</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市桃園區三元街156號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:30–12:30, 13:30–17:30</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 監理站 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCsXK7ECPaZ09o5MWEqrGUNmNC-6uGS6vxvA&s" class="w-full h-full object-contain p-2 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="公路總局 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://hmv.thb.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>桃園監理站</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市桃園區介壽路416號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-362-3131</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市桃園區介壽路416號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:00–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 教育局 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0HdZGktz9So1ork6OI6vM-1IHeHYBVs_MJg&s" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="桃園市政府 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.tyc.edu.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>桃園市教育局</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市桃園區縣府路1號14、15樓" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-332-2101</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市桃園區縣府路1號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:00–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 圖書館 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSl2TbjpeuO8Vo-KHjnatYXLux1kCtFOcN8A&s" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="桃園市政府 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.typl.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>桃園圖書館總館</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市桃園區南平路303號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-316-6345</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市桃園區南平路303號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">週二至六 08:30–21:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 婦幼局 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrJ7qJcpgQrXMgfTHTuaPw8p6c2EajGeOPrg&s" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="桃園市政府 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://dowcd.tycg.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>桃園婦幼發展局</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市桃園區縣府路1號8樓" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-332-2101</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市桃園區縣府路1號8樓</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:00–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </details>
-
-                        <!-- 分類 3：郵政與公用事業 -->
-                        <details class="group bg-blue-50/50 rounded-[1.5rem] shadow-sm border-2 border-blue-100 overflow-hidden transition-all">
-                            <summary class="font-black list-none flex justify-between items-center px-5 py-4 text-lg text-blue-600 cursor-pointer hover:bg-blue-100/50 transition-colors">
-                                <span class="flex items-center"><i class="fa-solid fa-envelopes-bulk mr-2.5"></i> 郵政與水電公用事業</span>
-                                <span class="text-blue-400 group-open:rotate-180 transition-transform"><i class="fa-solid fa-chevron-down"></i></span>
-                            </summary>
-                            <div class="px-4 pb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <!-- 文青郵局 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://www.eion.com.tw/Blogger/VectorLibrary/TwPost.png" class="w-full h-full object-contain p-2 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="中華郵政 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.post.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>龜山文青代辦所</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區樂善一路6號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-396-0098</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市龜山區樂善一路6號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:30–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 樂善郵局 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://www.eion.com.tw/Blogger/VectorLibrary/TwPost.png" class="w-full h-full object-contain p-2 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="中華郵政 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.post.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>龜山樂善郵局</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區復興街5號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-328-2459</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">龜山區復興街5號(長庚內)</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:30–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 長庚大學郵局 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://www.eion.com.tw/Blogger/VectorLibrary/TwPost.png" class="w-full h-full object-contain p-2 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="中華郵政 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.post.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>長庚大學郵局</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區文化一路259號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-211-8633</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">龜山區文化一路259號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:30–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 文化郵局 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://www.eion.com.tw/Blogger/VectorLibrary/TwPost.png" class="w-full h-full object-contain p-2 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="中華郵政 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.post.gov.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>龜山文化郵局</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區文昌一街102號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>03-328-2617</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">桃園市龜山區文昌一街102號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:30–17:30</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 台電 -->
-                                <div class="bg-white rounded-[1.2rem] p-3 shadow-sm border border-blue-100 hover:border-blue-300 hover:shadow-md hover:-translate-y-1 transition-all group flex flex-row items-center gap-3 relative overflow-hidden">
-                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 relative border border-gray-100 shadow-inner bg-white flex items-center justify-center">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLwVDpAmH34F2jH64dmMcrNy9_6QrFhGQRMQ&s" class="w-full h-full object-contain p-3 mix-blend-multiply group-hover:scale-110 transition-transform duration-300" alt="台灣電力公司 Logo">
-                                    </div>
-                                    <div class="flex flex-col flex-1 py-1 pr-1 overflow-hidden">
-                                        <div class="flex justify-between items-start gap-1 mb-1">
-                                            <a href="https://www.taipower.com.tw/" target="_blank" class="font-black text-gray-800 text-sm sm:text-base leading-snug hover:text-blue-600 transition-colors inline-flex items-start gap-1 group/link line-clamp-1">
-                                                <span>台灣電力公司 林口所</span>
-                                            </a>
-                                            <a href="https://www.google.com/maps/dir/?api=1&destination=新北市林口區文化一路一段29號" target="_blank" class="bg-blue-50 text-blue-500 w-7 h-7 rounded-lg flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors shrink-0" title="導航"><i class="fa-solid fa-location-arrow text-[10px]"></i></a>
-                                        </div>
-                                        <div class="space-y-0.5 sm:space-y-1 mt-auto">
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-center"><i class="fa-solid fa-phone mr-1.5 text-gray-400 w-3 text-center"></i>02-2601-1685</div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-location-dot mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">新北市林口區文化一路一段29號</span></div>
-                                            <div class="text-[10px] sm:text-xs text-gray-500 font-bold flex items-start"><i class="fa-solid fa-clock mr-1.5 text-gray-400 w-3 text-center mt-0.5"></i><span class="line-clamp-1">平日 08:00–17:00</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </details>
-                    </div>
                 </div>
             </div>
 
@@ -1560,7 +1158,7 @@
                                     <i class="fa-solid fa-circle-exclamation text-yellow-500 mr-1"></i> 具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所確認。
                                 </div>
                                 
-                                <button onclick="window.switchTab('#school'); window.scrollTo({top: 0, behavior: 'smooth'});" class="w-full sm:w-auto inline-flex items-center justify-center text-sm font-black text-themePurple bg-purple-50 hover:bg-purple-100 border border-purple-200 px-4 py-2.5 rounded-xl transition-colors shadow-sm active:scale-95">
+                                <button onclick="window.switchTab('schooling'); window.scrollTo({top: 0, behavior: 'smooth'});" class="w-full sm:w-auto inline-flex items-center justify-center text-sm font-black text-themePurple bg-purple-50 hover:bg-purple-100 border border-purple-200 px-4 py-2.5 rounded-xl transition-colors shadow-sm active:scale-95">
                                     <i class="fa-solid fa-school mr-2"></i> 了解更多各里「就學與設籍指南」
                                 </button>
 
@@ -1595,7 +1193,7 @@
             <!-- ============================================== -->
             <!-- 模組：就學與設籍 (獨立分頁) -->
             <!-- ============================================== -->
-            <div id="mod-#school-registry" class="content-module mb-12 hidden" data-shows-on="#school">
+            <div id="mod-schooling-registry" class="content-module mb-12 hidden" data-shows-on="schooling">
                 <div class="flex items-center mb-8">
                     <h3 class="text-xl md:text-2xl font-black text-orange-500 flex items-center">
                         <div class="w-12 h-12 bg-orange-100 text-orange-500 rounded-2xl flex items-center justify-center mr-4 shadow-sm transform -rotate-3"><i class="fa-solid fa-school"></i></div>
@@ -1625,7 +1223,7 @@
                         <div class="mb-6 relative z-10 bg-blue-50/50 p-4 md:p-6 rounded-[1.5rem] border-2 border-blue-100/60 shadow-inner flex flex-col md:flex-row gap-4 md:gap-6 items-stretch">
                             <!-- 左側：輸入區 -->
                             <div class="w-full md:w-1/2 flex flex-col justify-center">
-                                <h4 class="text-sm md:text-base font-black text-blue-700 mb-2 flex items-center"><i class="fa-solid fa-magnifying-glass-location mr-1.5 text-blue-500"></i>一鍵查詢我家學區</h4>
+                                <h4 class="text-sm md:text-base font-black text-blue-700 mb-2 flex items-center"><i class="fa-solid fa-magnifying-glass-location mr-1.5 text-blue-500"></i>一鍵查詢我家學區 (測試中)</h4>
                                 <p class="text-xs text-blue-500 font-bold mb-4">輸入完整地址即可快速對照最新學區（建議包含門牌號碼以利精確判斷）</p>
                                 <div class="flex gap-2 w-full">
                                     <input type="text" id="school-address-input" placeholder="例如：文青路100號" class="flex-1 min-w-0 rounded-xl border-2 border-blue-200 px-3 sm:px-4 py-2 text-sm font-bold text-gray-700 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white shadow-inner transition-all">
@@ -1633,7 +1231,8 @@
                                 </div>
                             </div>
                             <!-- 右側：結果區 -->
-                            <div class="w-full md:w-1/2 flex flex-col justify-center min-h-[100px]">
+                            <div class="w-full md:w-1/2 flex flex-col justify-center ">
+                                <!-- 預設提示狀態 -->
                                 
                                 <!-- 實際結果 -->
                                 <div id="school-result" class="hidden w-full h-full"></div>
@@ -1765,7 +1364,7 @@
                             <div class="text-xs md:text-sm text-rose-600 bg-rose-50/50 p-4 rounded-xl border-2 border-rose-100 flex items-start gap-3">
                                 <i class="fa-solid fa-triangle-exclamation mt-0.5 shrink-0 text-rose-400"></i>
                                 <p class="font-black leading-relaxed">
-                                    具體學區劃分依照當年桃園市政府教育局公告的「鄰里別」為準，建議設籍前先向區公所或學校教務處確認。
+                                    具體學區劃分依照桃園市政府教育局公告「鄰里別」為準，建議設籍前先向區公所或學校教務處確認。
                                 </p>
                             </div>
                         </div>
@@ -2129,7 +1728,7 @@
             'engineering': '市政建設追蹤',
             'community': '在地社群交流',
             'A7area': '分區建案與學區',
-            '#school': '就學與設籍指南',
+            'schooling': '就學與設籍指南',
             'transit': '通勤交通指南',
             'news': 'A7 最新焦點'
         };
@@ -2221,7 +1820,7 @@
                 let currentTab = 'overview';
                 if (window.location.hash) {
                     const hashTab = window.location.hash.replace('#', '');
-                    const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', '#school', 'transit', 'news'];
+                    const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'schooling', 'transit', 'news'];
                     if (validTabs.includes(hashTab)) {
                         currentTab = hashTab;
                     }
@@ -2232,7 +1831,7 @@
             let initialTab = 'overview';
             try {
                 const hash = window.location.hash.replace('#', '');
-                const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', '#school', 'transit', 'news'];
+                const validTabs = ['overview', 'engineering', 'community', 'faq', 'A7area', 'schooling', 'transit', 'news'];
                 if (validTabs.includes(hash)) {
                     initialTab = hash;
                 }
@@ -4102,12 +3701,8 @@
                 if (window.gasTransitCache) {
                     const parseMrtTime = (val) => {
                         const m = parseFloat(val);
-                        if (!isNaN(m)) {
-                // 🚀 關鍵修正：將取得的分鐘數減去 1，實現提早一分鐘顯示
-                // 使用 Math.max(0, ...) 確保不會出現負數
-                return Math.max(0, m - 1); 
-            }
-            return null;
+                        if (!isNaN(m)) return m; // 回傳分鐘數
+                        return null; 
                     };
                     
                     // 初始化機捷倒數動畫基礎資料
