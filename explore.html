@@ -2701,7 +2701,6 @@
             if(typeof fetchAirQuality === 'function') fetchAirQuality(); 
             if(typeof fetchWeather === 'function') fetchWeather(); 
             if(typeof fetchFuelPrices === 'function') fetchFuelPrices(); 
-            if(typeof window.initMap === 'function') window.initMap();
         });
 
         // ==========================================
@@ -3451,5 +3450,8 @@
         }, 15000);
 
     </script>
+    
+    <!-- 引入 Google Maps JS API 並套用專屬金鑰 -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj-k6l_4I5IhxkxLkCLLql6I3bk8Uvkh4&callback=initMap"></script>
 </body>
 </html>
