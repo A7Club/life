@@ -3113,7 +3113,7 @@
                             ? 'mrt-time-north text-2xl sm:text-4xl font-black text-purple-600 font-mono w-8 sm:w-10 text-center' 
                             : 'mrt-time-south text-2xl sm:text-4xl font-black text-white font-mono w-8 sm:w-10 text-center';
                         if(unitEl) unitEl.style.display = 'inline';
-                    } else if (diff <= 1 && diff >= 0) {
+                    } else if (diff <= 0 && diff >= -1) {
                         el.innerText = '進站中';
                         el.className = isNorth 
                             ? 'mrt-time-north text-xl sm:text-3xl font-black text-red-500 animate-pulse mt-1.5 drop-shadow-sm w-full text-center tracking-widest'
