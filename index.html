@@ -21,6 +21,7 @@
       gtag('config', 'G-YJ9RJC2DRS');
     </script>
 
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -2148,6 +2149,17 @@ if (shoppingData) {
             return name.replace(/([a-zA-Z\s]+)/g, '<span class="text-[0.8em]">$1</span>');
         }
 
+        // 新增：處理便利商店名稱簡化 (隱藏品牌前綴以維持版面整潔)
+        function getCleanStoreName(name, catName) {
+            if (catName && catName.includes('便利')) {
+                let cleanName = name.replace(/(7-ELEVEN|7-11|全家(?:便利商店)?|萊爾富(?:便利商店)?|OK(?:便利商店|\s*MART|\s*mart)?)/i, '').trim();
+                // 移除殘留的連接線或多餘空白 (例如："- 文青店" 會變成 "文青店")
+                cleanName = cleanName.replace(/^[-_~\s]+/, '').trim();
+                return cleanName || name; // 若不小心清空則返回原名
+            }
+            return name;
+        }
+
         // 新增：根據常見知名品牌（如便利商店、超市）配對專屬 Logo
         function getBrandLogo(name) {
             const upperName = name.toUpperCase();
@@ -2301,14 +2313,14 @@ if (shoppingData) {
                         const storeIconHtml = brandLogo 
                             ? `<div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white rounded-lg shadow-sm border border-gray-100"><img src="${brandLogo}" class="w-5 h-5 object-contain" alt="Logo"></div>`
                             : `<div class="w-8 flex justify-center shrink-0 text-orange-400"><i class="fa-solid fa-store text-lg"></i></div>`;
-                        
+                        const cleanName = getCleanStoreName(store.name, catName);
                         listHtml += `
                             <li onclick="focusNearestStore('${safeCatId}', '${catName.replace(/'/g, "\\'")}', '${store.name.replace(/'/g, "\\'")}', ${store.lat}, ${store.lng})" class="cursor-pointer flex flex-row items-center justify-between bg-white p-2.5 rounded-xl shadow-sm border border-orange-50 hover:border-orange-300 hover:shadow-md hover:-translate-y-1 transition-all group">
                                 <div class="flex items-center flex-1 overflow-hidden pr-2">
                                     <div class="font-black text-white bg-orange-400 rounded-full w-5 h-5 flex items-center justify-center text-[10px] mr-2 shrink-0 shadow-sm">${index + 1}</div>
                                     ${storeIconHtml}
                                     <div class="flex flex-col overflow-hidden pl-2">
-                                        <span class="font-bold text-gray-800 text-sm line-clamp-1 group-hover:text-orange-600 transition-colors" title="${store.name}">${store.name}</span>
+                                        <span class="font-bold text-gray-800 text-sm line-clamp-1 group-hover:text-orange-600 transition-colors" title="${store.name}">${cleanName}</span>
                                         <span class="text-[10px] text-orange-500 font-black mt-0.5"><i class="fa-solid fa-person-walking mr-1 text-orange-300"></i>約 ${(store.distance).toFixed(2)} km</span>
                                     </div>
                                 </div>
@@ -2364,10 +2376,10 @@ if (shoppingData) {
                         const marker = L.marker([store.lat, store.lng], { icon: getCategoryIcon(catName, store.name, 'normal') }).addTo(map);
                         window.nearestMarkersMap[safeCatId][store.name] = marker;
 
+                        const cleanName = getCleanStoreName(store.name, catName);
                         let popupContent = `
                             <div class="text-center p-1 pt-5 w-50">
-                                <div class="font-black text-white bg-orange-400 px-2 py-0.5 rounded-md inline-block text-[10px] mb-1.5 shadow-sm">離你第 ${idx + 1} 近</div>
-                                <h4 class="font-black text-gray-800 text-sm leading-[1.1] mb-1">${formatStoreName(store.name)}</h4>
+                                <h4 class="font-black text-themeYellow text-sm leading-[1.1] mb-1">${formatStoreName(cleanName)}</h4>
                                 <p class="text-[10px] text-gray-500 font-bold mb-1"><i class="fa-solid fa-location-dot mr-1"></i>${store.address}</p>
                                 <a href="https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${store.lat},${store.lng}" target="_blank" class="mt-2 block w-full bg-orange-100 text-orange-600 font-black py-1.5 rounded-lg text-xs hover:bg-orange-500 hover:text-white transition-colors shadow-sm">開始導航</a>
                             </div>
@@ -3314,11 +3326,11 @@ const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
 
         const generateItemHTML = (item, catName, safeCatId, isPhotoCategory) => {
             const itemStyle = getCategoryStyle(catName, item.name);
-const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
-const storeLikes = globalLikesData[item.name] || { users: [] };
-const isLiked = storeLikes.users.includes(currentUserId);
-// 【修改這裡】比對資料庫與快取，取兩者之間的最大值
-const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
+            const navTarget = encodeURIComponent((item.address && item.address.trim() !== '') ? item.address : item.name);
+            const storeLikes = globalLikesData[item.name] || { users: [] };
+            const isLiked = storeLikes.users.includes(currentUserId);
+            // 【修改這裡】比對資料庫與快取，取兩者之間的最大值
+            const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
             const isMRT = catName.includes('捷運') || catName.includes('機捷');
             const brandLogo = getBrandLogo(item.name);
             const storeBrand = getStoreBrand(item.name);
@@ -3326,6 +3338,9 @@ const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
             // 判斷如果是便利商店，預設將店家列表隱藏
             const isConvenienceItem = catName.includes('便利');
             const displayStyle = isConvenienceItem ? 'style="display: none;"' : '';
+            
+            // 宣告乾淨的名稱，讓照片與列表兩種排版都能共用這個變數
+            const cleanName = typeof getCleanStoreName === 'function' ? getCleanStoreName(item.name, catName) : item.name;
 
             if (isPhotoCategory) {
                 let imgContent = '';
@@ -3352,7 +3367,7 @@ const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
                         </div>
                         <div class="px-1 pb-1 flex flex-col flex-1">
                             <div class="flex justify-between items-start gap-1">
-                                <h4 class="font-black text-gray-800 line-clamp-1 text-sm sm:text-base pr-1" title="${item.name}">${item.name}</h4>
+                                <h4 class="font-black text-gray-800 line-clamp-1 text-sm sm:text-base pr-1" title="${item.name}">${cleanName}</h4>
                             </div>
                             ${item.address ? `<p class="text-[10px] sm:text-xs text-gray-400 font-bold mt-0.5 line-clamp-1" title="${item.address}"><i class="fa-solid fa-location-dot mr-1"></i>${item.address}</p>` : ''}
                         </div>
@@ -3377,7 +3392,7 @@ const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
                         <div class="flex items-start flex-1 overflow-hidden pr-2">
                             ${storeIconHtml}
                             <div class="flex flex-col overflow-hidden pl-1.5">
-                                <span class="font-bold text-gray-800 line-clamp-1 transition-colors">${item.name}</span>
+                                <span class="font-bold text-gray-800 line-clamp-1 transition-colors" title="${item.name}">${cleanName}</span>
                                 ${item.address ? `<span class="text-xs text-gray-500 mt-0.5 line-clamp-2"><i class="fa-solid fa-location-dot mr-1 text-gray-300"></i>${item.address}</span>` : ''}
                             </div>
                         </div>
@@ -3613,7 +3628,7 @@ const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
             const imgContent = item.img 
                 ? `<img src="${item.img}" onerror="this.style.display='none'" class="w-full h-full object-cover group-hover:scale-105 transition-transform">` 
                 : `<i class="fa-solid fa-camera-retro text-3xl sm:text-4xl text-purple-200"></i>`;
-
+                let cleanName = getCleanStoreName(item.name, item.category);
             return `
                 <div onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${navTarget}', '_blank')" class="w-[135px] sm:w-[220px] bg-white rounded-[1.2rem] sm:rounded-[2rem] p-2 sm:p-3 shadow-sm border-2 border-purple-50 shrink-0 hover:-translate-y-2 transition-transform cursor-pointer group flex flex-col snap-start">
                     <div class="w-full h-20 sm:h-32 rounded-[1rem] sm:rounded-[1.5rem] mb-2 overflow-hidden bg-purple-50 flex items-center justify-center shrink-0">
@@ -3621,7 +3636,7 @@ const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
                     </div>
                     <div class="flex flex-col flex-1 justify-between gap-1">
                         <div class="px-1 sm:px-2">
-                            <h4 class="font-black text-gray-800 line-clamp-1 text-xs sm:text-base" title="${item.name}">${item.name}</h4>
+                            <h4 class="font-black text-gray-800 line-clamp-1 group-hover:text-yellow-600" title="${item.name}">${cleanName}</h4
                             ${item.address ? `<p class="text-[10px] sm:text-xs text-gray-400 font-bold mt-0.5 line-clamp-1" title="${item.address}"><i class="fa-solid fa-location-dot mr-1"></i>${item.address}</p>` : ''}
                         </div>
                         <p class="text-[10px] sm:text-sm text-themePurple font-bold px-1 sm:px-2 mt-auto location-time" data-address="${item.address || item.name}">
@@ -3828,6 +3843,17 @@ const likeCount = Math.max((item.likesCount || 0), storeLikes.users.length);
             }).catch(reject);
         });
     }
+
+    // 新增：處理便利商店名稱簡化 (隱藏品牌前綴以維持版面整潔)
+function getCleanStoreName(name, catName) {
+    if (catName && catName.includes('便利')) {
+        let cleanName = name.replace(/(7-ELEVEN|7-11|全家(?:便利商店)?|萊爾富(?:便利商店)?|OK(?:便利商店|\s*MART|\s*mart)?)/i, '').trim();
+        // 移除殘留的連接線或多餘空白 (例如："- 文青店" 會變成 "文青店")
+        cleanName = cleanName.replace(/^[-_~\s]+/, '').trim();
+        return cleanName || name; // 若不小心清空則返回原名
+    }
+    return name;
+}
 </script>
 </body>
 </html>
