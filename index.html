@@ -21,7 +21,6 @@
       gtag('config', 'G-YJ9RJC2DRS');
     </script>
 
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -291,6 +290,38 @@
     </div>
 
     <!-- ========================================== -->
+    <!-- 💬 LINE 社群加入 1:1 Modal -->
+    <!-- ========================================== -->
+    <div id="line-community-modal" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 sm:p-6">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closeLineCommunityModal()"></div>
+        
+        <div class="bg-cover bg-center w-full max-w-[400px] aspect-square rounded-[2.5rem] shadow-2xl relative z-10 flex flex-col transform scale-95 opacity-0 transition-all duration-300 overflow-hidden border-4 border-white" id="line-community-modal-content" style="background-image: url('https://github.com/A7Club/life/blob/main/a7club_line.png?raw=true');">
+            <!-- 暗色玻璃遮罩，確保文字與 QR Code 清楚可見 -->
+            <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+
+            <button onclick="closeLineCommunityModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full text-white hover:bg-themePink flex items-center justify-center z-20 shadow-sm transition-colors border border-white/50">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <div class="flex-1 flex flex-col items-center justify-center p-6 text-center relative z-10">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-lg mb-3 border-4 border-[#00B900]/20">
+                    <i class="fa-brands fa-line text-4xl sm:text-5xl text-[#00B900]"></i>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black text-white mb-2 drop-shadow-md">A7 柒樂部同樂匯</h3>
+                <p class="text-xs sm:text-sm font-bold text-white/90 mb-4 sm:mb-5 px-2 leading-relaxed drop-shadow-md">分享在地美食、好康優惠<br>輕鬆掌握 A7 樂園大小事！</p>
+                
+                <div class="bg-white/90 backdrop-blur p-2.5 sm:p-3 rounded-2xl shadow-xl border-2 border-white mb-4 sm:mb-6 hover:scale-105 transition-transform">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fline.me%2Fti%2Fg2%2FGBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" alt="LINE 社群 QR Code" class="w-24 h-24 sm:w-32 sm:h-32 object-contain mix-blend-multiply">
+                </div>
+
+                <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="w-full max-w-[280px] bg-[#00B900] text-white font-black py-3 sm:py-3.5 rounded-xl shadow-[0_4px_15px_rgba(0,185,0,0.4)] hover:bg-[#009900] hover:-translate-y-1 transition-all text-base sm:text-lg flex items-center justify-center gap-2 mx-auto border-2 border-white/20">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> 點此直接加入
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
     <!-- 🧩 頁面模板區 (Template) - 不會被渲染直到被呼叫 -->
     <!-- ========================================== -->
 
@@ -310,11 +341,21 @@
                 <p class="text-lg md:text-xl text-white/95 font-bold mb-8 relative z-10 drop-shadow-md">林口、龜山、A7體育大學站在地生活指南<br>
                 <span class="text-sm md:text-base text-white font-bold mt-1 inline-block">― 網站３月試營運，你的建議就是我們升級的動力 ―</span>
                 </p>
-                <div class="max-w-xl mx-auto relative z-10">
-                    <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？全聯？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
-                    <button onclick="doSearch()" class="absolute right-2 top-2 bottom-2 w-12 bg-themeYellow text-white rounded-full flex items-center justify-center text-xl hover:bg-yellow-400 hover:scale-105 transition-all shadow-sm">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                <div class="max-w-xl mx-auto relative z-10 flex flex-col items-end">
+                    <!-- LINE 社群加入小廣告 (小巧可愛對話泡泡) -->
+                    <button onclick="openLineCommunityModal()" class="mb-3 sm:mb-4 bg-white text-gray-700 font-black px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl rounded-br-sm shadow-cute hover:scale-110 transition-all flex items-center gap-1.5 sm:gap-2 border-2 border-pink-100 animate-bounce origin-bottom-right group">
+                        <div class="w-5 h-5 sm:w-6 sm:h-6 bg-[#00B900] rounded-full flex items-center justify-center shrink-0 group-hover:rotate-12 transition-transform shadow-sm">
+                            <i class="fa-brands fa-line text-white text-[10px] sm:text-xs mt-[1px]"></i>
+                        </div>
+                        <span class="text-[10px] sm:text-xs tracking-wide">柒樂部LINE社群 <i class="fa-solid fa-heart text-[#FF4785] ml-0.5 animate-pulse"></i></span>
                     </button>
+                    <!-- 搜尋框本體 -->
+                    <div class="w-full relative">
+                        <input id="home-search-input" type="text" placeholder="🔍 找找看... 早餐？全聯？文青里?" class="w-full text-center text-lg font-bold text-gray-700 bg-white rounded-full py-4 pl-6 pr-16 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 border-4 border-white transition-all" onkeypress="if(event.key === 'Enter') doSearch()">
+                        <button onclick="doSearch()" class="absolute right-2 top-2 bottom-2 w-12 bg-themeYellow text-white rounded-full flex items-center justify-center text-xl hover:bg-yellow-400 hover:scale-105 transition-all shadow-sm">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -1040,6 +1081,30 @@
             content.classList.remove('scale-100', 'opacity-100');
             content.classList.add('scale-95', 'opacity-0');
             
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // 開啟 LINE 社群 Modal
+        function openLineCommunityModal() {
+            const modal = document.getElementById('line-community-modal');
+            const content = document.getElementById('line-community-modal-content');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // 關閉 LINE 社群 Modal
+        function closeLineCommunityModal() {
+            const modal = document.getElementById('line-community-modal');
+            const content = document.getElementById('line-community-modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
             setTimeout(() => {
                 modal.classList.remove('flex');
                 modal.classList.add('hidden');
