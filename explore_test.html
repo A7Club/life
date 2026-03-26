@@ -4180,8 +4180,7 @@
             { "village": "文青里", "neighborhoods": [9], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里39鄰調整" },
             { "village": "文青里", "neighborhoods": [10], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里38鄰調整" },
             { "village": "文青里", "neighborhoods": [11], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里37鄰調整" },
-            { "village": "文青里", "neighborhoods": [12], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里5鄰調整" },
-            { "village": "文青里", "neighborhoods": [13], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里6鄰調整" },
+            { "village": "文青里", "neighborhoods": [12, 13], "streets": ["文青路（遠雄文青社區/合宜住宅）", "【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里5、6鄰調整" },
             { "village": "文青里", "neighborhoods": [14], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里7鄰調整" },
             { "village": "文青里", "neighborhoods": [15], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里8鄰調整" },
             { "village": "文青里", "neighborhoods": [16], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里9鄰調整" },
@@ -4194,7 +4193,7 @@
             { "village": "文青里", "neighborhoods": [23], "streets": ["【名軒社區】詳細門牌請查社區登記資料"], "tag": "由原文青里27鄰調整" },
             { "village": "文青里", "neighborhoods": [24], "streets": ["【名軒社區】詳細門牌請查社區登記資料"], "tag": "由原文青里26鄰調整" },
             { "village": "文青里", "neighborhoods": [25], "streets": ["（同調整前）"], "tag": "由原文青里25鄰調整" },
-            { "village": "文青里", "neighborhoods": [26, 27], "streets": ["文青路227號", "【遠雄新未來一期】"], "tag": "由原文青里44、45鄰調整" },
+            { "village": "文青里", "neighborhoods": [26, 27], "streets": ["文青路227號", "【遠雄新未來一期】", "【新未來社區】"], "tag": "由原文青里44、45鄰調整" },
             { "village": "文青里", "neighborhoods": [28], "streets": ["【遠雄新未來二期】詳細門牌請查社區登記資料"], "tag": "由原文青里43鄰調整" },
             { "village": "文藝里", "neighborhoods": [1], "streets": ["（同調整前）"], "tag": "由原文青里3鄰調整" },
             { "village": "文藝里", "neighborhoods": [2], "streets": ["（同調整前）"], "tag": "由原文青里2鄰調整" },
@@ -4428,7 +4427,12 @@
             // 去除重複的 strongMatches (同里同鄰的多重條件命中的結果合併)
             const uniqueStrong = [];
             const seen = new Set();
-            for (const match of strongMatches) {
+            
+            // 【優化】如果有 condition 命中，就過濾掉 street_only 的命中（因為 condition 更精確）
+            const hasConditionMatch = strongMatches.some(m => m.matchType === 'condition' || m.matchType === 'tag' || m.matchType === 'village');
+            const filteredStrong = hasConditionMatch ? strongMatches.filter(m => m.matchType !== 'street_only') : strongMatches;
+
+            for (const match of filteredStrong) {
                 const key = match.village + (match.neighborhoods ? match.neighborhoods.join(',') : '');
                 if (!seen.has(key)) {
                     seen.add(key);
