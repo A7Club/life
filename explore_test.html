@@ -4121,7 +4121,7 @@
             { "village": "文樂里", "neighborhoods": [11], "streets": ["文化一路512巷66之1號、66之2號及66號（雙）", "樂善二路316-326（雙）"], "tag": "由原樂善里1鄰調整" },
             { "village": "文樂里", "neighborhoods": [12], "streets": ["文化一路662-668（雙）", "文學路49-55（單）、31-47（單）"], "tag": "由原樂善里1鄰調整" },
             { "village": "文樂里", "neighborhoods": [13], "streets": ["文學路13-29（單）、1-11（單）", "文化一路512巷25-69（單）", "文化一路688號(機捷體育大學A7站)、248之6號", "樂善街346之1號", "樂善街206巷43號、45之1號、45之7號、51之1號、59之1號、61號、65號"], "tag": "由原樂善里1、6鄰調整" },
-            { "village": "文桃里", "neighborhoods": [1], "streets": ["文桃路426號、428號", "文華路18號", "文信路286、288號、329、389號", "文工一路220-618（雙）、527-539（單）", "文工一路298巷(全部單雙號含各樓層)", "文桃路476巷18-42", "文桃路36之8號（雙）", "文南路85-286（雙）", "文桃路192-262"], "tag": "由原樂善里9、5鄰調整" },
+            { "village": "文桃里", "neighborhoods": [1], "streets": ["文桃路426號、428號", "文華路18號", "文信路286號、288號、329、389號", "文工一路220-618（雙）、527-539（單）", "文工一路298巷(全部單雙號含各樓層)", "文桃路476巷18-42", "文桃路36之8號（雙）", "文南路85-286（雙）", "文桃路192-262"], "tag": "由原樂善里9、5鄰調整" },
             { "village": "文桃里", "neighborhoods": [2], "streets": ["文桃路123-155（單）、131之1號、147之1號、147之2號、263-273（單）", "文桃路121巷31之7號", "文桃路235-251（單）"], "tag": "由原樂善里5鄰調整" },
             { "village": "文桃里", "neighborhoods": [3], "streets": ["樂善二路513-543（單）", "文吉路31、33", "文工一路27、29"], "tag": "由原樂善里4鄰調整" },
             { "village": "文桃里", "neighborhoods": [4], "streets": ["文桃路339-365（單）"], "tag": "由原樂善里4鄰調整" },
@@ -4390,11 +4390,11 @@
                         if (!rangeFound || !isMatch) {
                             // 先把包含「至」的區段文字挖掉，避免誤抓區段內的單個數字
                             const stringWithoutRanges = streetStr.replace(/(\d+)\s*(?:號)?\s*(?:至|~|-|～|－)\s*(\d+)\s*(?:號)?/g, '');
-                            const exactRegex = /(?:^|[^\d])(\d+)(?:號|、|及|$)/g;
+                            const exactRegex = /(\d+)/g;
                             let exactMatch;
 
                             while ((exactMatch = exactRegex.exec(stringWithoutRanges)) !== null) {
-                                if (parseInt(exactMatch[1], 10) === parsedNum) {
+                                if (parseInt(exactMatch[0], 10) === parsedNum) {
                                     isMatch = true;
                                     break;
                                 }
@@ -4573,7 +4573,7 @@
             } else {
                 const cleanedInput = input.replace(/桃園市|龜山區|林口區/g, '').trim();
                 if (cleanedInput.includes('文青') || cleanedInput.includes('文藝') || cleanedInput.includes('青山路')) { newVillage = '文青里'; }
-                else if (cleanedInput.includes('文桃') || cleanedInput.includes('體大') || cleanedInput.includes('牛角坡路') || cleanedInput.includes('樂善一路')) { newVillage = '文桃里'; }
+                else if (cleanedInput.includes('文桃') || cleanedInput.includes('體大') || cleanedInput.includes('牛角坡路') || cleanedInput.includes('樂善一路') || cleanedInput.includes('文信路')) { newVillage = '文桃里'; }
                 else if (cleanedInput.includes('樂善') || cleanedInput.includes('文樂')) { newVillage = '樂善里'; }
                 else if (cleanedInput.includes('長樂') || cleanedInput.includes('長慶')) { newVillage = '長樂里'; }
                 else if (cleanedInput.includes('文德二路')) { newVillage = '樂善里'; }
