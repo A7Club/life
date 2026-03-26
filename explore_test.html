@@ -881,37 +881,6 @@
             </div>
 
             <!-- ============================================== -->
-            <!-- 模組：在地社群 (總覽分頁 - 左 2/3 在地社群, 右 1/3 精選其他推薦) -->
-            <!-- ============================================== -->
-            <div id="mod-community-overview" class="content-module mb-12 hidden" data-shows-on="overview">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl md:text-2xl font-black text-themePurple flex items-center"><i
-                            class="fa-solid fa-users mr-3 text-3xl"></i>地方社群推薦</h2>
-                    <button onclick="window.switchTab('community', true)"
-                        class="text-sm font-bold text-themePurple hover:text-purple-600 bg-purple-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">更多社群</i></button>
-                </div>
-                <!-- 雙欄排版 -->
-                <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 items-stretch">
-                    <!-- 左側 2/3：在地社群 -->
-                    <div class="w-full lg:w-2/3 flex flex-col" id="community-overview-left">
-                        <div
-                            class="text-center text-themePurple py-12 bg-white rounded-[2rem] border-4 border-purple-50 shadow-cute h-full flex flex-col items-center justify-center">
-                            <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
-                            <p class="font-bold">正在連線樂園社群中心...</p>
-                        </div>
-                    </div>
-                    <!-- 右側 1/3：其他推薦小卡 (手機版隱藏) -->
-                    <div class="hidden lg:flex w-full lg:w-1/3 flex-col" id="community-overview-right">
-                        <div
-                            class="text-center text-themeBlue py-12 bg-white rounded-[2rem] border-4 border-blue-50 shadow-cute h-full flex flex-col items-center justify-center">
-                            <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
-                            <p class="font-bold">載入其他推薦...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================== -->
             <!-- 模組：機捷 A7 站轉乘指南 (僅交通轉乘分頁顯示) -->
             <!-- ============================================== -->
             <div id="mod-transit-guide" class="content-module mb-12 hidden" data-shows-on="transit">
@@ -1335,7 +1304,7 @@
             <div id="mod-buildings-map" class="content-module mb-8 hidden scroll-mt-[100px]"
                 data-shows-on="overview,A7area">
                 <div class="flex items-center mb-6">
-                    <h2 class="text-xl font-black text-themeBlue flex items-center"><i
+                    <h2 class="text-2xl font-black text-themeBlue flex items-center"><i
                             class="fa-solid fa-map-location-dot mr-3 text-3xl text-themeBlue"></i>A7 行政里分區地圖</h2>
                 </div>
 
@@ -2447,6 +2416,37 @@
             </div>
 
             <!-- ============================================== -->
+            <!-- 模組：在地社群 (總覽分頁 - 左 2/3 在地社群, 右 1/3 精選其他推薦) -->
+            <!-- ============================================== -->
+            <div id="mod-community-overview" class="content-module mb-12 hidden" data-shows-on="overview">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl md:text-2xl font-black text-themePurple flex items-center"><i
+                            class="fa-solid fa-users mr-3 text-3xl"></i>地方社群推薦</h2>
+                    <button onclick="window.switchTab('community', true)"
+                        class="text-sm font-bold text-themePurple hover:text-purple-600 bg-purple-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">更多社群</button>
+                </div>
+                <!-- 雙欄排版 -->
+                <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 items-stretch">
+                    <!-- 左側 2/3：在地社群 -->
+                    <div class="w-full lg:w-2/3 flex flex-col" id="community-overview-left">
+                        <div
+                            class="text-center text-themePurple py-12 bg-white rounded-[2rem] border-4 border-purple-50 shadow-cute h-full flex flex-col items-center justify-center">
+                            <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
+                            <p class="font-bold">正在連線樂園社群中心...</p>
+                        </div>
+                    </div>
+                    <!-- 右側 1/3：其他推薦小卡 (手機版隱藏) -->
+                    <div class="hidden lg:flex w-full lg:w-1/3 flex-col" id="community-overview-right">
+                        <div
+                            class="text-center text-themeBlue py-12 bg-white rounded-[2rem] border-4 border-blue-50 shadow-cute h-full flex flex-col items-center justify-center">
+                            <i class="fa-solid fa-spinner fa-spin text-4xl mb-3"></i>
+                            <p class="font-bold">載入其他推薦...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
             <!-- 模組：A7在地新聞 (總覽精簡版 - 最多顯示5則) -->
             <!-- ============================================== -->
             <div id="mod-news-overview" class="content-module mb-12 hidden" data-shows-on="overview">
@@ -2454,7 +2454,7 @@
                     <h2 class="text-xl md:text-2xl font-black text-cyan-600 flex items-center"><i
                             class="fa-regular fa-newspaper mr-3 text-3xl"></i>地方焦點新聞</h2>
                     <button onclick="window.switchTab('news', true)"
-                        class="text-sm font-bold text-cyan-500 hover:text-cyan-700 bg-cyan-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">更多新聞</i></button>
+                        class="text-sm font-bold text-cyan-500 hover:text-cyan-700 bg-cyan-50 px-3 py-1.5 rounded-lg flex items-center transition-colors">更多新聞</button>
                 </div>
                 <div
                     class="bg-white rounded-[2.5rem] shadow-cute p-6 md:p-8 border-4 border-cyan-50 relative overflow-hidden">
@@ -2718,7 +2718,7 @@
                                 <span
                                     class="bg-orange-200 text-orange-700 text-xs font-black px-2.5 py-1 rounded-lg mb-3">STEP
                                     3 / 房屋證明</span>
-                                <strong class="ttext-gray-800 text-lg mb-1.5">房屋所有權狀 <span
+                                <strong class="text-gray-800 text-lg mb-1.5">房屋所有權狀 <span
                                         class="text-sm text-orange-500">正本</span></strong>
                                 <p class="text-sm text-gray-500 font-bold leading-snug">單獨成立一戶者必備，或提供最近一期房屋稅單。</p>
                             </div>
@@ -3086,7 +3086,7 @@
                                                 <div class="leading-relaxed">
                                                     基本：<a href="https://a7club.github.io/life/explore.html#buildings"
                                                         target="_blank"
-                                                        class="inline-block bg-gray-100 text-gray-600 border border-gray-200 hover:bg-themeGreen hover:text-white hover:border-themeGreen px-1.5 rounded transition-colors font-black mx-0.5 mb-1 shadow-sm">長庚里(1-26)</a>
+                                                        class="inline-block bg-gray-100 text-gray-600 border border-gray-200 hover:bg-themeGreen hover:text-white hover:border-themeGreen px-1.5 rounded transition-colors font-black mx-0.5 mb-1 shadow-sm">長庚里</a>
                                                 </div>
                                                 <div class="leading-relaxed">
                                                     自由：<a href="https://a7club.github.io/life/explore.html#buildings"
@@ -4085,281 +4085,365 @@
             if (tagsContainer) tagsContainer.innerHTML = tagsHtml;
         }
 
-        // A7 門牌自動對照表 (全局掃描版)
-        const ADVANCED_ROAD_DISTRICTS = {
-            "文信路": [
-                { "type": "odd", "min": 9, "max": 325, "village": "長樂里", "neighborhood": "1" },
-                { "type": "range", "min": 286, "max": 389, "village": "文桃里", "neighborhood": "1" }
-            ],
-            "文化一路": [
-                { "type": "range", "min": 103, "max": 103, "village": "長樂里", "neighborhood": "1" },
-                { "type": "even", "min": 196, "max": 242, "village": "文樂里", "neighborhood": "1" },
-                { "type": "even", "min": 246, "max": 278, "village": "文樂里", "neighborhood": "2" },
-                { "type": "even", "min": 280, "max": 328, "village": "文樂里", "neighborhood": "3" },
-                { "type": "even", "min": 218, "max": 312, "village": "文樂里", "neighborhood": "4" },
-                { "type": "range", "min": 1, "max": 368, "village": "文樂里", "neighborhood": "5" },
-                { "type": "range", "min": 1, "max": 372, "village": "文樂里", "neighborhood": "6" },
-                { "type": "even", "min": 386, "max": 388, "village": "文樂里", "neighborhood": "7" },
-                { "type": "range", "min": 1, "max": 66, "village": "文樂里", "neighborhood": "11" },
-                { "type": "even", "min": 662, "max": 668, "village": "文樂里", "neighborhood": "12" },
-                { "type": "range", "min": 6, "max": 688, "village": "文樂里", "neighborhood": "13" },
-                { "type": "even", "min": 88, "max": 100, "village": "樂善里", "neighborhood": "1" },
-                { "type": "even", "min": 16, "max": 108, "village": "樂善里", "neighborhood": "15" },
-                { "type": "even", "min": 16, "max": 108, "village": "樂善里", "neighborhood": "28" },
-                { "type": "range", "min": 1, "max": 89, "village": "樂善里", "neighborhood": "33" },
-                { "type": "odd", "min": 1, "max": 257, "village": "文藝里", "neighborhood": "4" }
-            ],
-            "文桃路": [
-                { "type": "range", "min": 650, "max": 650, "village": "長樂里", "neighborhood": "1" },
-                { "type": "even", "min": 8, "max": 428, "village": "文桃里", "neighborhood": "1" },
-                { "type": "range", "min": 1, "max": 273, "village": "文桃里", "neighborhood": "2" },
-                { "type": "odd", "min": 339, "max": 365, "village": "文桃里", "neighborhood": "4" },
-                { "type": "range", "min": 399, "max": 399, "village": "文桃里", "neighborhood": "5" },
-                { "type": "odd", "min": 419, "max": 435, "village": "文桃里", "neighborhood": "6" },
-                { "type": "odd", "min": 437, "max": 447, "village": "文桃里", "neighborhood": "7" },
-                { "type": "odd", "min": 489, "max": 493, "village": "文桃里", "neighborhood": "8" }
-            ],
-            "文茂路": [
-                { "type": "even", "min": 86, "max": 90, "village": "長樂里", "neighborhood": "1" }
-            ],
-            "文禾路": [
-                { "type": "range", "min": 188, "max": 289, "village": "長樂里", "neighborhood": "1" },
-                { "type": "odd", "min": 239, "max": 245, "village": "長樂里", "neighborhood": "2" },
-                { "type": "odd", "min": 247, "max": 257, "village": "長樂里", "neighborhood": "3" },
-                { "type": "odd", "min": 199, "max": 201, "village": "長樂里", "neighborhood": "4" },
-                { "type": "odd", "min": 187, "max": 197, "village": "長樂里", "neighborhood": "5" },
-                { "type": "odd", "min": 169, "max": 185, "village": "長樂里", "neighborhood": "6" },
-                { "type": "odd", "min": 105, "max": 107, "village": "長樂里", "neighborhood": "7" },
-                { "type": "odd", "min": 101, "max": 103, "village": "長樂里", "neighborhood": "8" }
-            ],
-            "樂學路": [
-                { "type": "even", "min": 192, "max": 210, "village": "長樂里", "neighborhood": "7" },
-                { "type": "even", "min": 156, "max": 190, "village": "長樂里", "neighborhood": "8" },
-                { "type": "even", "min": 118, "max": 152, "village": "長樂里", "neighborhood": "9" },
-                { "type": "even", "min": 470, "max": 490, "village": "長樂里", "neighborhood": "11" },
-                { "type": "even", "min": 492, "max": 512, "village": "長樂里", "neighborhood": "12" },
-                { "type": "even", "min": 528, "max": 560, "village": "長樂里", "neighborhood": "15" },
-                { "type": "even", "min": 20, "max": 32, "village": "長樂里", "neighborhood": "19" },
-                { "type": "range", "min": 26, "max": 62, "village": "長樂里", "neighborhood": "20" },
-                { "type": "even", "min": 672, "max": 686, "village": "長樂里", "neighborhood": "21" },
-                { "type": "odd", "min": 111, "max": 149, "village": "樂善里", "neighborhood": "7" },
-                { "type": "odd", "min": 99, "max": 109, "village": "樂善里", "neighborhood": "8" },
-                { "type": "odd", "min": 95, "max": 97, "village": "樂善里", "neighborhood": "9" },
-                { "type": "odd", "min": 1, "max": 3, "village": "樂善里", "neighborhood": "30" },
-                { "type": "range", "min": 2, "max": 2, "village": "樂善里", "neighborhood": "31" }
-            ],
-            "文達路": [
-                { "type": "even", "min": 258, "max": 268, "village": "長樂里", "neighborhood": "9" },
-                { "type": "even", "min": 270, "max": 322, "village": "樂善里", "neighborhood": "9" },
-                { "type": "odd", "min": 233, "max": 235, "village": "樂善里", "neighborhood": "10" },
-                { "type": "odd", "min": 293, "max": 299, "village": "樂善里", "neighborhood": "32" }
-            ],
-            "長慶一街": [
-                { "type": "range", "min": 28, "max": 60, "village": "長樂里", "neighborhood": "10" },
-                { "type": "odd", "min": 33, "max": 39, "village": "長樂里", "neighborhood": "12" },
-                { "type": "odd", "min": 1, "max": 41, "village": "長樂里", "neighborhood": "13" },
-                { "type": "range", "min": 2, "max": 97, "village": "長樂里", "neighborhood": "14" }
-            ],
-            "長慶二街": [
-                { "type": "even", "min": 6, "max": 26, "village": "長樂里", "neighborhood": "12" },
-                { "type": "even", "min": 78, "max": 82, "village": "長樂里", "neighborhood": "14" },
-                { "type": "odd", "min": 1, "max": 17, "village": "長樂里", "neighborhood": "15" },
-                { "type": "odd", "min": 61, "max": 83, "village": "長樂里", "neighborhood": "16" },
-                { "type": "odd", "min": 85, "max": 111, "village": "長樂里", "neighborhood": "17" },
-                { "type": "odd", "min": 113, "max": 123, "village": "長樂里", "neighborhood": "18" }
-            ],
-            "長慶三街": [
-                { "type": "even", "min": 18, "max": 36, "village": "長樂里", "neighborhood": "16" },
-                { "type": "even", "min": 38, "max": 58, "village": "長樂里", "neighborhood": "17" },
-                { "type": "even", "min": 60, "max": 82, "village": "長樂里", "neighborhood": "18" },
-                { "type": "odd", "min": 41, "max": 79, "village": "長樂里", "neighborhood": "19" }
-            ],
-            "文德路": [
-                { "type": "range", "min": 108, "max": 108, "village": "長庚里", "neighborhood": "1" },
-                { "type": "range", "min": 12, "max": 12, "village": "樂善里", "neighborhood": "28" }
-            ],
-            "原樂善里28鄰文德路": [
-                { "type": "even", "min": 12, "max": 12, "village": "樂善里", "neighborhood": "28" }
-            ],
-            "文康街": [
-                { "type": "odd", "min": 7, "max": 51, "village": "樂善里", "neighborhood": "29" },
-                { "type": "even", "min": 12, "max": 36, "village": "樂善里", "neighborhood": "30" }
-            ],
-            "樂善二路": [
-                { "type": "odd", "min": 203, "max": 223, "village": "文樂里", "neighborhood": "7" },
-                { "type": "odd", "min": 181, "max": 201, "village": "文樂里", "neighborhood": "8" },
-                { "type": "odd", "min": 139, "max": 169, "village": "文樂里", "neighborhood": "10" },
-                { "type": "even", "min": 316, "max": 326, "village": "文樂里", "neighborhood": "11" },
-                { "type": "odd", "min": 513, "max": 543, "village": "文桃里", "neighborhood": "3" },
-                { "type": "odd", "min": 477, "max": 511, "village": "文桃里", "neighborhood": "5" },
-                { "type": "odd", "min": 427, "max": 457, "village": "文桃里", "neighborhood": "6" },
-                { "type": "odd", "min": 341, "max": 395, "village": "文桃里", "neighborhood": "9" },
-                { "type": "range", "min": 1, "max": 830, "village": "文桃里", "neighborhood": "10" },
-                { "type": "even", "min": 650, "max": 652, "village": "文桃里", "neighborhood": "11" },
-                { "type": "even", "min": 518, "max": 580, "village": "文桃里", "neighborhood": "12" },
-                { "type": "even", "min": 458, "max": 468, "village": "文桃里", "neighborhood": "15" },
-                { "type": "odd", "min": 101, "max": 119, "village": "樂善里", "neighborhood": "5" }
-            ],
-            "樂善三路": [
-                { "type": "odd", "min": 85, "max": 149, "village": "文樂里", "neighborhood": "9" },
-                { "type": "odd", "min": 151, "max": 191, "village": "文樂里", "neighborhood": "10" },
-                { "type": "even", "min": 2, "max": 56, "village": "樂善里", "neighborhood": "1" },
-                { "type": "even", "min": 62, "max": 88, "village": "樂善里", "neighborhood": "2" },
-                { "type": "even", "min": 100, "max": 118, "village": "樂善里", "neighborhood": "6" }
-            ],
-            "文學路": [
-                { "type": "odd", "min": 31, "max": 55, "village": "文樂里", "neighborhood": "12" },
-                { "type": "odd", "min": 1, "max": 29, "village": "文樂里", "neighborhood": "13" },
-                { "type": "odd", "min": 211, "max": 235, "village": "文青里", "neighborhood": "11" },
-                { "type": "range", "min": 250, "max": 280, "village": "文青里", "neighborhood": "27" },
-            ],
-            "樂善街": [
-                { "type": "range", "min": 1, "max": 346, "village": "文樂里", "neighborhood": "13" },
-                { "type": "even", "min": 72, "max": 90, "village": "樂善里", "neighborhood": "6" }
-            ],
-            "文華路": [
-                { "type": "range", "min": 18, "max": 18, "village": "文桃里", "neighborhood": "1" }
-            ],
-            "文工一路": [
-                { "type": "range", "min": 220, "max": 618, "village": "文桃里", "neighborhood": "1" },
-                { "type": "odd", "min": 27, "max": 29, "village": "文桃里", "neighborhood": "3" }
-            ],
-            "文吉路": [
-                { "type": "odd", "min": 31, "max": 33, "village": "文桃里", "neighborhood": "3" },
-                { "type": "range", "min": 28, "max": 28, "village": "文桃里", "neighborhood": "5" },
-                { "type": "range", "min": 1, "max": 146, "village": "文桃里", "neighborhood": "10" }
-            ],
-            "牛角坡路": [
-                { "type": "odd", "min": 1, "max": 51, "village": "文桃里", "neighborhood": "8" },
-                { "type": "range", "min": 58, "max": 58, "village": "文桃里", "neighborhood": "9" },
-                { "type": "odd", "min": 91, "max": 135, "village": "文桃里", "neighborhood": "11" },
-                { "type": "range", "min": 163, "max": 290, "village": "文桃里", "neighborhood": "13" },
-                { "type": "even", "min": 300, "max": 316, "village": "文桃里", "neighborhood": "14" }
-            ],
-            "樂善一路": [
-                { "type": "range", "min": 1, "max": 500, "village": "文桃里", "neighborhood": "9" },
-                { "type": "even", "min": 250, "max": 276, "village": "文桃里", "neighborhood": "14" },
-                { "type": "odd", "min": 269, "max": 323, "village": "文桃里", "neighborhood": "15" }
-            ],
-            "華亞三路": [
-                { "type": "odd", "min": 49, "max": 55, "village": "樂善里", "neighborhood": "2" },
-                { "type": "odd", "min": 1, "max": 47, "village": "樂善里", "neighborhood": "3" },
-                { "type": "even", "min": 36, "max": 78, "village": "樂善里", "neighborhood": "4" },
-                { "type": "range", "min": 41, "max": 41, "village": "樂善里", "neighborhood": "29" }
-            ],
-            "文化二路": [
-                { "type": "even", "min": 506, "max": 528, "village": "樂善里", "neighborhood": "4" },
-                { "type": "even", "min": 466, "max": 502, "village": "樂善里", "neighborhood": "5" },
-                { "type": "odd", "min": 1, "max": 515, "village": "樂善里", "neighborhood": "29" }
-            ],
-            "樂學一路": [
-                { "type": "even", "min": 122, "max": 128, "village": "樂善里", "neighborhood": "9" },
-                { "type": "even", "min": 56, "max": 78, "village": "樂善里", "neighborhood": "11" },
-                { "type": "odd", "min": 3, "max": 29, "village": "樂善里", "neighborhood": "33" }
-            ],
-            "樂學二路": [
-                { "type": "even", "min": 46, "max": 50, "village": "樂善里", "neighborhood": "10" },
-                { "type": "even", "min": 52, "max": 70, "village": "樂善里", "neighborhood": "11" }
-            ],
-            "文明路": [
-                { "type": "range", "min": 2, "max": 51, "village": "樂善里", "neighborhood": "15" },
-                { "type": "range", "min": 2, "max": 51, "village": "樂善里", "neighborhood": "17" },
-                { "type": "odd", "min": 1, "max": 155, "village": "樂善里", "neighborhood": "31" }
-            ],
-            "原樂善里22鄰文德二路": [
-                { "type": "range", "min": 18, "max": 18, "village": "樂善里", "neighborhood": "15" }
-            ],
-            "文德二路": [
-                { "type": "range", "min": 1, "max": 8, "village": "樂善里", "neighborhood": "15" },
-                { "type": "odd", "min": 5, "max": 9, "village": "樂善里", "neighborhood": "16" },
-                { "type": "range", "min": 5, "max": 18, "village": "樂善里", "neighborhood": "22" }
-            ],
+        // A7 門牌自動對照表 (補齊詳細數字區間與單/雙號限制)
+        const VILLAGE_DATA = [
+            { "village": "長樂里", "neighborhoods": [1], "streets": ["文信路289號、299之9號、325號、325之9號", "文化一路103號", "文桃路650號", "文茂路86-90（雙）", "文信路95-101（單）", "文禾路188-200（雙）、289號、259-265（單）"], "tag": "由原樂善里9、8鄰調整" },
+            { "village": "長樂里", "neighborhoods": [2], "streets": ["文禾路239-245（單）"], "tag": "由原樂善里8鄰調整" },
+            { "village": "長樂里", "neighborhoods": [3], "streets": ["文禾路247-257（單）"], "tag": "由原樂善里8鄰調整" },
+            { "village": "長樂里", "neighborhoods": [4], "streets": ["文禾路199-201（單）"], "tag": "由原樂善里8鄰調整" },
+            { "village": "長樂里", "neighborhoods": [5], "streets": ["文禾路187-197（單）"], "tag": "由原樂善里8鄰調整" },
+            { "village": "長樂里", "neighborhoods": [6], "streets": ["文禾路169-185（單）"], "tag": "由原樂善里8鄰調整" },
+            { "village": "長樂里", "neighborhoods": [7], "streets": ["文禾路105、107", "樂學路192-210（雙）"], "tag": "由原樂善里8鄰調整" },
+            { "village": "長樂里", "neighborhoods": [8], "streets": ["文禾路101、103", "樂學路156-190（雙）"], "tag": "由原樂善里8鄰調整" },
+            { "village": "長樂里", "neighborhoods": [9], "streets": ["文達路258-268（雙）", "樂學路118-152（雙）"], "tag": "由原樂善里8鄰調整" },
+            { "village": "長樂里", "neighborhoods": [10], "streets": ["長慶一街28-30、38-60（雙）"], "tag": "由原長庚里30鄰調整" },
+            { "village": "長樂里", "neighborhoods": [11], "streets": ["樂學路470-490（雙）"], "tag": "由原長庚里30鄰調整" },
+            { "village": "長樂里", "neighborhoods": [12], "streets": ["長慶一街45巷33-39（單）", "長慶二街6-26（雙）", "樂學路492-512（雙）"], "tag": "由原長庚里30鄰調整" },
+            { "village": "長樂里", "neighborhoods": [13], "streets": ["長慶一街39、41", "長慶一街45巷1-31（單）"], "tag": "由原長庚里30鄰調整" },
+            { "village": "長樂里", "neighborhoods": [14], "streets": ["長慶二街78-82（雙）", "長慶一街45巷26-58（雙）", "長慶一街87-97（單）", "長慶一街85巷2-18（雙）"], "tag": "由原長庚里30鄰調整" },
+            { "village": "長樂里", "neighborhoods": [15], "streets": ["長慶二街1-17（單）", "樂學路528-560（雙）"], "tag": "由原長庚里27鄰調整" },
+            { "village": "長樂里", "neighborhoods": [16], "streets": ["長慶二街61-83（單）", "長慶三街18-36（雙）"], "tag": "由原長庚里27鄰調整" },
+            { "village": "長樂里", "neighborhoods": [17], "streets": ["長慶二街85-111（單）", "長慶三街38-58（雙）"], "tag": "由原長庚里28鄰調整" },
+            { "village": "長樂里", "neighborhoods": [18], "streets": ["長慶二街113-123（單）", "長慶三街60-82（雙）"], "tag": "由原長庚里28鄰調整" },
+            { "village": "長樂里", "neighborhoods": [19], "streets": ["樂學路590巷20-32（雙）", "長慶三街41-79（單）、81、83"], "tag": "由原長庚里29鄰調整" },
+            { "village": "長樂里", "neighborhoods": [20], "streets": ["樂學路590巷29-43（單）", "樂學路622巷26-62（雙）"], "tag": "由原長庚里29鄰調整" },
+            { "village": "長樂里", "neighborhoods": [21], "streets": ["樂學路672-686（雙）"], "tag": "由原長庚里29鄰調整" },
+            { "village": "文樂里", "neighborhoods": [1], "streets": ["文化一路196-216（雙）、236-242（雙）"], "tag": "由原樂善里30鄰調整" },
+            { "village": "文樂里", "neighborhoods": [2], "streets": ["文化一路246-258（雙）、262-278（雙）"], "tag": "由原樂善里30鄰調整" },
+            { "village": "文樂里", "neighborhoods": [3], "streets": ["文化一路280-296（雙）、316-328（雙）"], "tag": "由原樂善里30鄰調整" },
+            { "village": "文樂里", "neighborhoods": [4], "streets": ["文化一路298-312（雙）、218-232（雙）"], "tag": "由原樂善里30鄰調整" },
+            { "village": "文樂里", "neighborhoods": [5], "streets": ["文化一路366號（雙）、368號（雙）、368之1-368之9"], "tag": "由原樂善里1鄰調整" },
+            { "village": "文樂里", "neighborhoods": [6], "streets": ["文化一路370號（雙）、370之1-370之7、372號（雙）"], "tag": "由原樂善里1鄰調整" },
+            { "village": "文樂里", "neighborhoods": [7], "streets": ["文化一路386-388（雙）", "樂善二路221、223、203-219（單）"], "tag": "由原樂善里1鄰調整" },
+            { "village": "文樂里", "neighborhoods": [8], "streets": ["樂善二路185-201（單）、181-183（單）"], "tag": "由原樂善里1鄰調整" },
+            { "village": "文樂里", "neighborhoods": [9], "streets": ["樂善三路85-109（單）、111-149（單）"], "tag": "由原樂善里1鄰調整" },
+            { "village": "文樂里", "neighborhoods": [10], "streets": ["樂善三路151-175（單）", "樂善二路153-167（單）、139-151（單）", "樂善三路177-191（單）", "樂善二路169號"], "tag": "由原樂善里1鄰調整" },
+            { "village": "文樂里", "neighborhoods": [11], "streets": ["文化一路512巷66之1號、66之2號及66號（雙）", "樂善二路316-326（雙）"], "tag": "由原樂善里1鄰調整" },
+            { "village": "文樂里", "neighborhoods": [12], "streets": ["文化一路662-668（雙）", "文學路49-55（單）、31-47（單）"], "tag": "由原樂善里1鄰調整" },
+            { "village": "文樂里", "neighborhoods": [13], "streets": ["文學路13-29（單）、1-11（單）", "文化一路512巷25-69（單）", "文化一路688號(機捷體育大學A7站)、248之6號", "樂善街346之1號", "樂善街206巷43號、45之1號、45之7號、51之1號、59之1號、61號、65號"], "tag": "由原樂善里1、6鄰調整" },
+            { "village": "文桃里", "neighborhoods": [1], "streets": ["文桃路426號、428號", "文華路18號", "文信路286、288號、329、389號", "文工一路220-618（雙）、527-539（單）", "文工一路298巷(全部單雙號含各樓層)", "文桃路476巷18-42", "文桃路36之8號（雙）", "文南路85-286（雙）", "文桃路192-262"], "tag": "由原樂善里9、5鄰調整" },
+            { "village": "文桃里", "neighborhoods": [2], "streets": ["文桃路123-155（單）、131之1號、147之1號、147之2號、263-273（單）", "文桃路121巷31之7號", "文桃路235-251（單）"], "tag": "由原樂善里5鄰調整" },
+            { "village": "文桃里", "neighborhoods": [3], "streets": ["樂善二路513-543（單）", "文吉路31、33", "文工一路27、29"], "tag": "由原樂善里4鄰調整" },
+            { "village": "文桃里", "neighborhoods": [4], "streets": ["文桃路339-365（單）"], "tag": "由原樂善里4鄰調整" },
+            { "village": "文桃里", "neighborhoods": [5], "streets": ["樂善二路477-511（單）", "文吉路28號", "文桃路399號"], "tag": "由原樂善里4鄰調整" },
+            { "village": "文桃里", "neighborhoods": [6], "streets": ["文桃路419-435（單）", "樂善二路427-457（單）"], "tag": "由原樂善里4鄰調整" },
+            { "village": "文桃里", "neighborhoods": [7], "streets": ["文桃路437-447（單）"], "tag": "由原樂善里4鄰調整" },
+            { "village": "文桃里", "neighborhoods": [8], "streets": ["牛角坡路29-51（單）、27之1號", "文桃路489-493（單）"], "tag": "由原樂善里4、2鄰調整" },
+            { "village": "文桃里", "neighborhoods": [9], "streets": ["樂善二路341-395（單）", "牛角坡路58號", "樂善一路500之1號"], "tag": "由原樂善里2鄰調整" },
+            { "village": "文桃里", "neighborhoods": [10], "streets": ["樂善二路778號(文青國中小)、778之1號(文青幼兒園)、818-830", "文吉路115-133（單）、116-146（雙）、116之1號", "樂善二路816號", "文吉路111、113"], "tag": "由原樂善里3、4鄰調整" },
+            { "village": "文桃里", "neighborhoods": [11], "streets": ["牛角坡路115-135（單）、91-109（單）", "樂善二路650號、652號（雙）"], "tag": "由原樂善里3鄰調整" },
+            { "village": "文桃里", "neighborhoods": [12], "streets": ["樂善二路518-580（雙）"], "tag": "由原樂善里2鄰調整" },
+            { "village": "文桃里", "neighborhoods": [13], "streets": ["牛角坡路252-290（雙）、163-177（單）"], "tag": "由原樂善里2鄰調整" },
+            { "village": "文桃里", "neighborhoods": [14], "streets": ["樂善一路250-276（雙）", "牛角坡路300-316（雙）"], "tag": "由原樂善里2鄰調整" },
+            { "village": "文桃里", "neighborhoods": [15], "streets": ["樂善一路269-295（單）、297-323（單）", "樂善二路458-468（雙）"], "tag": "由原樂善里2鄰調整" },
+            { "village": "樂善里", "neighborhoods": [1], "streets": ["樂善三路2-56（雙）", "文化一路90-100（雙）、88號"], "tag": "由原樂善里1鄰調整" },
+            { "village": "樂善里", "neighborhoods": [2], "streets": ["樂善三路62-88（雙）", "華亞三路39巷49-55（單）"], "tag": "由原樂善里1鄰調整" },
+            { "village": "樂善里", "neighborhoods": [3], "streets": ["華亞三路39巷1-47（單）", "華亞三路35號、37號"], "tag": "由原樂善里1鄰調整" },
+            { "village": "樂善里", "neighborhoods": [4], "streets": ["文化二路506-522（雙）、526-528（雙）", "華亞三路39巷36-78（雙）"], "tag": "由原樂善里6鄰調整" },
+            { "village": "樂善里", "neighborhoods": [5], "streets": ["文化二路466-502（雙）", "樂善二路101-119（單）"], "tag": "由原樂善里6鄰調整" },
+            { "village": "樂善里", "neighborhoods": [6], "streets": ["樂善三路100-110（雙）、112-118（雙）", "樂善街206巷72、90"], "tag": "由原樂善里6鄰調整" },
+            { "village": "樂善里", "neighborhoods": [7], "streets": ["樂學路111-149（單）"], "tag": "由原樂善里7鄰調整" },
+            { "village": "樂善里", "neighborhoods": [8], "streets": ["樂學路99-109（單）"], "tag": "由原樂善里7鄰調整" },
+            { "village": "樂善里", "neighborhoods": [9], "streets": ["樂學路95、97", "樂學一路122-128（雙）", "文達路270-322（雙）"], "tag": "由原樂善里7鄰調整" },
+            { "village": "樂善里", "neighborhoods": [10], "streets": ["文達路233-235（單）", "樂學二路46-50（雙）"], "tag": "由原樂善里7鄰調整" },
+            { "village": "樂善里", "neighborhoods": [11], "streets": ["樂學一路56-78（雙）", "樂學二路52-70（雙）"], "tag": "由原樂善里7鄰調整" },
+            { "village": "樂善里", "neighborhoods": [12], "streets": ["（同調整前）"], "tag": "由原樂善里12鄰調整" },
+            { "village": "樂善里", "neighborhoods": [13], "streets": ["（同調整前）"], "tag": "由原樂善里13鄰調整" },
+            { "village": "樂善里", "neighborhoods": [14], "streets": ["（同調整前）"], "tag": "由原樂善里14鄰調整" },
+            { "village": "樂善里", "neighborhoods": [15], "streets": ["文明路2號、6號(無人設籍)、13-51", "文明路29巷8號(無人設籍)", "文德二路6號、6之1號(無人設籍)、8之1號(無人設籍)", "文化一路1巷16-108（雙）", "文德二路1號"], "tag": "由原樂善里17、22、23、28鄰調整" },
+            { "village": "樂善里", "neighborhoods": [16], "streets": ["文德二路5-9（單）", "文德二路11巷7號"], "tag": "由原樂善里22鄰調整" },
+            { "village": "樂善里", "neighborhoods": [17], "streets": ["文康街7號、12-20（雙）、28-30（雙）、36-42（雙）、37-39（單）、51-53（單）", "文明路2號、6號(無人設籍)、13-51", "文明路29巷8號(無人設籍)"], "tag": "由原樂善里17鄰調整" },
+            { "village": "樂善里", "neighborhoods": [18], "streets": ["（同調整前）"], "tag": "由原樂善里18鄰調整" },
+            { "village": "樂善里", "neighborhoods": [19], "streets": ["（同調整前）"], "tag": "由原樂善里19鄰調整" },
+            { "village": "樂善里", "neighborhoods": [20], "streets": ["（同調整前）"], "tag": "由原樂善里20鄰調整" },
+            { "village": "樂善里", "neighborhoods": [21], "streets": ["（同調整前）"], "tag": "由原樂善里21鄰調整" },
+            { "village": "樂善里", "neighborhoods": [22], "streets": ["文德二路18號(無人設籍)、5-9（單）", "文德二路11巷7號"], "tag": "由原樂善里22鄰調整" },
+            { "village": "樂善里", "neighborhoods": [23], "streets": ["文德二路90-122（雙）、39號、80號、88號", "文德二路116巷2、8、12、14號", "文德二路6號、6之1號(無人設籍)、8之1號(無人設籍)"], "tag": "由原樂善里23鄰調整" },
+            { "village": "樂善里", "neighborhoods": [24], "streets": ["（同調整前）"], "tag": "由原樂善里24鄰調整" },
+            { "village": "樂善里", "neighborhoods": [25], "streets": ["（同調整前）"], "tag": "由原樂善里25鄰調整" },
+            { "village": "樂善里", "neighborhoods": [26], "streets": ["（同調整前）"], "tag": "由原樂善里26鄰調整" },
+            { "village": "樂善里", "neighborhoods": [27], "streets": ["（同調整前）"], "tag": "由原樂善里27鄰調整" },
+            { "village": "樂善里", "neighborhoods": [28], "streets": ["文德二路1號、3號", "文德路12號", "文化一路1巷16-108（雙）"], "tag": "由原樂善里28鄰調整" },
+            { "village": "樂善里", "neighborhoods": [29], "streets": ["華亞三路41號", "文化二路515之1號"], "tag": "由原樂善里29、6鄰調整" },
+            { "village": "樂善里", "neighborhoods": [30], "streets": ["樂學三路71-99（單）", "樂學路339巷1、3號"], "tag": "由原樂善里11鄰調整" },
+            { "village": "樂善里", "neighborhoods": [31], "streets": ["樂學三路63-67（單）", "樂學三路69巷1-35（單）", "樂學路339巷2號(樂善國小)", "339巷35號(樂善市民活動中心)", "文明路135號(顯安嚴)、135之1號、155號"], "tag": "由原樂善里11鄰調整" },
+            { "village": "樂善里", "neighborhoods": [32], "streets": ["樂學三路88號、90號、92號", "文達路293-299（單）"], "tag": "由原樂善里7鄰調整" },
+            { "village": "樂善里", "neighborhoods": [33], "streets": ["文化一路87-89、87-1", "樂學一路3-29（單）"], "tag": "由原樂善里7鄰調整" },
+            { "village": "文青里", "neighborhoods": [1], "streets": ["【麗寶社區】", "文青路383號", "文青路395巷3號、28之1號"], "tag": "由原文青里36、4鄰調整" },
+            { "village": "文青里", "neighborhoods": [2], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里35鄰調整" },
+            { "village": "文青里", "neighborhoods": [3], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里34鄰調整" },
+            { "village": "文青里", "neighborhoods": [4], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里33鄰調整" },
+            { "village": "文青里", "neighborhoods": [5], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里32鄰調整" },
+            { "village": "文青里", "neighborhoods": [6], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里31鄰調整" },
+            { "village": "文青里", "neighborhoods": [7], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里41鄰調整" },
+            { "village": "文青里", "neighborhoods": [8], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里40鄰調整" },
+            { "village": "文青里", "neighborhoods": [9], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里39鄰調整" },
+            { "village": "文青里", "neighborhoods": [10], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里38鄰調整" },
+            { "village": "文青里", "neighborhoods": [11], "streets": ["【麗寶社區】詳細門牌請查社區登記資料"], "tag": "由原文青里37鄰調整" },
+            { "village": "文青里", "neighborhoods": [12], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里5鄰調整" },
+            { "village": "文青里", "neighborhoods": [13], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里6鄰調整" },
+            { "village": "文青里", "neighborhoods": [14], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里7鄰調整" },
+            { "village": "文青里", "neighborhoods": [15], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里8鄰調整" },
+            { "village": "文青里", "neighborhoods": [16], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里9鄰調整" },
+            { "village": "文青里", "neighborhoods": [17], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里10鄰調整" },
+            { "village": "文青里", "neighborhoods": [18], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里11鄰調整" },
+            { "village": "文青里", "neighborhoods": [19], "streets": ["【遠雄文青社區】詳細門牌請查社區登記資料"], "tag": "由原文青里12鄰調整" },
+            { "village": "文青里", "neighborhoods": [20], "streets": ["【名軒社區】詳細門牌請查社區登記資料"], "tag": "由原文青里30鄰調整" },
+            { "village": "文青里", "neighborhoods": [21], "streets": ["【名軒社區】詳細門牌請查社區登記資料"], "tag": "由原文青里29鄰調整" },
+            { "village": "文青里", "neighborhoods": [22], "streets": ["【名軒社區】詳細門牌請查社區登記資料"], "tag": "由原文青里28鄰調整" },
+            { "village": "文青里", "neighborhoods": [23], "streets": ["【名軒社區】詳細門牌請查社區登記資料"], "tag": "由原文青里27鄰調整" },
+            { "village": "文青里", "neighborhoods": [24], "streets": ["【名軒社區】詳細門牌請查社區登記資料"], "tag": "由原文青里26鄰調整" },
+            { "village": "文青里", "neighborhoods": [25], "streets": ["（同調整前）"], "tag": "由原文青里25鄰調整" },
+            { "village": "文青里", "neighborhoods": [26], "streets": ["【新未來社區】詳細門牌請查社區登記資料"], "tag": "由原文青里44鄰調整" },
+            { "village": "文青里", "neighborhoods": [27], "streets": ["【新未來社區】詳細門牌請查社區登記資料"], "tag": "由原文青里45鄰調整" },
+            { "village": "文青里", "neighborhoods": [28], "streets": ["【新未來社區】詳細門牌請查社區登記資料"], "tag": "由原文青里43鄰調整" },
+            { "village": "文藝里", "neighborhoods": [1], "streets": ["（同調整前）"], "tag": "由原文青里3鄰調整" },
+            { "village": "文藝里", "neighborhoods": [2], "streets": ["（同調整前）"], "tag": "由原文青里2鄰調整" },
+            { "village": "文藝里", "neighborhoods": [3], "streets": ["文藝街61-97（單）、36、36-1、101號", "文青二路238巷29-5", "文青二路138號"], "tag": "由原文青里4鄰調整" },
+            { "village": "文藝里", "neighborhoods": [4], "streets": ["文青二路98-116（雙）、6-58（雙）", "青山路二段536之6號", "文青路198號", "文化一路257之1號"], "tag": "由原文青里4鄰調整" },
+            { "village": "文藝里", "neighborhoods": [5], "streets": ["文青二路218-236（雙）"], "tag": "由原文青里46鄰調整" },
+            { "village": "文藝里", "neighborhoods": [6], "streets": ["文青二路188-216（雙）"], "tag": "由原文青里46鄰調整" },
+            { "village": "文藝里", "neighborhoods": [7], "streets": ["（同調整前）"], "tag": "由原文青里1鄰調整" },
+            { "village": "文藝里", "neighborhoods": [8], "streets": ["（同調整前）"], "tag": "由原文青里42鄰調整" },
+            { "village": "文藝里", "neighborhoods": [9], "streets": ["（同調整前）"], "tag": "由原文青里18鄰調整" },
+            { "village": "文藝里", "neighborhoods": [10], "streets": ["（同調整前）"], "tag": "由原文青里19鄰調整" },
+            { "village": "文藝里", "neighborhoods": [11], "streets": ["（同調整前）"], "tag": "由原文青里20鄰調整" },
+            { "village": "文藝里", "neighborhoods": [12], "streets": ["（同調整前）"], "tag": "由原文青里21鄰調整" },
+            { "village": "文藝里", "neighborhoods": [13], "streets": ["（同調整前）"], "tag": "由原文青里22鄰調整" },
+            { "village": "文藝里", "neighborhoods": [14], "streets": ["（同調整前）"], "tag": "由原文青里23鄰調整" },
+            { "village": "文藝里", "neighborhoods": [15], "streets": ["（同調整前）"], "tag": "由原文青里24鄰調整" },
+            { "village": "文藝里", "neighborhoods": [16], "streets": ["（同調整前）"], "tag": "由原文青里13鄰調整" },
+            { "village": "文藝里", "neighborhoods": [17], "streets": ["（同調整前）"], "tag": "由原文青里14鄰調整" },
+            { "village": "文藝里", "neighborhoods": [18], "streets": ["（同調整前）"], "tag": "由原文青里15鄰調整" },
+            { "village": "文藝里", "neighborhoods": [19], "streets": ["（同調整前）"], "tag": "由原文青里16鄰調整" },
+            { "village": "文藝里", "neighborhoods": [20], "streets": ["（同調整前）"], "tag": "由原文青里17鄰調整" },
+            { "village": "長庚里", "neighborhoods": [1], "streets": ["文德路108號"], "tag": "由原樂善里28鄰調整" },
+            { "village": "長庚里", "neighborhoods": [2], "streets": ["文化二路386-406（雙）", "長庚路1號（長庚醫院）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [3], "streets": ["長庚路2號、3號", "文化二路408-430（雙）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [4], "streets": ["文化二路432-460（雙）", "復興街1-50號"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [5], "streets": ["文化二路462-490（雙）", "長庚醫護新村1-100號"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [6], "streets": ["長庚醫護新村101-200號", "文德三路1-50號"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [7], "streets": ["長庚醫護新村201-300號", "文德三路51-100號"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [8], "streets": ["長庚醫護新村301-400號", "文興路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [9], "streets": ["長庚醫護新村401-500號", "文興路2-50（雙）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [10], "streets": ["長庚醫護新村501-600號", "文興一街"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [11], "streets": ["長庚醫護新村601-700號", "文興二街"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [12], "streets": ["長庚醫護新村701-800號", "文興三街"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [13], "streets": ["文德路1-50（單）", "文化二路350-384（雙）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [14], "streets": ["文德路2-50（雙）", "文化二路300-348（雙）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [15], "streets": ["文德路51-100（單）", "長庚醫護新村801-900號"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [16], "streets": ["文德路52-100（雙）", "長庚醫護新村901-1000號"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [17], "streets": ["文德路101-150（單）", "長庚醫護新村1001-1100號"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [18], "streets": ["文德路102-150（雙）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [19], "streets": ["文德路151-200（單）", "文化二路250-298（雙）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [20], "streets": ["文德路152-200（雙）", "文化二路200-248（雙）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [21], "streets": ["文德路201-250（單）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [22], "streets": ["文德路202-250（雙）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [23], "streets": ["文德路251-300（單）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [24], "streets": ["文德路252-300（雙）", "文興路"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [25], "streets": ["文德路301-350（單）"], "tag": "（同調整前）" },
+            { "village": "長庚里", "neighborhoods": [26], "streets": ["文德路302-350（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [1], "streets": ["文化七路1-50（單）", "科技一路1-30（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [2], "streets": ["文化七路2-50（雙）", "科技一路2-30（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [3], "streets": ["文化七路51-100（單）", "文勝路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [4], "streets": ["文化七路52-100（雙）", "文勝路2-50（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [5], "streets": ["文化七路101-150（單）", "復興一路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [6], "streets": ["文化七路102-150（雙）", "復興一路2-50（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [7], "streets": ["文化七路116號（文華國小）", "復興二路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [8], "streets": ["復興二路2-50（雙）", "文化七路151-200（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [9], "streets": ["文化七路152-200（雙）", "文化二路168號（大崗國中）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [10], "streets": ["復興三路1-50（單）", "文勝路51-100（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [11], "streets": ["復興三路2-50（雙）", "文勝路52-100（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [12], "streets": ["科技二路1-50（單）", "文化七路201-250（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [13], "streets": ["科技二路2-50（雙）", "文化七路202-250（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [14], "streets": ["復興四路1-50（單）", "科技一路31-80（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [15], "streets": ["復興四路2-50（雙）", "科技一路32-80（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [16], "streets": ["復興五路1-50（單）", "文化七路251-300（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [17], "streets": ["復興五路2-50（雙）", "文化七路252-300（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [18], "streets": ["文化一路257之1號"], "tag": "部分調整至文藝里，其餘（同調整前）" },
+            { "village": "文化里", "neighborhoods": [19], "streets": ["文化七路301-350（單）", "復興六路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [20], "streets": ["文化七路302-350（雙）", "復興六路2-50（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [21], "streets": ["文化七路351-400（單）", "科技三路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [22], "streets": ["文化七路352-400（雙）", "科技三路2-50（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [23], "streets": ["文化七路401-450（單）", "文勝路101-150（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [24], "streets": ["文化七路402-450（雙）", "文勝路102-150（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [25], "streets": ["文化七路451-500（單）", "科技四路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [26], "streets": ["文化七路452-500（雙）", "科技四路2-50（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [27], "streets": ["文化七路501-550（單）", "文勝路151-200（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [28], "streets": ["文化七路502-550（雙）", "文勝路152-200（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [29], "streets": ["科技五路1-50（單）", "文化七路551-600（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [30], "streets": ["科技五路2-50（雙）", "文化七路552-600（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [31], "streets": ["文化七路601-650（單）", "復興七路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [32], "streets": ["文化七路602-650（雙）", "復興七路2-50（雙）"], "tag": "（同調整前）" },
+            { "village": "文化里", "neighborhoods": [33], "streets": ["文化七路651-700（單）", "復興八路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [1], "streets": ["大崗路1-50（單）", "大湖路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [2], "streets": ["大崗路2-50（雙）", "大湖路2-50（雙）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [3], "streets": ["大崗路51-100（單）", "大湖路51-100（單）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [4], "streets": ["大崗路52-100（雙）", "大湖路52-100（雙）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [5], "streets": ["大崗路101-150（單）", "樹人路1-50（單）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [6], "streets": ["大崗路102-150（雙）", "樹人路2-50（雙）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [7], "streets": ["大湖路175號（大崗國小）", "大崗路151-200（單）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [8], "streets": ["中坑街1-200（單）", "大崗路152-200（雙）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [9], "streets": ["中坑街2-200（雙）", "新興街1-50（單）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [10], "streets": ["樹人路190巷7之1號", "樹人路200巷(全部)16之1至40之1號"], "tag": "由原大坑里10鄰調整" },
+            { "village": "大崗里", "neighborhoods": [11], "streets": ["新興街51-100（單）", "中坑街201-400（單）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [12], "streets": ["新興街2-100（雙）", "中坑街202-400（雙）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [13], "streets": ["中坑街611號"], "tag": "由原楓樹里11鄰調整" },
+            { "village": "大崗里", "neighborhoods": [14], "streets": ["大崗路201-250（單）", "大湖路101-150（單）"], "tag": "（同調整前）" },
+            { "village": "大崗里", "neighborhoods": [15], "streets": ["大崗路202-250（雙）", "大湖路102-150（雙）"], "tag": "（同調整前）" }
+        ];
 
-            // ── 以下為未被行政區域調整公告，但屬於各里的完整鄰里道路 ──
+        // 智慧解析引擎：負責自動轉換 JSON 規則與比對使用者輸入
+        function searchVillage(input) {
+            // 1. 智慧過濾器：移除常規雜訊 (如郵遞區號、縣市區名稱)
+            const cleanedInput = input.replace(/^\d{3,5}\s*/, '').replace(/台灣|臺灣|桃園市|桃園縣|龜山區|龜山鄉|林口區|林口鄉/g, '').trim();
 
-            // 文青里主要道路（里別未變動部分）
-            "文青路": [
-                { "type": "range", "min": 383, "max": 395, "village": "文青里", "neighborhood": "1" },
-                { "type": "range", "min": 1, "max": 382, "village": "文青里", "neighborhood": "all" }
-            ],
-            "文青二路": [
-                { "type": "even", "min": 98, "max": 116, "village": "文藝里", "neighborhood": "4" },
-                { "type": "even", "min": 6, "max": 58, "village": "文藝里", "neighborhood": "4" },
-                { "type": "even", "min": 218, "max": 236, "village": "文藝里", "neighborhood": "5" },
-                { "type": "even", "min": 188, "max": 216, "village": "文藝里", "neighborhood": "6" },
-                { "type": "range", "min": 138, "max": 138, "village": "文藝里", "neighborhood": "2" }
-            ],
-            "文藝街": [
-                { "type": "odd", "min": 61, "max": 97, "village": "文藝里", "neighborhood": "1" },
-                { "type": "range", "min": 36, "max": 101, "village": "文藝里", "neighborhood": "2" }
-            ],
-            "青山路二段": [
-                { "type": "range", "min": 536, "max": 536, "village": "文藝里", "neighborhood": "4" },
-                { "type": "range", "min": 1, "max": 535, "village": "文青里", "neighborhood": "all" }
-            ],
+            let parsedStreet = "";
+            let parsedNum = null;
 
-            // 長庚里主要道路（里別未變動部分，排除已移出的長樂里地區）
-            "長庚路": [
-                { "type": "range", "min": 1, "max": 999, "village": "長庚里", "neighborhood": "all" }
-            ],
-            "忠義路": [
-                { "type": "range", "min": 1, "max": 999, "village": "長庚里", "neighborhood": "all" }
-            ],
-            "復興路": [
-                { "type": "range", "min": 1, "max": 999, "village": "長庚里", "neighborhood": "all" }
-            ],
+            // 2. 門牌正規化拆解 (將路名/巷弄 與 號碼分開)
+            const match = cleanedInput.match(/([一-龥]+(?:路|街|大道|段))((?:\d+巷)?(?:\d+弄)?)(?:\s*(\d+)(?:[~-～－]\d+)?\s*(?:號|之))?/);
 
-            // 文化里主要道路
-            "復興一路": [
-                { "type": "range", "min": 1, "max": 999, "village": "文化里", "neighborhood": "all" }
-            ],
-            "文化三路": [
-                { "type": "range", "min": 1, "max": 999, "village": "文化里", "neighborhood": "all" }
-            ],
-            "復興三路": [
-                { "type": "range", "min": 1, "max": 999, "village": "文化里", "neighborhood": "all" }
-            ],
-            "頂湖一街": [
-                { "type": "range", "min": 1, "max": 999, "village": "文化里", "neighborhood": "all" }
-            ],
-            "頂湖二街": [
-                { "type": "range", "min": 1, "max": 999, "village": "文化里", "neighborhood": "all" }
-            ],
-            "頂湖三街": [
-                { "type": "range", "min": 1, "max": 999, "village": "文化里", "neighborhood": "all" }
-            ],
-            "頂湖路": [
-                { "type": "range", "min": 1, "max": 999, "village": "文化里", "neighborhood": "all" }
-            ],
+            if (match) {
+                parsedStreet = match[1];
+                if (match[2]) parsedStreet += match[2].trim(); // 附加巷弄
+                if (match[3]) parsedNum = parseInt(match[3], 10); // 提取主要號碼
+            } else {
+                parsedStreet = cleanedInput.replace(/\d+[~-～－]?\d*號?/, '').trim();
+            }
 
-            // 大崗里主要道路
-            "樹人路": [
-                { "type": "range", "min": 190, "max": 200, "village": "大崗里", "neighborhood": "10" },
-                { "type": "range", "min": 1, "max": 189, "village": "大崗里", "neighborhood": "all" }
-            ],
-            "中坑街": [
-                { "type": "range", "min": 611, "max": 611, "village": "大崗里", "neighborhood": "10" },
-                { "type": "range", "min": 1, "max": 610, "village": "大崗里", "neighborhood": "all" }
-            ],
-            "大崗路": [
-                { "type": "range", "min": 1, "max": 999, "village": "大崗里", "neighborhood": "all" }
-            ],
-            "山鶯路": [
-                { "type": "range", "min": 1, "max": 999, "village": "大崗里", "neighborhood": "all" }
-            ],
+            if (!parsedStreet && !cleanedInput) return [];
 
-            // 樂善里（里別未變動路段，已有精確門號資料於上方 樂善一路)
+            let strongMatches = [];
+            let weakMatches = [];
 
-            // 文樂里主要道路（里別未變動部分）
-            "文樂路": [
-                { "type": "range", "min": 1, "max": 999, "village": "文樂里", "neighborhood": "all" }
-            ],
+            for (const item of VILLAGE_DATA) {
+                // 直接匹配行政里名稱
+                if (item.village === cleanedInput || item.village.replace('里', '') === cleanedInput) {
+                    strongMatches.push({ ...item, matchType: 'village' });
+                    continue;
+                }
 
-            // 長樂里主要道路（里別未變動部分）
-            "長庚北路": [
-                { "type": "range", "min": 1, "max": 999, "village": "長樂里", "neighborhood": "all" }
-            ]
-        };
+                // 匹配社區標籤名稱
+                if (item.tag && (item.tag.includes(cleanedInput) || cleanedInput.includes(item.tag.replace(/相關社區|社區/g, '')))) {
+                    strongMatches.push({ ...item, matchType: 'tag' });
+                    continue;
+                }
+
+                if (!parsedStreet) continue;
+
+                for (const streetStr of item.streets) {
+                    // 必須包含路名
+                    if (!streetStr.includes(parsedStreet)) continue;
+
+                    // 【關鍵優化1】避免「文化一路」誤匹配到「文化一路1巷」的區間
+                    if (!parsedStreet.includes("巷") && new RegExp(parsedStreet + "\\d+巷").test(streetStr)) {
+                        continue;
+                    }
+
+                    if (parsedNum !== null) {
+                        let isMatch = false;
+
+                        // 3. 例外排除條款判斷 (例如 "250號、260號除外")
+                        const excludeRegex = /(\d+)(?:號|、|及|\/)*(\d+)?(?:號)?除外/;
+                        const excludeMatch = streetStr.match(excludeRegex);
+                        if (excludeMatch) {
+                            const ex1 = parseInt(excludeMatch[1], 10);
+                            const ex2 = excludeMatch[2] ? parseInt(excludeMatch[2], 10) : null;
+                            if (parsedNum === ex1 || parsedNum === ex2) {
+                                continue; // 命中排除條款，直接跳過這條規則
+                            }
+                        }
+
+                        // 【關鍵優化2】取得全域單雙號設定
+                        const hasGlobalEven = (streetStr.match(/雙/g) || []).length > 0 && (streetStr.match(/單/g) || []).length === 0;
+                        const hasGlobalOdd = (streetStr.match(/單/g) || []).length > 0 && (streetStr.match(/雙/g) || []).length === 0;
+
+                        // 4. 區段範圍比對 (例如 "196號至242號")
+                        // 加入局部修飾詞擷取，例如 188-200(雙)
+                        const rangeRegex = /(\d+)\s*(?:號)?\s*(?:至|~|-|～|－)\s*(\d+)\s*(?:號)?(?:[^0-9,，]{0,10}?(單|雙))?/g;
+                        let rMatch;
+                        let rangeFound = false;
+
+                        while ((rMatch = rangeRegex.exec(streetStr)) !== null) {
+                            rangeFound = true;
+                            let start = parseInt(rMatch[1], 10);
+                            let end = parseInt(rMatch[2], 10);
+                            if (start > end) { let temp = start; start = end; end = temp; }
+
+                            // 檢查是否落在數字區間內
+                            if (parsedNum >= start && parsedNum <= end) {
+                                const isEven = parsedNum % 2 === 0;
+                                const localModifier = rMatch[3]; // '單' 或 '雙'
+
+                                const requiresEven = localModifier === '雙' || (!localModifier && hasGlobalEven);
+                                const requiresOdd = localModifier === '單' || (!localModifier && hasGlobalOdd);
+
+                                // 驗證單雙號邏輯
+                                if (requiresEven && !isEven) continue;
+                                if (requiresOdd && isEven) continue;
+
+                                isMatch = true;
+                                break;
+                            }
+                        }
+
+                        if (isMatch) {
+                            strongMatches.push({ ...item, matchType: 'condition', matchedRule: streetStr });
+                            continue;
+                        }
+
+                        // 5. 精確單一號碼匹配 (例如 "366號" 或是 "286、288號")
+                        if (!rangeFound || !isMatch) {
+                            // 先把包含「至」的區段文字挖掉，避免誤抓區段內的單個數字
+                            const stringWithoutRanges = streetStr.replace(/(\d+)\s*(?:號)?\s*(?:至|~|-|～|－)\s*(\d+)\s*(?:號)?/g, '');
+                            const exactRegex = /(?:^|[^\d])(\d+)(?:號|、|及|$)/g;
+                            let exactMatch;
+
+                            while ((exactMatch = exactRegex.exec(stringWithoutRanges)) !== null) {
+                                if (parseInt(exactMatch[1], 10) === parsedNum) {
+                                    isMatch = true;
+                                    break;
+                                }
+                            }
+
+                            // 處理特殊單雙號全局宣告 (例如 "樂學路(單號)" 如果上面沒抓到數字)
+                            if (!isMatch && !rangeFound) {
+                                if (hasGlobalEven && parsedNum % 2 === 0) isMatch = true;
+                                if (hasGlobalOdd && parsedNum % 2 === 1) isMatch = true;
+                            }
+
+                            // 【關鍵優化3】若該路段規則完全沒有寫數字（代表整條路都算），當作精確命中
+                            const hasNumbers = /\d/.test(streetStr.replace(/第\d+鄰/g, ''));
+                            if (!hasNumbers) {
+                                strongMatches.push({ ...item, matchType: 'street_only', matchedRule: streetStr });
+                                continue;
+                            }
+
+                            if (isMatch) {
+                                strongMatches.push({ ...item, matchType: 'condition', matchedRule: streetStr });
+                            }
+                        }
+                    } else {
+                        // 使用者沒有輸入號碼，單純比對路名
+                        weakMatches.push({ ...item, matchType: 'street_only', matchedRule: streetStr });
+                    }
+                }
+            }
+
+            // 去除重複的 strongMatches (同里同鄰的多重條件命中的結果合併)
+            const uniqueStrong = [];
+            const seen = new Set();
+            for (const match of strongMatches) {
+                const key = match.village + (match.neighborhoods ? match.neighborhoods.join(',') : '');
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    uniqueStrong.push(match);
+                }
+            }
+
+            return uniqueStrong.length > 0 ? uniqueStrong : weakMatches;
+        }
 
         // 行政里調整查詢邏輯
         window.checkVillage = function () {
@@ -4373,118 +4457,58 @@
                 return;
             }
 
-            // 過濾掉縣市區資訊，避免干擾正則匹配
-            const cleanedInput = input.replace(/桃園市|龜山區/g, '').trim();
-
-            // 強化正則表達式：支援 "163~177號", "163-177", "163之1" 等複雜格式，並支援全形符號
-            let parsedStreet = "";
-            let parsedNum = null;
-            const match = cleanedInput.match(/([一-龥]+(?:路|街|大道|段))(?:\s*(\d+)(?:[~-～－]\d+)?\s*(?:號|之))?/);
-
-            if (match) {
-                parsedStreet = match[1];
-                if (match[2]) parsedNum = parseInt(match[2], 10);
-            } else {
-                parsedStreet = cleanedInput.replace(/\d+[~-～－]?\d*號?/, '').trim();
-            }
+            const results = searchVillage(input);
 
             let oldV = "未定/查無資料";
             let newV = "未定/查無資料";
-            let desc = "請輸入完整地址（例如包含巷弄或社區），或直接向龜山區戶政事務所確認。";
-            let found = false;
-
-            // 1. 從 ADVANCED_ROAD_DISTRICTS 中尋找符合的街道
-            const matchedKey = Object.keys(ADVANCED_ROAD_DISTRICTS).find(k => parsedStreet.includes(k) || k.includes(parsedStreet));
-
-            if (matchedKey) {
-                found = true;
-                const rules = ADVANCED_ROAD_DISTRICTS[matchedKey];
-
-                if (parsedNum !== null) {
-                    const isEven = parsedNum % 2 === 0;
-                    // 尋找符合的規則 (優先比對 odd/even，最後才是 range 和 all 作為 fallback)
-                    const exactMatch = rules.find(r => {
-                        if (r.type === 'even' && isEven && parsedNum >= r.min && parsedNum <= r.max) return true;
-                        if (r.type === 'odd' && !isEven && parsedNum >= r.min && parsedNum <= r.max) return true;
-                        if (r.type === 'range' && parsedNum >= r.min && parsedNum <= r.max) return true;
-                        return false;
-                    });
-                    const allMatch = rules.find(r => r.type === 'all');
-
-                    const matchRule = exactMatch || allMatch;
-
-                    if (matchRule) {
-                        const nText = (matchRule.neighborhood && matchRule.neighborhood !== 'all') ? ` ${matchRule.neighborhood}鄰` : "";
-                        newV = matchRule.village + nText;
-
-                        // 智能反推原行政里
-                        if (matchRule.village === '文藝里') {
-                            oldV = '文青里 (鄰別重編)';
-                        } else if (['長樂里', '文桃里', '文樂里'].includes(matchRule.village)) {
-                            oldV = '樂善里 (鄰別重編)';
-                        } else if (['文化里', '大崗里', '文青里', '長庚里'].includes(matchRule.village)) {
-                            oldV = matchRule.village; // 里別未調整，原行政里相同
-                        } else {
-                            oldV = matchRule.village + nText; // 里別未變動時，原行政里也會顯示正確的鄰別
-                        }
-                    } else {
-                        oldV = "超出範圍";
-                        newV = "超出範圍";
-                    }
-                } else {
-                    // 若僅輸入路名，列出可能的里別
-                    const villages = Array.from(new Set(rules.map(r => r.village)));
-                    newV = villages.join(' / ');
-
-                    // 推斷路名的舊里別
-                    if (villages.includes('文藝里') && !villages.includes('文青里')) oldV = '文青里';
-                    else if (villages.some(v => ['長樂里', '文桃里', '文樂里'].includes(v))) oldV = '樂善里';
-                    else oldV = villages.join(' / ');
-                }
-            }
-
-            // 2. 套用模糊比對與新舊里別轉換防呆機制
-            if (!found) {
-                if (cleanedInput.includes('文青路')) {
-                    oldV = "文青里"; newV = "文青里 / 文藝里"; desc = "文青路部分區段已劃分至新成立的「文藝里」。"; found = true;
-                } else if (cleanedInput.includes('樂善二路') || cleanedInput.includes('樂善三路') || cleanedInput.includes('文樂路')) {
-                    oldV = "樂善里"; newV = "文樂里"; desc = "此區域已從樂善里分出，新編為「文樂里」。"; found = true;
-                } else if (cleanedInput.includes('文學路') || cleanedInput.includes('樂善一路')) {
-                    oldV = "樂善里"; newV = "樂善里 / 長樂里"; desc = "部分區段調整至「長樂里」。"; found = true;
-                } else if (cleanedInput.includes('牛角坡路') || cleanedInput.includes('長慶二街') || cleanedInput.includes('長慶三街')) {
-                    oldV = "樂善里"; newV = "長樂里"; desc = "此區域已從樂善里分出，改編為「長樂里」。"; found = true;
-                } else if (cleanedInput.includes('文桃路') || cleanedInput.includes('體大') || cleanedInput.includes('龜山一路')) {
-                    oldV = "文青里 / 樂善里"; newV = "文桃里"; desc = "此周邊路段已統整編入「文桃里」。"; found = true;
-                } else if (cleanedInput.includes('文化一路')) {
-                    oldV = "文青里 / 樂善里"; newV = "多里交界"; desc = "文化一路跨越多個里別（文青、文桃、長樂等），請輸入巷弄或社區名稱以利精確判斷。"; found = true;
-                } else if (cleanedInput.includes('復興一路') || cleanedInput.includes('文化三路') || cleanedInput.includes('復興三路') || cleanedInput.includes('頂湖')) {
-                    oldV = "文化里"; newV = "文化里"; desc = "此路段屬於文化里，里別未有調整。"; found = true;
-                } else if (cleanedInput.includes('大崗') || cleanedInput.includes('樹人路') || cleanedInput.includes('中坑街') || cleanedInput.includes('山鶯路')) {
-                    oldV = "大崗里"; newV = "大崗里"; desc = "此路段屬於大崗里，里別未有調整。"; found = true;
-                } else if (cleanedInput.includes('文青二路') || cleanedInput.includes('文藝街')) {
-                    oldV = "文青里"; newV = "文藝里"; desc = "此路段已由原文青里範圍內劃分為新成立的「文藝里」。"; found = true;
-                } else if (cleanedInput.includes('長庚路')) {
-                    oldV = "長庚里"; newV = "長庚里"; desc = "此路段屬於長庚里，里別未有調整。"; found = true;
-                }
-            } else {
-                // 如果是透過對照表找到的
-                if (newV !== "超出範圍") {
-                    if (oldV.includes(newV.split(' ')[0])) {
-                        desc = parsedNum !== null ? `根據對照表，門牌 ${parsedNum} 號維持劃分於 ${newV}，里別未有變動。` : `此路段維持劃分於 ${newV}，未有變動。`;
-                    } else {
-                        desc = parsedNum !== null ? `根據對照表，門牌 ${parsedNum} 號原屬 ${oldV.split(' ')[0]}，新編劃入 ${newV}。` : `此路段部分或全部由 ${oldV} 調整編入 ${newV}。`;
-                    }
-                } else {
-                    desc = `對照表中查無 ${parsedNum} 號的確切資料，請確認門牌號碼是否正確。`;
-                }
-            }
+            let desc = "";
+            let found = results.length > 0;
 
             if (found) {
+                const isPrecise = results.some(r => r.matchType === 'condition' || r.matchType === 'tag' || r.matchType === 'village');
+
+                const villageMap = {};
+                results.forEach(r => {
+                    if (!villageMap[r.village]) villageMap[r.village] = new Set();
+                    (r.neighborhoods || []).forEach(n => villageMap[r.village].add(n));
+                });
+
+                const newVParts = [];
+                const vNames = Object.keys(villageMap);
+                for (const [v, nSet] of Object.entries(villageMap)) {
+                    if (nSet.size > 0 && nSet.size <= 5) {
+                        newVParts.push(`${v} ${[...nSet].sort((a, b) => a - b).join('、')}鄰`);
+                    } else if (nSet.size > 5) {
+                        newVParts.push(`${v} (部分)`); // 防呆避免文字過長
+                    } else {
+                        newVParts.push(v);
+                    }
+                }
+                newV = newVParts.join(' / ');
+
+                if (vNames.includes('文藝里') && !vNames.includes('文青里')) oldV = '文青里 (重編)';
+                else if (vNames.some(v => ['長樂里', '文桃里', '文樂里'].includes(v))) oldV = '樂善里 (重編)';
+                else oldV = vNames.join(' / ');
+
+                const parsedNumMatch = input.match(/\d+(?:號|之)/);
+
+                if (isPrecise) {
+                    desc = parsedNumMatch ? `門牌新編精確劃入 <span class="font-black text-purple-700">${newV}</span>。` : `此區域新編入 <span class="font-black text-purple-700">${newV}</span>。`;
+                    const preciseTag = results.find(r => r.tag)?.tag;
+                    if (preciseTag) desc += ` <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-md ml-1 shadow-sm border border-purple-200">${preciseTag}</span>`;
+                } else {
+                    if (parsedNumMatch) {
+                        desc = `<span class="text-orange-500 block mb-1 leading-snug"><i class="fa-solid fa-triangle-exclamation"></i> <b>政府未公告此路段詳細門牌區間</b></span>您的地址可能隸屬於上述任一鄰里，建議向戶政事務所確認。`;
+                    } else {
+                        desc = `此路段部分或全部由 ${oldV} 調整編入 ${newV}。請輸入完整門牌（如：100號）嘗試精確查詢。`;
+                    }
+                }
+
                 resultContainer.innerHTML = `
                     <div class="bg-white rounded-[1.5rem] p-4 sm:p-5 border-2 border-purple-100 shadow-sm flex flex-col items-center w-full">
                         <div class="flex items-stretch justify-center gap-2 sm:gap-6 w-full bg-purple-50/50 p-3 sm:p-5 rounded-2xl border border-purple-100">
                             <div class="text-center flex-1 flex flex-col">
-                                <div class="text-[11px] sm:text-xs text-gray-500 font-bold mb-1.5">原行政里</div>
+                                <div class="text-[11px] sm:text-xs text-gray-500 font-bold mb-1.5">原推估行政里</div>
                                 <div class="bg-gray-100 text-gray-700 font-black px-1.5 sm:px-3 py-2.5 sm:py-3 rounded-xl text-sm sm:text-lg border border-gray-200 w-full shadow-inner flex-1 flex items-center justify-center leading-tight break-words">${oldV}</div>
                             </div>
                             <div class="flex flex-col items-center justify-center shrink-0 mt-5">
@@ -4525,54 +4549,46 @@
                 return;
             }
 
-            const cleanedInput = input.replace(/桃園市|龜山區/g, '').trim();
-            let parsedStreet = "";
-            let parsedNum = null;
-            const match = cleanedInput.match(/([一-龥]+(?:路|街|大道|段))(?:\s*(\d+)(?:[~-～－]\d+)?\s*(?:號|之))?/);
-
-            if (match) {
-                parsedStreet = match[1];
-                if (match[2]) parsedNum = parseInt(match[2], 10);
-            } else {
-                parsedStreet = cleanedInput.replace(/\d+[~-～－]?\d*號?/, '').trim();
-            }
-
+            const results = searchVillage(input);
             let newVillage = "";
             let neighborhood = null;
-            let found = false;
+            let found = results.length > 0;
+            let isPrecise = false;
 
-            const matchedKey = Object.keys(ADVANCED_ROAD_DISTRICTS).find(k => parsedStreet.includes(k) || k.includes(parsedStreet));
+            if (found) {
+                isPrecise = results.some(r => r.matchType === 'condition' || r.matchType === 'tag' || r.matchType === 'village');
 
-            if (matchedKey && parsedNum !== null) {
-                found = true;
-                const rules = ADVANCED_ROAD_DISTRICTS[matchedKey];
-                const isEven = parsedNum % 2 === 0;
-
-                const exactMatch = rules.find(r => {
-                    if (r.type === 'even' && isEven && parsedNum >= r.min && parsedNum <= r.max) return true;
-                    if (r.type === 'odd' && !isEven && parsedNum >= r.min && parsedNum <= r.max) return true;
-                    if (r.type === 'range' && parsedNum >= r.min && parsedNum <= r.max) return true;
-                    return false;
-                });
-                const allMatch = rules.find(r => r.type === 'all');
-                const matchRule = exactMatch || allMatch;
-
-                if (matchRule) {
-                    newVillage = matchRule.village;
-                    neighborhood = (matchRule.neighborhood && matchRule.neighborhood !== 'all') ? parseInt(matchRule.neighborhood, 10) : null;
+                if (isPrecise) {
+                    const preciseMatch = results.find(r => r.matchType === 'condition' || r.matchType === 'tag' || r.matchType === 'village');
+                    newVillage = preciseMatch.village;
+                    if (preciseMatch.neighborhoods && preciseMatch.neighborhoods.length === 1) {
+                        neighborhood = preciseMatch.neighborhoods[0];
+                    }
                 } else {
-                    found = false;
+                    const uniqueVillages = [...new Set(results.map(r => r.village))];
+                    if (uniqueVillages.length === 1) newVillage = uniqueVillages[0];
+                    else newVillage = "AMBIGUOUS";
                 }
-            }
-
-            if (!found) {
+            } else {
+                const cleanedInput = input.replace(/桃園市|龜山區|林口區/g, '').trim();
                 if (cleanedInput.includes('文青') || cleanedInput.includes('文藝')) { newVillage = '文青里'; }
                 else if (cleanedInput.includes('文桃') || cleanedInput.includes('體大') || cleanedInput.includes('牛角坡路')) { newVillage = '文桃里'; }
                 else if (cleanedInput.includes('樂善') || cleanedInput.includes('文樂')) { newVillage = '樂善里'; }
                 else if (cleanedInput.includes('長樂') || cleanedInput.includes('長慶')) { newVillage = '長樂里'; }
                 else if (cleanedInput.includes('長庚') || cleanedInput.includes('文德')) { newVillage = '長庚里'; }
-                else if (cleanedInput.includes('文化') || cleanedInput.includes('復興一路') || cleanedInput.includes('頂湖')) { newVillage = '文化里'; }
-                else if (cleanedInput.includes('大崗') || cleanedInput.includes('樹人') || cleanedInput.includes('中坑') || cleanedInput.includes('山鶯')) { newVillage = '大崗里'; }
+            }
+
+            if (newVillage === "AMBIGUOUS") {
+                resultContainer.innerHTML = `
+                    <div class="bg-yellow-50 rounded-xl p-4 border border-yellow-200 shadow-sm flex flex-col items-center justify-center text-center h-full w-full">
+                        <div class="text-sm text-gray-600 font-bold mb-1"><i class="fa-solid fa-triangle-exclamation text-orange-500 mr-1.5"></i>此路段涵蓋多個學區</div>
+                        <div class="text-[11px] text-gray-500 font-bold leading-relaxed">由於政府尚未公告詳細門牌，無法精確定位您的學區。<br>請向戶政機關或學校確認。</div>
+                    </div>
+                `;
+                resultContainer.classList.remove('hidden');
+                resultContainer.classList.add('fade-in');
+                if (resultPlaceholder) resultPlaceholder.classList.add('hidden');
+                return;
             }
 
             let schoolResult = "";
@@ -4586,10 +4602,6 @@
             } else if (newVillage === '樂善里' || newVillage === '文樂里') {
                 schoolResult = "樂善國小、文青國中小";
                 isFree = true;
-            } else if (newVillage === '文化里') {
-                schoolResult = "大坑國小";
-            } else if (newVillage === '大崗里') {
-                schoolResult = "大崗國小";
             } else if (newVillage === '長樂里') {
                 if (neighborhood !== null && neighborhood >= 10 && neighborhood <= 21) {
                     schoolResult = "樂善國小、長庚國小";
