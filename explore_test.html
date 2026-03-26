@@ -4129,7 +4129,7 @@
             { "village": "文桃里", "neighborhoods": [6], "streets": ["文桃路419-435（單）", "樂善二路427-457（單）"], "tag": "由原樂善里4鄰調整" },
             { "village": "文桃里", "neighborhoods": [7], "streets": ["文桃路437-447（單）"], "tag": "由原樂善里4鄰調整" },
             { "village": "文桃里", "neighborhoods": [8], "streets": ["牛角坡路29-51（單）、27之1號", "文桃路489-493（單）"], "tag": "由原樂善里4、2鄰調整" },
-            { "village": "文桃里", "neighborhoods": [9], "streets": ["樂善二路341-395（單）", "牛角坡路58號", "樂善一路500之1號"], "tag": "由原樂善里2鄰調整" },
+            { "village": "文桃里", "neighborhoods": [9], "streets": ["樂善二路341-395（單）", "牛角坡路58號", "樂善一路1-99（單雙）、500之1號"], "tag": "由原樂善里2鄰調整" },
             { "village": "文桃里", "neighborhoods": [10], "streets": ["樂善二路778號(文青國中小)、778之1號(文青幼兒園)、818-830", "文吉路115-133（單）、116-146（雙）、116之1號", "樂善二路816號", "文吉路111、113"], "tag": "由原樂善里3、4鄰調整" },
             { "village": "文桃里", "neighborhoods": [11], "streets": ["牛角坡路115-135（單）、91-109（單）", "樂善二路650號、652號（雙）"], "tag": "由原樂善里3鄰調整" },
             { "village": "文桃里", "neighborhoods": [12], "streets": ["樂善二路518-580（雙）"], "tag": "由原樂善里2鄰調整" },
@@ -4415,6 +4415,9 @@
 
                             if (isMatch) {
                                 strongMatches.push({ ...item, matchType: 'condition', matchedRule: streetStr });
+                            } else {
+                                // 【修正】即便號碼不匹配，只要路名匹配，就加入到 weakMatches 作為備案
+                                weakMatches.push({ ...item, matchType: 'street_only', matchedRule: streetStr });
                             }
                         }
                     } else {
@@ -4569,8 +4572,8 @@
                 }
             } else {
                 const cleanedInput = input.replace(/桃園市|龜山區|林口區/g, '').trim();
-                if (cleanedInput.includes('文青') || cleanedInput.includes('文藝')) { newVillage = '文青里'; }
-                else if (cleanedInput.includes('文桃') || cleanedInput.includes('體大') || cleanedInput.includes('牛角坡路')) { newVillage = '文桃里'; }
+                if (cleanedInput.includes('文青') || cleanedInput.includes('文藝') || cleanedInput.includes('青山路')) { newVillage = '文青里'; }
+                else if (cleanedInput.includes('文桃') || cleanedInput.includes('體大') || cleanedInput.includes('牛角坡路') || cleanedInput.includes('樂善一路')) { newVillage = '文桃里'; }
                 else if (cleanedInput.includes('樂善') || cleanedInput.includes('文樂')) { newVillage = '樂善里'; }
                 else if (cleanedInput.includes('長樂') || cleanedInput.includes('長慶')) { newVillage = '長樂里'; }
                 else if (cleanedInput.includes('文德二路')) { newVillage = '樂善里'; }
