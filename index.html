@@ -14,11 +14,11 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-YJ9RJC2DRS');
+        gtag('config', 'G-YJ9RJC2DRS');
     </script>
 
 
@@ -64,9 +64,12 @@
     <style>
         body { 
             background-color: #FDFBF7; 
-            /* 可愛的圓點背景 */
-            background-image: radial-gradient(#FF9EBB 1.5px, transparent 1.5px);
-            background-size: 40px 40px;
+            /* 融入機捷紫與可愛粉的雙色波卡圓點，加大間距與點點大小，溫和不密集 */
+            background-image: 
+                radial-gradient(rgba(193, 151, 255, 0.35) 4px, transparent 4px), 
+                radial-gradient(rgba(255, 158, 187, 0.25) 4px, transparent 4px);
+            background-size: 120px 120px;
+            background-position: 0 0, 60px 60px;
         }
         /* 自訂可愛滾動條 (加入 height 以支援橫向滾動條) */
         ::-webkit-scrollbar { width: 10px; height: 10px; }
