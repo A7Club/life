@@ -22,7 +22,6 @@
       gtag('config', 'G-YJ9RJC2DRS');
     </script>
 
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -582,8 +581,8 @@
                 <div class="absolute inset-0 bg-gradient-to-br from-themeBlue/40 to-themePink/40"></div>
 
                 <div class="absolute -right-10 -top-10 text-white/40 text-9xl z-0"><i
-                        class="fa-solid fa-mountain-city"></i></div>
-                <div class="absolute -left-5 -bottom-5 text-white/40 text-8xl z-0"><i class="fa-solid fa-ice-cream"></i>
+                        class="fa-solid fa-dharmachakra"></i></div>
+                <div class="absolute -left-5 -bottom-5 text-white/40 text-8xl z-0"><i class="fa-solid fa-mountain-city"></i>
                 </div>
 
                 <h1 class="text-4xl md:text-5xl font-black text-white mb-4 relative z-10 drop-shadow-lg">探索 A7 在地生活 ✨
@@ -1656,6 +1655,7 @@
                 }, 350);
             } else if (hash === 'food-gacha') {
                 renderPage('home');
+                document.title = 'A7 柒樂部🎡｜美食隨機輪盤';
                 setTimeout(() => {
                     const gachaEl = document.getElementById('food-gacha');
                     if (gachaEl) {
@@ -1787,7 +1787,7 @@
                 const pageTitles = {
                     'home': 'A7 柒樂部🎡｜生活地圖指南',
                     'food': 'A7 柒樂部🎡｜美食販賣部',
-                    'food-gacha': 'A7 柒樂部🎡｜今天吃什麼',
+                    'food-gacha': 'A7 柒樂部🎡｜美食隨機輪盤',
                     'shopping': 'A7 柒樂部🎡｜生活補給站',
                     'lifehub': 'A7 柒樂部🎡｜公共服務與醫療',
                     'search': 'A7 柒樂部🎡｜全站搜尋'
@@ -2663,7 +2663,7 @@
             setTimeout(() => {
                 const imgBox = document.getElementById('gacha-result-img-box');
                 if (imgBox) imgBox.classList.remove('animate-bounce');
-            }, 4500);
+            }, 8000);
         }
 
         function confettiEffect(el) {
