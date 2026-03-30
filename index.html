@@ -2642,11 +2642,11 @@
                 </div>
                 <div class="bg-themePink shrink-0 text-white px-3 py-1.5 rounded-md text-xs font-black mb-1.5 shadow-sm">${item.category}</div>
                 <h4 class="font-black shrink-0 text-gray-800 text-xl sm:text-2xl line-clamp-1 mb-4 leading-tight">${item.name}</h4>
-                <div class="flex gap-2 w-full max-w-[260px] shrink-0">
-                    <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="flex-1 bg-white border border-pink-200 text-pink-500 hover:bg-pink-50 hover:text-pink-600 font-black py-3 rounded-2xl text-base shadow-sm transition-colors flex items-center justify-center gap-1.5">
+                <div class="flex gap-2 w-full max-w-[280px] shrink-0 justify-center">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${navTarget}" target="_blank" class="w-[120px] shrink-0 whitespace-nowrap bg-white border border-pink-200 text-pink-500 hover:bg-pink-50 hover:text-pink-600 font-black py-3 rounded-2xl text-base shadow-sm transition-colors flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-location-arrow"></i> 導航
                     </a>
-                    <button onclick="loadPage('food'); setTimeout(()=>updateFoodMap('${(item.address || '').replace(/'/g, "\\'")}', '${(item.name || '').replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${(item.category || '').replace(/'/g, "\\'")}', true), 500);" class="flex-1 bg-themePink text-white hover:bg-pink-400 font-black py-3 rounded-xl text-base shadow-sm transition-colors flex items-center justify-center gap-1.5">
+                    <button onclick="loadPage('food'); setTimeout(()=>updateFoodMap('${(item.address || '').replace(/'/g, "\\'")}', '${(item.name || '').replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${(item.category || '').replace(/'/g, "\\'")}', true), 500);" class="w-[120px] shrink-0 whitespace-nowrap bg-themePink text-white hover:bg-pink-400 font-black py-3 rounded-xl text-base shadow-sm transition-colors flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-map-location-dot"></i> 地圖
                     </button>
                 </div>
@@ -2773,7 +2773,7 @@
             return R * c;
         }
 
-        
+
 
         // --- 首頁：抓取自動新聞邏輯 ---
         async function fetchLocalNews() {
