@@ -3064,6 +3064,13 @@
         window.nearestMaps = {};
         window.nearestMarkersMap = {};
         window.findNearestConvenienceStores = function (safeCatId, catName) {
+            const mapWrapper = document.getElementById('map-wrapper-' + safeCatId);
+            if (mapWrapper) {
+                mapWrapper.classList.add('hidden');
+                mapWrapper.classList.add('opacity-0');
+                mapWrapper.classList.remove('opacity-100');
+            }
+
             const btn = document.querySelector(`#nearest-header-${safeCatId} button`);
             if (btn) {
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在定位...';
