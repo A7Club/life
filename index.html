@@ -3156,7 +3156,7 @@
                         let popupContent = `
                             <div class="text-center p-1 pt-5 w-50">
                                 <div class="font-black text-white bg-orange-400 px-2 py-0.5 rounded-md inline-block text-[10px] mb-1.5 shadow-sm">離你第 ${idx + 1} 近</div>
-                                <h4 class="font-black text-gray-800 text-sm leading-[1.1] mb-1" title="${store.name}">${formatStoreName(cleanName)}</h4>
+                                <h4 class="font-black text-gray-800 text-sm leading-[1.1] mb-1" title="${store.name}">${formatStoreName(store.name)}</h4>
                                 <p class="text-[10px] text-gray-500 font-bold mb-1"><i class="fa-solid fa-location-dot mr-1"></i>${store.address}</p>
                                 <a href="https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${store.lat},${store.lng}" target="_blank" class="mt-2 block w-full bg-orange-100 text-orange-600 font-black py-1.5 rounded-lg text-xs hover:bg-orange-500 hover:text-white transition-colors shadow-sm">開始導航</a>
                             </div>
@@ -3844,11 +3844,11 @@
                         marker.category = store.category;
                         marker.storeName = store.name;
                         let cleanName = typeof getCleanStoreName === 'function' ? getCleanStoreName(store.name, catName) : store.name;
-                        marker.bindTooltip(cleanName, { direction: 'top', offset: [0, -50], className: 'custom-tooltip' });
+                        marker.bindTooltip(store.name, { direction: 'top', offset: [0, -50], className: 'custom-tooltip' });
 
                         let popupContent = `
                             <div class="text-center p-1 pt-5 w-50">
-                                <h4 class="font-black text-themeYellow text-sm leading-[1.1] mb-1" title="${store.name}">${formatStoreName(cleanName)}</h4>
+                                <h4 class="font-black text-themeYellow text-sm leading-[1.1] mb-1" title="${store.name}">${formatStoreName(store.name)}</h4>
                                 <p class="text-xs text-gray-500 font-bold leading-snug"><i class="fa-solid fa-location-dot mr-1"></i>${store.address}</p>
                                 <a href="https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lng}" target="_blank" class="mt-2.5 block w-full bg-blue-100 text-blue-600 font-black py-1.5 rounded-lg text-xs hover:bg-blue-500 hover:text-white transition-colors shadow-sm">導航去</a>
                             </div>
@@ -4272,7 +4272,7 @@
                 let listClass = isPhotoCategory
                     ? "grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-3 relative z-10 flex-1 content-start"
                     : isConvenience
-                        ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start"
+                        ? "grid grid-cols-1 md:grid-cols-2 gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start"
                         : "grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3 font-bold text-gray-600 relative z-10 flex-1 content-start";
 
                 return `
@@ -4284,15 +4284,16 @@
                             </h3>
                             ${brandTagsHtml}
                             ${nearestStoresHtml}
+                            
+                            <div id="map-wrapper-${safeCatId}" class="hidden w-full shrink-0 transition-all duration-300 opacity-0 flex-col mt-2 mb-4">
+                                <div id="map-${safeCatId}" class="w-full h-[250px] min-h-[250px] rounded-2xl border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 flex-1"></div>
+                            </div>
+
                             <div class="flex flex-col gap-4 relative z-10 w-full flex-1">
                                 <div class="flex-1 w-full transition-all duration-300">
                                     <${containerTag} id="list-${safeCatId}" class="${listClass}">
                                         ${itemsHtml}
                                     </${containerTag}>
-                                </div>
-                                <div id="map-wrapper-${safeCatId}" class="hidden w-full shrink-0 transition-all duration-300 opacity-0 flex-col mt-2">
-                                    
-                                    <div id="map-${safeCatId}" class="w-full h-[250px] min-h-[250px] rounded-b-[1rem] border-2 border-gray-100 shadow-inner overflow-hidden relative z-10 flex-1"></div>
                                 </div>
                             </div>
                         </div>
