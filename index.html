@@ -22,7 +22,6 @@
       gtag('config', 'G-YJ9RJC2DRS');
     </script>
 
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -3453,7 +3452,7 @@
                             lat: latIdx !== -1 && row[latIdx] ? parseFloat(row[latIdx]) : null,
                             lng: lngIdx !== -1 && row[lngIdx] ? parseFloat(row[lngIdx]) : null,
                             status: statusIdx !== -1 ? row[statusIdx] : 'OK',
-                            likesCount: parseInt(row[14]) || 0,
+                            likesCount: parseInt(row[16]) || 0,
                             timestamp: isNaN(parsedTime) ? 0 : parsedTime
                         };
                     }).filter(item => item.name !== '未命名' && item.name.trim() !== '');
@@ -3966,7 +3965,7 @@
                                 img: finalImg,
                                 lat: latIdx !== -1 && row[latIdx] ? parseFloat(row[latIdx]) : null,
                                 lng: lngIdx !== -1 && row[lngIdx] ? parseFloat(row[lngIdx]) : null,
-                                likesCount: parseInt(row[14]) || 0
+                                likesCount: parseInt(row[16]) || 0
                             };
                         }).filter(item => item.name !== '未命名' && item.name.trim() !== '');
 
