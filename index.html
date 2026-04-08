@@ -1284,7 +1284,7 @@
                 </div>
 
                 <!-- 🏆 手搖飲票選活動 (動態注入) -->
-                <div id="bestvote"
+                <div id="topvote"
                     class="w-full bg-gradient-to-br from-pink-50/50 to-orange-50/50 rounded-3xl p-5 sm:p-8 mb-6 shadow-xl border-2 border-white/80 relative overflow-hidden transition-all duration-500 backdrop-blur-sm"
                     style="display: none;">
                     <!-- 背景裝飾圖示 -->
@@ -1868,15 +1868,17 @@
             } else if (hash === 'school') {
                 // 特殊錨點路由：切換到外部生活通頁面並定位
                 window.location.href = 'lifehub.html#school';
-            } else if (hash === 'food-gacha') {
+            } else if (hash === 'topvote' || hash === 'food-gacha') {
                 renderPage('home');
-                document.title = 'A7 柒樂部🎡｜美食隨機輪盤';
+                document.title = hash === 'topvote' ? 'A7 柒樂部🥤｜首屆 A7 搖霸大賞' : 'A7 柒樂部🎡｜美食隨機輪盤';
                 setTimeout(() => {
-                    const gachaEl = document.getElementById('food-gacha');
-                    if (gachaEl) {
-                        gachaEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        gachaEl.classList.add('ring-4', 'ring-themePink', 'ring-offset-4', 'transition-shadow', 'duration-500');
-                        setTimeout(() => gachaEl.classList.remove('ring-4', 'ring-themePink', 'ring-offset-4'), 2500);
+                    const targetId = hash === 'topvote' ? 'topvote' : 'food-gacha';
+                    const targetEl = document.getElementById(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const ringColor = hash === 'topvote' ? 'ring-pink-400' : 'ring-themePink';
+                        targetEl.classList.add('ring-4', ringColor, 'ring-offset-4', 'transition-shadow', 'duration-500');
+                        setTimeout(() => targetEl.classList.remove('ring-4', ringColor, 'ring-offset-4'), 2500);
                     }
                 }, 350);
             } else {
@@ -3275,9 +3277,9 @@
                 if (typeof window.initDrinkVoting === 'function') {
                     window.initDrinkVoting();
 
-                    // 獨立網址深層連結：檢查 #bestvote 並捲動
+                    // 獨立網址深層連結：檢查 #topvote 並捲動
                     setTimeout(() => {
-                        if (window.location.hash === '#bestvote') {
+                        if (window.location.hash === '#topvote') {
                             const container = document.getElementById('drink-voting-container');
                             if (container) {
                                 container.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -5350,7 +5352,7 @@
 
         // 初始化票選活動畫面
         window.initDrinkVoting = function () {
-            const container = document.getElementById('bestvote');
+            const container = document.getElementById('topvote');
             const content = document.getElementById('drink-voting-content');
             if (!container || !content || !globalFoodData || !globalLikesData) return;
 
