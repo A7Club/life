@@ -490,7 +490,8 @@
                                 <i class="fa-solid fa-school text-xs lg:text-xl"></i>
                             </div>
                             <div class="flex flex-col lg:flex-row lg:items-center gap-1.5 lg:gap-2">
-                                <span class="font-black text-xs lg:text-lg text-gray-400 tracking-wide whitespace-nowrap">教育學習</span>
+                                <span
+                                    class="font-black text-xs lg:text-lg text-gray-400 tracking-wide whitespace-nowrap">教育學習</span>
                                 <div id="count-education" class="flex items-center gap-1 lg:gap-2">
                                     <i class="fa-solid fa-spinner fa-spin text-blue-400"></i>
                                 </div>
@@ -693,8 +694,10 @@
                     </a>
                 </div>
 
-                <div id="medical-list-container" class="flex flex-col lg:grid lg:grid-cols-[280px_1fr] gap-6 w-full items-start">
-                    <div class="w-full lg:col-span-2 text-center text-themeGreen py-12 bg-white rounded-[2.5rem] border-4 border-green-50 shadow-cute">
+                <div id="medical-list-container"
+                    class="flex flex-col lg:grid lg:grid-cols-[280px_1fr] gap-6 w-full items-start">
+                    <div
+                        class="w-full lg:col-span-2 text-center text-themeGreen py-12 bg-white rounded-[2.5rem] border-4 border-green-50 shadow-cute">
                         <i class="fa-solid fa-spinner fa-spin text-4xl mb-5"></i>
                         <p class="font-bold">正在連線樂園救護中心庫...</p>
                     </div>
@@ -1126,7 +1129,7 @@
                 tagBg: "bg-sky-500",
                 icon: "fa-star",
                 img: "https://img1.591.com.tw/house/2025/12/12/176550459390441101.jpg!900x.water3.jpg",
-                website: "http://www2.leses.tyc.edu.tw/school/web/index.php",
+                website: "http://www.leses.tyc.edu.tw/",
                 navUrl: "https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區樂善街200巷71號",
                 desc: "約 35 班 / 附設幼兒園",
                 address: "桃園市龜山區樂善街200巷71號",
@@ -2816,7 +2819,7 @@
         function scrollToMedicalCategory(keyword) {
             // 支援傳入單一字串或陣列
             const keywords = Array.isArray(keyword) ? keyword : [keyword];
-            
+
             if (globalMedicalData) {
                 const grouped = {};
                 globalMedicalData.forEach(i => {
@@ -2824,7 +2827,7 @@
                     if (!grouped[catName]) grouped[catName] = [];
                     grouped[catName].push(i);
                 });
-                
+
                 const cats = Object.keys(grouped);
                 for (let c of cats) {
                     if (keywords.some(k => c.includes(k))) {
