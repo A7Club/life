@@ -12,16 +12,17 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
 
     <!-- 📊 Google Analytics (GA4)追蹤代碼放置區 -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-YJ9RJC2DRS');
-    </script>
-
+    <!-- 
+      請將您的 GA4 gtag.js 代碼貼在下方。
+      範例：
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX'); // 將 X 替換為您的評估 ID
+      </script>
+    -->
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1699,6 +1700,79 @@
 
     <!-- JavaScript 路由與注入邏輯 -->
     <script>
+
+        // 請替換成你 GAS 部署後的 Web App URL
+const TRANSPORT_API_URL = "https://script.google.com/macros/s/AKfycbyfG-5P1uureyDnwT9XvWg_49smheYnEkZ8Bca9SJWERUyPnpwWIvBxi0WRCEZcjtC3IA/exec";
+async function updateAllTransportData() {
+    const statusMsg = document.getElementById('tdx-status-msg');
+    
+    try {
+        if (statusMsg) statusMsg.innerText = "正在連線中繼站...";
+
+        const response = await fetch(TRANSPORT_API_URL);
+        const data = await response.json();
+
+        if (data.error) throw new Error(data.error);
+
+        // 1. 更新捷運資訊 (A7 站)
+        renderMRTData(data.mrt_A7);
+
+        // 2. 合併並更新公車資訊
+        const allBusData = [...data.bus_Taoyuan, ...data.bus_NewTaipei];
+        renderBusData(allBusData);
+
+        // 3. 更新環境與油價 (選用)
+        if (data.aqi_data) renderAQIData(data.aqi_data);
+        if (data.fuel_data) renderFuelData(data.fuel_data);
+
+        if (statusMsg) {
+            statusMsg.innerText = data.is_offline ? "🌙 夜間離線模式" : `✅ 最後更新：${data.updateTime}`;
+        }
+
+    } catch (error) {
+        console.error("資料抓取失敗:", error);
+        if (statusMsg) statusMsg.innerText = "❌ 無法取得即時資訊，請稍後再試";
+        // 失敗時呼叫你原本準備好的靜態時刻表備援
+        if (typeof useStaticFallback === "function") useStaticFallback();
+    }
+}
+
+function renderBusData(busList) {
+    const container = document.getElementById('bus-list-container');
+    if (!container) return;
+
+    if (busList.length === 0) {
+        container.innerHTML = "<p class='text-gray-500'>目前無公車班次資訊</p>";
+        return;
+    }
+
+    // 範例：依照預估時間排序
+    busList.sort((a, b) => (a.EstimateTime || 9999) - (b.EstimateTime || 9999));
+
+    container.innerHTML = busList.map(bus => `
+        <div class="flex justify-between items-center p-2 border-b">
+            <div>
+                <span class="font-bold text-blue-600">${bus.RouteName}</span>
+                <span class="text-sm text-gray-500 ml-2">往 ${bus.StopName}</span>
+            </div>
+            <div class="${bus.EstimateTime < 180 ? 'text-red-500 animate-pulse' : 'text-green-600'}">
+                ${formatBusTime(bus.EstimateTime, bus.StopStatus)}
+            </div>
+        </div>
+    `).join('');
+}
+
+function formatBusTime(seconds, status) {
+    if (status === 1) return "尚未發車";
+    if (status === 3) return "末班車已過";
+    if (seconds === undefined || seconds === null) return "查詢中";
+    const mins = Math.floor(seconds / 60);
+    if (mins <= 1) return "即將到站";
+    return `${mins} 分鐘`;
+}
+
+
+
         // ==========================================
         // 1. 核心邏輯、路由與資料載入
         // ==========================================
@@ -2831,12 +2905,13 @@
             `;
         }
 
-        // --- 交通轉乘：改用 GAS 雲端 API ---
+// --- 交通轉乘：改用 GAS 雲端 API ---
         async function fetchRealtimeTransitData() {
             const refreshIcon = document.getElementById('transit-refresh-icon');
             if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-            const GAS_URL = "https://script.google.com/macros/s/AKfycbw0t0lUbxn6MV30sK75uGCNz6y_paQzQHtTvyFBpVd-uuPIAJ3op--wkv9TI6EjuGUxWw/exec";
+            // 替換為新的 GAS URL
+            const GAS_URL = "https://script.google.com/macros/s/AKfycbyfG-5P1uureyDnwT9XvWg_49smheYnEkZ8Bca9SJWERUyPnpwWIvBxi0WRCEZcjtC3IA/exec";
 
             const generateStaticMrtTimes = (schedule) => {
                 const now = new Date();
