@@ -5472,14 +5472,15 @@
             `;
         }
 
-// ==========================================
+        // ==========================================
         // 🚌 交通轉乘：改用 GAS 雲端 API (升級版 CorsProxy 備援)
         // ==========================================
         async function fetchRealtimeTransitData() {
             const refreshIcon = document.getElementById('transit-refresh-icon');
             if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-            const GAS_URL = "https://script.google.com/macros/s/AKfycbyfG-5P1uureyDnwT9XvWg_49smheYnEkZ8Bca9SJWERUyPnpwWIvBxi0WRCEZcjtC3IA/exec";
+            // 🚀 關鍵修正：將網址替換為與 index.html 相同、會成功吐出資料的最新網址！
+            const GAS_URL = "https://script.google.com/macros/s/AKfycbw0t0lUbxn6MV30sK75uGCNz6y_paQzQHtTvyFBpVd-uuPIAJ3op--wkv9TI6EjuGUxWw/exec";
 
             const generateStaticMrtTimes = (schedule) => {
                 const now = new Date();
@@ -5590,7 +5591,6 @@
 
             } catch (err) {
                 console.warn("※ 交通資料連線異常，已自動切換至備援模式:", err.message);
-                // 這裡的 err.message 如果是 Failed to fetch，通常就是網路層級被阻擋
                 window.gasTransitCache = {
                     isFallback: true,
                     usedProxy: false,
