@@ -5473,7 +5473,7 @@
         }
 
 // ==========================================
-        // 🚌 交通轉乘：改用 GAS 雲端 API (含 AllOrigins 代理備援)
+        // 🚌 交通轉乘：改用 GAS 雲端 API (升級版 CorsProxy 備援)
         // ==========================================
         async function fetchRealtimeTransitData() {
             const refreshIcon = document.getElementById('transit-refresh-icon');
@@ -5493,48 +5493,50 @@
             let usedProxy = false;
 
             try {
+                let text = '';
                 // 🚀 第一階段：嘗試直接連線
                 try {
-                    const response = await fetch(GAS_URL);
-                    const text = await response.text();
+                    const response = await fetch(GAS_URL, { redirect: "follow" });
                     
-                    // 檢查是否被轉導到 HTML (通常是 CORS 或權限被擋)
+                    if (!response.ok) throw new Error(`HTTP 錯誤: ${response.status}`);
+                    
+                    text = await response.text();
+                    
+                    // 如果 GAS 權限沒開好，Google 會回傳一個要求登入的 HTML 網頁
                     if (text.trim().startsWith('<')) {
-                        throw new Error("遭到 CORS 阻擋或回傳 HTML");
+                        throw new Error("GAS 回傳了 HTML，可能遭到 CORS 阻擋或權限未完全公開");
                     }
-                    
-                    const data = JSON.parse(text);
-                    if (data.error) throw new Error(data.error);
-                    rawData = data.data || data;
-
                 } catch (directErr) {
-                    console.warn("⚠️ 直連失敗，自動切換代理...", directErr.message);
+                    console.warn("⚠️ 直連失敗，啟動 AllOrigins 代理備援...", directErr.message);
                     usedProxy = true;
                     
-                    // 🛡️ 第二階段：使用代理連線
-                    let text = '';
                     try {
+                        // 🛡️ 第二階段：改用 AllOrigins 代理連線
                         const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(GAS_URL)}`;
                         const proxyRes = await fetch(proxyUrl);
-                        if (!proxyRes.ok) throw new Error(`AllOrigins連線失敗: ${proxyRes.status}`);
+                        
+                        if (!proxyRes.ok) throw new Error(`AllOrigins 代理連線 HTTP 錯誤: ${proxyRes.status}`);
+                        
                         const proxyData = await proxyRes.json();
                         text = proxyData.contents;
-                    } catch (proxyErr) {
-                        console.warn("⚠️ AllOrigins 失敗，嘗試備援代理...", proxyErr.message);
+                        if (!text || text.trim().startsWith('<')) throw new Error("AllOrigins 回傳無效內容");
+                    } catch (proxyErr1) {
+                        console.warn("⚠️ AllOrigins 失敗，啟動 Corsproxy 代理備援...", proxyErr1.message);
+                        
+                        // 🛡️ 第三階段：改用 corsproxy.io 代理連線
                         const proxyUrl2 = `https://corsproxy.io/?${encodeURIComponent(GAS_URL)}`;
                         const proxyRes2 = await fetch(proxyUrl2);
-                        if (!proxyRes2.ok) throw new Error(`Corsproxy連線失敗: ${proxyRes2.status}`);
+                        
+                        if (!proxyRes2.ok) throw new Error(`Corsproxy 代理連線 HTTP 錯誤: ${proxyRes2.status}`);
+                        
                         text = await proxyRes2.text();
+                        if (text.trim().startsWith('<')) throw new Error("Corsproxy 回傳了 HTML");
                     }
-
-                    if (!text || text.trim().startsWith('<')) {
-                        throw new Error("遭到 CORS 阻擋或回傳無效內容(HTML)");
-                    }
-
-                    const data = JSON.parse(text);
-                    if (data.error) throw new Error(data.error);
-                    rawData = data.data || data;
                 }
+
+                const data = JSON.parse(text);
+                if (data.error) throw new Error(data.error);
+                rawData = data.data || data;
 
                 // --- 資料解析與處理 ---
                 const parseSafeArray = (key) => {
@@ -5546,7 +5548,6 @@
                 const busTaoyuanData = parseSafeArray('bus_Taoyuan');
                 const busNewTaipeiData = parseSafeArray('bus_NewTaipei');
 
-                // 處理機捷
                 const getClosestMrt = (dirFilter) => {
                     const trains = mrtA7Data.filter(dirFilter);
                     if (!trains.length) return undefined;
@@ -5560,7 +5561,6 @@
                 if (northMrt === undefined) northMrt = generateStaticMrtTimes([2, 17, 32, 47]);
                 if (southMrt === undefined) southMrt = generateStaticMrtTimes([0, 15, 30, 45]);
 
-                // 處理公車 (完整保留原始欄位相容舊版)
                 const getStatusText = (status) => {
                     if (status === 1) return '尚未發車';
                     if (status === 2) return '交管不停靠';
@@ -5586,11 +5586,11 @@
                     buses: processedBuses
                 };
                 
-                // 相容全域變數
                 window.tdxBusData = processedBuses;
 
             } catch (err) {
-                console.error("※ GAS 交通資料全面解析失敗:", err.message);
+                console.warn("※ 交通資料連線異常，已自動切換至備援模式:", err.message);
+                // 這裡的 err.message 如果是 Failed to fetch，通常就是網路層級被阻擋
                 window.gasTransitCache = {
                     isFallback: true,
                     usedProxy: false,
@@ -5599,7 +5599,7 @@
                     mrtA7: { north: generateStaticMrtTimes([2, 17, 32, 47]), south: generateStaticMrtTimes([0, 15, 30, 45]) },
                     buses: []
                 };
-                window.gasTransitCache.errorMsg = err.message;
+                window.gasTransitCache.errorMsg = err.message === "Failed to fetch" ? "網路阻擋或擴充功能攔截" : err.message;
                 window.tdxBusData = [];
             } finally {
                 if (window.gasTransitCache) {
