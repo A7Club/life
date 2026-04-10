@@ -1060,7 +1060,7 @@
 
                 <!-- 🎰 美食部拉霸機 (右欄：35%) -->
                 <div id="food-gacha"
-                    class="w-full lg:w-[35%] bg-white rounded-[2.5rem] shadow-[0_30px_70px_-15px_rgba(255,158,187,0.5)] p-2 border-[12px] border-themePink/20 relative overflow-hidden flex flex-col group ring-4 ring-white/50 ring-inset min-h-[420px] sm:min-h-[450px] scroll-mt-28">
+                    class="w-full lg:w-[35%] bg-white rounded-[2.5rem] shadow-[0_30px_70px_-15px_rgba(255,158,187,0.5)] p-2 border-[12px] border-themePink/20 relative overflow-hidden flex flex-col group ring-4 ring-white/50 ring-inset min-h-[420px] sm:min-h-[450px] scroll-mt-24">
 
                     <!-- 機台頂部招牌 (Vibrant Marquee) -->
                     <div
@@ -1281,9 +1281,16 @@
                     </h2>
                 </div>
 
+
+
+                <!-- 外層使用 Flex 控制電腦版與手機版的佈局切換 -->
+                <div class="flex flex-col lg:flex-row gap-5 relative z-10">
+                    <!-- 主要推廣卡片區塊 (左側：改為自動填滿剩餘空間，解決寬度衝突) -->
+                    <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
+                        
                 <!-- 🏆 手搖飲票選活動 (動態注入) -->
-                <div id="topvote"
-                    class="w-full bg-gradient-to-br from-pink-50/50 to-orange-50/50 rounded-3xl p-5 sm:p-8 mb-6 shadow-xl border-2 border-white/80 relative overflow-hidden transition-all duration-500 backdrop-blur-sm scroll-mt-28"
+                <div id="bestvote"
+                    class="w-full bg-gradient-to-br from-pink-50/50 to-orange-50/50 rounded-3xl p-5 sm:p-8 mb-6 shadow-xl border-2 border-white/80 relative overflow-hidden transition-all duration-500 backdrop-blur-sm"
                     style="display: none;">
                     <!-- 背景裝飾圖示 -->
                     <div
@@ -1301,10 +1308,6 @@
                     </div>
                 </div>
 
-                <!-- 外層使用 Flex 控制電腦版與手機版的佈局切換 -->
-                <div class="flex flex-col lg:flex-row gap-5 relative z-10">
-                    <!-- 主要推廣卡片區塊 (左側：改為自動填滿剩餘空間，解決寬度衝突) -->
-                    <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
                         <!-- 模擬推廣卡片 1 -->
                         <div style="display: none;"
                             onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')"
@@ -1354,7 +1357,7 @@
                         </div>
                         <!-- 🎁 嵌入的新商家限時優惠卡片 (茶聚) -->
 
-                        <div
+                        <div  style="display: none;"
                             class="bg-gradient-to-br from-red-50 to-pink-50 rounded-[1.5rem] p-4 sm:p-5 shadow-sm border border-red-100 flex flex-col lg:flex-row gap-4 items-start lg:items-center relative overflow-hidden group">
                             <div
                                 class="absolute -right-4 -bottom-4 text-red-100 text-6xl transform -rotate-12 z-0 pointer-events-none">
@@ -1698,79 +1701,6 @@
 
     <!-- JavaScript 路由與注入邏輯 -->
     <script>
-
-        // 請替換成你 GAS 部署後的 Web App URL
-const TRANSPORT_API_URL = "https://script.google.com/macros/s/AKfycbyfG-5P1uureyDnwT9XvWg_49smheYnEkZ8Bca9SJWERUyPnpwWIvBxi0WRCEZcjtC3IA/exec";
-async function updateAllTransportData() {
-    const statusMsg = document.getElementById('tdx-status-msg');
-    
-    try {
-        if (statusMsg) statusMsg.innerText = "正在連線中繼站...";
-
-        const response = await fetch(TRANSPORT_API_URL);
-        const data = await response.json();
-
-        if (data.error) throw new Error(data.error);
-
-        // 1. 更新捷運資訊 (A7 站)
-        renderMRTData(data.mrt_A7);
-
-        // 2. 合併並更新公車資訊
-        const allBusData = [...data.bus_Taoyuan, ...data.bus_NewTaipei];
-        renderBusData(allBusData);
-
-        // 3. 更新環境與油價 (選用)
-        if (data.aqi_data) renderAQIData(data.aqi_data);
-        if (data.fuel_data) renderFuelData(data.fuel_data);
-
-        if (statusMsg) {
-            statusMsg.innerText = data.is_offline ? "🌙 夜間離線模式" : `✅ 最後更新：${data.updateTime}`;
-        }
-
-    } catch (error) {
-        console.error("資料抓取失敗:", error);
-        if (statusMsg) statusMsg.innerText = "❌ 無法取得即時資訊，請稍後再試";
-        // 失敗時呼叫你原本準備好的靜態時刻表備援
-        if (typeof useStaticFallback === "function") useStaticFallback();
-    }
-}
-
-function renderBusData(busList) {
-    const container = document.getElementById('bus-list-container');
-    if (!container) return;
-
-    if (busList.length === 0) {
-        container.innerHTML = "<p class='text-gray-500'>目前無公車班次資訊</p>";
-        return;
-    }
-
-    // 範例：依照預估時間排序
-    busList.sort((a, b) => (a.EstimateTime || 9999) - (b.EstimateTime || 9999));
-
-    container.innerHTML = busList.map(bus => `
-        <div class="flex justify-between items-center p-2 border-b">
-            <div>
-                <span class="font-bold text-blue-600">${bus.RouteName}</span>
-                <span class="text-sm text-gray-500 ml-2">往 ${bus.StopName}</span>
-            </div>
-            <div class="${bus.EstimateTime < 180 ? 'text-red-500 animate-pulse' : 'text-green-600'}">
-                ${formatBusTime(bus.EstimateTime, bus.StopStatus)}
-            </div>
-        </div>
-    `).join('');
-}
-
-function formatBusTime(seconds, status) {
-    if (status === 1) return "尚未發車";
-    if (status === 3) return "末班車已過";
-    if (seconds === undefined || seconds === null) return "查詢中";
-    const mins = Math.floor(seconds / 60);
-    if (mins <= 1) return "即將到站";
-    return `${mins} 分鐘`;
-}
-
-
-
         // ==========================================
         // 1. 核心邏輯、路由與資料載入
         // ==========================================
@@ -1794,7 +1724,7 @@ function formatBusTime(seconds, status) {
                 tagBg: "bg-sky-500",
                 icon: "fa-star",
                 img: "https://img1.591.com.tw/house/2025/12/12/176550459390441101.jpg!900x.water3.jpg",
-                website: "http://www.leses.tyc.edu.tw/",
+                website: "http://www2.leses.tyc.edu.tw/school/web/index.php",
                 navUrl: "https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區樂善街200巷71號",
                 desc: "約 35 班 / 附設幼兒園",
                 address: "桃園市龜山區樂善街200巷71號",
@@ -1939,17 +1869,15 @@ function formatBusTime(seconds, status) {
             } else if (hash === 'school') {
                 // 特殊錨點路由：切換到外部生活通頁面並定位
                 window.location.href = 'lifehub.html#school';
-            } else if (hash === 'topvote' || hash === 'food-gacha') {
+            } else if (hash === 'food-gacha') {
                 renderPage('home');
-                document.title = hash === 'topvote' ? 'A7 柒樂部🥤｜首屆 A7 搖霸大賞' : 'A7 柒樂部🎡｜美食隨機輪盤';
+                document.title = 'A7 柒樂部🎡｜美食隨機輪盤';
                 setTimeout(() => {
-                    const targetId = hash === 'topvote' ? 'topvote' : 'food-gacha';
-                    const targetEl = document.getElementById(targetId);
-                    if (targetEl) {
-                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        const ringColor = hash === 'topvote' ? 'ring-pink-400' : 'ring-themePink';
-                        targetEl.classList.add('ring-4', ringColor, 'ring-offset-4', 'transition-shadow', 'duration-500');
-                        setTimeout(() => targetEl.classList.remove('ring-4', ringColor, 'ring-offset-4'), 2500);
+                    const gachaEl = document.getElementById('food-gacha');
+                    if (gachaEl) {
+                        gachaEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        gachaEl.classList.add('ring-4', 'ring-themePink', 'ring-offset-4', 'transition-shadow', 'duration-500');
+                        setTimeout(() => gachaEl.classList.remove('ring-4', 'ring-themePink', 'ring-offset-4'), 2500);
                     }
                 }, 350);
             } else {
@@ -2903,12 +2831,12 @@ function formatBusTime(seconds, status) {
             `;
         }
 
-// --- 交通轉乘：改用 GAS 雲端 API ---
+        // --- 交通轉乘：改用 GAS 雲端 API ---
         async function fetchRealtimeTransitData() {
             const refreshIcon = document.getElementById('transit-refresh-icon');
             if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-            const GAS_URL = "https://script.google.com/macros/s/AKfycbyfG-5P1uureyDnwT9XvWg_49smheYnEkZ8Bca9SJWERUyPnpwWIvBxi0WRCEZcjtC3IA/exec";
+            const GAS_URL = "https://script.google.com/macros/s/AKfycbw0t0lUbxn6MV30sK75uGCNz6y_paQzQHtTvyFBpVd-uuPIAJ3op--wkv9TI6EjuGUxWw/exec";
 
             const generateStaticMrtTimes = (schedule) => {
                 const now = new Date();
@@ -2920,22 +2848,10 @@ function formatBusTime(seconds, status) {
             };
 
             try {
-                // 發送請求
-                const response = await fetch(GAS_URL);
-                if (!response.ok) throw new Error(`連線失敗狀態碼: ${response.status}`);
-                
-                // 先將回應轉成純文字，防護 GAS 權限沒開導致回傳 HTML 登入頁面的問題
-                const text = await response.text();
-                let res;
-                try {
-                    res = JSON.parse(text);
-                } catch (e) {
-                    console.error("GAS 回傳非 JSON 格式 (可能權限未設為所有人):", text.substring(0, 100));
-                    throw new Error("GAS權限錯誤");
-                }
-
+                const response = await fetch(GAS_URL, { redirect: "follow" });
+                const res = await response.json();
+                const now = new Date();
                 const rawData = res.data || res;
-                if (rawData.error) throw new Error(rawData.error);
 
                 const parseSafeArray = (key) => {
                     let val = rawData[key];
@@ -2984,14 +2900,13 @@ function formatBusTime(seconds, status) {
 
                 window.gasTransitCache = {
                     isFallback: false,
-                    timestamp: new Date().getTime(),
-                    updateTime: rawData.updateTime || new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false }),
+                    timestamp: now.getTime(),
+                    updateTime: rawData.updateTime ? new Date(rawData.updateTime).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false }) : now.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false }),
                     mrtA7: { north: northMrt, south: southMrt },
                     buses: allBuses
                 };
-
             } catch (err) {
-                console.warn("※ GAS 交通資料解析失敗:", err.message);
+                console.warn("※ GAS 連線或格式錯誤:", err.message);
                 window.gasTransitCache = {
                     isFallback: true,
                     timestamp: Date.now(),
@@ -3007,95 +2922,113 @@ function formatBusTime(seconds, status) {
                 if (window.gasTransitCache) {
                     const parseMrtTime = (val) => {
                         const m = parseFloat(val);
-                        return !isNaN(m) ? m : null;
+                        if (!isNaN(m)) return m;
+                        return null;
                     };
                     window.mrtBaseData = {
                         timestamp: window.gasTransitCache.timestamp,
                         n: parseMrtTime(window.gasTransitCache.mrtA7.north),
                         s: parseMrtTime(window.gasTransitCache.mrtA7.south)
                     };
-                    if (typeof renderAllTransit === 'function') {
-                        renderAllTransit();
-                    }
+                    renderAllTransit();
                 }
                 if (refreshIcon) refreshIcon.classList.remove('fa-spin');
             }
         }
 
-        function renderAllTransit() {
+function renderAllTransit() {
             if (!window.gasTransitCache) return;
             const cache = window.gasTransitCache;
             const elapsedMins = Math.floor((Date.now() - cache.timestamp) / 60000);
 
-            const getGasBusTime = (routeKeyword, targetStopName) => {
-                // 將「連線異常」改為溫和的「暫無資料」，避免版面醜掉
-                if (cache.isFallback) return '暫無資料';
-                if (!cache.buses || cache.buses.length === 0) return '未發車';
+            // 取得公車資料容器與外層的網格容器
+            const overviewContainer = document.getElementById('bus-overview-fastest-container');
+            const busWrapper = overviewContainer ? overviewContainer.closest('.bg-emerald-50\\/40') : null;
+            const transitGrid = busWrapper ? busWrapper.parentElement : null;
 
-                const matchingBuses = cache.buses.filter(b => {
-                    const isRouteMatch = b.route === routeKeyword;
-                    const isStopMatch = targetStopName ? (b.stopName && b.stopName.includes(targetStopName)) : true;
-                    return isRouteMatch && isStopMatch;
+            // 🚨 判斷：如果是備援模式 (連線異常)，則隱藏公車區塊並調整版面
+            if (cache.isFallback) {
+                if (busWrapper) busWrapper.style.display = 'none';
+                if (transitGrid) {
+                    transitGrid.classList.remove('lg:grid-cols-2');
+                    transitGrid.classList.add('lg:grid-cols-1'); // 讓捷運區塊單獨全寬
+                }
+            } else {
+                // ✅ 正常狀態：顯示公車區塊並維持雙欄排版
+                if (busWrapper) busWrapper.style.display = 'flex';
+                if (transitGrid) {
+                    transitGrid.classList.add('lg:grid-cols-2');
+                    transitGrid.classList.remove('lg:grid-cols-1');
+                }
+
+                const getGasBusTime = (routeKeyword, targetStopName) => {
+                    if (!cache.buses || cache.buses.length === 0) return '未發車';
+
+                    const matchingBuses = cache.buses.filter(b => {
+                        const isRouteMatch = b.route === routeKeyword;
+                        const isStopMatch = targetStopName ? (b.stopName && b.stopName.includes(targetStopName)) : true;
+                        return isRouteMatch && isStopMatch;
+                    });
+
+                    if (matchingBuses.length === 0) return '未發車';
+
+                    const numericBuses = matchingBuses.filter(b => typeof b.status === 'number');
+
+                    if (numericBuses.length > 0) {
+                        const minStatus = Math.min(...numericBuses.map(b => b.status));
+                        let remaining = Math.max(0, minStatus - elapsedMins - 1);
+                        if (remaining <= 1) return '進站中';
+                        return remaining + '分';
+                    }
+                    return matchingBuses[0].status;
+                };
+
+                const busConfigs = [
+                    { dir: '台北市府', route: '967', color: 'bg-blue-500 text-white' },
+                    { dir: '長庚醫院', route: '202', color: 'bg-emerald-500 text-white' },
+                    { dir: '長庚社區', route: 'L317', color: 'bg-amber-100 text-amber-700 border border-amber-200' },
+                    { dir: '新莊迴龍', route: '898', color: 'bg-fuchsia-500 text-white shadow-sm border border-fuchsia-600' }
+                ];
+
+                const allResolvedBuses = busConfigs.map(conf => {
+                    const time = getGasBusTime(conf.route, '捷運體育大學');
+                    const isActive = (time !== '未發車' && time !== '尚未發車' && time !== '末班已過' && time !== '今日未營運' && time !== '交管不停靠');
+                    return { ...conf, time, isActive };
                 });
 
-                if (matchingBuses.length === 0) return '未發車';
+                const activeBuses = allResolvedBuses.filter(b => b.isActive);
+                let displayBuses = activeBuses;
 
-                const numericBuses = matchingBuses.filter(b => typeof b.status === 'number');
-
-                if (numericBuses.length > 0) {
-                    const minStatus = Math.min(...numericBuses.map(b => b.status));
-                    let remaining = Math.max(0, minStatus - elapsedMins - 1);
-                    if (remaining <= 1) return '進站中';
-                    return remaining + '分';
+                if (displayBuses.length < 3) {
+                    const inactiveBuses = allResolvedBuses.filter(b => !b.isActive);
+                    const needed = 3 - displayBuses.length;
+                    displayBuses = displayBuses.concat(inactiveBuses.slice(0, needed));
                 }
-                return matchingBuses[0].status;
-            };
 
-            const busConfigs = [
-                { dir: '台北市府', route: '967', color: 'bg-blue-500 text-white' },
-                { dir: '長庚醫院', route: '202', color: 'bg-emerald-500 text-white' },
-                { dir: '長庚社區', route: 'L317', color: 'bg-amber-100 text-amber-700 border border-amber-200' },
-                { dir: '新莊迴龍', route: '898', color: 'bg-fuchsia-500 text-white shadow-sm border border-fuchsia-600' }
-            ];
-
-            const allResolvedBuses = busConfigs.map(conf => {
-                const time = getGasBusTime(conf.route, '捷運體育大學');
-                const isActive = (time !== '未發車' && time !== '尚未發車' && time !== '末班已過' && time !== '今日未營運' && time !== '交管不停靠' && time !== '暫無資料');
-                return { ...conf, time, isActive };
-            });
-
-            const activeBuses = allResolvedBuses.filter(b => b.isActive);
-            let displayBuses = activeBuses;
-
-            if (displayBuses.length < 3) {
-                const inactiveBuses = allResolvedBuses.filter(b => !b.isActive);
-                const needed = 3 - displayBuses.length;
-                displayBuses = displayBuses.concat(inactiveBuses.slice(0, needed));
-            }
-
-            const overviewContainer = document.getElementById('bus-overview-fastest-container');
-            if (overviewContainer) {
-                if (displayBuses.length > 0) {
-                    overviewContainer.innerHTML = displayBuses.map(item =>
-                        createOverviewBusCard(item.dir, item.route, item.time, item.color, '捷運體育大學站')
-                    ).join('');
-                } else {
-                    overviewContainer.innerHTML = `
-                        <div class="py-4 text-center">
-                            <i class="fa-solid fa-bus-simple text-gray-200 text-3xl mb-2 block"></i>
-                            <span class="text-gray-400 font-bold text-sm">目前無班車發車資訊</span>
-                        </div>
-                    `;
+                if (overviewContainer) {
+                    if (displayBuses.length > 0) {
+                        overviewContainer.innerHTML = displayBuses.map(item =>
+                            createOverviewBusCard(item.dir, item.route, item.time, item.color, '捷運體育大學站')
+                        ).join('');
+                    } else {
+                        overviewContainer.innerHTML = `
+                            <div class="py-4 text-center">
+                                <i class="fa-solid fa-bus-simple text-gray-200 text-3xl mb-2 block"></i>
+                                <span class="text-gray-400 font-bold text-sm">目前無班車發車資訊</span>
+                            </div>
+                        `;
+                    }
                 }
             }
 
+            // 更新下方狀態標籤與時間
             const timeElement = document.getElementById('mrt-update-time');
             if (timeElement) timeElement.textContent = `更新: ${cache.updateTime}`;
 
             const statusMsgs = document.querySelectorAll('.tdx-status-msg');
             if (cache.isFallback) {
                 let errorTxt = cache.errorMsg === "GAS權限錯誤" ? "請確認GAS權限設為所有人" : cache.errorMsg;
-                statusMsgs.forEach(el => el.innerHTML = `<div class="bg-orange-50 text-orange-700 text-[11px] sm:text-xs px-3 py-1.5 rounded-lg border border-orange-200 font-bold inline-flex items-center shadow-sm w-full sm:w-max"><i class="fa-solid fa-triangle-exclamation mr-1.5 shrink-0"></i>切換為備援時刻表 (${errorTxt})</div>`);
+                statusMsgs.forEach(el => el.innerHTML = `<div class="bg-orange-50 text-orange-700 text-[11px] sm:text-xs px-3 py-1.5 rounded-lg border border-orange-200 font-bold inline-flex items-center shadow-sm w-full sm:w-max"><i class="fa-solid fa-triangle-exclamation mr-1.5 shrink-0"></i>切換為機捷備援時刻表 (${errorTxt})</div>`);
             } else {
                 statusMsgs.forEach(el => el.innerHTML = `<div class="bg-purple-50 text-purple-700 text-[11px] sm:text-xs px-3 py-1.5 rounded-lg border border-purple-200 font-bold inline-flex items-center shadow-sm w-full sm:w-max"><i class="fa-solid fa-server mr-1.5 shrink-0"></i>已連線雲端資料，每分鐘自動同步最新動態</div>`);
             }
@@ -3363,9 +3296,9 @@ function formatBusTime(seconds, status) {
                 if (typeof window.initDrinkVoting === 'function') {
                     window.initDrinkVoting();
 
-                    // 獨立網址深層連結：檢查 #topvote 並捲動
+                    // 獨立網址深層連結：檢查 #bestvote 並捲動
                     setTimeout(() => {
-                        if (window.location.hash === '#topvote') {
+                        if (window.location.hash === '#bestvote') {
                             const container = document.getElementById('drink-voting-container');
                             if (container) {
                                 container.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -5438,7 +5371,7 @@ function formatBusTime(seconds, status) {
 
         // 初始化票選活動畫面
         window.initDrinkVoting = function () {
-            const container = document.getElementById('topvote');
+            const container = document.getElementById('bestvote');
             const content = document.getElementById('drink-voting-content');
             if (!container || !content || !globalFoodData || !globalLikesData) return;
 
@@ -5477,7 +5410,7 @@ function formatBusTime(seconds, status) {
                                     <div class="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-gradient-to-r from-transparent to-themePink"></div>
                                     <div class="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-gradient-to-l from-transparent to-themePink"></div>
                                 </div>
-                                <p class="text-[10px] sm:text-xs text-gray-400 font-bold mt-2 tracking-[0.4em] uppercase opacity-70">The Best Selection • Grand Prix 2026</p>
+                                <p class="text-[10px] sm:text-xs text-gray-400 font-bold mt-2 tracking-[0.4em] uppercase opacity-70">The Best Selection • Grand Prix 2024</p>
                             </div>
 
                             <div class="flex flex-col md:flex-row items-stretch md:items-end justify-center gap-4 md:gap-2 w-full max-w-4xl mx-auto px-2">
