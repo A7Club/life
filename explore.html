@@ -5003,9 +5003,18 @@
                 fuelData = findFuelArray(dataRoot) || [];
 
                 if (fuelData.length === 0) {
-                    const fallbackRes = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.cpc.com.tw/GetOilPriceJson.aspx?type=TodayOilPriceDictionary'));
-                    const cpcOfficialData = await fallbackRes.json();
-                    fuelData = Array.isArray(cpcOfficialData) ? cpcOfficialData : (cpcOfficialData.data || []);
+                    try {
+                        const fallbackRes = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.cpc.com.tw/GetOilPriceJson.aspx?type=TodayOilPriceDictionary'));
+                        const proxyData = await fallbackRes.json();
+                        if (proxyData.contents) {
+                            const cpcOfficialData = JSON.parse(proxyData.contents);
+                            fuelData = Array.isArray(cpcOfficialData) ? cpcOfficialData : (cpcOfficialData.data || []);
+                        }
+                    } catch (proxyErr) {
+                        const fallbackRes2 = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://www.cpc.com.tw/GetOilPriceJson.aspx?type=TodayOilPriceDictionary'));
+                        const cpcOfficialData = await fallbackRes2.json();
+                        fuelData = Array.isArray(cpcOfficialData) ? cpcOfficialData : (cpcOfficialData.data || []);
+                    }
                 }
 
                 const getPricesAndDiff = (productName) => {
@@ -5464,73 +5473,94 @@
         }
 
 // ==========================================
-        // 🚌 交通轉乘：改用 GAS 雲端 API，並精準鎖定站牌
+        // 🚌 交通轉乘：改用 GAS 雲端 API (含 AllOrigins 代理備援)
         // ==========================================
         async function fetchRealtimeTransitData() {
             const refreshIcon = document.getElementById('transit-refresh-icon');
             if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-            // 💡 替換為新的 GAS URL
             const GAS_URL = "https://script.google.com/macros/s/AKfycbyfG-5P1uureyDnwT9XvWg_49smheYnEkZ8Bca9SJWERUyPnpwWIvBxi0WRCEZcjtC3IA/exec";
 
-            // 💡 備援推算函式：依照官方時刻表推算
             const generateStaticMrtTimes = (schedule) => {
                 const now = new Date();
                 const totalCurrentSecs = now.getMinutes() * 60 + now.getSeconds();
                 let nextTotalSecs = schedule.map(m => m * 60).find(s => s >= totalCurrentSecs);
                 if (nextTotalSecs === undefined) nextTotalSecs = (60 + schedule[0]) * 60;
-
-                // ✨ 關鍵修正：將結果減去 1 分鐘
-                const result = (nextTotalSecs - totalCurrentSecs) / 60;
-                return Math.max(0, result - 1);
+                return Math.max(0, (nextTotalSecs - totalCurrentSecs) / 60 - 1);
             };
 
+            let rawData;
+            let usedProxy = false;
+
             try {
-                if (!GAS_URL) {
-                    throw new Error("尚未設定 GAS_URL");
+                // 🚀 第一階段：嘗試直接連線
+                try {
+                    const response = await fetch(GAS_URL);
+                    const text = await response.text();
+                    
+                    // 檢查是否被轉導到 HTML (通常是 CORS 或權限被擋)
+                    if (text.trim().startsWith('<')) {
+                        throw new Error("遭到 CORS 阻擋或回傳 HTML");
+                    }
+                    
+                    const data = JSON.parse(text);
+                    if (data.error) throw new Error(data.error);
+                    rawData = data.data || data;
+
+                } catch (directErr) {
+                    console.warn("⚠️ 直連失敗，自動切換代理...", directErr.message);
+                    usedProxy = true;
+                    
+                    // 🛡️ 第二階段：使用代理連線
+                    let text = '';
+                    try {
+                        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(GAS_URL)}`;
+                        const proxyRes = await fetch(proxyUrl);
+                        if (!proxyRes.ok) throw new Error(`AllOrigins連線失敗: ${proxyRes.status}`);
+                        const proxyData = await proxyRes.json();
+                        text = proxyData.contents;
+                    } catch (proxyErr) {
+                        console.warn("⚠️ AllOrigins 失敗，嘗試備援代理...", proxyErr.message);
+                        const proxyUrl2 = `https://corsproxy.io/?${encodeURIComponent(GAS_URL)}`;
+                        const proxyRes2 = await fetch(proxyUrl2);
+                        if (!proxyRes2.ok) throw new Error(`Corsproxy連線失敗: ${proxyRes2.status}`);
+                        text = await proxyRes2.text();
+                    }
+
+                    if (!text || text.trim().startsWith('<')) {
+                        throw new Error("遭到 CORS 阻擋或回傳無效內容(HTML)");
+                    }
+
+                    const data = JSON.parse(text);
+                    if (data.error) throw new Error(data.error);
+                    rawData = data.data || data;
                 }
 
-                // 💡 發送一次 fetch 請求，就能同時拿到捷運、公車的所有資料
-                const response = await fetch(GAS_URL, { redirect: "follow" });
-                const res = await response.json();
-
-                const now = new Date();
-                // 🚀 關鍵修正：相容多種 JSON 結構，確保取得的是陣列
-                const rawData = res.data || res;
-
-                // 💡 強制防呆轉換，避免 GAS 吐回字串而不是陣列的 Bug
+                // --- 資料解析與處理 ---
                 const parseSafeArray = (key) => {
                     let val = rawData[key];
-                    if (!val) return [];
-                    if (typeof val === 'string') {
-                        try { val = JSON.parse(val); } catch (e) { return []; }
-                    }
-                    return Array.isArray(val) ? val : [];
+                    return Array.isArray(val) ? val : (typeof val === 'string' ? (JSON.parse(val) || []) : []);
                 };
 
                 const mrtA7Data = parseSafeArray('mrt_A7');
                 const busTaoyuanData = parseSafeArray('bus_Taoyuan');
                 const busNewTaipeiData = parseSafeArray('bus_NewTaipei');
 
-                // 💡 修正機捷時間解析：找出最小(最快)的時間
+                // 處理機捷
                 const getClosestMrt = (dirFilter) => {
                     const trains = mrtA7Data.filter(dirFilter);
                     if (!trains.length) return undefined;
-                    const times = trains.map(t => {
-                        const val = t.CountDownTime !== undefined ? t.CountDownTime : t.EstimateTime;
-                        return parseFloat(val);
-                    }).filter(t => !isNaN(t));
-                    if (!times.length) return undefined;
-                    return Math.min(...times);
+                    const times = trains.map(t => parseFloat(t.CountDownTime !== undefined ? t.CountDownTime : t.EstimateTime)).filter(t => !isNaN(t));
+                    return times.length ? Math.min(...times) : undefined;
                 };
 
-                let northMrt = getClosestMrt(m => String(m.Direction) === "0" || (m.direction && m.direction.includes("北上")));
-                let southMrt = getClosestMrt(m => String(m.Direction) === "1" || (m.direction && m.direction.includes("南下")));
+                let northMrt = getClosestMrt(m => String(m.Direction) === "0" || (m.direction && String(m.direction).includes("北上")));
+                let southMrt = getClosestMrt(m => String(m.Direction) === "1" || (m.direction && String(m.direction).includes("南下")));
 
-                // 如果 API 成功但沒有捷運資料（離峰或TDX異常），直接使用時刻表推算
-                if (northMrt === undefined) northMrt = generateStaticMrtTimes([2, 17, 32, 47]); // 往台北
-                if (southMrt === undefined) southMrt = generateStaticMrtTimes([0, 15, 30, 45]); // 往機場/中壢
+                if (northMrt === undefined) northMrt = generateStaticMrtTimes([2, 17, 32, 47]);
+                if (southMrt === undefined) southMrt = generateStaticMrtTimes([0, 15, 30, 45]);
 
+                // 處理公車 (完整保留原始欄位相容舊版)
                 const getStatusText = (status) => {
                     if (status === 1) return '尚未發車';
                     if (status === 2) return '交管不停靠';
@@ -5539,68 +5569,78 @@
                     return '未發車';
                 };
 
-                // 整合所有來源公車資料
-                const allBuses = [...busTaoyuanData, ...busNewTaipeiData].map(b => ({
+                const processedBuses = [...busTaoyuanData, ...busNewTaipeiData].map(b => ({
+                    ...b, 
                     route: b.RouteName?.Zh_tw || b.RouteName || b.route || "未知路線",
                     status: b.EstimateTime !== undefined ? Math.floor(b.EstimateTime / 60) : (b.StopStatus !== undefined ? getStatusText(b.StopStatus) : "未發車"),
                     stopName: b.StopName?.Zh_tw || b.StopName || b.stop || "",
                     direction: b.Direction !== undefined ? b.Direction : -1
                 }));
 
-                // 更新快取
                 window.gasTransitCache = {
                     isFallback: false,
-                    timestamp: now.getTime(),
-                    updateTime: rawData.updateTime ? new Date(rawData.updateTime).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false }) : now.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false }),
+                    usedProxy: usedProxy,
+                    timestamp: Date.now(),
+                    updateTime: rawData.updateTime || new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false }),
                     mrtA7: { north: northMrt, south: southMrt },
-                    buses: allBuses
+                    buses: processedBuses
                 };
+                
+                // 相容全域變數
+                window.tdxBusData = processedBuses;
 
             } catch (err) {
-                console.warn("※ GAS 連線或格式錯誤:", err.message);
-
+                console.error("※ GAS 交通資料全面解析失敗:", err.message);
                 window.gasTransitCache = {
                     isFallback: true,
+                    usedProxy: false,
                     timestamp: Date.now(),
                     updateTime: new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false }) + ' (備援模式)',
-                    mrtA7: {
-                        north: generateStaticMrtTimes([2, 17, 32, 47]),
-                        south: generateStaticMrtTimes([0, 15, 30, 45])
-                    },
+                    mrtA7: { north: generateStaticMrtTimes([2, 17, 32, 47]), south: generateStaticMrtTimes([0, 15, 30, 45]) },
                     buses: []
                 };
                 window.gasTransitCache.errorMsg = err.message;
+                window.tdxBusData = [];
             } finally {
                 if (window.gasTransitCache) {
-                    const parseMrtTime = (val) => {
-                        const m = parseFloat(val);
-                        if (!isNaN(m)) return m; // 回傳分鐘數
-                        return null;
-                    };
-
-                    // 初始化機捷倒數動畫基礎資料
                     window.mrtBaseData = {
                         timestamp: window.gasTransitCache.timestamp,
-                        n: parseMrtTime(window.gasTransitCache.mrtA7.north),
-                        s: parseMrtTime(window.gasTransitCache.mrtA7.south)
+                        n: parseFloat(window.gasTransitCache.mrtA7.north) || null,
+                        s: parseFloat(window.gasTransitCache.mrtA7.south) || null
                     };
-                    // 呼叫下方的 renderAllTransit 更新畫面
-                    if (typeof renderAllTransit === 'function') {
-                        renderAllTransit();
-                    }
+                    if (typeof renderAllTransit === 'function') renderAllTransit();
                 }
                 if (refreshIcon) refreshIcon.classList.remove('fa-spin');
             }
         }
 
+        // --- 負責更新畫面的函數 ---
         function renderAllTransit() {
             if (!window.gasTransitCache) return;
             const cache = window.gasTransitCache;
             const elapsedMins = Math.floor((Date.now() - cache.timestamp) / 60000);
 
-            // 💡 取得公車時間：取消嚴格方向限制，僅靠「站牌名稱」過濾最快來的車
+            // --- 1. 首頁總覽區塊顯示/隱藏邏輯 ---
+            const overviewContainer = document.getElementById('bus-overview-fastest-container');
+            const overviewBusWrapper = overviewContainer ? overviewContainer.closest('.bg-emerald-50\\/40') : null;
+            const overviewTransitGrid = overviewBusWrapper ? overviewBusWrapper.parentElement : null;
+
+            if (cache.isFallback) {
+                if (overviewBusWrapper) overviewBusWrapper.style.display = 'none';
+                if (overviewTransitGrid) {
+                    overviewTransitGrid.classList.remove('lg:grid-cols-2');
+                    overviewTransitGrid.classList.add('lg:grid-cols-1');
+                }
+            } else {
+                if (overviewBusWrapper) overviewBusWrapper.style.display = ''; 
+                if (overviewTransitGrid) {
+                    overviewTransitGrid.classList.add('lg:grid-cols-2');
+                    overviewTransitGrid.classList.remove('lg:grid-cols-1');
+                }
+            }
+
             const getGasBusTime = (routeKeyword, targetStopName) => {
-                if (cache.isFallback) return cache.errorMsg?.includes('GAS') ? '請更新GAS' : '連線異常';
+                if (cache.isFallback) return '暫無資料';
                 if (!cache.buses || cache.buses.length === 0) return '未發車';
 
                 const matchingBuses = cache.buses.filter(b => {
@@ -5614,9 +5654,7 @@
                 const numericBuses = matchingBuses.filter(b => typeof b.status === 'number');
 
                 if (numericBuses.length > 0) {
-                    // 找出該站牌該路線最快到站的一班車
                     const minStatus = Math.min(...numericBuses.map(b => b.status));
-                    // 💡 在這裡將時間減去 1，刻意提早一分鐘顯示避免住戶錯過公車
                     let remaining = Math.max(0, minStatus - elapsedMins - 1);
                     if (remaining <= 1) return '進站中';
                     return remaining + '分';
@@ -5624,56 +5662,54 @@
                 return matchingBuses[0].status;
             };
 
-            const transitData = {
-                buses: {
-                    overview: [
-                        createOverviewBusCard('台北市府', '967', getGasBusTime('967', '捷運體育大學'), 'bg-blue-500 text-white', '捷運體育大學站'),
-                        createOverviewBusCard('長庚醫院', '202', getGasBusTime('202', '捷運體育大學'), 'bg-emerald-500 text-white', '捷運體育大學站'),
-                        createOverviewBusCard('長庚社區', 'L317', getGasBusTime('L317', '捷運體育大學'), 'bg-amber-100 text-amber-700 border border-amber-200', '捷運體育大學站')
-                    ],
-                    taipei: [
-                        createTransitCard('946', '內湖科學園區', getGasBusTime('946', '長庚醫院'), '新北市區', '長庚醫院站'),
-                        createTransitCard('967', '台北市政府', getGasBusTime('967', '捷運體育大學'), '新北市區', '捷運體育大學站')
-                    ],
-                    hospital: [
-                        createTransitCard('202', '林口長庚醫院', getGasBusTime('202', '捷運體育大學'), '桃園市區', '捷運體育大學站'),
-                        createTransitCard('603', '長庚大學', getGasBusTime('603', '捷運體育大學'), '桃園市區', '捷運體育大學站'),
-                        createTransitCard('606', '林口長庚醫院', getGasBusTime('606', '捷運體育大學'), '桃園市區', '捷運體育大學站'),
-                        createTransitCard('607', '長庚醫院', getGasBusTime('607', '捷運體育大學'), '桃園市區', '捷運體育大學站')
-                    ],
-                    xinzhuang: [
-                        createTransitCard('607', '迴龍', getGasBusTime('607', '捷運體育大學'), '桃園市區', '捷運體育大學站')
-                    ],
-                    local: [
-                        createTransitCard('L317', '長庚社區', getGasBusTime('L317', '捷運體育大學'), '龜山樂活巴士', '捷運體育大學站'),
-                        createTransitCard('L319', '長庚醫院', getGasBusTime('L319', '捷運體育大學'), '龜山樂活巴士', '捷運體育大學站'),
-                        createTransitCard('202', '體育大學', getGasBusTime('202', '長庚醫院'), '桃園市區', '長庚醫院站')
-                    ]
+            // --- 2. 渲染首頁總覽卡片 ---
+            if (overviewContainer && !cache.isFallback) {
+                const busConfigs = [
+                    { dir: '台北市府', route: '967', color: 'bg-blue-500 text-white' },
+                    { dir: '長庚醫院', route: '202', color: 'bg-emerald-500 text-white' },
+                    { dir: '長庚社區', route: 'L317', color: 'bg-amber-100 text-amber-700 border border-amber-200' },
+                    { dir: '新莊迴龍', route: '898', color: 'bg-fuchsia-500 text-white shadow-sm border border-fuchsia-600' }
+                ];
+
+                const allResolvedBuses = busConfigs.map(conf => {
+                    const time = getGasBusTime(conf.route, '捷運體育大學');
+                    const isActive = !['未發車', '尚未發車', '末班已過', '今日未營運', '交管不停靠', '暫無資料'].includes(time);
+                    return { ...conf, time, isActive };
+                });
+
+                const activeBuses = allResolvedBuses.filter(b => b.isActive);
+                let displayBuses = activeBuses;
+
+                if (displayBuses.length < 3) {
+                    const inactiveBuses = allResolvedBuses.filter(b => !b.isActive);
+                    const needed = 3 - displayBuses.length;
+                    displayBuses = displayBuses.concat(inactiveBuses.slice(0, needed));
                 }
-            };
 
-            // 渲染各個容器
-            const containers = [
-                { id: 'bus-overview-fastest-container', data: transitData.buses.overview },
-                { id: 'bus-taipei-container', data: transitData.buses.taipei },
-                { id: 'bus-hospital-container', data: transitData.buses.hospital },
-                { id: 'bus-xinzhuang-container', data: transitData.buses.xinzhuang },
-                { id: 'bus-local-container', data: transitData.buses.local }
-            ];
+                if (displayBuses.length > 0) {
+                    overviewContainer.innerHTML = displayBuses.map(item =>
+                        typeof createOverviewBusCard === 'function' ? createOverviewBusCard(item.dir, item.route, item.time, item.color, '捷運體育大學站') : ''
+                    ).join('');
+                }
+            }
 
-            containers.forEach(c => {
-                const el = document.getElementById(c.id);
-                if (el) el.innerHTML = c.data.join('');
-            });
-
+            // --- 3. 更新標籤狀態 ---
             const timeElement = document.getElementById('mrt-update-time');
             if (timeElement) timeElement.textContent = `更新: ${cache.updateTime}`;
 
             const statusMsgs = document.querySelectorAll('.tdx-status-msg');
             if (cache.isFallback) {
-                statusMsgs.forEach(el => el.innerHTML = `<div class="bg-orange-50 text-orange-700 text-[11px] sm:text-xs px-3 py-1.5 rounded-lg border border-orange-200 font-bold inline-flex items-center shadow-sm w-full sm:w-max"><i class="fa-solid fa-triangle-exclamation mr-1.5 shrink-0"></i>異常：${cache.errorMsg}</div>`);
+                statusMsgs.forEach(el => el.innerHTML = `<div class="bg-orange-50 text-orange-700 text-[11px] sm:text-xs px-3 py-1.5 rounded-lg border border-orange-200 font-bold inline-flex items-center shadow-sm w-full sm:w-max"><i class="fa-solid fa-triangle-exclamation mr-1.5 shrink-0"></i>目前顯示機捷備援時刻表 (連線異常)</div>`);
             } else {
-                statusMsgs.forEach(el => el.innerHTML = `<div class="bg-purple-50 text-purple-700 text-[11px] sm:text-xs px-3 py-1.5 rounded-lg border border-purple-200 font-bold inline-flex items-center shadow-sm w-full sm:w-max"><i class="fa-solid fa-server mr-1.5 shrink-0"></i>已連線雲端資料，每分鐘自動同步最新動態</div>`);
+                const proxyBadge = cache.usedProxy ? '<span class="bg-purple-200 text-purple-800 px-1.5 py-0.5 rounded ml-1 text-[9px]">Proxy</span>' : '';
+                statusMsgs.forEach(el => el.innerHTML = `<div class="bg-purple-50 text-purple-700 text-[11px] sm:text-xs px-3 py-1.5 rounded-lg border border-purple-200 font-bold inline-flex items-center shadow-sm w-full sm:w-max"><i class="fa-solid fa-server mr-1.5 shrink-0"></i>已連線雲端資料，自動同步動態 ${proxyBadge}</div>`);
+            }
+
+            // --- 4. 觸發交通指南頁籤的更新 ---
+            if (typeof renderTransitTabBuses === 'function') {
+                renderTransitTabBuses(cache.buses);
+            } else if (typeof renderBusData === 'function') {
+                renderBusData(cache.buses);
             }
         }
 
