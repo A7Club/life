@@ -5792,6 +5792,61 @@
                 }
             }
         }
+
+    // ==========================================
+        // 🚌 渲染交通指南分頁的公車詳細列表
+        // ==========================================
+        window.renderTransitTabBuses = function(buses) {
+            // 確認有快取資料才執行
+            if (!buses || !window.gasTransitCache) return;
+            const elapsedMins = Math.floor((Date.now() - window.gasTransitCache.timestamp) / 60000);
+
+            // 定義四個區塊要抓取的路線關鍵字
+            const categories = [
+                { id: 'bus-taipei-container', keywords: ['967', '946'] },
+                { id: 'bus-hospital-container', keywords: ['202', '603', '606', '607'] },
+                { id: 'bus-xinzhuang-container', keywords: ['898', '786', '810'] },
+                { id: 'bus-local-container', keywords: ['L317', 'L318', 'L319', 'L327'] }
+            ];
+
+            categories.forEach(cat => {
+                const container = document.getElementById(cat.id);
+                if (!container) return;
+
+                // 篩選出屬於該區塊的路線
+                let matchedBuses = buses.filter(b => cat.keywords.some(kw => b.route.includes(kw)));
+
+                if (matchedBuses.length > 0) {
+                    // 把快到站的車排在最上面
+                    matchedBuses.sort((a, b) => {
+                        const timeA = typeof a.status === 'number' ? a.status : 999;
+                        const timeB = typeof b.status === 'number' ? b.status : 999;
+                        return timeA - timeB;
+                    });
+
+                    container.innerHTML = matchedBuses.map(bus => {
+                        // 計算即時扣減的倒數分鐘數
+                        let displayStatus = bus.status;
+                        if (typeof bus.status === 'number') {
+                            let remaining = Math.max(0, bus.status - elapsedMins - 1);
+                            displayStatus = remaining <= 1 ? '進站中' : remaining + '分';
+                        }
+                        
+                        // 簡單判斷去回程文字 (0=去程, 1=回程)
+                        let dest = bus.direction === 0 ? "去程" : (bus.direction === 1 ? "回程" : "循環");
+                        
+                        // 呼叫你已經寫好的卡片產生器
+                        return createTransitCard(bus.route, dest, displayStatus, "", bus.stopName);
+                    }).join('');
+                } else {
+                    // 如果該分類目前沒有車，顯示無資料狀態
+                    container.innerHTML = `
+                        <div class="text-sm text-gray-400 font-bold p-4 text-center bg-gray-50 rounded-xl border border-gray-100 shadow-inner">
+                            目前無此區間之發車資訊
+                        </div>`;
+                }
+            });
+        };    
     </script>
 
     <!-- 引入 Google Maps JS API 並套用專屬金鑰 -->
