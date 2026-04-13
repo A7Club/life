@@ -946,10 +946,9 @@
                     </div>
 
                     <!-- 右側：各方向最快公車 -->
-                    <div class="bg-emerald-50/40 rounded-[1.5rem] border border-emerald-100 p-4 sm:p-5 flex flex-col">
-                        <h3
-                            class="text-lg font-black text-gray-800 flex items-center border-b border-emerald-100 pb-3 mb-4 shrink-0">
-                            <div
+                    <div id="bus-section-wrapper" class="bg-emerald-50/40 rounded-[1.5rem] border border-emerald-100 p-4 sm:p-5 flex flex-col">
+    <h3 class="text-lg font-black text-gray-800 flex items-center border-b border-emerald-100 pb-3 mb-4 shrink-0">
+        <div
                                 class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mr-3 shrink-0">
                                 <i class="fa-solid fa-stopwatch text-sm"></i>
                             </div>
@@ -2937,14 +2936,13 @@
         }
 
 function renderAllTransit() {
-            if (!window.gasTransitCache) return;
-            const cache = window.gasTransitCache;
-            const elapsedMins = Math.floor((Date.now() - cache.timestamp) / 60000);
-
-            // 取得公車資料容器與外層的網格容器
-            const overviewContainer = document.getElementById('bus-overview-fastest-container');
-            const busWrapper = overviewContainer ? overviewContainer.closest('.bg-emerald-50\\/40') : null;
-            const transitGrid = busWrapper ? busWrapper.parentElement : null;
+    if (!window.gasTransitCache) return;
+    const cache = window.gasTransitCache;
+    const elapsedMins = Math.floor((Date.now() - cache.timestamp) / 60000);
+    // 取得公車資料容器與外層的網格容器
+    const overviewContainer = document.getElementById('bus-overview-fastest-container');
+    const busWrapper = document.getElementById('bus-section-wrapper'); // 改為使用 ID 精準抓取
+    const transitGrid = busWrapper ? busWrapper.parentElement : null;
 
             // 🚨 判斷：如果是備援模式 (連線異常)，則隱藏公車區塊並調整版面
             if (cache.isFallback) {
@@ -2997,13 +2995,18 @@ function renderAllTransit() {
                 });
 
                 const activeBuses = allResolvedBuses.filter(b => b.isActive);
-                let displayBuses = activeBuses;
+let displayBuses = activeBuses;
 
-                if (displayBuses.length < 3) {
-                    const inactiveBuses = allResolvedBuses.filter(b => !b.isActive);
-                    const needed = 3 - displayBuses.length;
-                    displayBuses = displayBuses.concat(inactiveBuses.slice(0, needed));
-                }
+// 1. 已經移除強制補齊 3 筆「未發車」的邏輯
+
+// 2. 加上判斷：如果目前「完全沒有」正在發車的公車，也直接隱藏整個公車區塊
+if (displayBuses.length === 0) {
+    if (busWrapper) busWrapper.style.display = 'none';
+    if (transitGrid) {
+        transitGrid.classList.remove('lg:grid-cols-2');
+        transitGrid.classList.add('lg:grid-cols-1');
+    }
+}
 
                 if (overviewContainer) {
                     if (displayBuses.length > 0) {
