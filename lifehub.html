@@ -537,7 +537,7 @@
                                 </h4>
                                 <p
                                     class="text-sm text-sky-700/80 font-bold leading-tight mt-1 mb-1 lg:whitespace-nowrap">
-                                    輸入地址快速確認</p>
+                                    輸入地址（如：文青路100號）快速對照新學區。</p>
                             </div>
                             <div
                                 class="flex w-full gap-1.5 lg:gap-2 shrink-0 bg-white/60 backdrop-blur p-1.5 lg:p-2 rounded-full border border-white shadow-sm">
@@ -1833,32 +1833,47 @@ function getUserId() {
 // 我們已經將它改為在函式內動態呼叫了。
 
 async function loadSharedLikesData() {
+    // 1. 如果記憶體裡已經有抓好的資料，直接回傳
     if (Object.keys(globalLikesData).length > 0) return globalLikesData;
 
+    // 先用本地快取墊檔，讓畫面不要空空的
     const localCache = JSON.parse(localStorage.getItem('a7club_likes_cache') || '{}');
     globalLikesData = localCache;
 
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1295636704&single=true&output=csv';
+    
+    // 【升級 1：破除快取】加上隨機時間戳記，強迫瀏覽器每次都去雲端抓最新名單
+    const fetchUrl = csvUrl + '&t=' + new Date().getTime();
+
     try {
-        const res = await fetch(csvUrl);
+        const res = await fetch(fetchUrl);
         const text = await res.text();
         const rows = parseCSV(text);
         let likesMap = {};
 
         if (rows.length > 1) {
             const headers = rows[0];
-            const userIdx = headers.findIndex(k => k.includes('ID') || k.includes('使用者'));
-            const storeIdx = headers.findIndex(k => k.includes('店'));
+            
+            // 【升級 2：擴充欄位關鍵字】不管你的表單標題寫什麼，盡量都抓得到
+            const userIdx = headers.findIndex(k => k.includes('ID') || k.includes('使用者') || k.includes('帳號') || k.toLowerCase().includes('user'));
+            const storeIdx = headers.findIndex(k => k.includes('店') || k.includes('機構') || k.includes('名稱') || k.toLowerCase().includes('store'));
             const actionIdx = headers.findIndex(k => k.includes('動作') || k.includes('狀態') || k.toLowerCase().includes('action'));
 
+            // 除錯小幫手：如果真的對不上，會在開發者工具(F12)發出警告
+            if (userIdx === -1 || storeIdx === -1) {
+                console.warn("⚠️ 找不到愛心試算表的對應欄位！目前的欄位名稱是：", headers);
+            }
+
             rows.slice(1).forEach(row => {
-                const storeName = row[storeIdx];
-                const userId = row[userIdx];
-                const action = actionIdx !== -1 ? row[actionIdx] : 'like';
+                const storeName = storeIdx !== -1 ? row[storeIdx]?.trim() : null;
+                const userId = userIdx !== -1 ? row[userIdx]?.trim() : null;
+                const action = actionIdx !== -1 ? row[actionIdx]?.trim() : 'like';
 
                 if (!storeName || !userId) return;
+                
                 if (!likesMap[storeName]) likesMap[storeName] = { users: [] };
 
+                // 處理收回讚 (unlike) 與按讚 (like) 的邏輯
                 if (action && action.toLowerCase().includes('unlike')) {
                     const idx = likesMap[storeName].users.indexOf(userId);
                     if (idx !== -1) likesMap[storeName].users.splice(idx, 1);
@@ -1870,7 +1885,7 @@ async function loadSharedLikesData() {
             });
         }
 
-        // 【關鍵2】：強制用本地的 myLikes 覆蓋雲端 (解決 CSV 延遲問題)
+        // 【保留關鍵機制：強制合併本地資料】確保剛點擊的愛心不會因為雲端延遲而消失
         let userId = getUserId();
         let myLikes = JSON.parse(localStorage.getItem('a7club_my_likes') || '{}');
         
@@ -1878,13 +1893,12 @@ async function loadSharedLikesData() {
             let users = likesMap[store].users;
             let idx = users.indexOf(userId);
             
-            // 如果本地說有按讚，但雲端還沒更新，強制加上去
+            // 本地有按，雲端沒有 -> 補上去
             if (myLikes[store] === true && idx === -1) users.push(userId);
-            // 如果本地說沒按讚，但雲端還有紀錄，強制拿掉
+            // 本地收回，雲端還有 -> 拔下來
             if (myLikes[store] === false && idx !== -1) users.splice(idx, 1);
         }
         
-        // 處理雲端完全沒有這間店資料的情況
         for (let store in myLikes) {
             if (myLikes[store] === true && !likesMap[store]) {
                 likesMap[store] = { users: [userId] };
@@ -1893,9 +1907,11 @@ async function loadSharedLikesData() {
 
         globalLikesData = likesMap;
         localStorage.setItem('a7club_likes_cache', JSON.stringify(likesMap));
+        
     } catch (e) {
-        console.warn('載入按讚資料失敗', e);
+        console.error('讀取雲端愛心資料失敗：', e);
     }
+    
     return globalLikesData;
 }
 
