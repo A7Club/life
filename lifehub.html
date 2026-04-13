@@ -2,7 +2,6 @@
 <html lang="zh-TW">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
@@ -12,21 +11,17 @@
     <meta name="keywords" content="A7重劃區, 龜山美食, A7生活圈, 林口龜山, 桃園建案, 柒樂部">
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
 
-        
     <!-- 📊 Google Analytics (GA4)追蹤代碼放置區 -->
-    <!-- 
-      請將您的 GA4 gtag.js 代碼貼在下方。
-      範例：
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX'); // 將 X 替換為您的評估 ID
-      </script>
-    -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-        
+      gtag('config', 'G-YJ9RJC2DRS');
+    </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -493,27 +488,27 @@
                         </div>
                     </a>
 
-                    <!-- 教育學習標籤 (拆分為學校與補教) -->
-                    <div
-                        class="group relative flex items-center justify-center p-1.5 pr-3 lg:p-3 lg:px-6 rounded-full bg-white border-2 lg:border-4 border-blue-100 shadow-sm shrink-0 overflow-hidden">
+                    <!-- 教育學習標籤 -->
+                    <a href="#section-education-hall"
+                        class="group relative flex items-center justify-center p-1.5 pr-3 lg:p-3 lg:px-6 rounded-full bg-white border-2 lg:border-4 border-blue-100 hover:border-blue-300 hover:-translate-y-1 hover:shadow-md transition-all shadow-sm shrink-0 overflow-hidden">
                         <div
-                            class="absolute -right-2 -bottom-2 lg:-right-3 lg:-bottom-3 text-blue-50 text-4xl lg:text-5xl opacity-80 group-hover:scale-110 transition-transform pointer-events-none">
+                            class="absolute -right-2 -bottom-2 lg:-right-3 lg:-bottom-3 text-blue-50 text-4xl lg:text-5xl opacity-80 group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-school"></i>
                         </div>
                         <div class="flex items-center gap-1.5 lg:gap-2.5 relative z-10">
                             <div
-                                class="w-7 h-7 lg:w-11 lg:h-11 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 shrink-0 shadow-inner">
+                                class="w-7 h-7 lg:w-11 lg:h-11 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 shrink-0 group-hover:bg-blue-500 group-hover:text-white transition-colors shadow-inner">
                                 <i class="fa-solid fa-school text-xs lg:text-xl"></i>
                             </div>
-                            <div class="flex flex-col lg:flex-row lg:items-center gap-1.5 lg:gap-2">
+                            <div class="flex items-center gap-1.5 lg:gap-2">
                                 <span
-                                    class="font-black text-xs lg:text-lg text-gray-400 tracking-wide whitespace-nowrap">教育學習</span>
-                                <div id="count-education" class="flex items-center gap-1 lg:gap-2">
-                                    <i class="fa-solid fa-spinner fa-spin text-blue-400"></i>
-                                </div>
+                                    class="font-black text-base lg:text-lg text-gray-800 group-hover:text-blue-600 transition-colors tracking-wide whitespace-nowrap">教育學習</span>
+                                <span id="count-education"
+                                    class="bg-white text-blue-600 text-[10px] lg:text-sm font-black px-1.5 lg:px-2.5 py-0.5 lg:py-1 rounded shadow-sm border border-blue-100 flex items-center whitespace-nowrap"><i
+                                        class="fa-solid fa-spinner fa-spin mr-1 opacity-70 hidden lg:inline"></i>載入中</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -710,10 +705,8 @@
                     </a>
                 </div>
 
-                <div id="medical-list-container"
-                    class="flex flex-col lg:grid lg:grid-cols-[280px_1fr] gap-6 w-full items-start">
-                    <div
-                        class="w-full lg:col-span-2 text-center text-themeGreen py-12 bg-white rounded-[2.5rem] border-4 border-green-50 shadow-cute">
+                <div id="medical-list-container" class="flex flex-col lg:grid lg:grid-cols-[280px_1fr] gap-6 w-full items-start">
+                    <div class="w-full lg:col-span-2 text-center text-themeGreen py-12 bg-white rounded-[2.5rem] border-4 border-green-50 shadow-cute">
                         <i class="fa-solid fa-spinner fa-spin text-4xl mb-5"></i>
                         <p class="font-bold">正在連線樂園救護中心庫...</p>
                     </div>
@@ -1145,7 +1138,7 @@
                 tagBg: "bg-sky-500",
                 icon: "fa-star",
                 img: "https://img1.591.com.tw/house/2025/12/12/176550459390441101.jpg!900x.water3.jpg",
-                website: "http://www.leses.tyc.edu.tw/",
+                website: "http://www2.leses.tyc.edu.tw/school/web/index.php",
                 navUrl: "https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區樂善街200巷71號",
                 desc: "約 35 班 / 附設幼兒園",
                 address: "桃園市龜山區樂善街200巷71號",
@@ -1258,15 +1251,21 @@
             { name: "匿名水獺", icon: "🦦", color: "bg-cyan-100 text-cyan-600 border-cyan-200" }
         ];
 
-        function getUserId() {
-            let uid = localStorage.getItem('a7club_uid');
-            if (!uid) {
-                uid = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now();
-                localStorage.setItem('a7club_uid', uid);
-            }
-            return uid;
-        }
-        const currentUserId = getUserId();
+        // 動態獲取使用者 ID
+function getUserId() {
+    // 1. 如果已經有 Google 登入，優先使用他的 Email 當作全網唯一識別碼
+    if (typeof currentUser !== 'undefined' && currentUser && currentUser.email) {
+        return 'google_' + currentUser.email;
+    }
+    // 2. 否則退回使用本地的隨機 ID (就像美食販賣部的匿名機制)
+    let uid = localStorage.getItem('a7club_uid');
+    if (!uid) {
+        uid = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now();
+        localStorage.setItem('a7club_uid', uid);
+    }
+    return uid;
+}
+        
 
         // PUBLIC_SCHOOLS 現在由 data-schools.js 提提供
 
@@ -1564,6 +1563,7 @@
         }
 
         function updateModalLikeBtn(storeName) {
+            let currentUserId = getUserId();
             let storeLikes = globalLikesData[storeName] || { users: [] };
             let likeCount = storeLikes.users.length;
             let isLiked = storeLikes.users.includes(currentUserId);
@@ -1585,61 +1585,68 @@
         }
 
         function toggleLike(event, storeName) {
-            if (event) {
-                event.stopPropagation();
-                event.preventDefault();
-            }
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
 
-            let myLikes = JSON.parse(localStorage.getItem('a7club_my_likes') || '{}');
-            let storeLikes = globalLikesData[storeName] || { users: [] };
-            let userIndex = storeLikes.users.indexOf(currentUserId);
-            let isLiked = userIndex !== -1;
+    // 每次點擊都重新抓取 ID，確保登入狀態更新
+    let userId = getUserId(); 
+    
+    let myLikes = JSON.parse(localStorage.getItem('a7club_my_likes') || '{}');
+    let storeLikes = globalLikesData[storeName] || { users: [] };
+    
+    let userIndex = storeLikes.users.indexOf(userId);
+    let isLiked = userIndex !== -1;
 
-            if (isLiked) {
-                storeLikes.users.splice(userIndex, 1);
-                myLikes[storeName] = false;
-            } else {
-                storeLikes.users.push(currentUserId);
-                myLikes[storeName] = true;
+    if (isLiked) {
+        storeLikes.users.splice(userIndex, 1);
+        myLikes[storeName] = false;
+    } else {
+        storeLikes.users.push(userId);
+        myLikes[storeName] = true;
 
-                if (event) {
-                    const flyingHeart = document.createElement('i');
-                    flyingHeart.className = 'fa-solid fa-heart flying-heart';
-                    flyingHeart.style.left = (event.clientX - 10) + 'px';
-                    flyingHeart.style.top = (event.clientY - 10) + 'px';
-                    document.body.appendChild(flyingHeart);
-                    setTimeout(() => flyingHeart.remove(), 800);
-                }
-            }
-
-            globalLikesData[storeName] = storeLikes;
-            localStorage.setItem('a7club_my_likes', JSON.stringify(myLikes));
-
-            if (typeof GAS_LIKES_URL !== 'undefined' && GAS_LIKES_URL) {
-                const now = new Date();
-                const timeString = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
-                fetch(GAS_LIKES_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({
-                        storeName: storeName,
-                        userId: currentUserId,
-                        action: isLiked ? 'unlike' : 'like',
-                        timestamp: timeString
-                    })
-                }).catch(e => console.log('傳送愛心資料失敗', e));
-            }
-
-            if (document.getElementById('education-list-container')) {
-                renderEducationData(globalEducationData);
-                renderDashboard();
-            }
-
-            if (currentStoreForComment === storeName) {
-                updateModalLikeBtn(storeName);
-            }
+        if (event) {
+            const flyingHeart = document.createElement('i');
+            flyingHeart.className = 'fa-solid fa-heart flying-heart';
+            flyingHeart.style.left = (event.clientX - 10) + 'px';
+            flyingHeart.style.top = (event.clientY - 10) + 'px';
+            document.body.appendChild(flyingHeart);
+            setTimeout(() => flyingHeart.remove(), 800);
         }
+    }
+
+    globalLikesData[storeName] = storeLikes;
+    
+    // 【關鍵1】：本地端立刻存檔，畫面秒更新，不看雲端臉色
+    localStorage.setItem('a7club_my_likes', JSON.stringify(myLikes));
+
+    // 背景非同步傳送雲端 (安靜地在背後做，不卡住使用者)
+    if (typeof GAS_LIKES_URL !== 'undefined' && GAS_LIKES_URL) {
+        const now = new Date();
+        const timeString = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+        fetch(GAS_LIKES_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+                storeName: storeName,
+                userId: userId,
+                action: isLiked ? 'unlike' : 'like',
+                timestamp: timeString
+            })
+        }).catch(e => console.log('傳送愛心資料失敗', e));
+    }
+
+    if (document.getElementById('education-list-container')) {
+        renderEducationData(globalEducationData);
+        renderDashboard();
+    }
+
+    if (currentStoreForComment === storeName) {
+        updateModalLikeBtn(storeName);
+    }
+}
 
         function openCommentModal(storeName) {
             currentStoreForComment = storeName;
@@ -1822,63 +1829,75 @@
             }
         }
 
-        async function loadSharedLikesData() {
-            if (Object.keys(globalLikesData).length > 0) return globalLikesData;
+        // 注意：記得把最上方原本宣告的 `const currentUserId = getUserId();` 刪除
+// 我們已經將它改為在函式內動態呼叫了。
 
-            const localCache = JSON.parse(localStorage.getItem('a7club_likes_cache') || '{}');
-            globalLikesData = localCache;
+async function loadSharedLikesData() {
+    if (Object.keys(globalLikesData).length > 0) return globalLikesData;
 
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1295636704&single=true&output=csv';
-            try {
-                const res = await fetch(csvUrl);
-                const text = await res.text();
-                const rows = parseCSV(text);
-                let likesMap = {};
+    const localCache = JSON.parse(localStorage.getItem('a7club_likes_cache') || '{}');
+    globalLikesData = localCache;
 
-                if (rows.length > 1) {
-                    const headers = rows[0];
-                    const userIdx = headers.findIndex(k => k.includes('ID') || k.includes('使用者'));
-                    const storeIdx = headers.findIndex(k => k.includes('店'));
-                    const actionIdx = headers.findIndex(k => k.includes('動作') || k.includes('狀態') || k.toLowerCase().includes('action'));
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTmr3ebvX4CeJ_Dc-TK_57zxqaVlXfI4CPVcgTAWAIKM29dtR-SqiFs93i2iz1ScwYEBcty8mlIxKYO/pub?gid=1295636704&single=true&output=csv';
+    try {
+        const res = await fetch(csvUrl);
+        const text = await res.text();
+        const rows = parseCSV(text);
+        let likesMap = {};
 
-                    rows.slice(1).forEach(row => {
-                        const storeName = row[storeIdx];
-                        const userId = row[userIdx];
-                        const action = actionIdx !== -1 ? row[actionIdx] : 'like';
+        if (rows.length > 1) {
+            const headers = rows[0];
+            const userIdx = headers.findIndex(k => k.includes('ID') || k.includes('使用者'));
+            const storeIdx = headers.findIndex(k => k.includes('店'));
+            const actionIdx = headers.findIndex(k => k.includes('動作') || k.includes('狀態') || k.toLowerCase().includes('action'));
 
-                        if (!storeName || !userId) return;
-                        if (!likesMap[storeName]) likesMap[storeName] = { users: [] };
+            rows.slice(1).forEach(row => {
+                const storeName = row[storeIdx];
+                const userId = row[userIdx];
+                const action = actionIdx !== -1 ? row[actionIdx] : 'like';
 
-                        if (action && action.toLowerCase().includes('unlike')) {
-                            const idx = likesMap[storeName].users.indexOf(userId);
-                            if (idx !== -1) likesMap[storeName].users.splice(idx, 1);
-                        } else {
-                            if (!likesMap[storeName].users.includes(userId)) {
-                                likesMap[storeName].users.push(userId);
-                            }
-                        }
-                    });
-                }
+                if (!storeName || !userId) return;
+                if (!likesMap[storeName]) likesMap[storeName] = { users: [] };
 
-                let myLikes = JSON.parse(localStorage.getItem('a7club_my_likes') || '{}');
-                for (let store in likesMap) {
-                    let users = likesMap[store].users;
-                    let idx = users.indexOf(currentUserId);
-                    if (myLikes[store] === true && idx === -1) users.push(currentUserId);
-                    if (myLikes[store] === false && idx !== -1) users.splice(idx, 1);
-                }
-                for (let store in myLikes) {
-                    if (myLikes[store] === true && !likesMap[store]) {
-                        likesMap[store] = { users: [currentUserId] };
+                if (action && action.toLowerCase().includes('unlike')) {
+                    const idx = likesMap[storeName].users.indexOf(userId);
+                    if (idx !== -1) likesMap[storeName].users.splice(idx, 1);
+                } else {
+                    if (!likesMap[storeName].users.includes(userId)) {
+                        likesMap[storeName].users.push(userId);
                     }
                 }
-
-                globalLikesData = likesMap;
-            } catch (e) {
-                console.warn('載入按讚資料失敗', e);
-            }
-            return globalLikesData;
+            });
         }
+
+        // 【關鍵2】：強制用本地的 myLikes 覆蓋雲端 (解決 CSV 延遲問題)
+        let userId = getUserId();
+        let myLikes = JSON.parse(localStorage.getItem('a7club_my_likes') || '{}');
+        
+        for (let store in likesMap) {
+            let users = likesMap[store].users;
+            let idx = users.indexOf(userId);
+            
+            // 如果本地說有按讚，但雲端還沒更新，強制加上去
+            if (myLikes[store] === true && idx === -1) users.push(userId);
+            // 如果本地說沒按讚，但雲端還有紀錄，強制拿掉
+            if (myLikes[store] === false && idx !== -1) users.splice(idx, 1);
+        }
+        
+        // 處理雲端完全沒有這間店資料的情況
+        for (let store in myLikes) {
+            if (myLikes[store] === true && !likesMap[store]) {
+                likesMap[store] = { users: [userId] };
+            }
+        }
+
+        globalLikesData = likesMap;
+        localStorage.setItem('a7club_likes_cache', JSON.stringify(likesMap));
+    } catch (e) {
+        console.warn('載入按讚資料失敗', e);
+    }
+    return globalLikesData;
+}
 
         async function loadSharedMedicalData() {
             if (globalMedicalData) return globalMedicalData;
@@ -2238,18 +2257,14 @@
                 container.innerHTML = '<p class="text-center text-gray-400 font-bold py-10 bg-white rounded-[2rem] border border-gray-100 shadow-sm">尚無相關教育機構資料</p>';
                 return;
             }
+            
+            const currentUserId = getUserId(); // 補上這裡的 currentUserId
+            
             const countEdu = document.getElementById('count-education');
             if (countEdu) {
                 const schoolCount = (typeof PUBLIC_SCHOOLS !== 'undefined') ? PUBLIC_SCHOOLS.length : 8;
                 const cramCount = data.length;
-                countEdu.innerHTML = `
-                    <a href="#section-education-hall" class="bg-white text-blue-600 text-[10px] lg:text-sm font-black px-1.5 lg:px-2.5 py-0.5 lg:py-1 rounded shadow-sm border border-blue-100 hover:bg-blue-500 hover:text-white transition-colors flex items-center whitespace-nowrap">
-                        學校 ${schoolCount} 間
-                    </a>
-                    <a href="#section-education-list" class="bg-white text-blue-600 text-[10px] lg:text-sm font-black px-1.5 lg:px-2.5 py-0.5 lg:py-1 rounded shadow-sm border border-blue-100 hover:bg-blue-500 hover:text-white transition-colors flex items-center whitespace-nowrap">
-                        補教 ${cramCount} 間
-                    </a>
-                `;
+                countEdu.innerHTML = `<i class="fa-solid fa-school mr-1.5 opacity-70 hidden lg:inline"></i>學校 ${schoolCount} 間、補教 ${cramCount} 間`;
             }
 
             const grouped = {};
@@ -2835,7 +2850,7 @@
         function scrollToMedicalCategory(keyword) {
             // 支援傳入單一字串或陣列
             const keywords = Array.isArray(keyword) ? keyword : [keyword];
-
+            
             if (globalMedicalData) {
                 const grouped = {};
                 globalMedicalData.forEach(i => {
@@ -2843,7 +2858,7 @@
                     if (!grouped[catName]) grouped[catName] = [];
                     grouped[catName].push(i);
                 });
-
+                
                 const cats = Object.keys(grouped);
                 for (let c of cats) {
                     if (keywords.some(k => c.includes(k))) {
