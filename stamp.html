@@ -36,16 +36,22 @@
         body { font-family: 'M PLUS Rounded 1c', sans-serif; background: linear-gradient(135deg, #fff0f5 0%, #e0f7fa 100%); color: #4A4A4A; }
         .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border: 2px dashed rgba(255, 209, 220, 0.8); }
         .active-scale:active { transform: scale(0.95); transition: transform 0.1s; }
-        .scanner-laser { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: #FF8C94; box-shadow: 0 0 12px #FF8C94; animation: scanning 2.5s ease-in-out infinite; z-index: 10; }
-        @keyframes scanning { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        
         .loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,1); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
-        /* 掃描框角落裝飾 */
+        /* --- 掃描器自訂樣式 --- */
+        .scanner-laser { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: #FF8C94; box-shadow: 0 0 12px #FF8C94; animation: scanning 2.5s ease-in-out infinite; z-index: 10; }
+        @keyframes scanning { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
         .scan-corner { position: absolute; width: 24px; height: 24px; border-color: #FF8C94; border-width: 4px; z-index: 20; border-radius: 4px; }
         .corner-tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
         .corner-tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
         .corner-bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
         .corner-br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+        /* 強制隱藏 html5-qrcode 預設的白色醜醜邊框 */
+        #qr-shaded-region > div {
+            display: none !important;
+        }
     </style>
 </head>
 <body class="min-h-screen flex justify-center bg-gray-100">
@@ -57,7 +63,7 @@
         <p id="error-display" class="text-xs text-red-400 mt-4 px-10 text-center hidden"></p>
         <div id="setup-hint" class="hidden mt-6 p-4 bg-white border-2 border-dashed border-[#FFD1DC] rounded-2xl mx-10 text-center">
              <p class="text-[10px] text-gray-500 mb-2">💡 設定提示</p>
-             <p class="text-xs text-[#4A4A4A]">請至 LINE Developers 後台複製 LIFF ID 並替換程式碼中的 <b>"2009930258-GNJpigEk"</b> 位置。</p>
+             <p class="text-xs text-[#4A4A4A]">請至 LINE Developers 後台複製 LIFF ID 並替換程式碼中的 <b>"您的_LIFF_ID"</b> 位置。</p>
         </div>
         <button id="retry-btn" class="mt-4 px-6 py-2 bg-[#B5EAD7] rounded-full text-[#4A4A4A] font-bold text-xs hidden" onclick="location.reload()">重新連線</button>
     </div>
@@ -164,7 +170,7 @@
                 </div>
                 
                 <div class="p-5 bg-white text-center">
-                    <p class="text-xs text-gray-500 font-medium leading-relaxed">請將相機對準柒樂部店家的<br><span class="text-[#FF8C94] font-bold">正方形專屬 QR Code</span></p>
+                    <p class="text-xs text-gray-500 font-medium leading-relaxed">請將相機對準柒樂部店家的<br><span class="text-[#FF8C94] font-bold">專屬 QR Code</span></p>
                 </div>
             </div>
         </div>
@@ -191,7 +197,7 @@
 
         // 核心設定
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzC8FV-VwFLwjv7N9jyn4xy8IrCMjZy24-xdCT9rVgpRP5bXSudababRhaAkQloVmU2LA/exec";
-        const LIFF_ID = "2009930258-GNJpigEk"; 
+        const LIFF_ID = "2009930258-GNJpigEk"; // 請填寫您的 LIFF ID
         const SHOP_QR_CODE = "SEVEN_CLUB_JOY_2026";
         const MAX_STAMPS = 10;
         
@@ -272,6 +278,12 @@
             
             if (result.status === 'success') {
                 currentPoints = result.points;
+                
+                // 如果是新用戶，跳出歡迎訊息 (配合 GAS isNewUser 參數)
+                if(result.isNewUser) {
+                    setTimeout(() => alert("歡迎加入柒樂部！已贈送您入園禮 1 點！"), 500);
+                }
+
                 renderUI(result.prizes || []);
                 document.getElementById('loading').style.opacity = '0';
                 setTimeout(() => document.getElementById('loading').style.display = 'none', 300);
@@ -410,10 +422,14 @@
             document.getElementById('scanner-modal').classList.remove('hidden');
             html5QrCode = new Html5Qrcode("reader");
             try {
-                // 將掃描區域視覺化調整為正方形
+                // 強制 qrbox 必須為單一數值 (會自動產生完美的正方形遮罩)
                 await html5QrCode.start(
                     { facingMode: "environment" }, 
-                    { fps: 20, qrbox: { width: 260, height: 260 } }, 
+                    { 
+                        fps: 15, 
+                        qrbox: 260, // 設為整數 260，套件才會強制繪製 260x260 的正方形透明區
+                        aspectRatio: 1.0 
+                    }, 
                     (text) => { if (text === SHOP_QR_CODE) handleScanSuccess(); }
                 );
             } catch (err) {
