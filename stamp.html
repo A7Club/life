@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/html5-qrcode"></script>
+    <!-- LINE LIFF SDK -->
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     
     <script>
@@ -37,105 +38,124 @@
         .active-scale:active { transform: scale(0.95); transition: transform 0.1s; }
         .scanner-laser { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: #FF8C94; box-shadow: 0 0 15px #FF8C94; animation: scanning 2s linear infinite; }
         @keyframes scanning { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
-        .loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.9); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.3s; }
+        .loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,1); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     </style>
 </head>
 <body class="min-h-screen flex justify-center bg-gray-100">
 
-    <!-- 讀取遮罩 -->
+    <!-- 讀取遮罩 (強制身分驗證) -->
     <div id="loading" class="loading-overlay">
-        <div class="animate-spin text-4xl mb-4">🎡</div>
-        <p class="font-bold text-[#6B5B95]">遊樂園門票驗票中...</p>
+        <div id="loading-spinner" class="animate-spin text-4xl mb-4 text-[#6B5B95]">🎡</div>
+        <p id="loading-text" class="font-bold text-[#6B5B95]">遊樂園門票驗證中...</p>
         <p id="error-display" class="text-xs text-red-400 mt-4 px-10 text-center hidden"></p>
-        <button id="retry-btn" class="mt-4 px-4 py-2 bg-macaron-blue rounded-xl text-xs font-bold hidden" onclick="location.reload()">重新整理</button>
+        <div id="setup-hint" class="hidden mt-6 p-4 bg-white border-2 border-dashed border-[#FFD1DC] rounded-2xl mx-10 text-center">
+             <p class="text-[10px] text-gray-500 mb-2">💡 設定提示</p>
+             <p class="text-xs text-[#4A4A4A]">請至 LINE Developers 後台複製 LIFF ID 並替換程式碼中的 <b>"您的_LIFF_ID"</b> 預留文字。</p>
+        </div>
+        <button id="retry-btn" class="mt-4 px-6 py-2 bg-[#B5EAD7] rounded-full text-[#4A4A4A] font-bold text-xs hidden" onclick="location.reload()">重新連線</button>
     </div>
 
     <div class="w-full max-w-[400px] bg-gradient-to-br from-[#FFD1DC]/30 via-[#FFF5BA]/30 to-[#B5EAD7]/30 min-h-screen relative shadow-2xl overflow-hidden flex flex-col">
         
-        <!-- 頂部資訊 -->
+        <!-- 頂部導航 -->
         <header class="pt-8 pb-4 px-6 relative z-10">
             <div class="flex justify-between items-center">
                 <div>
                     <h2 class="text-sm font-bold text-[#6B5B95] flex items-center gap-1">
                         <i data-lucide="ticket" class="w-4 h-4"></i> 柒樂部 LINE 社群專屬
                     </h2>
-                    <h1 class="text-2xl font-extrabold text-[#4A4A4A] mt-1 animate-float">
+                    <h1 class="text-2xl font-extrabold text-[#4A4A4A] mt-1 animate-float tracking-tight">
                         遊樂園集點護照 🎡
                     </h1>
                 </div>
-                <div class="w-12 h-12 rounded-full border-4 border-white shadow-sm bg-macaron-yellow overflow-hidden">
+                <div class="w-12 h-12 rounded-full border-4 border-white shadow-sm bg-macaron-yellow overflow-hidden ring-2 ring-white/50">
                     <img id="user-avatar" src="https://api.dicebear.com/7.x/notionists/svg?seed=Lucky" alt="User" class="w-full h-full object-cover">
                 </div>
             </div>
         </header>
 
         <main class="flex-1 px-5 pb-24 overflow-y-auto relative z-10">
-            <!-- 進度顯示 -->
+            <!-- 進度卡片 -->
             <div class="bg-white/90 rounded-2xl p-4 shadow-sm mb-6 flex items-center gap-4 border-l-4 border-macaron-blue">
                 <div class="w-10 h-10 rounded-full bg-macaron-blue/30 flex items-center justify-center text-xl">🎈</div>
                 <div>
                     <p class="text-xs text-gray-500 font-medium">目前的進度</p>
-                    <p id="points-status" class="text-sm font-bold text-[#4A4A4A]">正在查詢點數...</p>
+                    <p id="points-status" class="text-sm font-bold text-[#4A4A4A]">讀取點數中...</p>
                 </div>
             </div>
 
-            <!-- 集點卡 -->
-            <div class="glass-card rounded-3xl p-6 shadow-md relative mb-6">
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-4/5 h-6 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSIyMCI+PHBvbHlnb24gcG9pbnRzPSIwLDExIDIwLDAgNDAsMTEgMjAsMjIiIGZpbGw9IiNGRkQxREMiLz48L3N2Zz4=')] bg-repeat-x opacity-80"></div>
+            <!-- 集點卡本體 -->
+            <div class="glass-card rounded-3xl p-6 shadow-md relative mb-6 overflow-hidden">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-4/5 h-6 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSIyMCI+PHBvbHlnb24gcG9pbnRzPSIwLDExIDIwLDAgNDAsMTEgMjAsMjIiIGZpbGw9IiNGRkQxREMiLz48L3N2Zz4=')] bg-repeat-x opacity-60"></div>
+                
                 <div id="stamp-grid" class="grid grid-cols-5 gap-y-5 gap-x-2 justify-items-center mt-4">
-                    <!-- JS 生成 -->
+                    <!-- JavaScript 動態渲染集點章 -->
                 </div>
             </div>
 
-            <!-- 獎品櫥窗 -->
+            <!-- 獎品區域 -->
             <div class="mb-6">
-                <h3 class="text-sm font-bold text-[#6B5B95] mb-3 px-1">🎁 獎品換領處</h3>
+                <h3 class="text-sm font-bold text-[#6B5B95] mb-3 px-1 flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> 獎品換領處
+                </h3>
                 <div id="prize-list" class="flex flex-col gap-3">
-                    <!-- 動態載入獎品 -->
+                    <!-- 獎品項目由同步數據產生 -->
                 </div>
             </div>
 
-            <!-- 集點按鈕 -->
+            <!-- 操作按鈕 -->
             <div class="mt-4">
-                <button id="start-scan" class="active-scale w-full bg-gradient-to-r from-[#FFD1DC] to-[#E2D1F9] text-[#4A4A4A] font-bold text-lg py-4 rounded-2xl shadow-lg flex justify-center items-center gap-2">
-                    <i data-lucide="aperture"></i> 開啟相機集點
+                <button id="start-scan" class="active-scale w-full bg-gradient-to-r from-[#FFD1DC] to-[#E2D1F9] text-[#4A4A4A] font-extrabold text-lg py-4 rounded-2xl shadow-[0_4px_15px_rgba(255,209,220,0.5)] flex justify-center items-center gap-2">
+                    <i data-lucide="maximize" class="w-5 h-5"></i> 開啟相機集點
                 </button>
             </div>
         </main>
 
-        <!-- 底部導覽 -->
-        <nav class="absolute bottom-0 w-full bg-white/90 backdrop-blur-md border-t border-gray-100 px-6 py-3 pb-6 flex justify-between z-20 shadow-lg">
-            <button class="flex flex-col items-center gap-1 text-[#FF8C94]"><i data-lucide="home" class="w-6 h-6"></i><span class="text-[10px] font-bold">首頁</span></button>
-            <button class="flex flex-col items-center gap-1 text-gray-400" onclick="alert('地圖功能開發中！')"><i data-lucide="map" class="w-6 h-6"></i><span class="text-[10px] font-bold">地圖</span></button>
-            <button class="flex flex-col items-center gap-1 text-gray-400" onclick="alert('請查看 Google Sheets 兌換紀錄')"><i data-lucide="gift" class="w-6 h-6"></i><span class="text-[10px] font-bold">紀錄</span></button>
+        <!-- 導覽列 -->
+        <nav class="absolute bottom-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 px-6 py-3 pb-6 flex justify-between z-20">
+            <button class="flex flex-col items-center gap-1 text-[#FF8C94]">
+                <i data-lucide="home" class="w-6 h-6"></i>
+                <span class="text-[10px] font-bold text-[#FF8C94]">首頁</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-gray-400 opacity-50">
+                <i data-lucide="map-pinned" class="w-6 h-6"></i>
+                <span class="text-[10px] font-bold text-gray-400">地圖</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-gray-400 opacity-50">
+                <i data-lucide="scroll-text" class="w-6 h-6"></i>
+                <span class="text-[10px] font-bold text-gray-400">紀錄</span>
+            </button>
         </nav>
 
-        <!-- 相機掃描彈窗 -->
-        <div id="scanner-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[60] hidden flex flex-col items-center justify-center p-6">
-            <div class="w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl">
-                <div class="bg-macaron-pink p-4 flex justify-between items-center text-[#6B5B95] font-bold">
-                    <span>掃描店家 QR Code</span>
-                    <button onclick="stopScanning()"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <!-- 掃描窗 -->
+        <div id="scanner-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[60] hidden flex flex-col items-center justify-center p-6">
+            <div class="w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl relative">
+                <div class="bg-macaron-pink/50 p-4 flex justify-between items-center text-[#6B5B95] font-bold">
+                    <span>相機集點中</span>
+                    <button onclick="stopScanning()" class="bg-white/80 rounded-full p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
                 <div class="relative aspect-square w-full bg-black">
                     <div id="reader" class="w-full h-full"></div>
                     <div class="scanner-laser"></div>
                 </div>
+                <div class="p-4 bg-white text-center">
+                    <p class="text-xs text-gray-400">請對準店內集點 QR Code</p>
+                </div>
             </div>
         </div>
 
         <!-- 兌換成功彈窗 -->
-        <div id="redeem-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center px-4">
+        <div id="redeem-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[70] hidden flex items-center justify-center px-4">
             <div class="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="redeem-modal-content">
                 <div class="text-center">
-                    <div class="text-6xl mb-4 animate-bounce">🎉</div>
+                    <div class="text-6xl mb-4 animate-bounce">🎁</div>
                     <h3 class="text-xl font-bold text-[#4A4A4A] mb-2">兌換成功！</h3>
-                    <p id="redeem-msg" class="text-sm text-gray-600 mb-4"></p>
-                    <div id="redeem-code-box" class="bg-gray-100 p-3 rounded-xl border border-gray-200 mb-5 flex justify-between items-center hidden">
+                    <p id="redeem-msg" class="text-sm text-gray-600 mb-6 leading-relaxed"></p>
+                    <div id="redeem-code-box" class="bg-gray-50 p-4 rounded-2xl border-2 border-dashed border-[#B5EAD7] mb-6 flex justify-between items-center hidden">
                         <span class="font-mono font-bold text-lg tracking-widest text-[#4A4A4A]" id="redemption-code"></span>
-                        <button onclick="copyCode()" class="text-macaron-blue p-2"><i data-lucide="copy"></i></button>
+                        <button onclick="copyCode()" class="text-macaron-blue p-2 active-scale"><i data-lucide="copy"></i></button>
                     </div>
-                    <button onclick="closeModal()" class="w-full bg-[#B5EAD7] text-[#4A4A4A] font-bold py-3 rounded-xl">繼續玩遊樂園</button>
+                    <button onclick="closeModal()" class="w-full bg-[#B5EAD7] text-[#4A4A4A] font-extrabold py-3 rounded-2xl shadow-sm">太棒了，繼續玩！</button>
                 </div>
             </div>
         </div>
@@ -144,68 +164,87 @@
     <script>
         lucide.createIcons();
 
-        // 串接設定
+        // 核心設定
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzC8FV-VwFLwjv7N9jyn4xy8IrCMjZy24-xdCT9rVgpRP5bXSudababRhaAkQloVmU2LA/exec";
+        const LIFF_ID = "2009930258-GNJpigEk"; // ⚠️ 重要：請在此處填入您的真實 LIFF ID
         const SHOP_QR_CODE = "SEVEN_CLUB_JOY_2026";
         const MAX_STAMPS = 10;
         
         let currentPoints = 0;
-        let userData = { userId: 'guest_' + Math.floor(Math.random()*1000), displayName: '遊客' };
+        let userData = { userId: null, displayName: '遊客' };
         let html5QrCode;
 
-        // 顯示錯誤訊息
         function showError(msg) {
-            const errEl = document.getElementById('error-display');
-            const retryBtn = document.getElementById('retry-btn');
-            errEl.innerText = msg;
-            errEl.classList.remove('hidden');
-            retryBtn.classList.remove('hidden');
+            document.getElementById('loading-spinner').classList.add('hidden');
+            document.getElementById('error-display').innerText = msg;
+            document.getElementById('error-display').classList.remove('hidden');
+            document.getElementById('retry-btn').classList.remove('hidden');
         }
 
-        // 初始化
+        // 初始化 LIFF 流程
         async function init() {
             try {
-                if (window.liff) {
-                    await liff.init({ liffId: "您的_LIFF_ID" }).catch(e => console.log("LIFF 啟動失敗，將以訪客模式執行"));
-                    if (liff.isLoggedIn()) {
-                        const profile = await liff.getProfile();
-                        userData = { userId: profile.userId, displayName: profile.displayName };
-                        document.getElementById('user-avatar').src = profile.pictureUrl || document.getElementById('user-avatar').src;
-                    }
+                // 檢查是否已填寫 ID
+                if (LIFF_ID === "您的_LIFF_ID" || LIFF_ID === "") {
+                    document.getElementById('loading-text').innerText = "尚未完成 LIFF ID 設定";
+                    document.getElementById('setup-hint').classList.remove('hidden');
+                    return;
                 }
+
+                // 1. 初始化 LIFF
+                await liff.init({ liffId: LIFF_ID });
+                
+                // 2. 判斷登入狀態
+                if (!liff.isLoggedIn()) {
+                    document.getElementById('loading-text').innerText = "引導至 LINE 登入中...";
+                    liff.login(); 
+                    return;
+                }
+
+                // 3. 獲取真實用戶資料
+                const profile = await liff.getProfile();
+                userData.userId = profile.userId;
+                userData.displayName = profile.displayName;
+                document.getElementById('user-avatar').src = profile.pictureUrl || document.getElementById('user-avatar').src;
+
+                // 4. 與 Google Sheets 同步點數
                 await syncData();
+
             } catch (err) {
-                console.error("Init Error:", err);
-                await syncData(); // 發生錯誤時嘗試預設同步
+                console.error("LIFF/Init Error:", err);
+                document.getElementById('loading-text').innerText = "驗證失敗";
+                
+                let errorMsg = "請從 LINE App 內開啟此網址。";
+                if (err.message.includes("channel not found")) {
+                    errorMsg = "LIFF ID 無效（Channel Not Found）。請確認 LINE Developers 後台設定是否正確。";
+                } else {
+                    errorMsg += "\n錯誤細節：" + err.message;
+                }
+                showError(errorMsg);
             }
         }
 
-        // 與 GAS 溝通 (修正後的版本)
+        // 呼叫 GAS (處理 CORS)
         async function callGAS(payload) {
             try {
-                // 重要：不要設置 Content-Type: application/json，這樣瀏覽器會以純文字發送，避開 CORS OPTIONS 預檢
                 const response = await fetch(GAS_URL, {
                     method: "POST",
                     mode: "cors",
                     redirect: "follow",
                     body: JSON.stringify(payload)
                 });
-                
-                if (!response.ok) throw new Error(`HTTP 錯誤! 狀態碼: ${response.status}`);
-                
-                const result = await response.json();
-                return result;
+                if (!response.ok) throw new Error("網路請求失敗");
+                return await response.json();
             } catch (e) {
                 console.error("Fetch Error:", e);
-                return { 
-                    status: "error", 
-                    message: "連線失敗：請確保 GAS 已部署為「任何人」並且您已複製正確的網址。" 
-                };
+                return { status: "error", message: "無法連線至雲端資料庫" };
             }
         }
 
-        // 同步點數與獎品
+        // 同步數據
         async function syncData() {
+            if (!userData.userId) return;
+            
             document.getElementById('loading').style.display = 'flex';
             const result = await callGAS({ 
                 action: 'getPoints', 
@@ -216,25 +255,27 @@
             if (result.status === 'success') {
                 currentPoints = result.points;
                 renderUI(result.prizes || []);
-                document.getElementById('loading').style.display = 'none';
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => document.getElementById('loading').style.display = 'none', 300);
             } else {
-                showError(result.message);
+                alert(result.message);
+                document.getElementById('retry-btn').classList.remove('hidden');
             }
         }
 
+        // 渲染 UI
         function renderUI(prizes = []) {
             const grid = document.getElementById('stamp-grid');
             const stampIcons = ['🎠', '🎡', '🎪', '🎢', '🎫', '🍿', '🎈', '🍦', '🪄', '🦄'];
             grid.innerHTML = '';
             
-            // 顯示前10點的狀態
             const displayPoints = currentPoints % MAX_STAMPS === 0 && currentPoints > 0 ? MAX_STAMPS : currentPoints % MAX_STAMPS;
             
             for (let i = 0; i < MAX_STAMPS; i++) {
                 const slot = document.createElement('div');
                 slot.className = 'w-12 h-12 rounded-full flex items-center justify-center relative transition-all border-2 border-dashed border-gray-200 bg-gray-50/50';
                 if (i < displayPoints) {
-                    slot.className = 'w-12 h-12 rounded-full flex items-center justify-center relative bg-white shadow-sm border border-gray-100';
+                    slot.className = 'w-12 h-12 rounded-full flex items-center justify-center relative bg-white shadow-sm border border-[#FFD1DC]';
                     slot.innerHTML = `<span class="text-2xl animate-bounce-pop">${stampIcons[i]}</span>`;
                 } else {
                     slot.innerHTML = `<span class="text-gray-300 font-bold text-xs">${i + 1}</span>`;
@@ -242,30 +283,30 @@
                 grid.appendChild(slot);
             }
 
-            document.getElementById('points-status').innerHTML = `目前累積 <span class="text-[#FF8C94] text-lg font-extrabold">${currentPoints}</span> 點！`;
+            document.getElementById('points-status').innerHTML = `目前擁有 <span class="text-[#FF8C94] text-lg font-black">${currentPoints}</span> 點`;
 
             const listEl = document.getElementById('prize-list');
             listEl.innerHTML = '';
             
             if (prizes.length === 0) {
-                listEl.innerHTML = '<p class="text-center text-xs text-gray-400 py-4">目前沒有可兌換的獎品</p>';
+                listEl.innerHTML = '<p class="text-center text-xs text-gray-300 py-6">獎品補貨中，敬請期待！</p>';
                 return;
             }
 
             prizes.forEach(prize => {
                 const canRedeem = currentPoints >= prize.points;
                 const item = document.createElement('div');
-                item.className = `flex justify-between items-center p-4 rounded-2xl border transition-all ${canRedeem ? 'bg-white border-[#B5EAD7] shadow-sm' : 'bg-gray-100/50 border-gray-200 opacity-70'}`;
+                item.className = `flex justify-between items-center p-4 rounded-2xl border transition-all ${canRedeem ? 'bg-white border-[#B5EAD7] shadow-sm' : 'bg-gray-100/30 border-gray-100 opacity-60'}`;
                 item.innerHTML = `
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-macaron-yellow/30 flex items-center justify-center text-xl">${prize.type === '電子' ? '📱' : '🧸'}</div>
+                        <div class="w-10 h-10 rounded-full bg-macaron-yellow/20 flex items-center justify-center text-xl">${prize.type === '電子' ? '🎟️' : '🎁'}</div>
                         <div>
                             <p class="font-bold text-[#4A4A4A] text-sm">${prize.name}</p>
-                            <p class="text-[10px] text-gray-400">${prize.points} 點 • ${prize.type}</p>
+                            <p class="text-[10px] text-gray-400 font-medium">${prize.points} 點 • ${prize.type}獎勵</p>
                         </div>
                     </div>
                     <button onclick="handleRedeem('${prize.name}')" ${!canRedeem ? 'disabled' : ''} 
-                        class="px-4 py-2 rounded-xl font-bold text-xs active-scale transition-colors ${canRedeem ? 'bg-[#B5EAD7] text-[#4A4A4A]' : 'bg-gray-200 text-gray-400'}">
+                        class="px-5 py-2 rounded-xl font-bold text-xs transition-colors ${canRedeem ? 'bg-[#B5EAD7] text-[#4A4A4A] active-scale' : 'bg-gray-200 text-gray-400'}">
                         兌換
                     </button>
                 `;
@@ -273,11 +314,13 @@
             });
         }
 
+        // 掃描成功處理
         async function handleScanSuccess() {
             if (html5QrCode) {
                 await html5QrCode.stop().catch(e => console.log(e));
                 document.getElementById('scanner-modal').classList.add('hidden');
                 document.getElementById('loading').style.display = 'flex';
+                document.getElementById('loading').style.opacity = '1';
                 
                 const result = await callGAS({ 
                     action: 'addStamp', 
@@ -288,7 +331,7 @@
                 
                 if (result.status === 'success') {
                     await syncData();
-                    if (navigator.vibrate) navigator.vibrate(100);
+                    if (navigator.vibrate) navigator.vibrate(200);
                 } else {
                     alert(result.message);
                     document.getElementById('loading').style.display = 'none';
@@ -296,9 +339,11 @@
             }
         }
 
+        // 兌換處理
         async function handleRedeem(prizeName) {
             if (!confirm(`確定要兌換「${prizeName}」嗎？`)) return;
             document.getElementById('loading').style.display = 'flex';
+            document.getElementById('loading').style.opacity = '1';
             
             const result = await callGAS({ 
                 action: 'redeem', 
@@ -307,29 +352,31 @@
                 prizeName 
             });
             
-            document.getElementById('loading').style.display = 'none';
-            
             if (result.status === 'success') {
                 const modal = document.getElementById('redeem-modal');
                 const content = document.getElementById('redeem-modal-content');
                 modal.classList.remove('hidden');
-                setTimeout(() => content.classList.replace('scale-95', 'scale-100'), 10);
-                setTimeout(() => content.classList.replace('opacity-0', 'opacity-100'), 10);
+                setTimeout(() => {
+                    content.classList.replace('scale-95', 'scale-100');
+                    content.classList.replace('opacity-0', 'opacity-100');
+                }, 10);
                 
                 if (result.type === '電子') {
-                    document.getElementById('redeem-msg').innerText = `兌換成功！序號如下：`;
+                    document.getElementById('redeem-msg').innerText = `恭喜獲得電子序號！您可以直接複製：`;
                     document.getElementById('redeem-code-box').classList.remove('hidden');
                     document.getElementById('redemption-code').innerText = result.code;
                 } else {
-                    document.getElementById('redeem-msg').innerText = `兌換成功！實體領取碼：${result.code}\n請出示此畫面給工作人員。`;
+                    document.getElementById('redeem-msg').innerText = `兌換成功！實體領取碼為：\n${result.code}\n請向社群管理員出示此畫面領取。`;
                     document.getElementById('redeem-code-box').classList.add('hidden');
                 }
                 await syncData();
             } else {
+                document.getElementById('loading').style.display = 'none';
                 alert(result.message);
             }
         }
 
+        // --- 視窗控制 ---
         function closeModal() {
             const content = document.getElementById('redeem-modal-content');
             content.classList.replace('scale-100', 'scale-95');
@@ -351,11 +398,11 @@
             try {
                 await html5QrCode.start(
                     { facingMode: "environment" }, 
-                    { fps: 10, qrbox: 250 }, 
+                    { fps: 15, qrbox: { width: 250, height: 250 } }, 
                     (text) => { if (text === SHOP_QR_CODE) handleScanSuccess(); }
                 );
             } catch (err) {
-                alert("相機啟動失敗，請確認權限設定。");
+                alert("相機開啟失敗，請確認是否已允許相機存取權限。");
                 stopScanning();
             }
         }
@@ -373,6 +420,8 @@
         }
 
         document.getElementById('start-scan').addEventListener('click', startScanning);
+        
+        // 啟動應用
         window.onload = init;
     </script>
 </body>
