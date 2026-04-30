@@ -96,7 +96,7 @@
         </header>
 
         <main class="flex-1 px-5 pb-24 overflow-y-auto relative z-10">
-            <!-- 進度卡片 (已改為天空藍) -->
+            <!-- 進度卡片 -->
             <div class="bg-white/90 rounded-2xl p-4 shadow-sm mb-6 flex items-center gap-4 border-l-4 border-macaron-sky">
                 <div class="w-10 h-10 rounded-full bg-macaron-sky/30 flex items-center justify-center text-xl">🎈</div>
                 <div>
@@ -179,7 +179,7 @@
                 
                 <div class="p-5 bg-white text-center">
                     <p class="text-xs text-gray-500 font-medium leading-relaxed">
-                        👉 <b>集點</b>：請掃描店家正方形 QR Code<br>
+                        👉 <b>集點</b>：請掃描各店家的專屬 QR Code<br>
                         👉 <b>店家核銷</b>：請掃描用戶兌換畫面
                     </p>
                 </div>
@@ -226,8 +226,7 @@
 
         // 核心設定
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzC8FV-VwFLwjv7N9jyn4xy8IrCMjZy24-xdCT9rVgpRP5bXSudababRhaAkQloVmU2LA/exec";
-        const LIFF_ID = "2009930258-GNJpigEk"; // 替換為您的 LIFF ID
-        const SHOP_QR_CODE = "SEVEN_CLUB_JOY_2026";
+        const LIFF_ID = "2009930258-GNJpigEk"; 
         const MAX_STAMPS = 10;
         
         let currentPoints = 0;
@@ -268,14 +267,11 @@
             } catch (err) {
                 console.error("LIFF/Init Error:", err);
                 document.getElementById('loading-text').innerText = "驗證失敗";
-                
                 let errorMsg = "請從 LINE App 內開啟此網址。";
                 if (err.message.includes("channel not found")) {
                     errorMsg = "LIFF ID 無效（Channel Not Found）。請確認 LINE Developers 後台設定是否正確。";
-                } else {
-                    errorMsg += "\n錯誤細節：" + err.message;
                 }
-                showError(errorMsg);
+                showError(errorMsg + "\n錯誤細節：" + err.message);
             }
         }
 
@@ -309,11 +305,9 @@
             
             if (result.status === 'success') {
                 currentPoints = result.points;
-                
                 if(result.isNewUser) {
                     setTimeout(() => alert("歡迎加入柒樂部！已贈送您入園禮 1 點！"), 500);
                 }
-
                 renderUI(result.prizes || []);
                 document.getElementById('loading').style.opacity = '0';
                 setTimeout(() => document.getElementById('loading').style.display = 'none', 300);
@@ -383,7 +377,6 @@
 
         // [用戶端] 點擊兌換按鈕
         async function handleRedeem(prizeName, prizeType) {
-            // 實體獎品：產生 QR Code 讓店家掃描 (此時不扣點)
             if (prizeType === '實體') {
                 const qrData = `REDEEM:::${userData.userId}:::${userData.displayName}:::${prizeName}`;
                 const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=6B5B95&data=${encodeURIComponent(qrData)}`;
@@ -401,7 +394,6 @@
                 return;
             }
 
-            // 電子獎品：直接扣點並給予序號
             if (!confirm(`確定要兌換「${prizeName}」嗎？`)) return;
             document.getElementById('loading').style.display = 'flex';
             document.getElementById('loading').style.opacity = '1';
@@ -440,6 +432,7 @@
             await syncData();
         }
 
+        // [店家端] 掃描用戶的出示條碼
         async function handleAdminRedeem(text) {
             if (html5QrCode) {
                 await html5QrCode.stop().catch(e => console.log(e));
@@ -462,7 +455,7 @@
                 userId: targetUserId, 
                 displayName: targetDisplayName, 
                 prizeName: targetPrizeName,
-                shopCode: SHOP_QR_CODE // 新增這行：記錄是哪個店家進行的核銷
+                adminId: userData.userId // 傳遞掃描者(店家)的 LINE ID，交由後端驗證權限
             });
 
             document.getElementById('loading').style.display = 'none';
@@ -475,7 +468,8 @@
             }
         }
 
-        async function handleScanSuccess() {
+        // [用戶端] 掃描任一店家 QR Code
+        async function handleScanSuccess(scannedShopCode) {
             if (html5QrCode) {
                 await html5QrCode.stop().catch(e => console.log(e));
             }
@@ -487,7 +481,7 @@
                 action: 'addStamp', 
                 userId: userData.userId, 
                 displayName: userData.displayName, 
-                shopCode: SHOP_QR_CODE 
+                shopCode: scannedShopCode // 傳入動態掃描到的店家代碼
             });
             
             if (result.status === 'success') {
@@ -526,12 +520,12 @@
                         aspectRatio: 1.0 
                     }, 
                     (text) => { 
-                        if (text === SHOP_QR_CODE) {
-                            handleScanSuccess(); 
-                        } else if (text.startsWith("REDEEM:::")) {
+                        if (text.startsWith("REDEEM:::")) {
+                            // 若開頭是 REDEEM，代表店家正在掃描用戶
                             handleAdminRedeem(text);
                         } else {
-                            console.log("Ignored unrecognised QR code.");
+                            // 若不是 REDEEM 開頭，一律視為用戶正在掃描店家的集點 QR Code
+                            handleScanSuccess(text);
                         }
                     }
                 );
