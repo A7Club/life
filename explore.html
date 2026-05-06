@@ -5801,43 +5801,82 @@
             if (!buses || !window.gasTransitCache) return;
             const elapsedMins = Math.floor((Date.now() - window.gasTransitCache.timestamp) / 60000);
 
-            // 定義四個區塊要抓取的路線關鍵字
+            // 定義四個區塊要抓取的路線、目標方向 (0: 去程, 1: 回程) 與顯示的終點名稱
             const categories = [
-                { id: 'bus-taipei-container', keywords: ['967', '946'] },
-                { id: 'bus-hospital-container', keywords: ['202', '603', '606', '607'] },
-                { id: 'bus-xinzhuang-container', keywords: ['898', '786', '810'] },
-                { id: 'bus-local-container', keywords: ['L317', 'L318', 'L319', 'L327'] }
+                { 
+                    id: 'bus-taipei-container', 
+                    routes: [
+                        { kw: '967', dir: 0, dest: '台北市區' },
+                        { kw: '946', dir: 0, dest: '內湖' }
+                    ] 
+                },
+                { 
+                    id: 'bus-hospital-container', 
+                    routes: [
+                        { kw: '202', dir: 0, dest: '長庚醫院' },
+                        { kw: '603', dir: 0, dest: '長庚大學' },
+                        { kw: '606', dir: 0, dest: '長庚大學' },
+                        { kw: '607', dir: 0, dest: '長庚大學' }
+                    ] 
+                },
+                { 
+                    id: 'bus-xinzhuang-container', 
+                    routes: [
+                        { kw: '898', dir: 1, dest: '迴龍/下新莊' },
+                        { kw: '786', dir: 0, dest: '新莊/板橋' },
+                        { kw: '810', dir: 0, dest: '輔大/新莊' }
+                    ] 
+                },
+                { 
+                    id: 'bus-local-container', 
+                    routes: [
+                        { kw: 'L317', dir: 0, dest: '長庚社區' },
+                        { kw: 'L318', dir: 0, dest: '長庚社區' },
+                        { kw: 'L319', dir: 0, dest: '長庚社區' },
+                        { kw: 'L327', dir: 0, dest: '長庚社區' }
+                    ] 
+                }
             ];
 
             categories.forEach(cat => {
                 const container = document.getElementById(cat.id);
                 if (!container) return;
 
-                // 篩選出屬於該區塊的路線
-                let matchedBuses = buses.filter(b => cat.keywords.some(kw => b.route.includes(kw)));
+                let html = '';
+                let hasBus = false;
 
-                if (matchedBuses.length > 0) {
-                    // 把快到站的車排在最上面
-                    matchedBuses.sort((a, b) => {
-                        const timeA = typeof a.status === 'number' ? a.status : 999;
-                        const timeB = typeof b.status === 'number' ? b.status : 999;
-                        return timeA - timeB;
-                    });
+                cat.routes.forEach(routeConfig => {
+                    // 篩選符合關鍵字，且方向符合主標題設定的公車 (過濾掉反向車次)
+                    // 若 direction 為 -1 代表 API 未提供方向，則放寬納入
+                    let matchedBuses = buses.filter(b => b.route.includes(routeConfig.kw) && (b.direction === routeConfig.dir || b.direction === -1));
 
-                    container.innerHTML = matchedBuses.map(bus => {
+                    if (matchedBuses.length > 0) {
+                        hasBus = true;
+                        
+                        // 把快到站的車排在最上面
+                        matchedBuses.sort((a, b) => {
+                            const timeA = typeof a.status === 'number' ? a.status : 999;
+                            const timeB = typeof b.status === 'number' ? b.status : 999;
+                            return timeA - timeB;
+                        });
+
+                        // 每一號碼的公車只取最快抵達的「第一筆」，避免清單重複出現多班同路線公車
+                        const targetBus = matchedBuses[0];
+
                         // 計算即時扣減的倒數分鐘數
-                        let displayStatus = bus.status;
-                        if (typeof bus.status === 'number') {
-                            let remaining = Math.max(0, bus.status - elapsedMins - 1);
+                        let displayStatus = targetBus.status;
+                        if (typeof targetBus.status === 'number') {
+                            let remaining = Math.max(0, targetBus.status - elapsedMins - 1);
                             displayStatus = remaining <= 1 ? '進站中' : remaining + '分';
                         }
                         
-                        // 簡單判斷去回程文字 (0=去程, 1=回程)
-                        let dest = bus.direction === 0 ? "去程" : (bus.direction === 1 ? "回程" : "循環");
-                        
-                        // 呼叫你已經寫好的卡片產生器
-                        return createTransitCard(bus.route, dest, displayStatus, "", bus.stopName);
-                    }).join('');
+                        // 呼叫卡片產生器，並帶入設定好的標題終點名稱
+                        html += createTransitCard(targetBus.route, routeConfig.dest, displayStatus, "", targetBus.stopName);
+                    }
+                });
+
+                if (hasBus) {
+                    container.innerHTML = html;
                 } else {
                     // 如果該分類目前沒有車，顯示無資料狀態
                     container.innerHTML = `
