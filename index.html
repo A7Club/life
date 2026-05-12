@@ -12,13 +12,18 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
 
     <!-- 📊 Google Analytics (GA4)追蹤代碼放置區 -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-YJ9RJC2DRS');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YJ9RJC2DRS');
     </script>
+
+
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -1296,7 +1301,7 @@
                 <!-- 外層使用 Flex 控制電腦版與手機版的佈局切換 -->
                 <div class="flex flex-col lg:flex-row gap-5 relative z-10">
                     <!-- 主要推廣卡片區塊 (左側：改為自動填滿剩餘空間，解決寬度衝突) -->
-                    <div class="flex-1 min-w-0 flex flex-col gap-4">
+                    <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-2 gap-4">
                         
                         <!-- 模擬推廣卡片 1 -->
                         <div style="display: none;"
@@ -1427,23 +1432,28 @@
                 <i class="fa-solid fa-heart"></i>
             </span>
         </h4>
-        <p class="text-xs sm:text-sm text-gray-600 font-bold mb-4 leading-relaxed">
+        <p class="text-xs sm:text-sm text-gray-600 font-bold leading-relaxed">
             隱身在樂善一路的手作甜點，用職人溫度溫暖你的胃。開幕期間出示貼文即招待「林華泰鮮奶茶」！
         </p>
     </div>
 
-    <div class="flex items-center justify-between text-xs font-bold mt-auto pt-2 relative z-10">
-        <span class="text-[#80CFFF] bg-white px-3 py-2 rounded-xl shadow-sm border border-[#80CFFF]/20 flex items-center group-hover:border-[#FF9EBB]/30 transition-colors">
-            <i class="fa-solid fa-location-dot mr-1.5 text-[#FF9EBB]"></i>樂善一路9號
-        </span>
-        <button class="bg-gradient-to-r from-[#80CFFF] to-[#70BEEF] text-white px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg shadow-blue-100 group-hover:shadow-pink-100 group-hover:from-[#FF9EBB] group-hover:to-[#FF8EAB] transition-all duration-500 active:scale-95">
+    <!-- 按鈕獨立出來，利用 my-auto 平均分配上下的空間 -->
+    <div class="relative z-10 my-auto py-3">
+        <button class="bg-gradient-to-r from-[#80CFFF] to-[#70BEEF] w-fit text-white px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg shadow-blue-100 group-hover:shadow-pink-100 group-hover:from-[#FF9EBB] group-hover:to-[#FF8EAB] transition-all duration-500 active:scale-95 font-black text-sm">
             <i class="fa-brands fa-threads text-base"></i> 
-            <span>查看詳情</span>
+            <span>查看 @Thread 貼文詳情</span>
         </button>
     </div>
+
+    <div class="flex flex-col gap-2 text-xs font-bold mt-auto relative z-10">
+        <span class="text-gray-500 bg-white px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100 flex items-center w-fit">
+            <i class="fa-solid fa-clock mr-1.5 text-orange-400"></i>12:00-20:00（每週日、二公休）
+        </span>
+        <span class="text-gray-500 bg-white px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100 flex items-center w-fit line-clamp-1">
+            <i class="fa-solid fa-location-dot mr-1.5 text-red-400"></i>樂善一路9號
+        </span>
+    </div>
 </div>
-
-
 
                         
                         <!-- 🎁 嵌入的新商家限時優惠卡片 (茶聚) -->
