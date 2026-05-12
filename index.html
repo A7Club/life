@@ -12,16 +12,13 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/A7Club/life/main/website.jpg">
 
     <!-- 📊 Google Analytics (GA4)追蹤代碼放置區 -->
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-YJ9RJC2DRS');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-YJ9RJC2DRS');
     </script>
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -736,7 +733,7 @@
                         <!-- 👑 新增：左上角活潑可愛的 LINE 邀請對話框 (極致精巧貼紙版) -->
                         <div class="absolute -top-10 sm:-top-11 left-2 sm:left-6 z-30 floating" style="animation-duration: 3.2s;">
                             <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank"
-                                class="bg-gradient-to-r from-[#FFF5C3] to-[#C9E9FF] backdrop-blur-md px-2 py-1.5 rounded-full shadow-[0_6px_12px_rgba(128,207,255,0.3)] hover:shadow-[0_8px_16px_rgba(128,207,255,0.4)] hover:scale-110 hover:-rotate-12 -rotate-6 transition-all duration-300 flex items-center gap-1.5 border-[1.5px] border-white group cursor-pointer block">
+                                class="bg-gradient-to-r from-[#FFF5C3] to-[#C9E9FF] backdrop-blur-md px-2 py-1.5 rounded-full shadow-[0_6px_12px_rgba(128,207,255,0.3)] hover:shadow-[0_8px_16px_rgba(128,207,255,0.4)] hover:scale-110 hover:-rotate-6 -rotate-1 transition-all duration-300 flex items-center gap-1.5 border-[1.5px] border-white group cursor-pointer block">
 
                                 <!-- 對話框尾巴 (精緻小巧，已改為黃色對應左側) -->
                                 <div class="absolute -bottom-[5px] left-5 w-2.5 h-2.5 bg-[#FFF5C3] border-b-[1.5px] border-l-[1.5px] border-white rotate-[-45deg] rounded-bl-[2px] z-[-1] transition-colors shadow-sm"></div>
@@ -1301,26 +1298,6 @@
                     <!-- 主要推廣卡片區塊 (左側：改為自動填滿剩餘空間，解決寬度衝突) -->
                     <div class="flex-1 min-w-0 flex flex-col gap-4">
                         
-                <!-- 🏆 手搖飲票選活動 (動態注入) -->
-                <div id="bestvote"
-                    class="w-full bg-gradient-to-br from-pink-50/50 to-orange-50/50 rounded-3xl p-5 sm:p-8 shadow-xl border-2 border-white/80 relative overflow-hidden transition-all duration-500 backdrop-blur-sm" 
-                    style="display: none; width: 100%;">
-                    <!-- 背景裝飾圖示 -->
-                    <div
-                        class="absolute -left-4 -top-4 text-pink-100 text-6xl opacity-20 pointer-events-none rotate-12 floating">
-                        <i class="fa-solid fa-glass-water"></i>
-                    </div>
-                    <div class="absolute -right-4 -bottom-4 text-yellow-100 text-6xl opacity-20 pointer-events-none -rotate-12 floating"
-                        style="animation-delay: 1s;"><i class="fa-solid fa-ice-cream"></i></div>
-
-                    <div id="drink-voting-content" class="relative z-10">
-                        <div class="text-center text-pink-400 py-10">
-                            <i class="fa-solid fa-wand-magic-sparkles fa-bounce text-4xl mb-4"></i>
-                            <div class="font-black">正在為您準備最高規格的大賞盛宴...</div>
-                        </div>
-                    </div>
-                </div>
-
                         <!-- 模擬推廣卡片 1 -->
                         <div style="display: none;"
                             onclick="openStoreModal('沐荼寺林口龜山店', '全新開幕', 'bg-red-500', '臺灣精品茶飲專門，堅持使用優質茶葉，帶給您最純粹的味覺享受，快來品嚐這杯好茶！', '桃園市龜山區長青一街39號', '10:00 - 21:00', 'https://www.mutucha.com/uploads/1/3/3/3/133347972/gemini-generated-image-4absl74absl74abs_orig.png', '沐荼寺林口龜山店')"
@@ -1366,6 +1343,65 @@
                                 <span
                                     class="text-blue-400 bg-blue-100 w-7 h-7 flex items-center justify-center rounded-lg"><i
                                         class="fa-solid fa-bowl-food"></i></span>
+                            </div>
+                        </div>
+
+                        <!-- 🐟 新開幕店家：小烤魚食事處 -->
+                        <div class="w-full bg-[#FFFDF7] rounded-[2rem] p-5 shadow-[0_10px_25px_-5px_rgba(249,115,22,0.2)] border-2 border-orange-300/40 relative group hover:-translate-y-2 hover:shadow-[0_15px_35px_-5px_rgba(249,115,22,0.3)] transition-all duration-500 flex flex-col overflow-hidden">
+                            
+                            <div class="absolute -top-10 -right-10 w-32 h-32 bg-red-400/10 rounded-full blur-3xl group-hover:bg-red-400/20 transition-colors"></div>
+
+                            <div class="absolute top-0 left-0 flex flex-col items-start z-20">
+                                <div class="bg-gradient-to-r from-red-500 to-orange-400 text-white text-[11px] font-black px-4 py-1.5 rounded-br-2xl shadow-md animate-pulse flex items-center">
+                                    <i class="fa-solid fa-fire mr-1.5"></i> 新開幕．深夜食堂
+                                </div>
+                            </div>
+
+                            <div class="absolute -right-4 -bottom-4 text-orange-400 opacity-[0.08] text-8xl transform rotate-12 pointer-events-none group-hover:rotate-0 transition-transform duration-700">
+                                <i class="fa-solid fa-fish-fins"></i>
+                            </div>
+
+                            <div class="relative z-10 mt-6">
+                                <h4 class="font-black text-gray-800 text-lg sm:text-xl mb-2 group-hover:text-red-500 transition-colors flex items-center">
+                                    小烤魚食事處-林口店
+                                </h4>
+                                <p class="text-xs sm:text-sm text-gray-600 font-bold mb-3 leading-relaxed">
+                                    主打重慶烤魚、川味干鍋、各式烤串與海鮮熱炒！鄰近華亞科技園區、林口長庚，對面即有停車場，下班宵夜聚餐超方便🍻
+                                </p>
+
+                                <!-- 點擊展開的詳細優惠內容 -->
+                                <details class="group bg-white/80 rounded-xl border border-orange-100 overflow-hidden transition-all text-sm w-full shadow-sm mb-4">
+                                    <summary class="cursor-pointer font-black px-4 py-2.5 text-orange-500 hover:bg-orange-50 flex items-center justify-between outline-none transition-colors">
+                                        <span><i class="fa-solid fa-gift mr-1.5"></i> 查看專屬優惠活動</span>
+                                        <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform text-orange-300"></i>
+                                    </summary>
+                                    <div class="p-4 border-t border-orange-100 text-gray-700 bg-orange-50/50 flex flex-col gap-3">
+                                        <ul class="text-xs sm:text-sm font-bold space-y-2 text-gray-700">
+                                            <li class="flex items-start"><span class="text-red-500 w-5 shrink-0 text-center">🎂</span> <span><span class="text-red-500">當日壽星：</span>9折優惠，再招待「絲瓜蛤蜊燒」一份！</span></li>
+                                            <li class="flex items-start"><span class="text-orange-500 w-5 shrink-0 text-center">🎉</span> <span><span class="text-orange-500">當月壽星：</span>95折優惠，再招待「小烤魚酸梅湯一壺」！</span></li>
+                                            <li class="flex items-start"><span class="text-blue-500 w-5 shrink-0 text-center">👩‍⚕️</span> <span><span class="text-blue-500">林口長庚醫護人員：</span>95折優惠</span></li>
+                                            <li class="flex items-start"><span class="text-green-500 w-5 shrink-0 text-center">👨‍💻</span> <span><span class="text-green-500">華亞科技園區人員：</span>95折優惠</span></li>
+                                        </ul>
+                                        <div class="mt-1 pt-2 border-t border-dashed border-orange-200 text-[10px] text-gray-500 font-bold leading-relaxed">
+                                            📍 以上優惠皆須出示相關證明<br>📍 優惠僅擇一使用，不得合併使用
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="flex items-center justify-between text-xs font-bold mt-auto pt-2 relative z-10">
+                                <div class="flex flex-col gap-2">
+                                    <span class="text-gray-500 bg-white px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100 flex items-center w-fit">
+                                        <i class="fa-solid fa-clock mr-1.5 text-orange-400"></i>17:00 - 01:00
+                                    </span>
+                                    <span class="text-gray-500 bg-white px-2.5 py-1.5 rounded-lg shadow-sm border border-gray-100 flex items-center w-fit line-clamp-1">
+                                        <i class="fa-solid fa-location-dot mr-1.5 text-red-400"></i>文化三路318號
+                                    </span>
+                                </div>
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=桃園市龜山區文化三路318號" target="_blank" class="bg-gradient-to-r from-orange-400 to-red-500 text-white px-4 py-3 sm:py-4 rounded-xl flex items-center gap-1.5 shadow-lg shadow-orange-100 group-hover:shadow-red-200 transition-all duration-500 active:scale-95 shrink-0 ml-2">
+                                    <i class="fa-solid fa-location-arrow text-sm sm:text-base"></i> 
+                                    <span class="whitespace-nowrap font-black">導航去</span>
+                                </a>
                             </div>
                         </div>
 
@@ -1532,6 +1568,14 @@
                             class="text-sm font-black text-themeBlue mb-1 flex items-center bg-blue-100/50 w-fit px-3 py-1 rounded-full">
                             <i class="fa-solid fa-thumbtack mr-1.5"></i>樂園精選公告
                         </h3>
+                        <a href="https://a7club.github.io/life/needbus.html" target="_blank"
+                            class="flex items-start bg-red-50 hover:bg-red-100 p-3.5 rounded-2xl shadow-sm border border-red-100 hover:-translate-y-0.5 transition-all cursor-pointer group">
+                            <span class="bg-red-500 text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0 group-hover:scale-110 transition-transform">重要</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm sm:text-base group-hover:text-red-600 transition-colors">桃園龜山(A7) 至 雙北通勤公車增班申訴教學</h4>
+                                <p class="text-xs sm:text-sm text-gray-500 mt-1">公車難等？跟著教學步驟反映需求，爭取公車增班！</p>
+                            </div>
+                        </a>
                         <div class="flex items-start bg-blue-50 p-3.5 rounded-2xl shadow-sm border border-transparent">
                             <span
                                 class="bg-themeBlue text-white font-bold px-2.5 py-1 rounded-full text-[10px] sm:text-xs mr-3 mt-0.5 shrink-0">新開幕</span>
@@ -3349,24 +3393,6 @@ if (displayBuses.length === 0) {
                 // 新增：渲染美食愛心排行榜
                 if (foodData && likesData) {
                     renderFoodRankings(foodData, likesData);
-                }
-
-                // 新增：初始化手搖飲票選活動
-                if (typeof window.initDrinkVoting === 'function') {
-                    window.initDrinkVoting();
-
-                    // 獨立網址深層連結：檢查 #bestvote 並捲動
-                    setTimeout(() => {
-                        if (window.location.hash === '#bestvote') {
-                            const container = document.getElementById('drink-voting-container');
-                            if (container) {
-                                container.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                // 加上閃爍提醒
-                                container.classList.add('ring-4', 'ring-pink-400/50');
-                                setTimeout(() => container.classList.remove('ring-4', 'ring-pink-400/50'), 3000);
-                            }
-                        }
-                    }, 800);
                 }
             } catch (error) {
                 console.error("取得統計數字失敗:", error);
@@ -5413,250 +5439,6 @@ if (displayBuses.length === 0) {
             window.openShareStoreModal();
         };
 
-        // ==========================================
-        // 2. JavaScript 邏輯部分 (手搖飲票選活動)
-        // ==========================================
-
-        // 1. 初始化頁面時加入紙花畫布
-
-
-        // 2. 奢華版手搖飲大賞邏輯
-        let isDrinkSubmitted = localStorage.getItem('a7club_drink_submitted') === 'true';
-        let selectedDrinkStores = [];
-
-        function formatAwardName(name) {
-            return name.replace('林口龜山店', '').replace('長庚店', '').replace('A7店', '').trim();
-        }
-
-        // 初始化票選活動畫面
-        window.initDrinkVoting = function () {
-            const container = document.getElementById('bestvote');
-            const content = document.getElementById('drink-voting-content');
-            if (!container || !content || !globalFoodData || !globalLikesData) return;
-
-            const drinkStores = globalFoodData.filter(s =>
-                s.category && (s.category.includes('飲') || s.category.includes('茶') || s.category.includes('手搖')) &&
-                s.address && s.address.includes('龜山')
-            );
-
-            if (drinkStores.length === 0) {
-                container.style.display = 'none';
-                return;
-            }
-
-            const candidates = [...drinkStores].sort((a, b) => a.name.localeCompare(b.name, 'zh-TW'));
-
-            if (isDrinkSubmitted) {
-                const results = candidates.map(item => {
-                    const localLikes = globalLikesData[item.name] ? globalLikesData[item.name].users.length : 0;
-                    const totalLikes = Math.max((item.likesCount || 0), localLikes);
-                    return { ...item, totalLikes };
-                })
-                    .filter(item => item.totalLikes > 0)
-                    .sort((a, b) => b.totalLikes - a.totalLikes)
-                    .slice(0, 3);
-
-                if (results.length > 0) {
-                    container.style.display = 'block';
-                    content.innerHTML = `
-                        <div class="flex flex-col relative z-20 w-full animate-fade-in py-1">
-                            <div class="text-center mb-6 relative">
-                                <div class="inline-block relative">
-                                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 text-orange-300 opacity-50 text-xl"><i class="fa-solid fa-crown"></i></div>
-                                    <h3 class="text-2xl sm:text-3xl font-black text-gray-800 tracking-[0.1em] relative z-10 px-2 font-serif">
-                                        <span class="text-themePink">A7</span> 手搖飲大賞
-                                    </h3>
-                                    <div class="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-gradient-to-r from-transparent to-themePink"></div>
-                                    <div class="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-gradient-to-l from-transparent to-themePink"></div>
-                                </div>
-                                <p class="text-[10px] sm:text-xs text-gray-400 font-bold mt-2 tracking-[0.4em] uppercase opacity-70">The Best Selection • Grand Prix 2024</p>
-                            </div>
-
-                            <div class="flex flex-col md:flex-row items-stretch md:items-end justify-center gap-4 md:gap-2 max-w-full mx-auto px-2">
-                                ${results.map((item, actualIndex) => {
-                        const isFirst = actualIndex === 0;
-                        const isSecond = actualIndex === 1;
-                        const isThird = actualIndex === 2;
-                        const titles = ['GRAND PRIX', 'SECOND EXCELLENCE', 'THIRD HONOR'];
-                        const subTitles = ['最高金賞', '優秀賞', '佳作賞'];
-                        const medalIcons = ['fa-crown', 'fa-medal', 'fa-award'];
-                        const desktopOrderClass = isFirst ? 'md:order-2' : (isSecond ? 'md:order-1' : 'md:order-3');
-                        let cardClass = isFirst ? 'h-auto md:pb-10 z-20 scale-100 md:scale-110' : (isSecond ? 'h-auto md:pb-6 z-10' : 'h-auto md:pb-4 z-10');
-                        let colorClass = isFirst ? 'from-yellow-400 via-amber-500 to-yellow-600' : (isSecond ? 'from-gray-300 via-gray-400 to-gray-500' : 'from-orange-300 via-orange-400 to-orange-500');
-                        let shadowClass = isFirst ? 'shadow-yellow-200/50' : (isSecond ? 'shadow-gray-200/50' : 'shadow-orange-200/50');
-                        let borderClass = isFirst ? 'border-yellow-200' : (isSecond ? 'border-gray-100' : 'border-orange-100');
-
-                        return `
-                                        <div class="flex-1 w-full md:w-auto transition-all duration-500 ${desktopOrderClass} ${cardClass}">
-                                            <div class="bg-white rounded-3xl p-5 border-4 ${borderClass} shadow-2xl ${shadowClass} relative overflow-hidden group hover:-translate-y-2 transition-transform cursor-pointer h-full" 
-                                                 onclick="loadPage('food'); setTimeout(()=>updateFoodMap('${(item.address || '').replace(/'/g, "\\'")}', '${(item.name || '').replace(/'/g, "\\'")}', ${item.lat || null}, ${item.lng || null}, '${(item.category || '').replace(/'/g, "\\'")}', true), 500);">
-                                                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${colorClass}"></div>
-                                                <div class="flex flex-col items-center">
-                                                    <div class="w-12 h-12 rounded-full bg-gradient-to-br ${colorClass} flex items-center justify-center text-white text-xl shadow-lg mb-4 ring-4 ring-white">
-                                                        <i class="fa-solid ${medalIcons[actualIndex]}"></i>
-                                                    </div>
-                                                    <div class="text-[9px] font-black tracking-tighter opacity-60 mb-0.5 text-gray-400">${titles[actualIndex]}</div>
-                                                    <div class="text-[11px] font-black tracking-[0.2em] mb-3 text-gray-800">${subTitles[actualIndex]}</div>
-                                                    <h4 class="font-black text-gray-800 text-lg sm:text-xl truncate w-full text-center mb-3" title="${item.name}">${formatAwardName(item.name)}</h4>
-                                                    <div class="flex items-center gap-2">
-                                                        <div class="px-3 py-1 rounded-full bg-pink-50 border border-pink-100 flex items-center gap-1.5 shadow-inner">
-                                                            <i class="fa-solid fa-heart text-themePink text-[10px] animate-pulse"></i>
-                                                            <span class="text-sm font-black text-themePink">${item.totalLikes}</span>
-                                                            <span class="text-[9px] text-pink-300 font-bold">VOTES</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="absolute -right-3 -bottom-3 text-6xl font-black italic opacity-[0.05] text-black">0${actualIndex + 1}</div>
-                                                ${isFirst ? '<div class="absolute inset-0 bg-gradient-to-t from-yellow-50/20 to-transparent pointer-events-none"></div>' : ''}
-                                            </div>
-                                        </div>`;
-                    }).join('')}
-                            </div>
-                            <div class="text-center mt-4 space-y-1">
-                                <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase"><i class="fa-solid fa-circle-check mr-1 text-green-400"></i> OFFICIAL ELECTION COMPLETED</p>
-                                <p class="text-[9px] text-gray-300 font-medium tracking-widest">感謝所有居民參與 A7 首屆手搖飲霸主大選</p>
-                            </div>
-                        </div>`;
-                }
-                return;
-            }
-
-            // 選取模式
-            let candidatesHtml = candidates.map(item => {
-                const isSelected = selectedDrinkStores.includes(item.name);
-                return `
-                    <div class="selection-ticket rounded-2xl p-3 sm:p-4 shadow-sm cursor-pointer flex items-center justify-between group active:scale-95 ${isSelected ? 'selected' : ''}" 
-                         onclick="toggleDrinkSelection(event, '${item.name.replace(/'/g, "\\'")}')">
-                        <div class="flex flex-col gap-0.5 overflow-hidden">
-                            <div class="text-[9px] text-pink-300 font-black tracking-widest uppercase opacity-70">OFFICIAL VOTE</div>
-                            <div class="font-black text-gray-800 text-xs sm:text-sm truncate pr-1 transition-colors ${isSelected ? 'text-pink-600' : 'group-hover:text-pink-500'}" title="${item.name}">${formatAwardName(item.name)}</div>
-                        </div>
-                        <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${isSelected ? 'bg-pink-500' : 'bg-gray-50/50'} transition-all duration-300 shadow-sm">
-                            <i class="fa-solid fa-heart ${isSelected ? 'text-white scale-125' : 'text-gray-200 group-hover:text-pink-200 group-hover:scale-110'} text-xs transition-all"></i>
-                        </div>
-                    </div>`;
-            }).join('');
-
-            container.style.display = 'block';
-            content.innerHTML = `
-                <div class="flex flex-col relative z-20 w-full animate-fade-in">
-                    <div class="flex flex-col md:flex-row items-center justify-between border-b border-pink-100/50 pb-4 mb-4 gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 bg-gradient-to-br from-pink-400 to-pink-600 rounded-2xl flex items-center justify-center text-white shadow-xl rotate-3 shrink-0">
-                                <i class="fa-solid fa-trophy text-2xl"></i>
-                            </div>
-                            <div class="text-center md:text-left">
-                                <h3 class="text-2xl sm:text-2xl font-black text-gray-800 tracking-[0.1em] relative z-10 px-2 font-serif">首屆 A7 搖霸大賞 🥤 誰才是龜山最強手搖？</h3>
-                                <p class="text-[10px] sm:text-xs text-pink-400 font-bold tracking-[0.2em] uppercase mt-1">SELECT YOUR FAVORITES • 即日起至4/30截止 • </p>
-                            </div>
-                        </div>
-                        <div id="selection-counter" class="bg-white/80 backdrop-blur px-5 py-2.5 rounded-2xl border-2 border-pink-100 shadow-sm flex items-center gap-3">
-                            <span class="text-xs font-black text-gray-400">已選取心儀店家</span>
-                            <span class="text-xl font-black text-pink-500 leading-none">${selectedDrinkStores.length}</span>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-3 sm:gap-4 mb-4">
-                        ${candidatesHtml}
-                    </div>
-
-                    <div class="relative py-2">
-                        <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none scale-150">
-                            <i class="fa-solid fa-trophy text-[200px]"></i>
-                        </div>
-                        <div class="flex flex-col items-center relative z-10">
-                            <button onclick="confirmDrinkVote(event)" 
-                                    id="btn-submit-drink-vote"
-                                    class="w-full sm:w-80 group bg-gradient-to-r from-gray-200 to-gray-300 text-white font-black py-4 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3 relative overflow-hidden cursor-not-allowed" 
-                                    disabled>
-                                <span class="relative z-10 text-lg">正式送出大賞投票</span>
-                                <i class="fa-solid fa-paper-plane relative z-10 text-sm group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-                            </button>
-                            <p class="text-[11px] text-gray-400 font-bold mt-2 tracking-widest"><i class="fa-solid fa-hand-pointer mr-1 animate-bounce"></i> 選取喜歡的店家後按鈕將會解鎖</p>
-                        </div>
-                    </div>
-                </div>`;
-
-            updateSubmitButtonState();
-        }
-
-
-        window.toggleDrinkSelection = function (event, storeName) {
-            if (isDrinkSubmitted) return;
-            const idx = selectedDrinkStores.indexOf(storeName);
-            if (idx === -1) {
-                selectedDrinkStores.push(storeName);
-                // 噴發愛心特效
-                for (let i = 0; i < 5; i++) {
-                    const heart = document.createElement('i');
-                    heart.className = 'fa-solid fa-heart rising-heart';
-                    const offset = (Math.random() - 0.5) * 40;
-                    heart.style.left = (event.clientX + offset) + 'px';
-                    heart.style.top = (event.clientY + (Math.random() * -20)) + 'px';
-                    heart.style.fontSize = (0.5 + Math.random()) + 'rem';
-                    heart.style.opacity = (0.5 + Math.random() * 0.5);
-                    heart.style.animationDelay = (i * 0.05) + 's';
-                    document.body.appendChild(heart);
-                    setTimeout(() => heart.remove(), 800);
-                }
-            } else {
-                selectedDrinkStores.splice(idx, 1);
-            }
-            window.initDrinkVoting();
-        }
-
-        function updateSubmitButtonState() {
-            const btn = document.getElementById('btn-submit-drink-vote');
-            if (!btn) return;
-            if (selectedDrinkStores.length > 0) {
-                btn.disabled = false;
-                btn.classList.remove('from-gray-200', 'to-gray-300', 'cursor-not-allowed');
-                btn.classList.add('from-pink-500', 'to-pink-600', 'gold-pulse', 'cursor-pointer', 'hover:-translate-y-1', 'hover:shadow-pink-400/50');
-            } else {
-                btn.disabled = true;
-                btn.classList.remove('from-pink-500', 'to-pink-600', 'gold-pulse', 'cursor-pointer', 'hover:-translate-y-1', 'hover:shadow-pink-400/50');
-                btn.classList.add('from-gray-200', 'to-gray-300', 'cursor-not-allowed');
-            }
-        }
-
-
-
-        window.confirmDrinkVote = async function (event) {
-            if (selectedDrinkStores.length === 0) return;
-            const btn = event.currentTarget || document.getElementById('btn-submit-drink-vote');
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> 正在傳送大賞選票...`;
-            btn.disabled = true;
-            const GAS_URL = 'https://script.google.com/macros/s/AKfycbzyH7yhuVfi-Ajb0u9hwob8plKXqvm2Bbas4H-TFiDFQ2_aKmZQI6vhfHJyvLO7xhB1WA/exec';
-            const timeString = new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
-            try {
-                const promises = selectedDrinkStores.map(storeName => {
-                    if (!globalLikesData[storeName]) globalLikesData[storeName] = { users: [] };
-                    if (!globalLikesData[storeName].users.includes(currentUserId)) {
-                        globalLikesData[storeName].users.push(currentUserId);
-                    }
-                    return fetch(GAS_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                        body: JSON.stringify({ storeName, userId: currentUserId, action: 'like', timestamp: timeString })
-                    });
-                });
-                await Promise.all(promises);
-                localStorage.setItem('a7club_drink_submitted', 'true');
-                localStorage.setItem('a7club_likes_cache', JSON.stringify(globalLikesData));
-                isDrinkSubmitted = true;
-
-
-                setTimeout(() => {
-                    window.initDrinkVoting();
-                    if (typeof renderFoodRankings === 'function') renderFoodRankings(globalFoodData, globalLikesData);
-                }, 1000);
-            } catch (e) {
-                console.error('大賞提交失敗', e);
-                btn.disabled = false;
-                btn.innerText = '再次嘗試提交選票';
-            }
-        }
     function openMugoThreadsModal() {
     // 1. 先呼叫通用開窗函式，圖片網址傳空值
     openStoreModal(
