@@ -196,6 +196,14 @@
                         <div class="animate-spin text-2xl">⏳</div>
                     </div>
                 </div>
+                
+                <!-- ⭐ 新增：招募合作店家按鈕 (固定在底部) -->
+                <div class="p-4 bg-white border-t border-gray-100 z-10 shrink-0">
+                    <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="w-full bg-macaron-yellow text-[#6B5B95] font-bold py-3 rounded-2xl shadow-sm active-scale flex items-center justify-center gap-2 transition-transform">
+                        <i data-lucide="store" class="w-5 h-5"></i>
+                        有興趣加入合作店家？
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -268,21 +276,20 @@
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzC8FV-VwFLwjv7N9jyn4xy8IrCMjZy24-xdCT9rVgpRP5bXSudababRhaAkQloVmU2LA/exec";
         const LIFF_ID = "2009930258-GNJpigEk"; 
         const SHOP_QR_CODE = "SEVEN_CLUB_JOY_2026"; 
-        const MAX_STAMPS = 7; // ⭐ 修改為 7 點 (A7的7)
+        const MAX_STAMPS = 7; // ⭐ 7 點 (A7的7)
         
         let currentPoints = 0;
-        let userData = { userId: null, displayName: '遊客' };
+        let userData = { userId: null, displayName: '遊客', isAdmin: false, shopName: '' }; // ⭐ 新增權限狀態
         let html5QrCode;
         let globalShopList = []; 
         let globalHistoryList = []; 
 
-        // 取得動態獎品 Icon (地瓜球專屬圖示)
         function getPrizeIcon(prizeName, prizeType) {
             if (prizeName.includes('地瓜')) return '🍠';
             return prizeType === '電子' ? '🎟️' : '🎁';
         }
 
-        // --- 自訂精美對話視窗系統 (取代原生 alert & confirm) ---
+        // --- 自訂精美對話視窗系統 ---
         function showCustomAlert(message, title = "提示", icon = "🎡") {
             return new Promise((resolve) => {
                 const modal = document.getElementById('custom-alert-modal');
@@ -424,6 +431,10 @@
                 currentPoints = result.points;
                 globalShopList = result.shops || []; 
                 globalHistoryList = result.history || []; 
+                
+                // ⭐ 儲存後端傳來的店家權限狀態
+                userData.isAdmin = !!result.isAdmin; 
+                userData.shopName = result.shopName || ''; 
 
                 if(result.isNewUser) {
                     setTimeout(() => showCustomAlert("歡迎加入柒樂部！已贈送您入園禮 1 點！", "新朋友加入", "🎉"), 500);
@@ -443,7 +454,6 @@
 
         function renderUI(prizes = []) {
             const grid = document.getElementById('stamp-grid');
-            // ⭐ 擴充到 7 種圖示 (加入爆米花與氣球)
             const stampIcons = ['🎠', '🎡', '🎪', '🎢', '🎫', '🍿', '🎈'];
             grid.innerHTML = '';
             
@@ -474,7 +484,7 @@
             prizes.forEach(prize => {
                 const isOutOfStock = prize.type === '實體' && parseInt(prize.stock) <= 0;
                 const canRedeem = currentPoints >= prize.points && !isOutOfStock;
-                const displayIcon = getPrizeIcon(prize.name, prize.type); // ⭐ 取得專屬圖示
+                const displayIcon = getPrizeIcon(prize.name, prize.type); 
                 
                 const item = document.createElement('div');
                 item.className = `flex justify-between items-center p-4 rounded-2xl border transition-all ${canRedeem ? 'bg-white border-macaron-sky shadow-sm' : 'bg-gray-100/30 border-gray-200 opacity-60'}`;
@@ -512,7 +522,6 @@
 
             globalHistoryList.forEach(item => {
                 const isStamp = item.type === 'stamp';
-                // ⭐ 歷史紀錄同樣帶入地瓜專屬圖示
                 const icon = isStamp ? '🎈' : getPrizeIcon(item.prizeName, '實體'); 
                 const title = isStamp ? '集點成功' : '兌換獎品';
                 const detail = isStamp ? `於 ${item.shopName} 集點` : `兌換 ${item.prizeName}`;
@@ -615,14 +624,14 @@
         // 兌換與核銷核心邏輯
         // ==========================================
         async function handleRedeem(prizeName, prizeType) {
-            const displayIcon = getPrizeIcon(prizeName, prizeType); // ⭐ 帶入專屬圖示
+            const displayIcon = getPrizeIcon(prizeName, prizeType); 
 
             if (prizeType === '實體') {
                 const qrData = `REDEEM:::${userData.userId}:::${userData.displayName}:::${prizeName}`;
                 const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=6B5B95&data=${encodeURIComponent(qrData)}`;
                 document.getElementById('physical-qr-img').src = qrUrl;
                 document.getElementById('physical-qr-prize').innerText = prizeName;
-                document.getElementById('physical-qr-icon').innerText = displayIcon; // 更新實體核銷畫面的圖示
+                document.getElementById('physical-qr-icon').innerText = displayIcon; 
 
                 const modal = document.getElementById('physical-qr-modal');
                 const content = document.getElementById('physical-qr-content');
@@ -650,7 +659,7 @@
             if (result.status === 'success') {
                 const modal = document.getElementById('redeem-modal');
                 const content = document.getElementById('redeem-modal-content');
-                document.getElementById('redeem-modal-icon').innerText = displayIcon; // 更新電子兌換畫面的圖示
+                document.getElementById('redeem-modal-icon').innerText = displayIcon; 
                 modal.classList.remove('hidden');
                 setTimeout(() => {
                     content.classList.replace('scale-95', 'scale-100');
@@ -674,17 +683,25 @@
             await syncData();
         }
 
+        // ⭐ 新增：前端店家權限阻擋驗證
         async function handleAdminRedeem(text) {
             if (html5QrCode) await html5QrCode.stop().catch(e => console.log(e));
             document.getElementById('scanner-modal').classList.add('hidden');
             
+            // ⭐ 1. 提早攔截非店家用戶
+            if (!userData.isAdmin) {
+                showCustomAlert("此功能僅限「柒樂部授權店家」使用，一般用戶無法執行核銷作業哦！", "權限不足", "🚫");
+                return;
+            }
+
             const parts = text.split(":::");
             if (parts.length !== 4) return;
             const [prefix, targetUserId, targetDisplayName, targetPrizeName] = parts;
-            const displayIcon = getPrizeIcon(targetPrizeName, '實體'); // ⭐ 核銷視窗帶入專屬圖示
+            const displayIcon = getPrizeIcon(targetPrizeName, '實體'); 
 
+            // ⭐ 2. 確認視窗動態顯示該「店家名稱」
             const confirmed = await showCustomConfirm(
-                `【店家核銷確認】\n確定要為「${targetDisplayName}」核銷實體獎品「${targetPrizeName}」嗎？\n\n確認後將自動扣除該用戶之集點點數。`, 
+                `【${userData.shopName} 核銷確認】\n確定要為「${targetDisplayName}」核銷實體獎品「${targetPrizeName}」嗎？\n\n確認後將自動扣除該用戶之集點點數。`, 
                 "店家核銷確認", 
                 displayIcon
             );
@@ -698,7 +715,7 @@
                 userId: targetUserId, 
                 displayName: targetDisplayName, 
                 prizeName: targetPrizeName,
-                adminId: userData.userId // 傳送當前操作者的 LINE ID 以供權限驗證
+                adminId: userData.userId 
             });
 
             document.getElementById('loading').style.display = 'none';
@@ -724,7 +741,7 @@
                 action: 'addStamp', 
                 userId: userData.userId, 
                 displayName: userData.displayName, 
-                shopCode: scannedCode // 傳遞實際掃描到的代碼，由後端驗證
+                shopCode: scannedCode 
             });
             
             if (result.status === 'success') {
@@ -762,7 +779,6 @@
                         if (text.startsWith("REDEEM:::")) {
                             handleAdminRedeem(text);
                         } else {
-                            // 任何非 REDEEM 開頭的 QR Code 都當作集點碼送給後端驗證
                             handleScanSuccess(text); 
                         }
                     }
