@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>柒樂部遊樂園 - A7 🅟OINTS</title>
-    <!-- 引入核心庫 -->
+    <!-- 引入核心庫 (新增 Noto Sans TC 字體) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/html5-qrcode"></script>
     <!-- LINE LIFF SDK -->
@@ -47,6 +47,20 @@
         .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border: 2px dashed rgba(255, 209, 220, 0.8); }
         .active-scale:active { transform: scale(0.95); transition: transform 0.1s; }
         
+        /* --- ⭐ 載入畫面專屬：日系文青網格與漸層融合背景 --- */
+        .loading-bg-grid {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #FFFDF9; /* 柔和紙本底色 */
+            background-image: 
+                /* 第一層 & 第二層：日系手帳的柔和網格 */
+                linear-gradient(#F0EAE1 1px, transparent 1px),
+                linear-gradient(90deg, #F0EAE1 1px, transparent 1px),
+                /* 第三層：與主畫面相同的粉黃藍漸層 (調低透明度以透出底色) */
+                linear-gradient(135deg, rgba(255,209,220,0.45) 0%, rgba(255,245,186,0.45) 50%, rgba(174,223,247,0.45) 100%);
+            background-size: 24px 24px, 24px 24px, 100% 100%;
+            color: #5C5454; /* 溫柔深灰 */
+        }
+        
         /* --- 掃描器自訂樣式 --- */
         .scanner-laser { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: #FF8C94; box-shadow: 0 0 12px #FF8C94; animation: scanning 2.5s ease-in-out infinite; z-index: 10; }
         .scan-corner { position: absolute; width: 24px; height: 24px; border-color: #FF8C94; border-width: 4px; z-index: 20; border-radius: 4px; }
@@ -59,11 +73,10 @@
 </head>
 <body class="min-h-screen flex justify-center bg-gray-100">
 
-    <!-- ⭐ 全新專業驗證畫面 (紫藍為主、同集點卡漸層背景、多步驟進度) -->
-    <!-- 將背景改為與主畫面相同的粉/黃/藍漸層 -->
-    <div id="loading" class="fixed inset-0 bg-gradient-to-br from-[#FFD1DC]/80 via-[#FFF5BA]/80 to-[#AEDFF7]/80 backdrop-blur-md z-[100] flex flex-col items-center justify-center px-6 transition-opacity duration-500">
-        <!-- 玻璃擬態卡片 (與集點卡相同的視覺風格) -->
-        <div class="glass-card w-full max-w-sm rounded-[2.5rem] p-8 flex flex-col items-center justify-center shadow-2xl relative border-2 border-macaron-purple bg-white/70">
+    <!-- ⭐ 全新專業驗證畫面 (日系文青網格 + 粉黃藍漸層融合) -->
+    <div id="loading" class="fixed inset-0 loading-bg-grid z-[100] flex flex-col items-center justify-center px-6 transition-opacity duration-500">
+        <!-- 玻璃擬態卡片 -->
+        <div class="glass-card w-full max-w-sm rounded-[2.5rem] p-8 flex flex-col items-center justify-center shadow-2xl relative border-2 border-macaron-purple bg-white/80">
             
             <!-- 頂部裝飾條 -->
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-3/4 h-6 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSIyMCI+PHBvbHlnb24gcG9pbnRzPSIwLDExIDIwLDAgNDAsMTEgMjAsMjIiIGZpbGw9IiNFMkQxRjkiLz48L3N2Zz4=')] bg-repeat-x opacity-60"></div>
@@ -90,10 +103,10 @@
                 </div>
             </div>
 
-            <h2 class="text-xl font-extrabold text-[#6B5B95] tracking-widest mb-1 drop-shadow-sm text-center">A7 🅟OINTS</h2>
+            <h2 class="text-xl font-extrabold text-[#5C5454] tracking-widest mb-1 drop-shadow-sm text-center">A7 🅟OINTS</h2>
             
             <div class="h-6 flex items-center justify-center mb-6">
-                <p id="loading-text" class="text-[13px] text-[#4A4A4A] font-bold tracking-wider animate-pulse">啟動驗票閘門...</p>
+                <p id="loading-text" class="text-[13px] text-[#5C5454] font-bold tracking-wider animate-pulse">啟動驗票閘門...</p>
             </div>
 
             <!-- 紫藍漸層進度條 -->
@@ -359,7 +372,7 @@
         async function init() {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (!isMobile) {
-                showError("次活動為柒樂部社群優惠，\n請透過 A7LUB 柒樂部 LINE社群開啟集點哦！", "裝置不支援");
+                showError("此活動為 A7ᴄʟᴜʙ|柒楽部 社群優惠，\n請透過 柒樂部LINE社群 開啟集點哦！", "裝置不支援");
                 document.getElementById('retry-btn').classList.add('hidden');
                 return;
             }
