@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>柒樂部遊樂園 - A7 🅟OINTS</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YJ9RJC2DRS');
+    </script>
+
+    
     <!-- 引入核心庫 (新增 Noto Sans TC 字體) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -50,13 +61,13 @@
         /* --- ⭐ 載入畫面專屬：日系文青網格與漸層融合背景 --- */
         .loading-bg-grid {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: #FFFDF9; /* 柔和紙本底色 */
+            background-color: #FFFDF9; /* 偏向柔和紙本底色 */
             background-image: 
-                /* 第一層 & 第二層：日系手帳的柔和網格 */
-                linear-gradient(#F0EAE1 1px, transparent 1px),
-                linear-gradient(90deg, #F0EAE1 1px, transparent 1px),
-                /* 第三層：與主畫面相同的粉黃藍漸層 (調低透明度以透出底色) */
-                linear-gradient(135deg, rgba(255,209,220,0.3) 0%, rgba(255,245,186,0.3) 50%, rgba(174,223,247,0.3) 100%);
+                /* 第一層 & 第二層：極淡的紫色網格線融入背景 */
+                linear-gradient(rgba(107, 91, 149, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(107, 91, 149, 0.04) 1px, transparent 1px),
+                /* 第三層：與主畫面相同的粉黃藍漸層，將透明度降至 20%，完美與 #FFFDF9 銜接 */
+                linear-gradient(135deg, rgba(255,209,220,0.2) 0%, rgba(255,245,186,0.2) 50%, rgba(174,223,247,0.2) 100%);
             background-size: 24px 24px, 24px 24px, 100% 100%;
             color: #5C5454; /* 溫柔深灰 */
         }
@@ -114,9 +125,9 @@
                 <div id="loading-progress" class="absolute top-0 left-0 h-full bg-gradient-to-r from-[#8A79AF] to-[#AEDFF7] w-[5%] transition-all duration-300 ease-out"></div>
             </div>
 
-            <!-- 錯誤狀態容器 (預設隱藏，調整為柔和磚紅配色) -->
+            <!-- ⭐ 錯誤狀態容器 (調整為符合風格的柔和玫瑰紅配色) -->
             <div id="error-container" class="hidden flex-col items-center w-full mt-4 z-20">
-                <p id="error-display" class="text-[11px] text-[#C73E3A] font-bold mb-4 text-center leading-relaxed bg-[#FCE5E6] p-3 rounded-xl border border-[#F5B1B3] whitespace-pre-line w-full"></p>
+                <p id="error-display" class="text-[11px] text-[#B35C66] font-bold mb-4 text-center leading-relaxed bg-[#FFF0F5] p-3 rounded-xl border border-[#FFD1DC] whitespace-pre-line w-full"></p>
                 <div id="setup-hint" class="hidden w-full p-3 bg-white border-2 border-dashed border-[#FFD1DC] rounded-xl text-center mb-4 shadow-sm">
                      <p class="text-[10px] text-gray-500 mb-1">💡 開發者提示</p>
                      <p class="text-[11px] text-[#4A4A4A]">請替換程式碼中的 <b>"您的_LIFF_ID"</b></p>
@@ -347,13 +358,14 @@
             document.getElementById('loading-ping').classList.remove('hidden');
             document.getElementById('loading-spin').classList.remove('hidden');
             document.getElementById('error-container').classList.add('hidden');
-            document.getElementById('loading-text').classList.remove('text-[#C73E3A]');
+            document.getElementById('loading-text').classList.remove('text-[#B35C66]');
             
             void loadingEl.offsetWidth; 
             loadingEl.style.opacity = '1';
             updateLoadingState(60, text);
         }
 
+        // ⭐ 更新了文字的顏色以搭配柔和玫瑰粉的錯誤風格
         function showError(msg, title = "連線已中斷") {
             document.getElementById('loading-progress-container').classList.add('hidden');
             document.getElementById('loading-ping').classList.add('hidden');
@@ -361,7 +373,7 @@
             
             const textEl = document.getElementById('loading-text');
             textEl.innerText = title;
-            textEl.classList.add('text-[#C73E3A]');
+            textEl.classList.add('text-[#B35C66]');
             textEl.classList.remove('animate-pulse');
 
             document.getElementById('error-container').classList.remove('hidden');
