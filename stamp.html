@@ -60,7 +60,8 @@
 <body class="min-h-screen flex justify-center bg-gray-100">
 
     <!-- ⭐ 全新專業驗證畫面 (紫藍為主、同集點卡漸層背景、多步驟進度) -->
-    <div id="loading" class="fixed inset-0 bg-gradient-to-br from-[#FFD1DC]/60 via-[#FFF5BA]/60 to-[#AEDFF7]/60 backdrop-blur-md z-[100] flex flex-col items-center justify-center px-6 transition-opacity duration-500">
+    <!-- 將背景改為與主畫面相同的粉/黃/藍漸層 -->
+    <div id="loading" class="fixed inset-0 bg-gradient-to-br from-[#FFD1DC]/80 via-[#FFF5BA]/80 to-[#AEDFF7]/80 backdrop-blur-md z-[100] flex flex-col items-center justify-center px-6 transition-opacity duration-500">
         <!-- 玻璃擬態卡片 (與集點卡相同的視覺風格) -->
         <div class="glass-card w-full max-w-sm rounded-[2.5rem] p-8 flex flex-col items-center justify-center shadow-2xl relative border-2 border-macaron-purple bg-white/70">
             
@@ -358,7 +359,7 @@
         async function init() {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (!isMobile) {
-                showError("為了提供最佳體驗與確保系統安全性，\n請使用手機（LINE App 或手機瀏覽器）開啟此網頁哦！📱", "裝置不支援");
+                showError("次活動為柒樂部社群優惠，\n請透過 A7LUB 柒樂部 LINE社群開啟集點哦！", "裝置不支援");
                 document.getElementById('retry-btn').classList.add('hidden');
                 return;
             }
@@ -433,7 +434,7 @@
                 renderHistoryList(); 
                 
                 if (isInit) {
-                    updateLoadingState(100, "驗票完成！歡迎入園 🎉");
+                    updateLoadingState(100, "驗票完成！歡迎進入集點🎉");
                     await sleep(600); // 停頓一下讓使用者看見成功狀態
                 }
                 
