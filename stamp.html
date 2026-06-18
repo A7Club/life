@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>柒樂部遊樂園 - A7 🅟OINTS</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YJ9RJC2DRS');
+    </script>
+
+    
     <!-- 引入核心庫 (新增 Noto Sans TC 字體) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -372,7 +383,7 @@
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (!isMobile) {
                 // 加入帶有底線且可點擊的社群連結
-                showError('此活動為 <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="text-[#6B5B95] underline font-extrabold active-scale inline-block">A7ᴄʟᴜʙ | 柒楽部</a> 社群優惠，<br>請透過手機版 LINE App 開啟集點哦！', "請使用手機開啟");
+                showError('此活動為 <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="text-[#6B5B95] underline font-extrabold active-scale inline-block"><b>A7ᴄʟᴜʙ | 柒楽部</b></a> 社群優惠，<br>請透過手機版 LINE App 開啟集點哦！', "請使用手機開啟");
                 document.getElementById('retry-btn').classList.add('hidden');
                 return;
             }
