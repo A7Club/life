@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>柒樂部遊樂園 - A7 🅟OINTS</title>
-
-        <!-- Google tag (gtag.js) -->
+   
+    
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -57,7 +58,7 @@
         .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border: 2px dashed rgba(255, 209, 220, 0.8); }
         .active-scale:active { transform: scale(0.95); transition: transform 0.1s; }
         
-        /* --- 掃描器自訂樣式 --- */
+        /* --- 掃描器與驗票自訂樣式 --- */
         .scanner-laser { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: #FF8C94; box-shadow: 0 0 12px #FF8C94; animation: scanning 2.5s ease-in-out infinite; z-index: 10; }
         @keyframes scanning { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
         .scan-corner { position: absolute; width: 24px; height: 24px; border-color: #FF8C94; border-width: 4px; z-index: 20; border-radius: 4px; }
@@ -70,34 +71,42 @@
 </head>
 <body class="min-h-screen flex justify-center bg-gray-100">
 
-    <!-- ⭐ 全新專業驗證畫面 (進度條與掃描雷達) -->
-    <div id="loading" class="fixed inset-0 bg-[#F8FAFC]/95 backdrop-blur-md z-[100] flex flex-col items-center justify-center transition-opacity duration-500">
-        <!-- 雷達波紋與安全驗證圖示 -->
+    <!-- ⭐ 全新專業驗證畫面 (遊樂園驗票風格 + 紫藍配色) -->
+    <div id="loading" class="fixed inset-0 bg-gradient-to-br from-[#E2D1F9]/95 to-[#AEDFF7]/95 backdrop-blur-md z-[100] flex flex-col items-center justify-center transition-opacity duration-300">
+        <!-- 雷達波紋與票券掃描圖示 -->
         <div class="relative flex justify-center items-center mb-8">
-            <div id="loading-ping" class="absolute w-24 h-24 bg-macaron-sky/40 rounded-full animate-ping"></div>
-            <div id="loading-spin" class="absolute w-32 h-32 border-2 border-dashed border-macaron-sky/60 rounded-full animate-[spin_4s_linear_infinite]"></div>
-            <div class="relative w-16 h-16 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-macaron-sky flex items-center justify-center z-10">
-                <!-- 直接內聯 SVG 以確保最快顯示，無需等待外部腳本載入 -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-[#6B5B95]">
-                    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.94.94 5.06 1.9 7 3a1 1 0 0 1 1 1z"></path>
-                    <path d="m9 12 2 2 4-4"></path>
+            <div id="loading-ping" class="absolute w-24 h-24 bg-[#6B5B95]/10 rounded-full animate-ping"></div>
+            <div id="loading-spin" class="absolute w-32 h-32 border-4 border-dashed border-[#6B5B95]/30 rounded-full animate-[spin_3s_linear_infinite]"></div>
+            
+            <!-- 票券本體 -->
+            <div class="relative w-20 h-14 bg-white rounded-lg shadow-xl border-2 border-[#6B5B95] flex items-center justify-center z-10 overflow-hidden">
+                <!-- 票券左右的半圓凹槽 -->
+                <div class="absolute -left-2 w-4 h-4 bg-[#E2D1F9] rounded-full border-r-2 border-[#6B5B95]"></div>
+                <div class="absolute -right-2 w-4 h-4 bg-[#AEDFF7] rounded-full border-l-2 border-[#6B5B95]"></div>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6B5B95" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path>
+                    <path d="M13 5v2"></path><path d="M13 17v2"></path><path d="M13 11v2"></path>
                 </svg>
+                
+                <!-- 藍色掃描光軸 -->
+                <div class="absolute top-0 left-0 w-full h-[2px] bg-[#AEDFF7] shadow-[0_0_8px_#AEDFF7] animate-[scanning_1.5s_ease-in-out_infinite]"></div>
             </div>
         </div>
 
-        <h2 class="text-xl font-extrabold text-[#4A4A4A] tracking-widest mb-1 font-rounded drop-shadow-sm">A7 🅟OINTS</h2>
+        <h2 class="text-2xl font-extrabold text-[#6B5B95] tracking-widest mb-1 font-rounded drop-shadow-sm">A7 🅟OINTS</h2>
         
         <div class="h-6 flex items-center justify-center mb-5">
-            <p id="loading-text" class="text-xs text-[#6B5B95] font-bold tracking-widest animate-pulse">初始化系統環境...</p>
+            <p id="loading-text" class="text-xs text-[#4A4A4A] font-bold tracking-widest animate-pulse">遊樂園驗票閘門開啟中...</p>
         </div>
 
-        <!-- 進度條 -->
-        <div id="loading-progress-container" class="w-64 h-2 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6 relative">
-            <div id="loading-progress" class="absolute top-0 left-0 h-full bg-gradient-to-r from-macaron-sky to-macaron-purple w-[5%] transition-all duration-300 ease-out"></div>
+        <!-- 漸層紫藍進度條 -->
+        <div id="loading-progress-container" class="w-64 h-3 bg-white/50 rounded-full overflow-hidden shadow-inner mb-6 relative border border-white/60">
+            <div id="loading-progress" class="absolute top-0 left-0 h-full bg-gradient-to-r from-[#6B5B95] to-[#AEDFF7] w-[5%] transition-all duration-200 ease-out"></div>
         </div>
 
         <!-- 錯誤狀態容器 (預設隱藏) -->
-        <div id="error-container" class="hidden flex-col items-center w-full px-8 mt-2">
+        <div id="error-container" class="hidden flex-col items-center w-full px-8 mt-2 z-20">
             <p id="error-display" class="text-xs text-red-500 font-bold mb-4 text-center leading-relaxed bg-red-50 p-3 rounded-xl border border-red-100"></p>
             <div id="setup-hint" class="hidden w-full p-4 bg-white border-2 border-dashed border-[#FFD1DC] rounded-2xl text-center mb-4 shadow-sm">
                  <p class="text-[10px] text-gray-500 mb-1">💡 開發者提示</p>
@@ -310,7 +319,7 @@
             return prizeType === '電子' ? '🎟️' : '🎁';
         }
 
-        // --- 進度條與狀態控制系統 ---
+        // --- 進度條與狀態控制系統 (已加速) ---
         function updateLoadingState(percent, text) {
             const bar = document.getElementById('loading-progress');
             const textEl = document.getElementById('loading-text');
@@ -352,7 +361,7 @@
 
         // --- 初始化流程 ---
         async function init() {
-            updateLoadingState(15, "初始化安全環境...");
+            updateLoadingState(15, "建立遊樂園連線...");
             try {
                 if (LIFF_ID === "您的_LIFF_ID" || LIFF_ID === "") {
                     updateLoadingState(0, "系統設定異常");
@@ -361,16 +370,16 @@
                     return;
                 }
                 
-                updateLoadingState(35, "啟動 LINE 授權服務...");
+                updateLoadingState(35, "啟動 LINE 快速通關...");
                 await liff.init({ liffId: LIFF_ID });
 
                 if (!liff.isLoggedIn()) {
-                    updateLoadingState(45, "要求存取身分識別...");
+                    updateLoadingState(45, "等待通關授權...");
                     liff.login(); 
                     return;
                 }
                 
-                updateLoadingState(60, "驗證 A7 🅟OINTS 身分...");
+                updateLoadingState(60, "掃描護照身分...");
                 const profile = await liff.getProfile();
                 userData.userId = profile.userId;
                 userData.displayName = profile.displayName;
@@ -392,9 +401,9 @@
             if (!userData.userId) return;
             
             if (!isInit) {
-                showLoadingScreen("同步最新護照資料...");
+                showLoadingScreen("同步最新遊玩紀錄...");
             } else {
-                updateLoadingState(80, "下載集點與兌換紀錄...");
+                updateLoadingState(80, "讀取集點與兌換資料...");
             }
             
             const result = await callGAS({ 
@@ -414,18 +423,18 @@
                 renderMapShops(); 
                 renderHistoryList(); 
                 
-                updateLoadingState(100, "驗證完成！歡迎入園 🎉");
+                updateLoadingState(100, "驗票完成！歡迎入園 🎉");
                 
-                // 延遲淡出，讓使用者看到完成的狀態
+                // ⭐ 加速淡出過場，避免讓使用者覺得卡頓
                 setTimeout(() => {
                     const loadingEl = document.getElementById('loading');
                     loadingEl.style.opacity = '0';
-                    setTimeout(() => { loadingEl.style.display = 'none'; }, 500);
+                    setTimeout(() => { loadingEl.style.display = 'none'; }, 300);
                     
                     if(result.isNewUser && isInit) {
                         setTimeout(() => showCustomAlert("歡迎加入柒樂部！已贈送您入園禮 1 點！", "新朋友加入", "🎉"), 300);
                     }
-                }, 600);
+                }, 200);
 
             } else {
                 showError(result.message);
