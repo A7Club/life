@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>柒樂部遊樂園 - A7 🅟OINTS</title>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
     <script>
@@ -13,8 +14,6 @@
 
       gtag('config', 'G-YJ9RJC2DRS');
     </script>
-
-    
     <!-- 引入核心庫 (新增 Noto Sans TC 字體) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -54,19 +53,19 @@
         }
     </script>
     <style>
-        body { font-family: 'M PLUS Rounded 1c', sans-serif; background: linear-gradient(135deg, #fff0f5 0%, #e0f7fa 100%); color: #4A4A4A; }
+        body { font-family: 'M PLUS Rounded 1c', sans-serif; color: #4A4A4A; }
         .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border: 2px dashed rgba(255, 209, 220, 0.8); }
         .active-scale:active { transform: scale(0.95); transition: transform 0.1s; }
         
-        /* --- ⭐ 載入畫面專屬：日系文青漸層融合背景 (已去除網格) --- */
-        .loading-bg-grid {
+        /* --- ⭐ 全局背景：日系文青漸層融合背景 --- */
+        .japanese-paper-bg {
             font-family: 'Noto Sans TC', sans-serif;
             background-color: #FFFDF9; /* 偏向柔和紙本底色 */
             background-image: 
-                /* 僅保留與主畫面相同的粉黃藍漸層，將透明度降至 20%，完美與 #FFFDF9 銜接 */
-                linear-gradient(135deg, rgba(255,209,220,0.2) 0%, rgba(255,245,186,0.2) 50%, rgba(174,223,247,0.2) 100%);
+                linear-gradient(135deg, rgba(255,209,220,0.3) 0%, rgba(255,245,186,0.3) 50%, rgba(174,223,247,0.3) 100%);
+            background-attachment: fixed;
             background-size: 100% 100%;
-            color: #5C5454; /* 溫柔深灰 */
+            color: #5C5454;
         }
         
         /* --- 掃描器自訂樣式 --- */
@@ -79,10 +78,10 @@
         #qr-shaded-region > div { display: none !important; }
     </style>
 </head>
-<body class="min-h-screen flex justify-center bg-gray-100">
+<body class="min-h-screen flex justify-center japanese-paper-bg">
 
     <!-- ⭐ 全新專業驗證畫面 (日系文青網格 + 粉黃藍漸層融合) -->
-    <div id="loading" class="fixed inset-0 loading-bg-grid z-[100] flex flex-col items-center justify-center px-6 transition-opacity duration-500">
+    <div id="loading" class="fixed inset-0 japanese-paper-bg z-[100] flex flex-col items-center justify-center px-6 transition-opacity duration-500">
         <!-- 玻璃擬態卡片 -->
         <div class="glass-card w-full max-w-sm rounded-[2.5rem] p-8 flex flex-col items-center justify-center shadow-2xl relative border-2 border-macaron-purple bg-white/80">
             
@@ -148,7 +147,7 @@
         </div>
     </div>
 
-    <div class="w-full max-w-[400px] bg-gradient-to-br from-[#FFD1DC]/30 via-[#FFF5BA]/30 to-[#AEDFF7]/30 min-h-screen relative shadow-2xl overflow-hidden flex flex-col">
+    <div class="w-full max-w-[400px] min-h-screen relative shadow-2xl overflow-hidden flex flex-col bg-white/30 backdrop-blur-[2px]">
         
         <!-- 頂部導航 -->
         <header class="pt-8 pb-4 px-6 relative z-10">
