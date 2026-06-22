@@ -139,7 +139,6 @@
 
     <div class="w-full max-w-[400px] min-h-screen relative shadow-2xl overflow-hidden flex flex-col bg-white/30 backdrop-blur-[2px]">
         
-        <!-- ⭐ 縮減頂部導航空間 -->
         <header class="pt-6 pb-2 px-5 relative z-10">
             <div class="flex justify-between items-center">
                 <div>
@@ -156,22 +155,20 @@
             </div>
         </header>
 
-        <!-- ⭐ 縮減 Main 區塊邊距與間距 -->
         <main class="flex-1 px-4 pb-20 overflow-y-auto relative z-10 flex flex-col gap-3.5">
             
-            <!-- ⭐ 整合「目前進度」與「集點卡」 (減少一大區塊垂直空間) -->
             <div class="glass-card rounded-[1.5rem] p-4 shadow-md relative overflow-hidden mt-1">
                 <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-[85%] h-4 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSIyMCI+PHBvbHlnb24gcG9pbnRzPSIwLDExIDIwLDAgNDAsMTEgMjAsMjIiIGZpbGw9IiNGRkQxREMiLz48L3N2Zz4=')] bg-repeat-x opacity-60"></div>
                 
-                <div class="flex justify-between items-end mb-3 mt-1 px-1">
+                <div class="flex justify-between items-end mb-4 mt-1 px-1">
                     <p class="text-[11px] font-bold text-[#6B5B95] flex items-center gap-1"><i data-lucide="award" class="w-3.5 h-3.5"></i> 集點進度</p>
                     <p id="points-status" class="text-sm font-bold text-[#4A4A4A] leading-none">讀取中...</p>
                 </div>
                 
-                <div id="stamp-grid" class="flex flex-wrap justify-center gap-y-3 gap-x-2.5 px-1"></div>
+                <!-- ⭐ 透過 max-w 控制寬度，強制分為兩排 (4+3) -->
+                <div id="stamp-grid" class="flex flex-wrap justify-center gap-y-4 gap-x-4 px-1 max-w-[320px] mx-auto pb-2"></div>
             </div>
 
-            <!-- ⭐ 獎品區域 (縮減清單項目內距) -->
             <div>
                 <h3 class="text-xs font-bold text-[#6B5B95] mb-2 px-1 flex items-center gap-1.5">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 獎品換領處
@@ -179,7 +176,6 @@
                 <div id="prize-list" class="flex flex-col gap-2.5"></div>
             </div>
 
-            <!-- ⭐ 授權店家專區 -->
             <div id="admin-panel" class="hidden">
                 <h3 class="text-xs font-bold text-[#6B5B95] mb-2 px-1 flex items-center gap-1.5">
                     <i data-lucide="store" class="w-3.5 h-3.5"></i> 授權店家專區
@@ -192,13 +188,11 @@
                         </div>
                         
                         <div class="flex gap-2.5 items-stretch">
-                            <!-- 左邊：已發送點數框 -->
                             <div class="flex-1 bg-gray-50 rounded-xl p-3 border border-gray-100 flex flex-col justify-center">
                                 <p class="text-[10px] text-gray-500 font-bold mb-1">本店累計發放</p>
                                 <p class="text-xl font-black text-[#FF8C94] leading-none"><span id="admin-issued-stamps">0</span> <span class="text-[10px] font-bold text-gray-500">點</span></p>
                             </div>
 
-                            <!-- 右邊：顯示 QR Code 按鈕 -->
                             <button onclick="showShopQrCode()" class="flex-1 bg-white border border-[#E2D1F9] shadow-sm rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer active-scale transition-transform">
                                 <div class="w-8 h-8 bg-macaron-purple/20 rounded-full flex items-center justify-center mb-1.5">
                                     <i data-lucide="qr-code" class="w-4 h-4 text-[#6B5B95]"></i>
@@ -210,7 +204,6 @@
                 </div>
             </div>
 
-            <!-- ⭐ 操作按鈕 (縮減高度留白) -->
             <div class="mt-1 mb-2">
                 <button id="start-scan" class="active-scale w-full bg-gradient-to-r from-[#FFD1DC] to-[#E2D1F9] text-[#4A4A4A] font-extrabold text-base py-3.5 rounded-2xl shadow-[0_4px_12px_rgba(255,209,220,0.5)] flex justify-center items-center gap-2">
                     <i data-lucide="maximize" class="w-5 h-5"></i> 開啟相機 (集點 / 核銷)
@@ -219,7 +212,6 @@
 
         </main>
 
-        <!-- ⭐ 縮減底部導覽列高度與字體 -->
         <nav class="absolute bottom-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 px-8 py-2 pb-5 flex justify-between z-20">
             <button class="flex flex-col items-center gap-0.5 text-[#FF8C94]">
                 <i data-lucide="home" class="w-5 h-5"></i>
@@ -235,7 +227,6 @@
             </button>
         </nav>
 
-        <!-- ⭐ 店家專屬 QR Code 彈窗 -->
         <div id="shop-qr-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[70] hidden flex items-center justify-center px-4">
             <div class="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="shop-qr-content">
                 <div class="text-center">
@@ -250,7 +241,6 @@
             </div>
         </div>
 
-        <!-- 歷史紀錄彈窗 -->
         <div id="history-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60] hidden flex flex-col items-center justify-end sm:justify-center p-0 sm:p-6 transition-all duration-300">
             <div class="w-full max-w-[400px] bg-white rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[85vh] transform translate-y-full transition-transform duration-300" id="history-modal-content">
                 <div class="bg-macaron-yellow/60 p-5 flex justify-between items-center text-[#6B5B95] font-bold shadow-sm z-10">
@@ -266,7 +256,6 @@
             </div>
         </div>
 
-        <!-- 合作店家地圖彈窗 -->
         <div id="map-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60] hidden flex flex-col items-center justify-end sm:justify-center p-0 sm:p-6 transition-all duration-300">
             <div class="w-full max-w-[400px] bg-white rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[85vh] transform translate-y-full transition-transform duration-300" id="map-modal-content">
                 <div class="bg-macaron-sky/60 p-5 flex justify-between items-center text-[#6B5B95] font-bold shadow-sm z-10">
@@ -279,7 +268,6 @@
                 <div class="p-5 overflow-y-auto flex-1 bg-gray-50/50 flex flex-col gap-3" id="shop-list-container">
                     <div class="flex items-center justify-center py-10"><div class="animate-spin text-2xl">⏳</div></div>
                 </div>
-                <!-- 招募合作店家按鈕 -->
                 <div class="p-4 bg-white border-t border-gray-100 z-10 shrink-0">
                     <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="w-full bg-macaron-yellow text-[#6B5B95] font-bold py-3 rounded-2xl shadow-sm active-scale flex items-center justify-center gap-2 transition-transform">
                         <i data-lucide="store" class="w-5 h-5"></i>
@@ -289,7 +277,6 @@
             </div>
         </div>
 
-        <!-- 掃描窗 -->
         <div id="scanner-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[60] hidden flex flex-col items-center justify-center p-6 text-white">
             <div class="w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl relative">
                 <div class="bg-macaron-pink/50 p-4 flex justify-between items-center text-[#6B5B95] font-bold">
@@ -320,7 +307,6 @@
             </div>
         </div>
 
-        <!-- 實體獎品出示 QR Code 彈窗 -->
         <div id="physical-qr-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[70] hidden flex items-center justify-center px-4">
             <div class="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="physical-qr-content">
                 <div class="text-center">
@@ -335,7 +321,6 @@
             </div>
         </div>
 
-        <!-- 電子兌換成功彈窗 -->
         <div id="redeem-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[70] hidden flex items-center justify-center px-4">
             <div class="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="redeem-modal-content">
                 <div class="text-center">
@@ -591,7 +576,7 @@
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
 
-        // ⭐ UI 渲染縮小空間優化
+        // ⭐ UI 渲染縮小空間優化、分為兩排、放大點數
         function renderUI(prizes = []) {
             const grid = document.getElementById('stamp-grid');
             const stampIcons = ['🎠', '🎡', '🎪', '🎢', '🎫', '🍿', '🎈'];
@@ -599,15 +584,15 @@
             
             const displayPoints = currentPoints % MAX_STAMPS === 0 && currentPoints > 0 ? MAX_STAMPS : currentPoints % MAX_STAMPS;
             
-            // ⭐ 縮小集點圈圈 (42px)
+            // ⭐ 放大集點圈圈 (64px)
             for (let i = 0; i < MAX_STAMPS; i++) {
                 const slot = document.createElement('div');
-                slot.className = 'w-[42px] h-[42px] rounded-full flex items-center justify-center relative transition-all border-2 border-dashed border-gray-200 bg-gray-50/50';
+                slot.className = 'w-16 h-16 rounded-full flex items-center justify-center relative transition-all border-2 border-dashed border-gray-200 bg-gray-50/50';
                 if (i < displayPoints) {
-                    slot.className = 'w-[42px] h-[42px] rounded-full flex items-center justify-center relative bg-white shadow-sm border border-[#FFD1DC]';
-                    slot.innerHTML = `<span class="text-xl animate-bounce-pop">${stampIcons[i]}</span>`;
+                    slot.className = 'w-16 h-16 rounded-full flex items-center justify-center relative bg-white shadow-sm border-2 border-[#FFD1DC]';
+                    slot.innerHTML = `<span class="text-3xl animate-bounce-pop">${stampIcons[i]}</span>`;
                 } else {
-                    slot.innerHTML = `<span class="text-gray-300 font-bold text-[11px]">${i + 1}</span>`;
+                    slot.innerHTML = `<span class="text-gray-300 font-bold text-lg">${i + 1}</span>`;
                 }
                 grid.appendChild(slot);
             }
@@ -622,7 +607,6 @@
                 return;
             }
 
-            // ⭐ 縮小獎品區塊尺寸與內距
             prizes.forEach(prize => {
                 const isOutOfStock = prize.type === '實體' && parseInt(prize.stock) <= 0;
                 const canRedeem = currentPoints >= prize.points && !isOutOfStock;
