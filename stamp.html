@@ -104,8 +104,9 @@
                 <div id="loading-progress" class="absolute top-0 left-0 h-full bg-gradient-to-r from-[#8A79AF] to-[#AEDFF7] w-[5%] transition-all duration-300 ease-out"></div>
             </div>
 
+            <!-- ⭐ 錯誤狀態容器 (調整為符合風格的柔和玫瑰紅配色) -->
             <div id="error-container" class="hidden flex-col items-center w-full mt-4 z-20">
-                <p id="error-display" class="text-[11px] text-[#B35C66] font-bold mb-4 text-center leading-relaxed bg-[#FFF0F5] p-3 rounded-xl border border-[#FFD1DC] whitespace-pre-line w-full"></p>
+                <p id="error-display" class="text-[12px] text-[#B35C66] font-bold mb-4 text-center leading-relaxed bg-[#FFF0F5] p-5 rounded-2xl border border-[#FFD1DC] whitespace-pre-line w-full shadow-sm tracking-wide"></p>
                 <div id="setup-hint" class="hidden w-full p-3 bg-white border-2 border-dashed border-[#FFD1DC] rounded-xl text-center mb-4 shadow-sm">
                      <p class="text-[10px] text-gray-500 mb-1">💡 開發者提示</p>
                      <p class="text-[11px] text-[#4A4A4A]">請替換程式碼中的 <b>"您的_LIFF_ID"</b></p>
@@ -113,6 +114,15 @@
                 <button id="retry-btn" onclick="location.reload()" class="px-6 py-2.5 bg-white border border-macaron-purple text-[#6B5B95] rounded-full font-bold text-xs shadow-sm active-scale flex items-center gap-2">
                     重新載入
                 </button>
+            </div>
+
+            <!-- ⭐ 凸顯社群連結 -->
+            <div class="mt-6 flex flex-col items-center justify-center relative z-20">
+                <p class="text-[10px] text-gray-400 font-medium mb-1.5">活動由以下社群串聯</p>
+                <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="active-scale px-4 py-2 bg-white/70 border border-[#E2D1F9] rounded-full shadow-sm flex items-center gap-1.5 hover:bg-white transition-colors">
+                    <i data-lucide="link" class="w-3.5 h-3.5 text-[#6B5B95]"></i>
+                    <span class="text-[11px] font-black text-[#6B5B95] tracking-widest">A7ᴄʟᴜʙ 柒楽部</span>
+                </a>
             </div>
         </div>
     </div>
@@ -405,12 +415,12 @@
 
             document.getElementById('error-container').classList.remove('hidden');
             document.getElementById('error-display').innerHTML = msg;
-        }
-
+        // --- 初始化流程 (加入多重過渡步驟) ---
         async function init() {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (!isMobile) {
-                showError('此活動為 <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="text-[#6B5B95] underline font-extrabold active-scale inline-block"><b>A7ᴄʟᴜʙ | 柒楽部</b></a> 社群優惠，<br>請透過手機版 LINE App 開啟集點哦！', "請使用手機開啟");
+                const desktopMsg = `此活動為 <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="text-[#6B5B95] font-black underline decoration-[#6B5B95] decoration-2 underline-offset-2 mx-1 hover:text-macaron-purple transition-colors">A7ᴄʟᴜʙ | 柒楽部</a> 社群優惠，<br><br>電腦版請由社群內的連結，<br>或由合作店家LINE社群中的連結開啟集點哦！`;
+                showError(desktopMsg, "請使用手機開啟");
                 document.getElementById('retry-btn').classList.add('hidden');
                 return;
             }
