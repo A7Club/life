@@ -187,28 +187,38 @@
                 <div id="prize-list" class="flex flex-col gap-2.5"></div>
             </div>
 
+            <!-- ⭐ 授權店家專區 -->
             <div id="admin-panel" class="hidden">
                 <h3 class="text-xs font-bold text-[#6B5B95] mb-2 px-1 flex items-center gap-1.5">
                     <i data-lucide="store" class="w-3.5 h-3.5"></i> 授權店家專區
                 </h3>
-                <div class="bg-white/80 backdrop-blur-md rounded-[1.5rem] p-4 border-2 border-dashed border-[#E2D1F9] shadow-sm relative overflow-hidden">
+                <div class="bg-white/80 backdrop-blur-md rounded-[1.5rem] p-3.5 border-2 border-dashed border-[#E2D1F9] shadow-sm relative overflow-hidden">
                     <div class="relative z-10 flex flex-col gap-3">
                         <div>
                             <p class="text-[10px] text-gray-500 font-bold mb-0.5">登入店舖</p>
                             <p class="text-base font-black text-[#6B5B95] drop-shadow-sm leading-tight" id="admin-shop-name"></p>
                         </div>
                         
-                        <div class="flex gap-2.5 items-stretch">
-                            <div class="flex-1 bg-gray-50 rounded-xl p-3 border border-gray-100 flex flex-col justify-center">
-                                <p class="text-[10px] text-gray-500 font-bold mb-1">本店累計發放</p>
-                                <p class="text-xl font-black text-[#FF8C94] leading-none"><span id="admin-issued-stamps">0</span> <span class="text-[10px] font-bold text-gray-500">點</span></p>
+                        <!-- ⭐ 改為三個內容的網格排版 -->
+                        <div class="grid grid-cols-3 gap-2 items-stretch">
+                            <!-- 1. 已發送點數 -->
+                            <div class="bg-gray-50 rounded-xl p-2 border border-gray-100 flex flex-col justify-center items-center text-center">
+                                <p class="text-[9px] text-gray-500 font-bold mb-1">發送點數</p>
+                                <p class="text-lg font-black text-[#FF8C94] leading-none"><span id="admin-issued-stamps">0</span><span class="text-[9px] font-bold text-gray-500 ml-0.5">點</span></p>
                             </div>
 
-                            <button onclick="showShopQrCode()" class="flex-1 bg-white border border-[#E2D1F9] shadow-sm rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer active-scale transition-transform">
-                                <div class="w-8 h-8 bg-macaron-purple/20 rounded-full flex items-center justify-center mb-1.5">
-                                    <i data-lucide="qr-code" class="w-4 h-4 text-[#6B5B95]"></i>
+                            <!-- 2. 已兌換數量 -->
+                            <div class="bg-gray-50 rounded-xl p-2 border border-gray-100 flex flex-col justify-center items-center text-center">
+                                <p class="text-[9px] text-gray-500 font-bold mb-1">已兌換量</p>
+                                <p class="text-lg font-black text-[#6BAED6] leading-none"><span id="admin-redeemed-count">0</span><span class="text-[9px] font-bold text-gray-500 ml-0.5">次</span></p>
+                            </div>
+
+                            <!-- 3. 顯示 QR Code 按鈕 -->
+                            <button onclick="showShopQrCode()" class="bg-white border border-[#E2D1F9] shadow-sm rounded-xl p-2 flex flex-col items-center justify-center cursor-pointer active-scale transition-transform">
+                                <div class="w-6 h-6 bg-macaron-purple/20 rounded-full flex items-center justify-center mb-1">
+                                    <i data-lucide="qr-code" class="w-3 h-3 text-[#6B5B95]"></i>
                                 </div>
-                                <p class="text-[11px] font-bold text-[#4A4A4A]">顯示 QR Code</p>
+                                <p class="text-[9px] font-bold text-[#4A4A4A]">專屬 QR</p>
                             </button>
                         </div>
                     </div>
@@ -363,6 +373,7 @@
         
         let adminShopCode = '';
         let shopIssuedStamps = 0;
+        let shopRedeemedCount = 0; // ⭐ 新增：已兌換數量變數
 
         const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -483,6 +494,7 @@
                 
                 adminShopCode = result.adminShopCode || '';
                 shopIssuedStamps = result.shopIssuedStamps || 0;
+                shopRedeemedCount = result.shopRedeemedCount || 0; // ⭐ 從後端接收兌換數量
 
                 renderUI(result.prizes || []);
                 renderAdminPanel(); 
@@ -649,6 +661,7 @@
                 panel.classList.remove('hidden');
                 document.getElementById('admin-shop-name').innerText = userData.shopName;
                 document.getElementById('admin-issued-stamps').innerText = shopIssuedStamps;
+                document.getElementById('admin-redeemed-count').innerText = shopRedeemedCount; // ⭐ 渲染已兌換數量
             } else {
                 panel.classList.add('hidden');
             }
