@@ -160,13 +160,13 @@
             <div class="glass-card rounded-[1.5rem] p-4 shadow-md relative overflow-hidden mt-1">
                 <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-[85%] h-4 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSIyMCI+PHBvbHlnb24gcG9pbnRzPSIwLDExIDIwLDAgNDAsMTEgMjAsMjIiIGZpbGw9IiNGRkQxREMiLz48L3N2Zz4=')] bg-repeat-x opacity-60"></div>
                 
-                <div class="flex justify-between items-end mb-4 mt-1 px-1">
+                <div class="flex justify-between items-end mb-5 mt-1 px-1">
                     <p class="text-[11px] font-bold text-[#6B5B95] flex items-center gap-1"><i data-lucide="award" class="w-3.5 h-3.5"></i> 集點進度</p>
                     <p id="points-status" class="text-sm font-bold text-[#4A4A4A] leading-none">讀取中...</p>
                 </div>
                 
-                <!-- ⭐ 透過 max-w 控制寬度，強制分為兩排 (4+3) -->
-                <div id="stamp-grid" class="flex flex-wrap justify-center gap-y-4 gap-x-4 px-1 max-w-[320px] mx-auto pb-2"></div>
+                <!-- ⭐ 精準控制寬度與間距，強制分為完美兩排 (4+3 排版) -->
+                <div id="stamp-grid" class="flex flex-wrap justify-center gap-y-5 gap-x-3 w-full max-w-[320px] mx-auto pb-2"></div>
             </div>
 
             <div>
@@ -479,7 +479,7 @@
                 renderHistoryList(); 
                 
                 if (isInit) {
-                    updateLoadingState(100, "驗票完成！歡迎進入集點🎉");
+                    updateLoadingState(100, "驗票完成開啟集點🎉");
                     await sleep(600); 
                 }
                 
@@ -584,15 +584,15 @@
             
             const displayPoints = currentPoints % MAX_STAMPS === 0 && currentPoints > 0 ? MAX_STAMPS : currentPoints % MAX_STAMPS;
             
-            // ⭐ 放大集點圈圈 (64px)
+            // ⭐ 放大集點圈圈 (68px) 並加入 shrink-0 防止被擠壓
             for (let i = 0; i < MAX_STAMPS; i++) {
                 const slot = document.createElement('div');
-                slot.className = 'w-16 h-16 rounded-full flex items-center justify-center relative transition-all border-2 border-dashed border-gray-200 bg-gray-50/50';
                 if (i < displayPoints) {
-                    slot.className = 'w-16 h-16 rounded-full flex items-center justify-center relative bg-white shadow-sm border-2 border-[#FFD1DC]';
-                    slot.innerHTML = `<span class="text-3xl animate-bounce-pop">${stampIcons[i]}</span>`;
+                    slot.className = 'w-[68px] h-[68px] shrink-0 rounded-full flex items-center justify-center relative bg-white shadow-md border-[3px] border-[#FFD1DC]';
+                    slot.innerHTML = `<span class="text-4xl animate-bounce-pop">${stampIcons[i]}</span>`;
                 } else {
-                    slot.innerHTML = `<span class="text-gray-300 font-bold text-lg">${i + 1}</span>`;
+                    slot.className = 'w-[68px] h-[68px] shrink-0 rounded-full flex items-center justify-center relative transition-all border-2 border-dashed border-gray-300 bg-gray-50/80';
+                    slot.innerHTML = `<span class="text-gray-300 font-black text-[22px]">${i + 1}</span>`;
                 }
                 grid.appendChild(slot);
             }
