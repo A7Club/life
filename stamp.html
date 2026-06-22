@@ -187,30 +187,21 @@
                 </h3>
                 <div class="bg-white/80 backdrop-blur-md rounded-3xl p-5 border-2 border-dashed border-[#E2D1F9] shadow-sm relative overflow-hidden">
                     <div class="relative z-10 flex flex-col gap-4">
-                        
-                        <div>
-                            <p class="text-[11px] text-gray-500 font-bold mb-1">登入店舖</p>
-                            <p class="text-lg font-black text-[#6B5B95] drop-shadow-sm" id="admin-shop-name"></p>
-                        </div>
-
-                        <!-- ⭐ 左邊已發送點數、右邊顯示 QR Code 按鈕 -->
-                        <div class="flex gap-3">
-                            <!-- 左邊：已發送點數框 -->
-                            <div class="flex-1 bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex flex-col justify-center relative overflow-hidden">
-                                <div class="absolute -right-4 -bottom-4 text-4xl opacity-5">🎈</div>
-                                <p class="text-[11px] text-gray-500 font-bold mb-1 relative z-10">本店已發送</p>
-                                <p class="text-2xl font-black text-[#FF8C94] leading-none relative z-10"><span id="admin-issued-stamps">0</span> <span class="text-sm font-bold text-gray-400">點</span></p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-[11px] text-gray-500 font-bold mb-1">登入店舖</p>
+                                <p class="text-lg font-black text-[#6B5B95] drop-shadow-sm" id="admin-shop-name"></p>
                             </div>
-
-                            <!-- 右邊：顯示 QR Code 按鈕 -->
-                            <button onclick="showShopQrCode()" class="w-[100px] bg-gradient-to-br from-[#E2D1F9]/40 to-[#AEDFF7]/40 border border-white text-[#6B5B95] rounded-2xl shadow-sm active-scale flex flex-col justify-center items-center gap-2 p-3 transition-colors hover:from-[#E2D1F9]/60 hover:to-[#AEDFF7]/60 shrink-0">
-                                <div class="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center border border-white/50">
-                                    <i data-lucide="qr-code" class="w-6 h-6"></i>
-                                </div>
-                                <span class="text-[11px] font-bold text-[#4A4A4A]">集點條碼</span>
-                            </button>
+                            <div class="text-right">
+                                <p class="text-[11px] text-gray-500 font-bold mb-1">本店累計發放</p>
+                                <p class="text-2xl font-black text-[#FF8C94] leading-none"><span id="admin-issued-stamps">0</span> <span class="text-xs font-bold text-gray-500">點</span></p>
+                            </div>
                         </div>
 
+                        <!-- ⭐ 按鈕顯示 QR Code -->
+                        <button onclick="showShopQrCode()" class="w-full bg-white text-[#6B5B95] border-2 border-macaron-purple font-bold py-3 rounded-2xl shadow-sm active-scale flex justify-center items-center gap-2 mt-2 transition-colors hover:bg-gray-50">
+                            <i data-lucide="qr-code" class="w-5 h-5"></i> 顯示本店專屬 QR Code
+                        </button>
                     </div>
                 </div>
             </div>
