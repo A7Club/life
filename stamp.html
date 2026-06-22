@@ -20,7 +20,7 @@
 
         <main class="flex-1 px-5 pb-24 overflow-y-auto relative z-10">
             
-            <!-- ⭐ 新增：超吸睛的社群招募動態橫幅 -->
+            <!-- ⭐ 新增：超吸睛的社群招募動態橫幅 (凸顯主辦單位) -->
             <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="block mb-6 relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#FFD1DC] via-[#FFF5BA] to-[#AEDFF7] p-[2px] active-scale shadow-sm group">
                 <div class="absolute inset-0 bg-white/40 group-hover:bg-white/20 transition-colors duration-300"></div>
                 <div class="relative bg-white/90 backdrop-blur-sm rounded-xl p-3 flex items-center justify-between">
@@ -44,4 +44,61 @@
 
             <!-- 進度卡片 -->
             <div class="bg-white/90 rounded-2xl p-4 shadow-sm mb-6 flex items-center gap-4 border-l-4 border-macaron-sky">
+<!-- ... existing code ... -->
+            <!-- ⭐ 店家專區 (已修改 QR Code 為按鈕樣式) -->
+            <div id="admin-panel" class="hidden mb-6">
+                <h3 class="text-sm font-bold text-[#6B5B95] mb-3 px-1 flex items-center gap-2">
+                    <i data-lucide="store" class="w-4 h-4"></i> 授權店家專區
+                </h3>
+                <div class="bg-white/80 backdrop-blur-md rounded-3xl p-5 border-2 border-dashed border-[#E2D1F9] shadow-sm relative overflow-hidden">
+                    <div class="relative z-10 flex flex-col gap-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-[11px] text-gray-500 font-bold mb-1">登入店舖</p>
+                                <p class="text-lg font-black text-[#6B5B95] drop-shadow-sm" id="admin-shop-name"></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[11px] text-gray-500 font-bold mb-1">本店累計發放</p>
+                                <p class="text-2xl font-black text-[#FF8C94] leading-none"><span id="admin-issued-stamps">0</span> <span class="text-xs font-bold text-gray-500">點</span></p>
+                            </div>
+                        </div>
+
+                        <!-- ⭐ 將原本的 QR Code 圖片改為「點擊開啟的按鈕」 -->
+                        <button onclick="showShopQrCode()" class="w-full bg-gray-50 hover:bg-gray-100 transition-colors rounded-2xl p-3 flex items-center justify-between border-2 border-dashed border-[#E2D1F9] active-scale group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-gray-200 flex items-center justify-center p-1.5 group-hover:scale-105 transition-transform relative overflow-hidden shrink-0">
+                                    <i data-lucide="qr-code" class="w-7 h-7 text-[#6B5B95]"></i>
+                                    <div class="absolute inset-0 bg-macaron-sky/10 animate-pulse"></div>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-sm font-bold text-[#4A4A4A] mb-0.5">本店專屬 QR Code</p>
+                                    <p class="text-[11px] text-gray-500 font-medium">點擊此按鈕放大顯示供客人掃描</p>
+                                </div>
+                            </div>
+                            <div class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-[#6B5B95]"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+<!-- ... existing code ... -->
+        // ⭐ 顯示/隱藏 店家專屬 QR Code 彈窗
+        function showShopQrCode() {
+            // 使用後端傳來的 ShopCode (如果沒有獨立的 adminShopCode 變數，可使用常數 SHOP_QR_CODE 或對應的變數)
+            const targetShopCode = typeof adminShopCode !== 'undefined' && adminShopCode ? adminShopCode : SHOP_QR_CODE;
+            
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=6B5B95&data=${encodeURIComponent(targetShopCode)}`;
+            document.getElementById('shop-qr-img').src = qrUrl;
+            
+            const modal = document.getElementById('shop-qr-modal');
+            const content = document.getElementById('shop-qr-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.replace('scale-95', 'scale-100');
+                content.classList.replace('opacity-0', 'opacity-100');
+            }, 10);
+        }
 <!-- ... existing code ... -->
