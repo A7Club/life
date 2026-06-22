@@ -4,17 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>柒樂部遊樂園 - A7 🅟OINTS</title>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ9RJC2DRS"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-YJ9RJC2DRS');
-    </script>
-    
     <!-- 引入核心庫 (新增 Noto Sans TC 字體) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -194,28 +183,30 @@
             <!-- ⭐ 店家專區 (僅店家登入時可見，已移至掃描按鈕下方) -->
             <div id="admin-panel" class="hidden mb-6">
                 <h3 class="text-sm font-bold text-[#6B5B95] mb-3 px-1 flex items-center gap-2">
-                    <i data-lucide="store" class="w-4 h-4"></i> 授權店家管理
+                    <i data-lucide="store" class="w-4 h-4"></i> 授權店家專區
                 </h3>
-                <div class="bg-gradient-to-br from-macaron-purple/30 to-macaron-sky/30 rounded-3xl p-5 border border-white shadow-sm relative overflow-hidden">
-                    <div class="absolute -top-2 -right-2 opacity-20 text-macaron-purple mix-blend-multiply pointer-events-none">
-                        <i data-lucide="store" class="w-24 h-24"></i>
-                    </div>
-                    <div class="relative z-10">
-                        <p class="text-[11px] text-gray-500 font-bold mb-1">登入店舖</p>
-                        <p class="text-lg font-black text-[#4A4A4A] mb-4 drop-shadow-sm" id="admin-shop-name"></p>
+                <div class="bg-white/80 backdrop-blur-md rounded-3xl p-5 border-2 border-dashed border-[#E2D1F9] shadow-sm relative overflow-hidden">
+                    <div class="relative z-10 flex flex-col gap-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-[11px] text-gray-500 font-bold mb-1">登入店舖</p>
+                                <p class="text-lg font-black text-[#6B5B95] drop-shadow-sm" id="admin-shop-name"></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[11px] text-gray-500 font-bold mb-1">本店累計發放</p>
+                                <p class="text-2xl font-black text-[#FF8C94] leading-none"><span id="admin-issued-stamps">0</span> <span class="text-xs font-bold text-gray-500">點</span></p>
+                            </div>
+                        </div>
 
-                        <div class="flex gap-3">
-                            <div class="flex-1 bg-white/70 backdrop-blur-sm rounded-2xl p-3 border border-white shadow-sm flex flex-col justify-center">
-                                <p class="text-[10px] text-gray-500 font-bold mb-1">累計發放點數</p>
-                                <p class="text-xl font-black text-[#6B5B95] leading-none"><span id="admin-issued-stamps">0</span> <span class="text-xs font-bold">點</span></p>
+                        <!-- 直接顯示 QR Code (無文字串) -->
+                        <div class="bg-gray-50 rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer active-scale border border-gray-100" onclick="showShopQrCode()">
+                            <p class="text-xs font-bold text-[#4A4A4A] mb-3 flex items-center gap-1">
+                                <i data-lucide="qr-code" class="w-4 h-4"></i> 本店專屬集點 QR Code
+                            </p>
+                            <div class="w-32 h-32 bg-white p-2 rounded-xl shadow-sm border border-gray-200">
+                                <img id="admin-mini-qr" src="" class="w-full h-full object-contain hidden" alt="Shop QR Code">
                             </div>
-                            <div class="flex-1 bg-white/70 backdrop-blur-sm rounded-2xl p-3 border border-white shadow-sm flex flex-col justify-between cursor-pointer active-scale" onclick="showShopQrCode()">
-                                <p class="text-[10px] text-gray-500 font-bold mb-1">本店 ShopCode</p>
-                                <div class="flex items-center justify-between mt-1">
-                                    <p class="text-[11px] font-mono font-bold text-[#4A4A4A] truncate pr-1" id="admin-shop-code-text"></p>
-                                    <i data-lucide="qr-code" class="w-5 h-5 text-[#6B5B95] shrink-0"></i>
-                                </div>
-                            </div>
+                            <p class="text-[10px] text-gray-400 font-medium mt-3">點擊可放大顯示</p>
                         </div>
                     </div>
                 </div>
@@ -246,11 +237,8 @@
                     <div class="text-5xl mb-4">🏪</div>
                     <h3 class="text-xl font-bold text-[#4A4A4A] mb-2">本店集點 QR Code</h3>
                     <p class="text-xs text-gray-500 mb-6 font-medium">請讓客人掃描此條碼來集點</p>
-                    <div class="bg-gray-50 p-4 rounded-2xl border-2 border-dashed border-[#E2D1F9] mb-4 flex justify-center items-center aspect-square mx-auto w-[220px]">
+                    <div class="bg-gray-50 p-4 rounded-2xl border-2 border-dashed border-[#E2D1F9] mb-6 flex justify-center items-center aspect-square mx-auto w-[220px]">
                         <img id="shop-qr-img" src="" alt="Shop QR Code" class="w-[180px] h-[180px] object-contain">
-                    </div>
-                    <div class="bg-macaron-purple/20 py-2.5 rounded-xl mb-6 flex justify-center items-center gap-2">
-                        <span class="text-sm font-mono font-bold text-[#6B5B95]" id="shop-qr-text"></span>
                     </div>
                     <button onclick="closeShopQrModal()" class="w-full bg-macaron-sky text-[#4A4A4A] font-extrabold py-3 rounded-2xl shadow-sm active-scale">完成並關閉</button>
                 </div>
@@ -659,7 +647,16 @@
                 panel.classList.remove('hidden');
                 document.getElementById('admin-shop-name').innerText = userData.shopName;
                 document.getElementById('admin-issued-stamps').innerText = shopIssuedStamps;
-                document.getElementById('admin-shop-code-text').innerText = adminShopCode;
+                
+                // ⭐ 直接渲染小張 QR Code 圖片
+                if (adminShopCode) {
+                    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=6B5B95&data=${encodeURIComponent(adminShopCode)}`;
+                    const miniQr = document.getElementById('admin-mini-qr');
+                    if (miniQr) {
+                        miniQr.src = qrUrl;
+                        miniQr.classList.remove('hidden');
+                    }
+                }
             } else {
                 panel.classList.add('hidden');
             }
@@ -671,7 +668,6 @@
             if (!adminShopCode) return;
             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=6B5B95&data=${encodeURIComponent(adminShopCode)}`;
             document.getElementById('shop-qr-img').src = qrUrl;
-            document.getElementById('shop-qr-text').innerText = adminShopCode;
             
             const modal = document.getElementById('shop-qr-modal');
             const content = document.getElementById('shop-qr-content');
