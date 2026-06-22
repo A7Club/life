@@ -180,33 +180,33 @@
                 </button>
             </div>
 
-            <!-- ⭐ 店家專區 (僅店家登入時可見，已移至掃描按鈕下方) -->
+            <!-- ⭐ 店家專區 (僅店家登入時可見) -->
             <div id="admin-panel" class="hidden mb-6">
                 <h3 class="text-sm font-bold text-[#6B5B95] mb-3 px-1 flex items-center gap-2">
                     <i data-lucide="store" class="w-4 h-4"></i> 授權店家專區
                 </h3>
                 <div class="bg-white/80 backdrop-blur-md rounded-3xl p-5 border-2 border-dashed border-[#E2D1F9] shadow-sm relative overflow-hidden">
                     <div class="relative z-10 flex flex-col gap-4">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <p class="text-[11px] text-gray-500 font-bold mb-1">登入店舖</p>
-                                <p class="text-lg font-black text-[#6B5B95] drop-shadow-sm" id="admin-shop-name"></p>
-                            </div>
-                            <div class="text-right">
+                        <div>
+                            <p class="text-[11px] text-gray-500 font-bold mb-1">登入店舖</p>
+                            <p class="text-lg font-black text-[#6B5B95] drop-shadow-sm" id="admin-shop-name"></p>
+                        </div>
+                        
+                        <!-- 左右排版：左已發送點數，右 QR Code 按鈕 -->
+                        <div class="flex gap-3 items-stretch">
+                            <!-- 左邊：已發送點數框 -->
+                            <div class="flex-1 bg-gray-50 rounded-2xl p-4 border border-gray-100 flex flex-col justify-center">
                                 <p class="text-[11px] text-gray-500 font-bold mb-1">本店累計發放</p>
                                 <p class="text-2xl font-black text-[#FF8C94] leading-none"><span id="admin-issued-stamps">0</span> <span class="text-xs font-bold text-gray-500">點</span></p>
                             </div>
-                        </div>
 
-                        <!-- 直接顯示 QR Code (無文字串) -->
-                        <div class="bg-gray-50 rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer active-scale border border-gray-100" onclick="showShopQrCode()">
-                            <p class="text-xs font-bold text-[#4A4A4A] mb-3 flex items-center gap-1">
-                                <i data-lucide="qr-code" class="w-4 h-4"></i> 本店專屬集點 QR Code
-                            </p>
-                            <div class="w-32 h-32 bg-white p-2 rounded-xl shadow-sm border border-gray-200">
-                                <img id="admin-mini-qr" src="" class="w-full h-full object-contain hidden" alt="Shop QR Code">
-                            </div>
-                            <p class="text-[10px] text-gray-400 font-medium mt-3">點擊可放大顯示</p>
+                            <!-- 右邊：顯示 QR Code 按鈕 -->
+                            <button onclick="showShopQrCode()" class="flex-1 bg-white border border-[#E2D1F9] shadow-sm rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer active-scale transition-transform">
+                                <div class="w-10 h-10 bg-macaron-purple/20 rounded-full flex items-center justify-center mb-2">
+                                    <i data-lucide="qr-code" class="w-5 h-5 text-[#6B5B95]"></i>
+                                </div>
+                                <p class="text-xs font-bold text-[#4A4A4A]">顯示 QR Code</p>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -274,6 +274,7 @@
                 <div class="p-5 overflow-y-auto flex-1 bg-gray-50/50 flex flex-col gap-3" id="shop-list-container">
                     <div class="flex items-center justify-center py-10"><div class="animate-spin text-2xl">⏳</div></div>
                 </div>
+                <!-- 招募合作店家按鈕 -->
                 <div class="p-4 bg-white border-t border-gray-100 z-10 shrink-0">
                     <a href="https://line.me/ti/g2/GBG7FOYaVN8Ek3Zn3wAEjfAumASOabXHP6hLzg" target="_blank" class="w-full bg-macaron-yellow text-[#6B5B95] font-bold py-3 rounded-2xl shadow-sm active-scale flex items-center justify-center gap-2 transition-transform">
                         <i data-lucide="store" class="w-5 h-5"></i>
@@ -478,7 +479,7 @@
                 
                 userData.isAdmin = !!result.isAdmin; 
                 userData.shopName = result.shopName || ''; 
-                // ⭐ 接收後端傳來的店家專屬資料
+                
                 adminShopCode = result.adminShopCode || '';
                 shopIssuedStamps = result.shopIssuedStamps || 0;
 
@@ -488,7 +489,7 @@
                 renderHistoryList(); 
                 
                 if (isInit) {
-                    updateLoadingState(100, "驗票完成！歡迎進入集點🎉");
+                    updateLoadingState(100, "驗票完成開啟集點🎉");
                     await sleep(600); 
                 }
                 
@@ -640,30 +641,20 @@
             });
         }
 
-        // ⭐ 新增：渲染店家管理專區
+        // ⭐ 渲染店家管理專區
         function renderAdminPanel() {
             const panel = document.getElementById('admin-panel');
             if (userData.isAdmin) {
                 panel.classList.remove('hidden');
                 document.getElementById('admin-shop-name').innerText = userData.shopName;
                 document.getElementById('admin-issued-stamps').innerText = shopIssuedStamps;
-                
-                // ⭐ 直接渲染小張 QR Code 圖片
-                if (adminShopCode) {
-                    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=6B5B95&data=${encodeURIComponent(adminShopCode)}`;
-                    const miniQr = document.getElementById('admin-mini-qr');
-                    if (miniQr) {
-                        miniQr.src = qrUrl;
-                        miniQr.classList.remove('hidden');
-                    }
-                }
             } else {
                 panel.classList.add('hidden');
             }
             lucide.createIcons();
         }
 
-        // ⭐ 新增：顯示/隱藏 店家專屬 QR Code 彈窗
+        // ⭐ 顯示/隱藏 店家專屬 QR Code 彈窗
         function showShopQrCode() {
             if (!adminShopCode) return;
             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=6B5B95&data=${encodeURIComponent(adminShopCode)}`;
